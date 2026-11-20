@@ -59,6 +59,9 @@ Solarchat's own:
 | F-03 | They are outside, on a phone, with a poor signal; they come back inside and give up. | Ghost, 2026-11-20, in chat | Offline first (P-15); a conversation resumes where it stopped (P-18). |
 | F-04 | The bot must run no code and know nothing outside its packs. | Ghost, 2026-11-20, in chat | The model gets no tools (SC-002); out-of-scope questions are refused and are a third of the evaluation set. |
 | F-05 | Knowledge libraries are swapped in and out, starting from public material. | Ghost, 2026-11-20, in chat | The pack format comes first; a manufacturer's manual is loaded where the bot is deployed, never committed (SC-005, Core C-033). |
+| F-07 | The online model is Claude Sonnet through the Anthropic API, chosen over Haiku for its reasoning; the customer can show it a photo, and it asks for the make and model and says where to find them when it cannot tell. | Ghost, 2026-11-20, in chat | 3.1 is settled for the online side; a photo is evidence the bot states back and the customer confirms (Core C-005); Sonnet against Haiku is measured on the evaluation set, not argued (Core C-004). |
+| F-08 | The customer should be able to speak and be spoken to, hands busy with the panel. | Ghost, 2026-11-20, in chat | Speech is the phone's own, around the text conversation (Phase 5); it is not a model feature the kernel depends on. |
+| F-09 | Offline, Ghost wants a very light open model downloaded ahead of time inside an app that ships with the online version built in. | Ghost, 2026-11-20, in chat | Phase 5 is an app; whether a small model may write an answer, or only choose which admitted passage and flow to show, is settled by a trial against the safety and refusal cases (5.1, Core C-004). The model's weights are downloaded, never committed (Core C-033). |
 | F-06 | Three modes are wanted: hosted behind an API, local, and offline. | Ghost, 2026-11-20, in chat | One kernel, three shells (P-15); the phases below. |
 
 ## 4. What is deliberately not built
@@ -133,13 +136,17 @@ What a wrong answer is has to be written down before anything can give one (Core
 ### Phase 3: the local mode (a model on top)
 
 - 3.1 The model door: one module, the only one that imports a model client (a dependency proposed to Ghost;
-  Core C-012, SC-002). Open for Ghost: a hosted model reached with a key, a model on the machine, or both.
+  Core C-012, SC-002). The online model is Claude Sonnet through the Anthropic API (F-07); it is given no tools
+  and no connectors.
 - 3.2 The answering step: the found passages and the question in, an answer that cites its passage or says it
   does not know out; no tools.
 - 3.3 Tests against recorded replies; no test calls a model.
 - 3.4 The evaluation run, by hand, its scores recorded; the refusal and safety thresholds set by Ghost.
-- 3.5 When the model cannot be reached, the conversation falls to the offline mode and says so.
-- 3.6 Tune-up pass 3
+- 3.5 A photo in the conversation: the bot says what it reads (the label, the connectors), the customer confirms,
+  and only then does it act on it; when it cannot tell, it asks for the make and model and says where the label is.
+- 3.6 Sonnet against Haiku on the evaluation set, cost beside score.
+- 3.7 When the model cannot be reached, the conversation falls to the offline mode and says so.
+- 3.8 Tune-up pass 3
 
 ### Phase 4: the hosted mode (a service behind an API)
 
@@ -155,10 +162,13 @@ The customer of F-03 is on a phone outside. This phase decides how the offline m
 likeliest form is a page the phone keeps, with the packs and flows stored on it, which is a second language
 stack and so Ghost's decision before any of it is built.
 
-- 5.1 The decision: how the offline mode runs on a phone.
+- 5.1 The decision: the app's stack, and the trial of a small on-device model (F-09): the same safety and refusal
+  cases as the online model, with the rivals written first: no model, a model that only chooses the passage and
+  flow, a model that writes the answer.
 - 5.2 The phone shell: packs and flows stored on the phone; the model used when there is signal.
 - 5.3 A conversation resumes where it stopped, outside or back indoors.
-- 5.4 Tune-up pass 5
+- 5.4 Speech in and out, by the phone's own recognition and voice (F-08).
+- 5.5 Tune-up pass 5
 
 ### Phase 6: real packs and the engineer
 
