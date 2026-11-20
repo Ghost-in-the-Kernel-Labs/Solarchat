@@ -48,5 +48,6 @@ Phase 0: 0.2 (the full gate), 0.4 (the contract and modules), 0.5 (any further f
 - Open, and it comes before Phase 1's safety rules (1.3): who the customer is. F-01 says a rural homeowner setting
   up a panel they bought; for the first make you named First Solar and large projects of hundreds of megawatts,
   which are built by professional crews at high voltage. The two need different safety rules and different packs.
-- Open, the agent's questions to you: connectors (the agent recommends none: a photo needs no connector, the model
-  reads it directly; SC-002); the app's stack (5.1).
+- Settled by you (J-011): no connectors; packs carry failures by type, the steps and a picture per step (F-14); a
+  first draft of the seed pack goes to a strong-grade worker now, ahead of 1.2, on `agent/seed-pack`.
+- Open, the agent's question to you: the app's stack (5.1).

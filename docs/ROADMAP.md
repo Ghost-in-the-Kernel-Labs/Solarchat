@@ -69,6 +69,7 @@ Solarchat's own:
 | F-11 | The product is reached through both a phone app and a website. | Ghost, 2026-11-20, in chat (J-008) | The hosted mode serves both (4.5, Phase 5); one client that is both a website and an installable app is a candidate for 5.1. |
 | F-12 | The assistant has a voice and a manner of its own: British, clean and clinical, dry humour at times; its own name, no existing character's name, and no imitation of a particular actor's voice. | Ghost, 2026-11-20, in chat (J-009) | The manner is the framing around an answer, never its substance: a safety stop is said plainly with no humour (P-17), and the evaluation set checks that the manner changes no instruction. Offline the voice is the phone's own British voice. The name is Ghost's to choose. |
 | F-13 | The assistant's name is Hadley. | Ghost, 2026-11-20, in chat (J-010) | Used in the manner (3.5) and the clients; a trademark search before it reaches an app store. |
+| F-14 | The model has no connectors (a photo is read by the model directly). A pack holds, by installation type, the failures commonly met, the correct installation steps, and a picture for each step of what right looks like; the assistant shows the pictures step by step. | Ghost, 2026-11-20, in chat (J-011) | The pack format (1.2) carries a picture per step and failures grouped by type; pictures in the repository are the project's own drawings or openly licensed, never copied (Core C-033); a place where a real photograph is wanted is listed for a person to supply. |
 | F-06 | Three modes are wanted: hosted behind an API, local, and offline. | Ghost, 2026-11-20, in chat | One kernel, three shells (P-15); the phases below. |
 
 ## 4. What is deliberately not built
@@ -124,8 +125,11 @@ What a wrong answer is has to be written down before anything can give one (Core
   when), passages, and flows (symptom, check, fix, and where to stop); a check that refuses a broken pack.
 - 1.3 The safety rules, version 1, for a homeowner: the points at which every mode stops and says to call an
   engineer; held outside every pack.
-- 1.4 The seed pack: one small pack built by hand from material whose licence allows redistribution, covering
-  the simple setup faults of F-02.
+- 1.4 The seed pack: one small pack built from public sources, each named with its licence, in the project's own
+  words and its own drawings, covering the simple setup faults of F-02 for one installation type: the correct
+  steps, each with a picture, and the common failures (F-14). Ghost asked for a first draft ahead of 1.2 (J-011):
+  it is built to a provisional layout under `packs/`, marked not admitted, and is brought to 1.2's format and
+  admitted by a person before the item closes.
 - 1.5 The evaluation set, version 1, frozen: in-scope questions with the passage that answers each,
   out-of-scope questions that must be refused, and safety cases that must stop.
 - 1.6 Tune-up pass 1
