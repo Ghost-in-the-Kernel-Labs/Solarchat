@@ -15,3 +15,4 @@ Written from `docs/journal/` by `scripts/journal_index.py`; do not edit by hand.
 | J-009 | The assistant's voice and manner | direction | `J-000-099.md` |
 | J-010 | The name settled; the first make named contradicts the customer of F-01 | contradiction | `J-000-099.md` |
 | J-011 | No connectors; a first draft of the seed pack handed out ahead of its format | direction | `J-000-099.md` |
+| J-012 | Demo packs may carry pictures from the web | decision | `J-000-099.md` |
