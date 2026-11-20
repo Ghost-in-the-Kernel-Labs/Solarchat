@@ -13,3 +13,4 @@ Written from `docs/journal/` by `scripts/journal_index.py`; do not edit by hand.
 | J-007 | The model-name check removed at Ghost's word | decision | `J-000-099.md` |
 | J-008 | The offline model only chooses; online first; an app and a website | decision | `J-000-099.md` |
 | J-009 | The assistant's voice and manner | direction | `J-000-099.md` |
+| J-010 | The name settled; the first make named contradicts the customer of F-01 | contradiction | `J-000-099.md` |

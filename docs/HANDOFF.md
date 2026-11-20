@@ -44,5 +44,9 @@ Phase 0: 0.2 (the full gate), 0.4 (the contract and modules), 0.5 (any further f
   offline, a light open model downloaded inside an app (F-07 to F-09).
 - Settled by you (J-008): offline, the small model only chooses the admitted passage and flow, as the worst-case
   backup; online first whenever there is a connection; a phone app and a website (F-10, F-11, P-19).
-- Open, the agent's questions to you: connectors (the agent recommends none: they are tools, SC-002); the app's
-  stack (5.1); which make and model first (6.2).
+- Settled by you (J-010): the assistant is named Hadley (F-13).
+- Open, and it comes before Phase 1's safety rules (1.3): who the customer is. F-01 says a rural homeowner setting
+  up a panel they bought; for the first make you named First Solar and large projects of hundreds of megawatts,
+  which are built by professional crews at high voltage. The two need different safety rules and different packs.
+- Open, the agent's questions to you: connectors (the agent recommends none: a photo needs no connector, the model
+  reads it directly; SC-002); the app's stack (5.1).
