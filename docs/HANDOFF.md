@@ -40,7 +40,7 @@ Phase 0: 0.2 (the full gate), 0.4 (the contract and modules), 0.5 (any further f
 
 - The project's ghost (`docs/GHOST-IN-THE-KERNEL.md`) and the roadmap (`docs/ROADMAP.md`, Phases 1 to 6; `TODO.md`,
   Phase 1) are the agent's drafts from your words of 2026-11-20. Landed as drafts at your word (J-005); correct them freely with later commits.
-- Settled by you (J-006): the online model is named in `docs/ROADMAP.md` F-07, with photos; speech wanted;
+- Settled by you (J-006): the online model is Claude Sonnet through the Anthropic API, with photos; speech wanted;
   offline, a light open model downloaded inside an app (F-07 to F-09).
 - Open, the agent's questions to you (J-006): connectors (the agent recommends none: they are tools, SC-002); whether
   the offline model may write an answer or only choose the admitted passage (5.1's trial); the app's stack (5.1);

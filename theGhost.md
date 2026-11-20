@@ -521,3 +521,12 @@ The core decisions above are inherited (Core C-001 to C-041); this project's beg
 - **Status:** in force
 - **See also:** Core C-005, Core C-007, Core C-033; SC-002
 - **subject:** model roles
+
+### SC-006: Core C-036's check that no instruction names a model is refused; the grade map stays
+- **Decision:** Solarchat does not run the check that fails the fast loop when a model's name appears in `CLAUDE.md`, the when files, the path files, `docs/AGENT.md`, `docs/HANDOFF.md` or `README.md`. The rest of Core C-036 stands: work is handed out by grade, and `docs/when/grades.md` is the one map from grade to model.
+- **Why:** The product itself calls a named model (SC-002), so the plan and the handoff must be able to say which; the check refused the handoff for naming the product's model (J-006). Ghost, 2026-11-20: "That template check rule is not relevant for this project." What the check protected, said once: a model's name copied into an agent's instructions outlives the model; here that is left to review.
+- **Held by:** `scripts/checks/grades.py` and `test/test_grades.py` (the map and the floor only); `docs/when/grades.md`.
+- **Source:** Ghost, 2026-11-20, in chat; removed by the agent at Ghost's word.
+- **Status:** in force
+- **See also:** Core C-036; SC-002
+- **subject:** agents

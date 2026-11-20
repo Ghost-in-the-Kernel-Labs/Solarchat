@@ -50,3 +50,4 @@ Written by `scripts/decisions_index.py` from `theGhost.md`; do not edit here. Se
 | SC-003 | Core C-017's byte-identical goldens hold for the deterministic parts; an answer is judged by the evaluation set | in force | goldens |
 | SC-004 | Core C-018's mutation covers the deterministic code; prompt text is excluded | in force | mutation |
 | SC-005 | Core C-005's confirmation happens at the pack; the bot answers only from admitted text, with its source | in force | model roles |
+| SC-006 | Core C-036's check that no instruction names a model is refused; the grade map stays | in force | agents |

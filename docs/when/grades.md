@@ -1,8 +1,8 @@
 # Grades: which model each grade is (C-036)
 
-Read this when you hand out a task, escalate, or need to know what a grade gets. This is the one file
-that names models; every other instruction names the grade, and `scripts/checks/grades.py` fails the
-fast loop on a model's name anywhere else an agent is instructed. (Your system prompt names your model;
+Read this when you hand out a task, escalate, or need to know what a grade gets. This is the file
+that maps grades to models; an instruction to an agent names the grade. Solarchat does not hold that with a
+check (SC-006): its product calls a named model, so its plan and handoff name one. (Your system prompt names your model;
 this table gives its grade.)
 
 | Grade | Model | Most points (provisional) | Tool calls | Gets |
@@ -44,6 +44,6 @@ the journal entries since that date whose Cost line names a grade and an exact t
 (`docs/when/coordinate.md`, "Ending a session").
 
 Why: Ghost-Core's floor is strong because a template is held to a higher standard than the projects
-stamped from it (Ghost, 2026-11-06); a stamped project's default is mid. One table, held by a check,
+stamped from it (Ghost, 2026-11-06); a stamped project's default is mid. One table,
 because a model's name copied into an instruction outlives the model (Neon Rain's first run found
-seven stray files).
+seven stray files); here by habit and review, not by a check (SC-006).
