@@ -11,3 +11,4 @@ Written from `docs/journal/` by `scripts/journal_index.py`; do not edit by hand.
 | J-005 | The first landing on main, at Ghost's word, by the fast checks | decision | `J-000-099.md` |
 | J-006 | The online model named; the offline model's role left to a trial | direction | `J-000-099.md` |
 | J-007 | The model-name check removed at Ghost's word | decision | `J-000-099.md` |
+| J-008 | The offline model only chooses; online first; an app and a website | decision | `J-000-099.md` |

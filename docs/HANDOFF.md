@@ -42,6 +42,7 @@ Phase 0: 0.2 (the full gate), 0.4 (the contract and modules), 0.5 (any further f
   Phase 1) are the agent's drafts from your words of 2026-11-20. Landed as drafts at your word (J-005); correct them freely with later commits.
 - Settled by you (J-006): the online model is Claude Sonnet through the Anthropic API, with photos; speech wanted;
   offline, a light open model downloaded inside an app (F-07 to F-09).
-- Open, the agent's questions to you (J-006): connectors (the agent recommends none: they are tools, SC-002); whether
-  the offline model may write an answer or only choose the admitted passage (5.1's trial); the app's stack (5.1);
-  which make and model first (6.2).
+- Settled by you (J-008): offline, the small model only chooses the admitted passage and flow, as the worst-case
+  backup; online first whenever there is a connection; a phone app and a website (F-10, F-11, P-19).
+- Open, the agent's questions to you: connectors (the agent recommends none: they are tools, SC-002); the app's
+  stack (5.1); which make and model first (6.2).

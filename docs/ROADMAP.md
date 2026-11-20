@@ -46,6 +46,9 @@ Solarchat's own:
 - **P-16 An answer is a passage with a source, or it is "I do not know"** (SC-005).
 - **P-17 The safety rules are not knowledge.** They sit outside every pack, fire in every mode, and are
   written for the least experienced reader (F-01, SC-005).
+- **P-19 Online first, offline always.** At run time the conversation uses the Anthropic model whenever there
+  is a connection, and drops to the offline floor only when there is none; the floor is built first (P-15) so
+  that the drop is never a dead end (F-10).
 - **P-18 Written for a phone and a tired person.** One step at a time, short, in plain words, and the
   conversation can be picked up where it stopped (F-03).
 
@@ -62,6 +65,8 @@ Solarchat's own:
 | F-07 | The online model is Claude Sonnet through the Anthropic API, chosen over Haiku for its reasoning; the customer can show it a photo, and it asks for the make and model and says where to find them when it cannot tell. | Ghost, 2026-11-20, in chat | 3.1 is settled for the online side; a photo is evidence the bot states back and the customer confirms (Core C-005); Sonnet against Haiku is measured on the evaluation set, not argued (Core C-004). |
 | F-08 | The customer should be able to speak and be spoken to, hands busy with the panel. | Ghost, 2026-11-20, in chat | Speech is the phone's own, around the text conversation (Phase 5); it is not a model feature the kernel depends on. |
 | F-09 | Offline, Ghost wants a very light open model downloaded ahead of time inside an app that ships with the online version built in. | Ghost, 2026-11-20, in chat | Phase 5 is an app; whether a small model may write an answer, or only choose which admitted passage and flow to show, is settled by a trial against the safety and refusal cases (5.1, Core C-004). The model's weights are downloaded, never committed (Core C-033). |
+| F-10 | Offline, a small model only chooses: it works out what the customer asks and picks the admitted passage and flow, and the words shown are the pack's. It is the worst-case backup; whenever there is a connection the Anthropic model is used. | Ghost, 2026-11-20, in chat (J-008) | Online first at run time (P-19); 5.1 no longer chooses among rivals, it tests that the choosing model passes the safety and refusal cases, with no model as the fallback if it does not. |
+| F-11 | The product is reached through both a phone app and a website. | Ghost, 2026-11-20, in chat (J-008) | The hosted mode serves both (4.5, Phase 5); one client that is both a website and an installable app is a candidate for 5.1. |
 | F-06 | Three modes are wanted: hosted behind an API, local, and offline. | Ghost, 2026-11-20, in chat | One kernel, three shells (P-15); the phases below. |
 
 ## 4. What is deliberately not built
@@ -154,7 +159,8 @@ What a wrong answer is has to be written down before anything can give one (Core
 - 4.2 The service, and what it keeps of a conversation and for how long.
 - 4.3 Pack administration: which packs a deployment has on, and their versions.
 - 4.4 Limits against abuse, and a hostile-input test set (Core C-007).
-- 4.5 Tune-up pass 4
+- 4.5 The website: a page that holds the conversation against the API, photos included (F-11).
+- 4.6 Tune-up pass 4
 
 ### Phase 5: the phone
 
@@ -162,9 +168,9 @@ The customer of F-03 is on a phone outside. This phase decides how the offline m
 likeliest form is a page the phone keeps, with the packs and flows stored on it, which is a second language
 stack and so Ghost's decision before any of it is built.
 
-- 5.1 The decision: the app's stack, and the trial of a small on-device model (F-09): the same safety and refusal
-  cases as the online model, with the rivals written first: no model, a model that only chooses the passage and
-  flow, a model that writes the answer.
+- 5.1 The decision: the app's stack (F-11: a website and a phone app), and the trial of the small on-device model
+  in the role Ghost gave it (F-10: it only chooses the passage and flow): the same safety and refusal cases as
+  the online model, the pass condition written first; if it fails, offline runs with no model.
 - 5.2 The phone shell: packs and flows stored on the phone; the model used when there is signal.
 - 5.3 A conversation resumes where it stopped, outside or back indoors.
 - 5.4 Speech in and out, by the phone's own recognition and voice (F-08).
