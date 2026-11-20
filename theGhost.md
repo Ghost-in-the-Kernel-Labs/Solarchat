@@ -485,3 +485,39 @@ The core decisions above are inherited (Core C-001 to C-041); this project's beg
 - **Status:** in force
 - **See also:** Core C-008
 - **subject:** founding
+
+### SC-002: Core C-006 is refused for the answering step; the model is called through one door, and no test calls it
+- **Decision:** Solarchat's product is a conversation, so its answering step calls a model at run time; Core C-006 is refused for that step and no other. What C-006 protected is kept: one module holds the model client and no other module imports it; ingestion, indexing and retrieval call no model; the fast loop, the fast checks and the gate call no model and no paid service, and the answering step is tested against recorded replies; a run against the live model is an evaluation run, started by hand and recorded. The model is given no tools, so the product cannot run code.
+- **Why:** C-006 was written for compilers and scorers, whose runs must be free and reproducible. A chatbot has no run without a model, but everything around the model call can still be free, repeatable and tested, and a model with no tools has no way to execute anything, which is the customer's requirement that the bot run no code.
+- **Held by:** the module map and its import test once the answering module exists (TODO 0.4); `docs/HANDOFF.md` ("Settled by Ghost") until then.
+- **Source:** Ghost, 2026-11-20, in chat ("Yes confirmed"); the wording the agent's, for Ghost to confirm.
+- **Status:** in force
+- **See also:** Core C-006, Core C-012; SC-005
+- **subject:** model roles
+
+### SC-003: Core C-017's byte-identical goldens hold for the deterministic parts; an answer is judged by the evaluation set
+- **Decision:** Core C-017 stands for everything that is deterministic: ingestion, chunking, indexing and retrieval have goldens compared byte for byte, and a refactor of them changes none. A model's answer is not a golden: a change to the prompt, the retrieval settings or the model is judged by the evaluation set (in-scope questions, out-of-scope questions and safety cases), written and frozen before the first prompt exists (Core C-003), and is refused when a recorded score falls. One change per commit stands everywhere.
+- **Why:** A model's reply is not reproducible byte for byte, so a golden of one would be red on every run or would be rewritten until it meant nothing (Core C-001). The evaluation set is the oracle that can refute an answer.
+- **Held by:** the goldens and the evaluation set once each exists (the roadmap's first phase, TODO 0.3); `docs/HANDOFF.md` ("Settled by Ghost") until then.
+- **Source:** Ghost, 2026-11-20, in chat ("Yes confirmed"); the wording the agent's, for Ghost to confirm.
+- **Status:** in force
+- **See also:** Core C-003, Core C-017; SC-004
+- **subject:** goldens
+
+### SC-004: Core C-018's mutation covers the deterministic code; prompt text is excluded
+- **Decision:** Mutation testing runs over Solarchat's deterministic code and the scripts its checks rest on, as Core C-018 says. Prompt text and the fixed safety rules' wording are excluded from mutation, as C-018 already excludes thresholds: a changed prompt is an experiment judged by the evaluation set (SC-003), not an untested line.
+- **Why:** A mutant of a prompt is a different prompt; no unit test can say whether it is worse, and only the evaluation set can.
+- **Held by:** the mutation configuration once TODO 0.2 wires it (`pyproject.toml`); `docs/HANDOFF.md` ("Settled by Ghost") until then.
+- **Source:** Ghost, 2026-11-20, in chat ("Yes confirmed"); the wording the agent's, for Ghost to confirm.
+- **Status:** in force
+- **See also:** Core C-018; SC-003
+- **subject:** mutation
+
+### SC-005: Core C-005's confirmation happens at the pack; the bot answers only from admitted text, with its source
+- **Decision:** No person stands between the bot and the customer, so the person's word of Core C-005 is given earlier: a knowledge pack's text is admitted by a person through a recorded process, with its source and its licence, before the bot may use it. The bot answers only from the admitted text of the packs that are switched on, names the passage it answered from, and says it does not know when the packs do not cover the question. A pack's text is data and never instructions (Core C-007): the fixed safety rules sit outside every pack, and no pack can remove or change them. A pack whose licence forbids redistribution never enters the repository (Core C-033); it is loaded where the bot is deployed.
+- **Why:** A wrong step in an electrical installation can injure someone, so what the bot may say has to trace to text a person admitted. Putting the confirmation at the pack keeps C-005's rule that a model's reading is never the source of truth while letting the bot answer live.
+- **Held by:** the pack format and its admission check once each exists (the roadmap's first phase, TODO 0.3); `docs/HANDOFF.md` ("Settled by Ghost") until then.
+- **Source:** Ghost, 2026-11-20, in chat ("Yes confirmed"); the wording the agent's, for Ghost to confirm.
+- **Status:** in force
+- **See also:** Core C-005, Core C-007, Core C-033; SC-002
+- **subject:** model roles

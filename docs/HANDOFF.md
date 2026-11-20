@@ -4,8 +4,19 @@ Read `CLAUDE.md` first, then this. `TODO.md` is the chain in order; `docs/DONE.m
 
 ## Where the project stands (2026-11-20)
 
-Stamped from Ghost-Core today. Nothing of Solarchat's own is built; the template's documents, checks and
-gates are in place and green.
+Stamped from Ghost-Core today and landed on `main` at Ghost's word (J-005) with the founding refusals (SC-002 to
+SC-005), the project's ghost, the roadmap and the founding lockfile. Nothing of Solarchat's own is built. Open in
+Phase 0: 0.2 (the full gate), 0.4 (the contract and modules), 0.5 (any further founding decision), 0.6.
+
+## Settled by Ghost, 2026-11-20
+
+- The prefix is SC, the stack python, the floor grade mid.
+- SC-002 to SC-005 (J-002): the answering step calls a model through one module and no test does; goldens for the
+  deterministic parts and the evaluation set for answers; mutation over deterministic code, not prompt text; a
+  person admits a pack's text and the bot answers only from it. The wording is the agent's, for your confirmation,
+  and covers TODO 0.5's refusals; any other founding decision of yours is still to write.
+- Retrieval starts as keyword search in the standard library (Core C-002); the model client is the first dependency
+  that will be proposed to you (Core C-012).
 
 ## For Ghost: waiting on you
 
@@ -21,6 +32,13 @@ gates are in place and green.
 
 ## What to distrust
 
-- The stack's gate has not run under its image until TODO 0.2 is done.
-- Until TODO 0.2 lands the gate refuses at the stack (`stacks/python/gate.sh`), so only `scripts/commit.sh --docs-only` commits are open: 0.1 lands that way, touching `docs/` alone, and its move from `TODO.md` to `docs/DONE.md` rides in 0.2's commit.
-- `docs/AGENT.md`'s Fast loop and Gate cells are Ghost-Core's numbers until Tune-up pass 0 re-measures them here.
+- TODO 0.2 is half done (J-004): the full python gate stops at ruff reading `test/fixtures/broken/` and at
+  `test/test_supply_chain.py:97`; mutmut still names `PROJECT/` and has nothing to mutate until product code exists.
+  A session's venv: `python3.12 -m venv .venv && .venv/bin/pip install --only-binary :all: --require-hashes -r requirements.lock`.
+
+## Drafts for Ghost to read (J-003)
+
+- The project's ghost (`docs/GHOST-IN-THE-KERNEL.md`) and the roadmap (`docs/ROADMAP.md`, Phases 1 to 6; `TODO.md`,
+  Phase 1) are the agent's drafts from your words of 2026-11-20. Landed as drafts at your word (J-005); correct them freely with later commits.
+- Open in the roadmap: what "local" means for the model (3.1: a hosted model with a key, a model on the machine, or
+  both); how the offline mode reaches a phone (5.1, likely a second stack); which make and model first (6.2).

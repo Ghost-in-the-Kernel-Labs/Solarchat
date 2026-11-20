@@ -46,3 +46,7 @@ Written by `scripts/decisions_index.py` from `theGhost.md`; do not edit here. Se
 | C-040 | Saving is separate from landing; three checkpoints; the count is main's; Ghost's word in chat is Ghost's word | in force | commits |
 | C-041 | The supply-chain rules are read on their trigger; CLAUDE.md keeps the triggers, SUPPLY-CHAIN.md the text | in force | supply chain |
 | SC-001 | Solarchat is stamped from Ghost-Core, on the python stack | in force | founding |
+| SC-002 | Core C-006 is refused for the answering step; the model is called through one door, and no test calls it | in force | model roles |
+| SC-003 | Core C-017's byte-identical goldens hold for the deterministic parts; an answer is judged by the evaluation set | in force | goldens |
+| SC-004 | Core C-018's mutation covers the deterministic code; prompt text is excluded | in force | mutation |
+| SC-005 | Core C-005's confirmation happens at the pack; the bot answers only from admitted text, with its source | in force | model roles |

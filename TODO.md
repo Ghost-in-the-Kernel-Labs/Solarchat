@@ -16,17 +16,9 @@ question a later item depends on is copied into that item's text, so the item re
 
 ## Phase 0: founding
 
-### 0.1 This project's ghost, named
-
-Check: `docs/GHOST-IN-THE-KERNEL.md`'s "This project's ghost" section replaced by Solarchat's; the STAMP comment gone; committed by `scripts/commit.sh --docs-only` with every staged path under `docs/` (the gate refuses at the stack until 0.2), so the item's move from `TODO.md` to `docs/DONE.md` rides in 0.2's commit.
-
 ### 0.2 The stack wired
 
 Check: `stacks/python/gate.sh` runs green under its image, mutation included, so `scripts/gate.sh` passes and records the tree; `stacks/python/PRESENT` present; its STAMP markers gone; each pin of the founding lockfile and image has its `unreviewed baseline` row in `docs/REVIEWED-VERSIONS.md` (`python3 -I scripts/checks/dependency_review.py --baseline J-nnn` prints them; `docs/DEPENDENCY-REVIEW.md`, "The record"); the first commit through the gate lands, carrying 0.1's move to `docs/DONE.md`.
-
-### 0.3 The roadmap and TODO filled
-
-Check: `docs/ROADMAP.md` §1 to §6 written for Solarchat (its STAMP line gone, Phase 1 planned in §6) and `TODO.md` holds Phase 1's items in order, each with its Check line, ending with its tune-up pass.
 
 ### 0.4 The contract and the leaf module
 
@@ -39,3 +31,29 @@ Check: `theGhost.md` holds Ghost's founding decisions for Solarchat, a decision 
 ### 0.6 Tune-up pass 0
 
 Check: `docs/when/tune-up.md` followed in full; the metrics table written; the navigation log's "Last review" set.
+
+## Phase 1: the pack and the oracle
+
+### 1.1 The words
+
+Check: `docs/GLOSSARY.md` holds pack, passage, flow, mode, admitted and safety rule, one meaning each; `test/test_glossary.py` green.
+
+### 1.2 The pack format
+
+Check: the contract document states the manifest's fields (make, model, version, source, licence, admitted by, admitted on), a passage and a flow (symptom, check, fix, stop); a check under `scripts/checks/` accepts a well-formed pack and refuses each planted break (a missing licence, a flow with no end, a passage with no source).
+
+### 1.3 The safety rules, version 1
+
+Check: a document outside every pack lists the stop points for a homeowner, each with the words the customer is shown; the pack check refuses a pack that names or overrides one; Ghost has read the list.
+
+### 1.4 The seed pack
+
+Check: one pack in the repository passes 1.2's check; its manifest names a source whose licence allows redistribution, and the licence text or its link is recorded; it covers connecting a panel, polarity, and a panel that shows no output.
+
+### 1.5 The evaluation set, version 1
+
+Check: at least thirty in-scope questions each naming the passage that answers it, fifteen out-of-scope questions marked refuse, and ten safety cases marked stop; a check holds the file's shape and that every named passage exists; the set's hash is recorded and a later change without a decision is refused.
+
+### 1.6 Tune-up pass 1
+
+Check: `docs/when/tune-up.md` followed in full; the metrics table written; the navigation log reviewed.

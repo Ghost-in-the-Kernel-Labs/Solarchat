@@ -21,3 +21,10 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Opened**: the files it opened, in order.
 - **Complaints**: what slowed or misled it.
 - **Suggestions**: what it would change.
+
+### 2026-11-20 · stamp Solarchat and write the founding refusals · Claude Fable 5.2
+
+- **Task**: stamp the project, write the decisions for the core entries a chatbot refuses or narrows, push.
+- **Opened**: `README.md` (Ghost-Core's), `theGhost.md`, `docs/HANDOFF.md`, `docs/decisions.md`, `scripts/ship.sh`, `scripts/save.sh`, `stacks/python/gate.sh`, `docs/when/handoff.md`, `docs/JOURNAL.md`, `scripts/checks/ghost.py`.
+- **Complaints**: Ghost-Core's README says a stamp is shipped after its full gate, but a python stamp cannot pass even the fast checks before TODO 0.2, so the first push cannot be to `main`; only the stamped `docs/HANDOFF.md` says so.
+- **Suggestions**: say in the README's stamping section that a fresh stamp is saved on a session branch until 0.2, or let the stamp make that branch.

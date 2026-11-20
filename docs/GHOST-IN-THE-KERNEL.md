@@ -24,26 +24,35 @@ the system should have enough structure to expose a misunderstanding when one is
 
 ## This project's ghost
 
-<!-- STAMP: replace this section. Name the loss this project is built against, in a paragraph,
-and the mechanisms by which the kernel remembers it, as a list that cites the contract and the
-decisions. The parents' sections are the examples; each is the philosophy pointed at a different
-loss. -->
+Solarchat is built against **the giving up**. Someone in a rural place has bought a solar panel and is
+outside with it, holding a phone with a poor signal. Something as small as which plug goes where has gone wrong.
+The manual that answers it exists, but it is two hundred pages, indoors, and written for an installer. The
+engineer who could answer in a minute is booked for weeks, because there are not enough engineers. So the person
+goes back inside and gives up, and what is lost is not knowledge, which was there all along, but the path from
+the knowledge to the hands that needed it, at the minute they needed it.
 
-Every project built this way has a loss of its own, and this section names it. The parents:
+The second loss is the one a chatbot adds if it is built carelessly: **an answer with no source**. A reply that
+sounds right, comes from nowhere a person can check, and is about a live electrical circuit.
 
-- **Suite Builder**: a test suite written by a tool whose reasons for each test would be gone by
-  the time the suite failed; so every generated test says where it came from, and the Suite IR
-  holds every decision a suite needs as plain data read back from the output.
-- **Katana**: a COBOL program whose authors have been gone for decades; so what the code does and
-  what it means are two artifacts (the Semantic IR and the Intent IR), and a proof ledger links
-  them, hash-chained, so a person's confirmation survives a rebuild.
-- **Employee Evaluator**: turnover, the ordinary loss, in a product that measures the philosophy
-  in other people's code; so every score is traced to a fact with evidence and a confidence.
-- **Neon Rain**: the forgotten search, a loss that happens in weeks to the person who caused it:
-  how many configurations were tried before this one looked good; so the trials file is
-  append-only and its count deflates every reported number.
+The kernel remembers both this way:
 
-A project whose section is still this list has not yet said what it is for.
+- **The answer is on the phone before the signal drops.** The offline mode is the product's floor, not a
+  fallback: the packs and the troubleshooting flows work with no network and no model, and every other mode is
+  that floor with more on top (`docs/ROADMAP.md`, P-15).
+- **Every answer names the passage it came from**, and the bot says it does not know when the packs do not
+  cover the question (SC-005). A person admitted that passage before the bot could use it.
+- **A manual is data, never instructions**, and the safety rules sit outside every pack, so no library swapped
+  in can remove the line that says stop and call an engineer (SC-005, Core C-007).
+- **The bot can only speak.** The model is given no tools, so it runs nothing (SC-002).
+- **The evaluation set is written before the first prompt** and is the only judge of an answer (SC-003,
+  Core C-003).
+- **When the bot cannot help, the engineer starts ahead.** A conversation that ends in a call hands the engineer
+  what was tried and what was seen, so the minute the engineer has is spent on the fault (`docs/ROADMAP.md`,
+  Phase 6).
+
+**The tempting lie here** is a fluent answer that is not in the manual, and next to it an evaluation score made
+good by easy questions. An answer that reads well is not evidence; the passage it names is. A score that rises
+is the moment to ask which questions were added.
 
 ## What it asks of a project's own code
 
