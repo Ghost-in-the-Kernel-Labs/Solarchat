@@ -67,6 +67,7 @@ Solarchat's own:
 | F-09 | Offline, Ghost wants a very light open model downloaded ahead of time inside an app that ships with the online version built in. | Ghost, 2026-11-20, in chat | Phase 5 is an app; whether a small model may write an answer, or only choose which admitted passage and flow to show, is settled by a trial against the safety and refusal cases (5.1, Core C-004). The model's weights are downloaded, never committed (Core C-033). |
 | F-10 | Offline, a small model only chooses: it works out what the customer asks and picks the admitted passage and flow, and the words shown are the pack's. It is the worst-case backup; whenever there is a connection the Anthropic model is used. | Ghost, 2026-11-20, in chat (J-008) | Online first at run time (P-19); 5.1 no longer chooses among rivals, it tests that the choosing model passes the safety and refusal cases, with no model as the fallback if it does not. |
 | F-11 | The product is reached through both a phone app and a website. | Ghost, 2026-11-20, in chat (J-008) | The hosted mode serves both (4.5, Phase 5); one client that is both a website and an installable app is a candidate for 5.1. |
+| F-12 | The assistant has a voice and a manner of its own: British, clean and clinical, dry humour at times; its own name, no existing character's name, and no imitation of a particular actor's voice. | Ghost, 2026-11-20, in chat (J-009) | The manner is the framing around an answer, never its substance: a safety stop is said plainly with no humour (P-17), and the evaluation set checks that the manner changes no instruction. Offline the voice is the phone's own British voice. The name is Ghost's to choose. |
 | F-06 | Three modes are wanted: hosted behind an API, local, and offline. | Ghost, 2026-11-20, in chat | One kernel, three shells (P-15); the phases below. |
 
 ## 4. What is deliberately not built
@@ -147,11 +148,13 @@ What a wrong answer is has to be written down before anything can give one (Core
   does not know out; no tools.
 - 3.3 Tests against recorded replies; no test calls a model.
 - 3.4 The evaluation run, by hand, its scores recorded; the refusal and safety thresholds set by Ghost.
-- 3.5 A photo in the conversation: the bot says what it reads (the label, the connectors), the customer confirms,
+- 3.5 The manner (F-12): written once beside the prompt, with evaluation cases that the same question gets the
+  same steps with and without it, and that a safety stop carries no humour.
+- 3.6 A photo in the conversation: the bot says what it reads (the label, the connectors), the customer confirms,
   and only then does it act on it; when it cannot tell, it asks for the make and model and says where the label is.
-- 3.6 Sonnet against Haiku on the evaluation set, cost beside score.
-- 3.7 When the model cannot be reached, the conversation falls to the offline mode and says so.
-- 3.8 Tune-up pass 3
+- 3.7 Sonnet against Haiku on the evaluation set, cost beside score.
+- 3.8 When the model cannot be reached, the conversation falls to the offline mode and says so.
+- 3.9 Tune-up pass 3
 
 ### Phase 4: the hosted mode (a service behind an API)
 
@@ -173,7 +176,8 @@ stack and so Ghost's decision before any of it is built.
   the online model, the pass condition written first; if it fails, offline runs with no model.
 - 5.2 The phone shell: packs and flows stored on the phone; the model used when there is signal.
 - 5.3 A conversation resumes where it stopped, outside or back indoors.
-- 5.4 Speech in and out, by the phone's own recognition and voice (F-08).
+- 5.4 Speech in and out, by the phone's own recognition and voice (F-08), in the assistant's manner (F-12); a
+  richer voice from a speech service is a dependency proposed to Ghost, online only, from a licensed stock voice.
 - 5.5 Tune-up pass 5
 
 ### Phase 6: real packs and the engineer
