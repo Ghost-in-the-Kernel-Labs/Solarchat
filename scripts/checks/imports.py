@@ -14,6 +14,9 @@ from scripts.checks.common import matching, tracked_files  # noqa: E402
 OUR_CODE: tuple[str, ...] = ("PROJECT", "scripts", "test")
 ROOT = Path(__file__).resolve().parent.parent.parent
 
+# The planted breaks import packages no lock holds, on purpose; they are fixtures, not our code (J-004).
+PLANTED = "test/fixtures/broken/"
+
 
 def locked(lock: str) -> set[str]:
     """The package names a lock holds, lower-cased with dashes as underscores: "Polars==1.0 \\\\" gives {"polars"}."""
@@ -39,6 +42,8 @@ def problems(root: Path) -> list[str]:
     files = tracked_files(root)
     for top in OUR_CODE:
         for path in matching(files, root, f"{top}/**/*.py"):
+            if PLANTED in path.relative_to(root).as_posix():
+                continue
             for name in sorted(top_level_imports(path.read_text())):
                 if name not in ours and name not in sys.stdlib_module_names and name.lower() not in allowed:
                     found.append(f"{path.relative_to(root)} imports {name}, which requirements.lock does not hold")

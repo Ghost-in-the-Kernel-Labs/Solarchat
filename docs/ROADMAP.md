@@ -8,8 +8,8 @@ finished.
 
 ## 1. The product in three sentences
 
-Solarchat walks a person who has bought a solar panel through setting it up and finding what is wrong, on
-their phone, where the panel is, answering only from knowledge packs (manuals and troubleshooting guides) that can be
+Solarchat walks a person installing solar panels on a site through setting them up and finding what is wrong,
+on their phone, where the panels are, answering only from knowledge packs (manuals and troubleshooting guides) that can be
 switched in and out. It runs in three modes on one kernel: offline (no network, no model), local (on one's own
 machine) and hosted (a service behind an API). The thesis to hold: the knowledge already exists, and the product is
 the path from it to the person at the minute they need it; the thesis to refuse: a clever general assistant that
@@ -57,9 +57,9 @@ Solarchat's own:
 
 | Id | Fact | Source | Implication |
 | --- | --- | --- | --- |
-| F-01 | The customers are people in rural areas who bought a panel and are setting it up themselves; they are not installers. | Ghost, 2026-11-20, in chat | The safety rules and the wording are for a homeowner (P-17, P-18). |
-| F-02 | Many of them call an engineer for things as simple as plugging the panel in correctly; engineers are short, the backlog grows and the reviews turn bad. | Ghost, 2026-11-20, in chat | The first pack and the first evaluation questions are the simple setup faults, not the rare ones. |
-| F-03 | They are outside, on a phone, with a poor signal; they come back inside and give up. | Ghost, 2026-11-20, in chat | Offline first (P-15); a conversation resumes where it stopped (P-18). |
+| F-01 | The users are a mix of people installing on sites for the deploying company: contractors new to the job, the company's own crews, and outside employees installing on its behalf. They are workers, not homeowners (corrected by Ghost, J-013; the first reading, a rural homeowner, was the agent's). | Ghost, 2026-11-20, in chat (J-013) | The safety rules and the wording are for the newest contractor on a site (P-17, P-18); a stop sends the worker to the site supervisor or engineer, and the site's own safety procedures always come first. |
+| F-02 | Many of them call an engineer for things as simple as connecting a panel correctly; engineers are short, the backlog grows and the reviews turn bad. | Ghost, 2026-11-20, in chat | The first pack and the first evaluation questions are the simple setup faults, not the rare ones. |
+| F-03 | They are outside on remote sites, on a phone, with a poor signal; they stop and give up, or wait for an engineer. | Ghost, 2026-11-20, in chat | Offline first (P-15); a conversation resumes where it stopped (P-18). |
 | F-04 | The bot must run no code and know nothing outside its packs. | Ghost, 2026-11-20, in chat | The model gets no tools (SC-002); out-of-scope questions are refused and are a third of the evaluation set. |
 | F-05 | Knowledge libraries are swapped in and out, starting from public material. | Ghost, 2026-11-20, in chat | The pack format comes first; a manufacturer's manual is loaded where the bot is deployed, never committed (SC-005, Core C-033). |
 | F-07 | The online model is Claude Sonnet through the Anthropic API, chosen over Haiku for its reasoning; the customer can show it a photo, and it asks for the make and model and says where to find them when it cannot tell. | Ghost, 2026-11-20, in chat | 3.1 is settled for the online side; a photo is evidence the bot states back and the customer confirms (Core C-005); Sonnet against Haiku is measured on the evaluation set, not argued (Core C-004). |
@@ -124,8 +124,9 @@ What a wrong answer is has to be written down before anything can give one (Core
 - 1.1 The words: pack, passage, flow, mode, admitted, safety rule, in `docs/GLOSSARY.md`.
 - 1.2 The pack format, as the contract: a manifest (make, model, version, source, licence, who admitted it and
   when), passages, and flows (symptom, check, fix, and where to stop); a check that refuses a broken pack.
-- 1.3 The safety rules, version 1, for a homeowner: the points at which every mode stops and says to call an
-  engineer; held outside every pack.
+- 1.3 The safety rules, version 1, for the newest contractor on a site (F-01): the points at which every mode
+  stops and sends the worker to the site supervisor or engineer, and the rule that the site's own safety
+  procedures come first; held outside every pack.
 - 1.4 The seed pack: one small pack built from public sources, each named with its licence, in the project's own
   words and its own drawings, covering the simple setup faults of F-02 for one installation type: the correct
   steps, each with a picture, and the common failures (F-14). Ghost asked for a first draft ahead of 1.2 (J-011):

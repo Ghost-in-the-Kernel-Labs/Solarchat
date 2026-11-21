@@ -18,7 +18,7 @@ question a later item depends on is copied into that item's text, so the item re
 
 ### 0.2 The stack wired
 
-Check: `stacks/python/gate.sh` runs green under its image, mutation included, so `scripts/gate.sh` passes and records the tree; `stacks/python/PRESENT` present; its STAMP markers gone; each pin of the founding lockfile and image has its `unreviewed baseline` row in `docs/REVIEWED-VERSIONS.md` (`python3 -I scripts/checks/dependency_review.py --baseline J-nnn` prints them; `docs/DEPENDENCY-REVIEW.md`, "The record"); the first commit through the gate lands, carrying 0.1's move to `docs/DONE.md`.
+Check: `stacks/python/gate.sh` runs green under its image (no mutation run: SC-008), so `scripts/gate.sh` passes and records the tree; `stacks/python/PRESENT` present; its STAMP markers gone; each pin of the founding lockfile and image has its `unreviewed baseline` row in `docs/REVIEWED-VERSIONS.md` (`python3 -I scripts/checks/dependency_review.py --baseline J-nnn` prints them; `docs/DEPENDENCY-REVIEW.md`, "The record"); the first commit through the gate lands, carrying 0.1's move to `docs/DONE.md`.
 
 ### 0.4 The contract and the leaf module
 
@@ -44,7 +44,7 @@ Check: the contract document states the manifest's fields (make, model, version,
 
 ### 1.3 The safety rules, version 1
 
-Check: a document outside every pack lists the stop points for a homeowner, each with the words the customer is shown; the pack check refuses a pack that names or overrides one; Ghost has read the list.
+Check: a document outside every pack lists the stop points for the newest contractor on a site, each with the words the worker is shown, and says the site's own safety procedures come first; the pack check refuses a pack that names or overrides one; Ghost has read the list.
 
 ### 1.4 The seed pack
 

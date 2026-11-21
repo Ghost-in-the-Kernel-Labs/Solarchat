@@ -509,7 +509,7 @@ The core decisions above are inherited (Core C-001 to C-041); this project's beg
 - **Why:** A mutant of a prompt is a different prompt; no unit test can say whether it is worse, and only the evaluation set can.
 - **Held by:** the mutation configuration once TODO 0.2 wires it (`pyproject.toml`); `docs/HANDOFF.md` ("Settled by Ghost") until then.
 - **Source:** Ghost, 2026-11-20, in chat ("Yes confirmed"); the wording the agent's, for Ghost to confirm.
-- **Status:** in force
+- **Status:** superseded by SC-008
 - **See also:** Core C-018; SC-003
 - **subject:** mutation
 
@@ -539,3 +539,14 @@ The core decisions above are inherited (Core C-001 to C-041); this project's beg
 - **Status:** in force
 - **See also:** Core C-033; SC-005
 - **subject:** privacy
+
+### SC-008: Core C-018's mutation run is refused; a test is still never weakened, and every check keeps its planted break
+- **Decision:** Solarchat runs no mutation tool: not over the product, not over the checks. The dependency is removed, with the packages it brought, and the python gate ends at the lockfile check. What stays of Core C-018: a test is never weakened to make code pass, and a test a change makes weaker is said in the report; and of Core C-001: every check is shown rejecting a planted break.
+- **Why:** Ghost, 2026-11-21: "We probably dont need mutations. The mutations were primarily for suite builder and katana which do compiler work and cannot be wrong." The mutation run could not start on a fresh stamp (J-014: it runs the template's tests in a copy that lacks the repository), so it was a gate that failed always and said nothing (Core C-001). What the rule protected, said once by the agent: tests that pass while testing nothing; here the evaluation set judges the answers, and the planted breaks judge the checks.
+- **Held by:** `stacks/python/gate.sh`, `requirements.in`, `requirements.lock`, `stacks/python/README.md` (the Mutation row).
+- **Source:** Ghost, 2026-11-21, in chat; removed by the agent at Ghost's word.
+- **Status:** in force
+- **Reverses if:** the code that enforces the safety rules or admits a pack proves hard to trust by its tests and planted breaks alone; Ghost said "probably".
+- **See also:** Core C-018, Core C-001; SC-003
+- **Supersedes:** SC-004
+- **subject:** mutation

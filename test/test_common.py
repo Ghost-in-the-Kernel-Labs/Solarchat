@@ -164,6 +164,16 @@ class TheLastDiskReaders(unittest.TestCase):
         git(root, ["add", "scripts"])
         self.assertEqual(imports.problems(root), ["scripts/b.py imports numpy, which requirements.lock does not hold"])
 
+    @unittest.skipIf(IMPORTS is None, "not a Python-stack project: the imports check is the stack's")
+    def test_a_planted_break_is_not_our_code(self) -> None:
+        imports = load_imports()
+        root = repository()
+        (root / "test" / "fixtures" / "broken" / "x").mkdir(parents=True)
+        (root / "test" / "fixtures" / "broken" / "x" / "a.py").write_text("import numpy\n")
+        (root / "test" / "fixtures" / "other.py").write_text("import numpy\n")
+        git(root, ["add", "test"])
+        self.assertEqual(imports.problems(root), ["test/fixtures/other.py imports numpy, which requirements.lock does not hold"])
+
 
 @unittest.skipIf(READABILITY is None, "not a Python-stack project: the readability rules are the stack's")
 class TheStampedReadability(unittest.TestCase):

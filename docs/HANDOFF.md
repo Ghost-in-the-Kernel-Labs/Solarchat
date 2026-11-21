@@ -32,8 +32,8 @@ Phase 0: 0.2 (the full gate), 0.4 (the contract and modules), 0.5 (any further f
 
 ## What to distrust
 
-- TODO 0.2 is half done (J-004): the full python gate stops at ruff reading `test/fixtures/broken/` and at
-  `test/test_supply_chain.py:97`; mutmut still names `PROJECT/` and has nothing to mutate until product code exists.
+- TODO 0.2: the python gate passes since J-014 and J-015 (ruff, readability, the lockfile check; no mutation run).
+  `scripts/checks/imports.py` still names the placeholder `PROJECT` until TODO 0.4 sets the package.
   A session's venv: `python3.12 -m venv .venv && .venv/bin/pip install --only-binary :all: --require-hashes -r requirements.lock`.
 
 ## Drafts for Ghost to read (J-003)
@@ -45,9 +45,10 @@ Phase 0: 0.2 (the full gate), 0.4 (the contract and modules), 0.5 (any further f
 - Settled by you (J-008): offline, the small model only chooses the admitted passage and flow, as the worst-case
   backup; online first whenever there is a connection; a phone app and a website (F-10, F-11, P-19).
 - Settled by you (J-010): the assistant is named Hadley (F-13).
-- Open, and it comes before Phase 1's safety rules (1.3): who the customer is. F-01 says a rural homeowner setting
-  up a panel they bought; for the first make you named First Solar and large projects of hundreds of megawatts,
-  which are built by professional crews at high voltage. The two need different safety rules and different packs.
+- Settled by you (J-013): the users are workers on sites (new contractors, the deploying company's crews, outside
+  employees installing on its behalf), not homeowners; F-01 corrected, 1.3 unblocked.
+- Settled by you (J-015): no mutation run (SC-008, superseding SC-004); the lock is six pins.
+- The seed pack's draft waits on `agent/seed-pack` for its own landing after J-016's tune-up commit.
 - Settled by you (J-011): no connectors; packs carry failures by type, the steps and a picture per step (F-14); a
   first draft of the seed pack goes to a strong-grade worker now, ahead of 1.2, on `agent/seed-pack`.
 - Open, the agent's question to you: the app's stack (5.1).

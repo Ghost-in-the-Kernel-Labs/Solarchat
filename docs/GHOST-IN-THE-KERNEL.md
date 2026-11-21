@@ -24,11 +24,11 @@ the system should have enough structure to expose a misunderstanding when one is
 
 ## This project's ghost
 
-Solarchat is built against **the giving up**. Someone in a rural place has bought a solar panel and is
-outside with it, holding a phone with a poor signal. Something as small as which plug goes where has gone wrong.
-The manual that answers it exists, but it is two hundred pages, indoors, and written for an installer. The
-engineer who could answer in a minute is booked for weeks, because there are not enough engineers. So the person
-goes back inside and gives up, and what is lost is not knowledge, which was there all along, but the path from
+Solarchat is built against **the giving up**. A contractor new to the job is out on a remote site with a row of
+panels, holding a phone with a poor signal. Something as small as which connector goes where has gone wrong.
+The manual that answers it exists, but it is two hundred pages, back in the site office, and written for someone
+with years on the job. The engineer who could answer in a minute is hours away or booked for weeks, because there
+are not enough engineers. So the worker stops, waits or gives up, and what is lost is not knowledge, which was there all along, but the path from
 the knowledge to the hands that needed it, at the minute they needed it.
 
 The second loss is the one a chatbot adds if it is built carelessly: **an answer with no source**. A reply that

@@ -16,3 +16,7 @@ Written from `docs/journal/` by `scripts/journal_index.py`; do not edit by hand.
 | J-010 | The name settled; the first make named contradicts the customer of F-01 | contradiction | `J-000-099.md` |
 | J-011 | No connectors; a first draft of the seed pack handed out ahead of its format | direction | `J-000-099.md` |
 | J-012 | Demo packs may carry pictures from the web | decision | `J-000-099.md` |
+| J-013 | The users are workers on sites, not homeowners; J-010's contradiction closed | decision | `J-000-099.md` |
+| J-014 | The python gate now reaches mutation; mutation cannot start on the template's own tests | failure-caught | `J-000-099.md` |
+| J-015 | The mutation run removed at Ghost's word | decision | `J-000-099.md` |
+| J-016 | Tune-up commit: the first eight commits | measurement | `J-000-099.md` |
