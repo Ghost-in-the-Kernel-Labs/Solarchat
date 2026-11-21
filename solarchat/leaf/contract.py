@@ -6,10 +6,15 @@ import re
 from dataclasses import dataclass
 from datetime import date
 from enum import Enum
+from typing import Protocol
 
 SAFETY_RULE_ID_PATTERN = re.compile(r"^SR-\d{2}$")
 SAFETY_RESPONSES = ("warn", "stop", "emergency")
 CHANGE_FIELDS = ("date", "by", "role", "why", "evidence")
+# Decision: SC-019 (a reply cites at most this many passages; more is an answerer's breach, answered with "I do not know")
+MAX_CITED_PASSAGES = 3
+# Decision: SC-019 (SC-010's words, one home: every reply shown in demo mode starts with them)
+DEMO_BANNER = "DEMO: not reviewed by an engineer, do not use on a site"
 
 
 @dataclass(frozen=True)
@@ -25,10 +30,12 @@ class Passage:
     """A pack's text, held as data and only ever quoted, never followed.
 
     Invariant: HAD-05 (a pack's text is data, never instructions; no field here is read as an instruction).
+    Decision: SC-019 (it gains a title, shown in a citation; the default keeps Passage(ref, text) valid).
     """
 
     ref: PassageRef
     text: str
+    title: str = ""
 
 
 class ReplyKind(Enum):
@@ -78,6 +85,37 @@ def reply_problem(reply: Reply) -> str | None:
     if (reply.kind in (ReplyKind.STOP, ReplyKind.WARN)) != bool(reply.safety_rule_id):
         return "a stop or a warn, and only they, name the safety rule that fired (HAD-04)"
     return None
+
+
+@dataclass(frozen=True)
+class Finding:
+    """What an answerer found: Finding((PassageRef("seed-mc4-leads", "step-06"),), "Join plus to plus.", 4.5);
+    Finding() is "I do not know". Refs with no text, or text with no refs, raise ValueError.
+
+    Decision: SC-019 (an answerer returns refs, best first, the words to show and its score for refs[0]).
+    """
+
+    refs: tuple[PassageRef, ...] = ()
+    text: str = ""
+    score: float = 0.0
+
+    def __post_init__(self) -> None:
+        """Raise ValueError when refs and text do not come together: Finding((), "words") raises."""
+        if bool(self.refs) != bool(self.text.strip()):
+            raise ValueError("a finding has refs and text together, or neither (SC-019)")
+
+
+class Answerer(Protocol):
+    """What the door asks: a short stable `name` ("no-answer") and find(question, passages) -> Finding.
+
+    Decision: SC-019 (the door takes its answerer as an argument, so no mode changes the door).
+    """
+
+    name: str
+
+    def find(self, question: str, passages: tuple[Passage, ...]) -> Finding:
+        """The finding for a question among the passages it may use: NoAnswer().find("q", ()) gives Finding()."""
+        ...
 
 
 def may_answer(manifest: dict, demo_mode: bool) -> bool:

@@ -33,7 +33,8 @@ import, and `test/test_modules.py` refuses an import it does not allow.
 | Module | What it does | State |
 | --- | --- | --- |
 | `solarchat/leaf/` | The contract in code: the passage and its reference, a reply (an answer, "I do not know", or a stop) that cannot be built in a form the contract forbids, and the test of whether a pack is a demo pack. Every other module imports it; it imports nothing of the project's own. | built |
-| `solarchat/packs/` | Reads a knowledge pack from disk and checks it. | planned (the check is in `scripts/checks/packs.py` today) |
+| `solarchat/packs/` | Reads a knowledge pack from disk (`load.py`) and words each passage's citations with the page; the pack check is `scripts/checks/packs.py`. | built (1.6) |
+| `solarchat/answer/` | The answering door, `answer(question, packs, demo_mode, answerer)`, through which every mode answers; the offline stub `NoAnswer` and `RecordedAnswerer` (SC-019). It imports no model client. | built (1.6) |
 | `solarchat/safety/` | The fixed safety rules, kept outside every pack, and the decision to stop and send the worker to the supervisor. | planned (1.3, 1.9, 2.3) |
 | `solarchat/walker/` | Steps a worker through a procedure or a troubleshooting flow, one step at a time, to a fix or a stop. | planned (2.2) |
 | `solarchat/project/` | Calls the other modules in order. | planned |
@@ -51,7 +52,7 @@ the installation types a pack can cover. The format a pack must follow is the se
 `evals/v1.json` is the frozen evaluation set, version 1 (TODO 1.5): questions a worker on site would type, each with
 the reply the bot must give (an answer citing a named passage, "I do not know", a stop, an emergency, a warn, or
 anything but a stop), written against the seed pack. `evals/v1.sha256` holds its hash; the set is frozen, and a change
-needs a decision and the new hash. The automatic runner (TODO 1.6) scores the bot on it; the electrical engineer reviews
+needs a decision and the new hash. The automatic runner, `scripts/eval.py` (TODO 1.6), scores the bot on it and holds the result to `evals/results/offline.json`; the electrical engineer reviews
 it at the end (TODO 6.4).
 
 ### The rules: documents at the root and in `docs/`
@@ -87,6 +88,7 @@ Ghost-Core, the template the project was stamped from.
 | `scripts/score.py` | Places each open TODO item at a grade (how strong an agent it needs), from facts. |
 | `scripts/review_scan.py` | Scans a dependency update's diff for warning signs before it is allowed in. |
 | `scripts/checks/packs.py` | Checks a knowledge pack against the format: refuses a missing licence, a flow with no stop, a passage with no source, a picture with no alt text, and more. |
+| `scripts/eval.py` | The evaluation runner: feeds each case of the set to the answering door, scores it by class, prints the table and the failures, and holds the run to the committed record (`--check`, `--write`); `--live` is the only way a model is called (`scripts/eval_core.py` scores, `scripts/eval_record.py` keeps the record). |
 | `scripts/checks/evals.py` | Checks the evaluation set (`evals/v1.json`): its shape and classes, that every passage and rule it names exists, that each rule's response matches the class and really fires, the counts, and the frozen hash. |
 | `scripts/checks/library.py` | Checks the reference library's sources (`library/sources/`): every field, the licence allow-list, the hash against the original, a non-empty text. |
 | `scripts/checks/contract.py`, `modules.py`, `imports.py` | Hold the code to the contract, the module map and the lockfile. |

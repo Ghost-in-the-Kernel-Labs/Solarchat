@@ -2,7 +2,7 @@
 import json
 import unittest
 
-from solarchat.leaf.contract import PassageRef, Reply, ReplyKind, may_answer
+from solarchat.leaf.contract import DEMO_BANNER, MAX_CITED_PASSAGES, Finding, Passage, PassageRef, Reply, ReplyKind, may_answer
 from test.support import ROOT
 
 STEP = PassageRef("seed-mc4-leads", "step-06")
@@ -73,3 +73,25 @@ class PackStatus(unittest.TestCase):
         manifest = json.loads((ROOT / "packs" / "seed-mc4-leads" / "manifest.json").read_text())
         self.assertTrue(may_answer(manifest, True))
         self.assertFalse(may_answer(manifest, False))
+
+
+class TheAnsweringTypes(unittest.TestCase):
+    def test_a_passage_without_a_title_stays_valid(self) -> None:
+        self.assertEqual(Passage(STEP, "Join plus to plus.").title, "")
+        self.assertEqual(Passage(STEP, "Join plus to plus.", "Join the leads").title, "Join the leads")
+
+    def test_an_empty_finding_is_i_do_not_know(self) -> None:
+        self.assertEqual((Finding().refs, Finding().text, Finding().score), ((), "", 0.0))
+
+    def test_a_finding_with_refs_and_text_stands(self) -> None:
+        self.assertEqual(Finding((STEP,), "Join plus to plus.", 4.5).score, 4.5)
+
+    def test_refs_without_text_or_text_without_refs_are_refused(self) -> None:
+        with self.assertRaises(ValueError):
+            Finding((STEP,), "")
+        with self.assertRaises(ValueError):
+            Finding((), "Join plus to plus.")
+
+    def test_the_constants_say_what_the_decision_says(self) -> None:
+        self.assertEqual(MAX_CITED_PASSAGES, 3)
+        self.assertEqual(DEMO_BANNER, "DEMO: not reviewed by an engineer, do not use on a site")

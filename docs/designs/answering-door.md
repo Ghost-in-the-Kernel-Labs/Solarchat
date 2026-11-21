@@ -390,3 +390,19 @@ the sections above that say "until TODO 2.6" now mean 1.10; and the session prof
 settling first how the profile is held, how a rule names its lowerings, the side file's shape (keyed by case id, so the frozen set is
 untouched) and whether the meter triggers split from SR-02. 1.6 is built as written
 here, with the known failures mns-03 (until 1.10) and mns-09 (until 1.10, SC-020), (mns-06 was fixed meanwhile by 1.13's removal of SR-10's "add a panel in series", J-041, so it is not listed).
+
+### What 1.6 built, and where it read the page (J-047)
+
+Built as written, with three readings the page left open, each for Ghost or the next strong-grade agent to confirm.
+(1) **Known failures that pass on day one.** Section 6.7 has `--write` refuse "while an entry's case passes", and also lists
+mns-03 and mns-09 in a file written on a day when `NoAnswer` never stops, so both cases pass: read literally the record
+could never be written with the entries in the file. 1.6 reads it as "a known failure the record shows failing that now
+passes must leave the list": a known case that passes with no failure on record is dormant (nothing fires until the
+door's safety step, 1.9, and 1.10's worker words), not fixed, and is neither printed as passing nor refused. TODO 1.6's
+check says nothing of the refusal, only that the entries are listed, printed and counted when they fail and excuse no fall.
+(2) **The runner is three files**, `scripts/eval.py` (the command line and the run), `scripts/eval_core.py` (the types and
+the scoring table) and `scripts/eval_record.py` (the record, the ratchet and the printing), because one file passed the
+400-line ceiling. (3) **The strict set check** (counts and the frozen hash) runs when a `<set>.sha256` sits beside the set;
+a fixture set without one is held to its shape, classes and references only, since the counts are the real set's.
+The door's tests cannot make a stop or a warn come out of the door, which has no step 6 until 1.9; the scoring of those
+classes is tested on hand-built replies. mns-06 was left out of the known failures: 1.13's first part (J-041) fixed it.

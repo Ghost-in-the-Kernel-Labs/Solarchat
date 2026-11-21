@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "set_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+  "answerer": "claude-test-other",
+  "recorded_on": "2026-11-21",
+  "replies": {
+    "Where do I find the Voc of my panel?": {
+      "refs": [
+        [
+          "good",
+          "voltage"
+        ]
+      ],
+      "text": "The panel's Voc must be below the limit.",
+      "score": 4.5
+    }
+  }
+}

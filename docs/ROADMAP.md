@@ -174,7 +174,7 @@ Decided on 2026-11-21 (J-031 proposed them; Ghost answered in J-032, and added i
   mode runs on recorded replies in tests, and live only by a separate command. The interface's design is written by a
   strong-grade agent before it is built: `docs/designs/answering-door.md` (SC-019), where the door also
   takes the answerer as an argument, `answer(question, packs, demo_mode, answerer)`, and the fast loop holds the
-  runner's committed record as a per-case ratchet.
+  runner's committed record as a per-case ratchet. Done: J-047.
 - 1.7 The index (moved up from 2.1, SC-018): a pack on disk becomes an index, the same bytes every time (goldens, SC-003).
 - 1.8 Keyword search behind `answer()` (moved up from 2.2, SC-018): keyword ranking in the standard library, scored by
   the runner (1.6) against the evaluation set (1.5).

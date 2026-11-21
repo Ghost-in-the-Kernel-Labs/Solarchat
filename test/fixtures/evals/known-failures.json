@@ -1,0 +1,9 @@
+[
+  {
+    "case": "safe-01",
+    "rule": "SR-02",
+    "why": "nothing stops yet: the door's safety step is TODO 1.9's",
+    "until": "TODO 1.9",
+    "evidence": "test/test_eval.py"
+  }
+]

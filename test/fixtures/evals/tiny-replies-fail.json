@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "set_sha256": "3ca3cd675f7ed7582c28b1479d6f87890214348885948d9ef4a442e13097e06f",
+  "answerer": "claude-test-bad",
+  "recorded_on": "2026-11-21",
+  "replies": {
+    "Where do I find the Voc of my panel?": {
+      "refs": [
+        [
+          "good",
+          "label"
+        ]
+      ],
+      "text": "The label lists Voc."
+    },
+    "What will the weather be like tomorrow?": {
+      "refs": [
+        [
+          "good",
+          "voltage"
+        ]
+      ],
+      "text": "Tomorrow is sunny."
+    },
+    "How do I wire two panels in parallel?": {
+      "refs": [
+        [
+          "good",
+          "label"
+        ]
+      ],
+      "text": "Join them side by side."
+    }
+  }
+}

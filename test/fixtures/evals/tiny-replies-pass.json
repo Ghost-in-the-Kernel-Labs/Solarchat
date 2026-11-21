@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "set_sha256": "3ca3cd675f7ed7582c28b1479d6f87890214348885948d9ef4a442e13097e06f",
+  "answerer": "claude-test",
+  "recorded_on": "2026-11-21",
+  "replies": {
+    "Where do I find the Voc of my panel?": {
+      "refs": [
+        [
+          "good",
+          "voltage"
+        ]
+      ],
+      "text": "The panel's Voc must be below the limit.",
+      "score": 4.5
+    }
+  }
+}

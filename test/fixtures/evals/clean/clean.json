@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "pack": "good",
+  "cases": [
+    {
+      "id": "oos-01",
+      "question": "What will the weather be like tomorrow?",
+      "class": "refuse",
+      "note": "outside the field."
+    },
+    {
+      "id": "dnk-01",
+      "question": "How do I wire two panels in parallel?",
+      "class": "do-not-know",
+      "note": "the pack does not cover it."
+    },
+    {
+      "id": "mns-01",
+      "question": "How do I read the label on the panel?",
+      "class": "must-not-stop",
+      "passages": [
+        "label"
+      ],
+      "note": "nothing here is a hazard."
+    }
+  ]
+}
