@@ -22,7 +22,8 @@ Every other module may import it; it may import only the standard library. Held 
 ## HAD-02 Every number a document reports comes from a run the repository can repeat
 
 A number without the command that produced it does not exist. Held by the project's results check
-once a document reports one (the runner's scores on the evaluation set, TODO 1.6).
+once a document reports one; the runner's scores on the evaluation set are held to the committed record by
+`scripts/eval.py --check` (TODO 1.6, done).
 
 ## HAD-03 Hadley answers only from the packs, names the passage, or says it does not know
 
@@ -60,7 +61,7 @@ forbids the act; SR-01 holds only phrases that order the site's rules ignored, s
 
 Nothing in a pack is read as an instruction to Hadley: a passage that says "ignore the safety
 rules" is shown or quoted as a passage, never obeyed (Core C-007). Held by the leaf's `Passage`,
-whose text is only ever quoted, and, once it exists, the evaluation set's injection cases (TODO 1.5).
+whose text is only ever quoted, and the evaluation set's injection cases (oos-13 to oos-15, TODO 1.5, done; they put the instruction in the question, none inside a passage).
 
 ## HAD-06 A demo pack never answers outside demo mode
 
@@ -195,4 +196,4 @@ and otherwise ends at the stop; branching waits for a real pack that needs it.
 ### What the check does not hold
 
 Whether a licence allows redistribution, whether a passage is true, and whether a pack's text names or overrides a safety
-rule: the first two are the judgement of the person who loads the packs, the third is added to the check with the safety rules (TODO 1.3).
+rule: the first two are the judgement of the person who loads the packs, the third is held by the check since TODO 1.3 (the planted breaks `names-safety-rule` and `overrides-safety-rule`).

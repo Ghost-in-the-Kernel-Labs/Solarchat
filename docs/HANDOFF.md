@@ -2,14 +2,23 @@
 
 Read `CLAUDE.md` first, then this. `TODO.md` is the chain in order; `docs/DONE.md` is what is finished.
 
-## Where the project stands (2026-11-21)
+## Where the project stands (2026-11-21, `main` at 48a248a)
 
-Founded, planned, and holding one demo pack and the leaf. `main` carries the stamp, decisions SC-001 to
-SC-008, the project's ghost, the roadmap (Phases 1 to 6), the six-pin lockfile, and the demo pack
-`packs/seed-mc4-leads/` (J-017). The full gate passes (J-016, a tune-up commit; the count restarted there).
-TODO 0.4 landed (J-018): the package `solarchat/`, the contract's HAD-01 to HAD-06, the module map (leaf, packs,
-safety, project, cli) and the leaf's types; 0.2 closed with it. Phase 0 is closed by Tune-up pass 0 (J-019) but
-for 0.5, which waits on Ghost in Phase W.
+`main` holds the stamp, decisions to SC-023, the project's ghost, the roadmap (Phases 1 to 6), the 22-pin lockfile
+(the SDK and its 15 reviewed additions came in with SC-021, J-045), the package `solarchat/` with its contract
+(HAD-01 to HAD-06) and module map, the demo pack `packs/seed-mc4-leads/`, the fourteen safety rules as data, and the
+frozen evaluation set. Built since the pack and the rules: the answering door and the runner (1.6, J-047), the Claude
+answerer, the chat command and the live evaluation run, with the model a parameter (1.16, J-048, J-049), the rule
+bank's format and check with twenty hand-written rules (1.19, J-053), and the command menu `bin/solarchat` with the
+local key (2.5, J-055; `solarchat --key`, SC-022 point 6). 1.17 was absorbed by SC-023 and not built (J-051). Phase 0
+is closed but for 0.5, which waits on Ghost in Phase W. Built since: 2.7, speech out
+(`--voice`, J-056); speech in is later and needs a dependency proposed to Ghost.
+
+What works today, and what does not: the chat and the live run call a model only by hand, with a key
+(`.venv/bin/python`); the offline stub scores 34 of 90 on `evals/v1.json`; the first live run, by Ghost on Haiku 5.5
+(2026-11-21), scored 66 of 90 at an estimated $0.0151, its stop, warn and emergency cases at 0 as expected before 1.9
+(J-051). No reply of the door is yet a stop or a warn: the safety rules are not applied to answers until 1.9 and 1.10,
+and there is no keyword search (1.7, 1.8), no walker (2.2) and no offline shell (2.4).
 
 What Solarchat is, in the roadmap's words (`docs/ROADMAP.md` §1 to §3, F-01 to F-15): an assistant named Hadley
 that walks workers on solar sites through installing panels and finding faults, on a phone, answering only from
@@ -27,22 +36,22 @@ which passage to show.
    1.3 is in `docs/DONE.md`, marked as all but Ghost's read. Next: the four marks still open in `docs/SAFETY-RULES.md`
    (below, For Ghost 1), headed "Ghost to confirm" there, wait for the engineer's final review under F-16 (the engineer comes in at the end); a change
    of an answer is a change to `rules.json`, then `scripts/safety_rules_doc.py`.
-2. **The demo of Monday 2026-11-23** (SC-010, its plan amended by SC-018, Ghost 2026-11-21): the demo now shows
-   `scripts/eval.py` scoring the offline bot on the evaluation set, not a walk-through. The chain, after 1.3: 1.4 the
-   seed pack in the format (done, J-038: `packs/seed-mc4-leads/` is passages, flows and a procedure; still a `demo` pack),
-   1.5 the evaluation set, frozen (done, J-039: `evals/v1.json`, its hash in `evals/v1.sha256`, held by
-   `scripts/checks/evals.py`; a change needs a decision and the new hash; the engineer reviews the frozen set at the
-   end, TODO 6.4), 1.6 the answering door `answer(question, packs, demo_mode)` and the runner (its
-   interface designed by a strong-grade agent before it is built), 1.7 the index, 1.8 keyword search behind
-   `answer()`, 1.9 the safety rules in the answers, 1.10 the safety rules matched on the worker's words (moved up from 2.6, Ghost 2026-11-21, SC-019), 1.16 the model answerer (brought forward, done), 1.17 the conversational evaluation set (written, not built), 1.18 Tune-up pass 1 (renumbered from 1.15). Each goes to a fresh worker of its grade with
-   the brief of `docs/when/hand-out-a-task.md`, saved on its own branch and landed by the coordinator after Ghost's
-   word; 1.3 went to the strong grade.
-3. **Phase 2 opens with what the demo first meant** (SC-018: old 1.5 to 1.8 moved down): 2.1 demo mode, 2.2 the walker
-   (`solarchat/walker`, a module Ghost approved), 2.3 the safety rules in the walker (whole-word matching on the
-   step's text is settled, HAD-04), 2.4 the offline shell; 2.8 is Tune-up pass 2 (2.6 left for Phase 1 as 1.10). The evaluation set is frozen before
-   any search or model (J-033: back in Phase 1, after SC-015's code; the engineer reviews the frozen set at the end,
-   TODO 6.4; For Ghost 16). 1.25 Tune-up pass 1 (was 1.15, then 1.18) carries the next human maintainability pass (SC-011: Ghost-Core's
-   toolkit under `scripts/` a few files at a time, each with its proof that nothing changed; then the tests).
+2. **The demo of Monday 2026-11-23** (SC-010, its plan amended by SC-018 and by J-054, Ghost 2026-11-21): the demo is
+   run from a local clone on Windows (README, "Running the demo on Windows"): `solarchat --help`, `solarchat --key`, the
+   chat on the seed pack with `--demo`, and `scripts/eval.py` scoring the answerer on the evaluation set. Done of the
+   chain: 1.3 the safety rules, 1.4 the seed pack, 1.5 the frozen set, 1.6 the door and the runner, 1.16 the model
+   answerer, 1.19 the bank's format, 2.5 the command menu and local key. Open, in order: 1.7 the index, 1.8 keyword
+   search, 1.9 the safety rules in the answers, 1.10 the safety rules on the worker's words, 1.20 to 1.24 the bank run,
+   the model roles, drafting, harm triage and guards (SC-023), then 1.25 Tune-up pass 1 (renumbered from 1.15, 1.18).
+   Each goes to a fresh worker of its grade with the brief of `docs/when/hand-out-a-task.md`, saved on its own branch
+   and landed by the coordinator after Ghost's word; 1.3 and 1.6 went to the strong grade.
+3. **Phase 2** (SC-018: old 1.5 to 1.8 moved down): 2.1 demo mode, 2.2 the walker (`solarchat/walker`, a module Ghost
+   approved, its folder not yet written), 2.3 the safety rules in the walker (whole-word matching on the step's text is
+   settled, HAD-04), 2.4 the offline shell, and 2.8 (2.7 speech out is built, J-056)
+   Tune-up pass 2. 2.5 and 2.7 are the free numbers J-054 used; `docs/ROADMAP.md` still holds its own 2.5 (switching
+   packs on and off) and 2.7 (a site-safety pack) under those numbers (For Ghost 20). 1.25 Tune-up pass 1 carries the
+   next human maintainability pass (SC-011: Ghost-Core's toolkit under `scripts/` a few files at a time, each with
+   its proof that nothing changed; then the tests).
 
 ## Settled by Ghost
 
@@ -152,13 +161,19 @@ which passage to show.
     debrief). (d) `theGhost.md`'s header could say when an in-force decision is rewritten on Ghost's word and when it is
     superseded (one debrief); a decision of Ghost's, and `theGhost.md` is not a tune-up's to edit.
 
+20. **Two items hold the same numbers** (found in a documentation pass, J-057): `docs/ROADMAP.md` Phase 2 lists 2.5
+    "Switching packs on and off, and two packs for different models side by side" and 2.7 "A site-safety pack built
+    from the library", while `TODO.md` and `docs/DONE.md` use 2.5 for the command menu and the local key and 2.7 for
+    speech out (J-054), and `TODO.md`'s note under 2.8 still says those two roadmap items join the chain. Which
+    renumbering is wanted (the old items to 2.9 and 2.10, or others) is a plan change, so no document was edited for it.
+
 Audit advisories (tune-up step 2): the python gate runs no audit step, so none are listed. An audit tool
 (`pip-audit` or the like) would be a new dependency, Ghost's to approve; until then the review's layers 1, 2 and 4
 stand alone (`docs/DEPENDENCY-REVIEW.md`).
 
 ## Trials: questions settled by a run, not an argument
 
-(none yet; roadmap 3.7 and 5.1 name the first two)
+(none yet; roadmap 3.7 and 5.1 name the first two. The first live run, 66 of 90 on Haiku 5.5, is one nondeterministic run, an observation and no trial.)
 
 ## What to distrust
 
@@ -166,8 +181,13 @@ stand alone (`docs/DEPENDENCY-REVIEW.md`).
   drawings were looked at once, rendered together; its text was not read in full by the coordinator.
 - The project's ghost and the roadmap are the agent's drafts from Ghost's words, landed for Ghost to correct.
 - A session's venv: `python3.12 -m venv .venv && .venv/bin/pip install --only-binary :all: --require-hashes -r requirements.lock`.
-- Branches left on origin, all merged into `main` by squash and safe to delete (this session's proxy refuses a
-  branch deletion, HTTP 403): `agent/words-1-1`, `agent/pack-format-1-2`; `agent/safety-rules-1-3`, now landed.
-  Earlier ones Ghost deleted on 2026-11-21. The remote's name is `Ghost-in-the-Kernel-Labs/Solarchat`; a fresh clone
-  may still name it in lower case, which works through GitHub's redirect.
+- Branches left on origin, safe to delete (this session's proxy refuses a branch deletion, HTTP 403; each was landed
+  by squash or by a rewritten commit, so git's own "merged" test says no, and the content is on `main`):
+  `agent/words-1-1` (1.1), `agent/pack-format-1-2` (1.2), `agent/safety-rules-1-3` (1.3), `agent/page-citations`
+  (SC-012), `agent/coordinator-conditional` (da53935), `agent/roadmap-vision` (marked "not for main"; its SC-015,
+  SC-016, F-16 and F-17 landed with J-032), `agent/tune-up-commit-1` (J-052), `agent/rule-bank-1-19` (J-053),
+  `agent/cli-key-2-5` (J-054, J-055), `worktree-agent-a80dd423575285e3d` (SDK, J-045) and `claude/quirky-pascal-nr458d`
+  (level with `main`). The 2.7 branch is not on origin yet. The remote's name is
+  `Ghost-in-the-Kernel-Labs/Solarchat`; a fresh clone may still name it in lower case, which works through GitHub's
+  redirect.
 - Branches deleted earlier, kept here for the record: `claude/audience-f01`, `claude/gate-0-2`, `agent/seed-pack`.

@@ -11,17 +11,22 @@ explained in full in [docs/SAFETY-AND-COMPLIANCE.md](docs/SAFETY-AND-COMPLIANCE.
 ## Where the project stands
 
 - **Built:** the contract every module shares (`docs/CONTRACT.md`), the knowledge-pack format and the check that
-  refuses a broken pack, the shared types in `solarchat/leaf/`, and the checks and gates that hold the repository to
-  its rules.
-- **Being built for the demo of 2026-11-23:** the demo pack in the new format, the frozen evaluation set, the
-  answering door and the runner that scores the bot on that question set, the index, keyword search and the safety
-  rules in the answers (`TODO.md`, items 1.4 to 1.9). The demo shows the runner scoring the offline bot on the
-  question set (SC-018).
-- **Later:** the demo mode, the walker that steps a worker through a procedure or a fault, and a command-line
-  conversation that runs with the network off (Phase 2); a small local model that only chooses which checked
-  passage to show, the hosted service, and the phone app (`docs/ROADMAP.md`, Phases 3 to 6).
+  refuses a broken pack, the demo pack, the fourteen fixed safety rules as data, the frozen evaluation set, the
+  answering door and the runner that scores an answerer on that set (1.6), a Claude answerer with a chat command
+  and a live evaluation run (1.16), the rule bank's format and check (1.19), the command menu and the local key
+  (2.5), and the checks and gates that hold the repository to its rules.
+- **Open, in order (`TODO.md`):** the index and keyword search (1.7, 1.8), the safety rules applied in the door's
+  answers and on the worker's own words (1.9, 1.10), the bank run, its model roles, drafting, harm triage and guards
+  (1.20 to 1.24), then Phase 1's tune-up pass (1.25). Phase 2 holds demo mode, the walker, the safety rules in the
+  walker and the offline shell (2.1 to 2.4); speech out (2.7, `--voice`, J-056) is built.
+- **Later:** speech in, which needs a dependency proposed to Ghost; a small local model that only chooses which
+  checked passage to show, the hosted service and the phone app (`docs/ROADMAP.md`, Phases 3 to 6).
 
-No language model is called anywhere in the code today.
+A language model is called only by hand: the `claude` answerer of the chat (`solarchat --pack <pack> --demo`) and
+`scripts/eval.py --live`, both of which need a key; no test, check or gate calls one. The first live run of the
+frozen set (2026-11-21, Haiku 5.5, `--model claude-haiku-5-5`) scored 66 of 90 at an estimated $0.0151 (J-051); its
+recorded replies are not in the repository. The offline stub scores 34 of 90 (`evals/results/offline.json`). The
+safety rules are not yet applied in the door's answers, so no reply of the door is a stop or a warn today (1.9).
 
 ## What each part does
 
@@ -32,13 +37,14 @@ import, and `test/test_modules.py` refuses an import it does not allow.
 
 | Module | What it does | State |
 | --- | --- | --- |
-| `solarchat/leaf/` | The contract in code: the passage and its reference, a reply (an answer, "I do not know", or a stop) that cannot be built in a form the contract forbids, and the test of whether a pack is a demo pack. Every other module imports it; it imports nothing of the project's own. | built |
-| `solarchat/packs/` | Reads a knowledge pack from disk (`load.py`) and words each passage's citations with the page; the pack check is `scripts/checks/packs.py`. | built (1.6) |
-| `solarchat/answer/` | The answering door, `answer(question, packs, demo_mode, answerer)`, through which every mode answers; the offline stub `NoAnswer` and `RecordedAnswerer` (SC-019). It imports no model client. | built (1.6) |
-| `solarchat/safety/` | The fixed safety rules, kept outside every pack, and the decision to stop and send the worker to the supervisor. | planned (1.3, 1.9, 2.3) |
+| `solarchat/leaf/` | The contract in code: the passage and its reference, a reply (an answer, "I do not know", a warn or a stop) that cannot be built in a form the contract forbids, the conversation's turns, and the test of whether a pack may answer. Every other module imports it; it imports nothing of the project's own. | built |
+| `solarchat/packs/` | Reads a knowledge pack from disk (`load.py`) and words each passage's citations with the page; the pack check is `scripts/checks/packs.py`. | built (1.2, 1.6) |
+| `solarchat/answer/` | The answering door, `answer(question, packs, demo_mode, answerer)`, through which every mode answers; the offline stub `NoAnswer` and `RecordedAnswerer` (SC-019). It imports no model client. Its safety step is not built (1.9). | built (1.6) |
+| `solarchat/safety/` | The fixed safety rules, kept outside every pack (`rules.json`, loaded by `rules.py`, which also says which rules a text fires). Nothing yet applies them to an answer. | rules built (1.3); applying them planned (1.9, 1.10, 2.3) |
+| `solarchat/model/` | The only module that may import the model client: the Claude answerer (`claude.py`, Sonnet 5.5 or Haiku 5.5) and the local key store (`key.py`, SC-022 point 6). | built (1.16, 2.5) |
 | `solarchat/walker/` | Steps a worker through a procedure or a troubleshooting flow, one step at a time, to a fix or a stop. | planned (2.2) |
-| `solarchat/project/` | Calls the other modules in order. | planned |
-| `solarchat/cli/` | The command-line conversation; parses input and calls `project`, with no logic of its own. | planned (2.4) |
+| `solarchat/project/` | Calls the other modules in order: the chat (`chat.py`) and the key commands (`keys.py`). | built (1.16, 2.5) |
+| `solarchat/cli/` | The command line: the menu, `--key`, and the chat; parses input and calls `project`, with no logic of its own. The offline shell that walks a procedure is 2.4. | built (1.16, 2.5); shell planned (2.4) |
 
 ### The knowledge: `packs/`
 
@@ -47,13 +53,20 @@ in the pack format (passages, flows and a procedure) and marked `"status": "demo
 the installation types a pack can cover. The format a pack must follow is the section "The pack format" in
 `docs/CONTRACT.md`.
 
+### The reference library: `library/`
+
+`library/sources/` holds source documents (regulations, manuals, checklists) as text with their licence and a hash.
+They are source material, not packs: nothing there answers a worker (SC-014; `library/README.md`).
+
 ### The evaluation set: `evals/`
 
 `evals/v1.json` is the frozen evaluation set, version 1 (TODO 1.5): questions a worker on site would type, each with
 the reply the bot must give (an answer citing a named passage, "I do not know", a stop, an emergency, a warn, or
 anything but a stop), written against the seed pack. `evals/v1.sha256` holds its hash; the set is frozen, and a change
-needs a decision and the new hash. The automatic runner, `scripts/eval.py` (TODO 1.6), scores the bot on it and holds the result to `evals/results/offline.json`; the electrical engineer reviews
-it at the end (TODO 6.4).
+needs a decision and the new hash. The automatic runner, `scripts/eval.py` (TODO 1.6), scores the bot on it and holds the result to `evals/results/offline.json`;
+`evals/known-failures.json` names the cases that fail until 1.10. The electrical engineer reviews the set at the end (TODO 6.4).
+`evals/bank/` is the rule bank (SC-023, TODO 1.19): twenty hand-written conversational rules, sampled and read as a
+trend, never a gate; nothing runs them yet (1.20).
 
 ### The rules: documents at the root and in `docs/`
 
@@ -89,6 +102,8 @@ Ghost-Core, the template the project was stamped from.
 | `scripts/review_scan.py` | Scans a dependency update's diff for warning signs before it is allowed in. |
 | `scripts/checks/packs.py` | Checks a knowledge pack against the format: refuses a missing licence, a flow with no stop, a passage with no source, a picture with no alt text, and more. |
 | `scripts/eval.py` | The evaluation runner: feeds each case of the set to the answering door, scores it by class, prints the table and the failures, and holds the run to the committed record (`--check`, `--write`); `--live` is the only way a model is called (`scripts/eval_core.py` scores, `scripts/eval_record.py` keeps the record). |
+| `scripts/eval_live.py` | The live half of the runner: failure blocks, tokens and estimated cost for a run on a real model. Named by no gate script. |
+| `scripts/checks/bank.py` | Checks the rule bank (`evals/bank/`): every field, ids in order, one to three turns, a question that ends in "?", a source that resolves, and no run of six words of the bot's system prompt. |
 | `scripts/checks/evals.py` | Checks the evaluation set (`evals/v1.json`): its shape and classes, that every passage and rule it names exists, that each rule's response matches the class and really fires, the counts, and the frozen hash. |
 | `scripts/checks/library.py` | Checks the reference library's sources (`library/sources/`): every field, the licence allow-list, the hash against the original, a non-empty text. |
 | `scripts/checks/contract.py`, `modules.py`, `imports.py` | Hold the code to the contract, the module map and the lockfile. |
@@ -112,7 +127,7 @@ The Python stack's gate and its pinned tools (pytest and ruff, installed only fr
 bash scripts/fast.sh
 ```
 
-The fast loop needs nothing installed. The full gate needs the virtual environment:
+The fast loop needs nothing installed. The full gate, the chat and the live run need the virtual environment (the model client is in the lock; run them with `.venv/bin/python`):
 
 ```bash
 python3.12 -m venv .venv && .venv/bin/pip install --only-binary :all: --require-hashes -r requirements.lock
