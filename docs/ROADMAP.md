@@ -64,8 +64,8 @@ Solarchat's own:
 | F-05 | Knowledge libraries are swapped in and out, starting from public material. | Ghost, 2026-11-20, in chat | The pack format comes first; a manufacturer's manual is loaded where the bot is deployed, never committed (SC-005, Core C-033). |
 | F-07 | The online model is Claude Sonnet through the Anthropic API, chosen over Haiku for its reasoning; the customer can show it a photo, and it asks for the make and model and says where to find them when it cannot tell. | Ghost, 2026-11-20, in chat | 3.1 is settled for the online side; a photo is evidence the bot states back and the customer confirms (Core C-005); Sonnet against Haiku is measured on the evaluation set, not argued (Core C-004). |
 | F-08 | The customer should be able to speak and be spoken to, hands busy with the panel. | Ghost, 2026-11-20, in chat | Speech is the phone's own, around the text conversation (Phase 5); it is not a model feature the kernel depends on. |
-| F-09 | Offline, Ghost wants a very light open model downloaded ahead of time inside an app that ships with the online version built in. | Ghost, 2026-11-20, in chat | Phase 5 is an app; whether a small model may write an answer, or only choose which admitted passage and flow to show, is settled by a trial against the safety and refusal cases (5.1, Core C-004). The model's weights are downloaded, never committed (Core C-033). |
-| F-10 | Offline, a small model only chooses: it works out what the customer asks and picks the admitted passage and flow, and the words shown are the pack's. It is the worst-case backup; whenever there is a connection the Anthropic model is used. | Ghost, 2026-11-20, in chat (J-008) | Online first at run time (P-19); 5.1 no longer chooses among rivals, it tests that the choosing model passes the safety and refusal cases, with no model as the fallback if it does not. |
+| F-09 | Offline, Ghost wants a very light open model downloaded ahead of time inside an app that ships with the online version built in. | Ghost, 2026-11-20, in chat | Phase 5 is an app; whether a small model may write an answer, or only choose which passage and flow to show, is settled by a trial against the safety and refusal cases (5.1, Core C-004). The model's weights are downloaded, never committed (Core C-033). |
+| F-10 | Offline, a small model only chooses: it works out what the customer asks and picks the passage and flow, and the words shown are the pack's. It is the worst-case backup; whenever there is a connection the Anthropic model is used. | Ghost, 2026-11-20, in chat (J-008) | Online first at run time (P-19); 5.1 no longer chooses among rivals, it tests that the choosing model passes the safety and refusal cases, with no model as the fallback if it does not. |
 | F-11 | The product is reached through both a phone app and a website. | Ghost, 2026-11-20, in chat (J-008) | The hosted mode serves both (4.5, Phase 5); one client that is both a website and an installable app is a candidate for 5.1. |
 | F-12 | The assistant has a voice and a manner of its own: British, clean and clinical, dry humour at times; its own name, no existing character's name, and no imitation of a particular actor's voice. | Ghost, 2026-11-20, in chat (J-009) | The manner is the framing around an answer, never its substance: a safety stop is said plainly with no humour (P-17), and the evaluation set checks that the manner changes no instruction. Offline the voice is the phone's own British voice. The name is Ghost's to choose. |
 | F-13 | The assistant's name is Hadley. | Ghost, 2026-11-20, in chat (J-010) | Used in the manner (3.5) and the clients; a trademark search before it reaches an app store. |
@@ -121,18 +121,17 @@ The core's table, copied from Ghost-Core when this project was stamped; add this
 
 What a wrong answer is has to be written down before anything can give one (Core C-003).
 
-- 1.1 The words: pack, passage, flow, mode, admitted, safety rule, in `docs/GLOSSARY.md`.
-- 1.2 The pack format, as the contract: a manifest (make, model, version, source, licence, who admitted it and
-  when), passages, and flows (symptom, check, fix, and where to stop); a check that refuses a broken pack.
+- 1.1 The words: pack, passage, flow, mode, pack status, safety rule, in `docs/GLOSSARY.md`.
+- 1.2 The pack format, as the contract: a manifest (make, model, version, source, licence, its status, `library` or `demo`, SC-013), passages, and flows (symptom, check, fix, and where to stop); a check that refuses a broken pack.
 - 1.3 The safety rules, version 1, for the newest contractor on a site (F-01): the points at which every mode
   stops and sends the worker to the site supervisor or engineer, and the rule that the site's own safety
   procedures come first; held outside every pack.
 - 1.4 The seed pack: one small pack built from public sources, each named with its licence, in the project's own
   words and its own drawings, covering the simple setup faults of F-02 for one installation type: the correct
   steps, each with a picture, and the common failures (F-14). Ghost asked for a first draft ahead of 1.2 (J-011):
-  it is built to a provisional layout under `packs/`, marked not admitted, and is brought to 1.2's format and
-  admitted by a person before the item closes.
-- 1.5 Demo mode: a labelled switch that lets a pack that is not admitted run, for a demo only (SC-010).
+  it is built to a provisional layout under `packs/`, marked `demo`, and is brought to 1.2's format before the item closes; it joins the library only when a person hands it
+  over as checked documentation (SC-013).
+- 1.5 Demo mode: a labelled switch that lets a `demo` pack run, for a demo only (SC-010, SC-013).
 - 1.6 The walker, moved from 2.3 for the demo of 2026-11-23 (SC-010): one step at a time through a procedure or
   a flow, to a fix or a stop.
 - 1.7 The safety rules enforced in the walker, moved from 2.4's walker half (SC-010).

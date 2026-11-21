@@ -42,24 +42,25 @@ never depends on it to be safe.
   does not name it, and no module names one (`docs/modules.json`, rule MOD-03).
 - **Designed:** the walker that shows the steps (`TODO.md` 1.6) and the offline command-line conversation (1.8).
 
-### 2. Hadley answers only from text a person admitted (HAD-03, HAD-06, SC-005)
+### 2. Hadley answers only from the packs, and only checked documentation is in the library (HAD-03, HAD-06, SC-005, SC-013)
 
 The only knowledge Hadley may use is a **knowledge pack**: a folder of passages, troubleshooting flows and
-procedures, each citing its sources. A pack is **admitted** when a named person has read it, with each source and
-its licence, and the pack's manifest records who admitted it and on what date. A pack that is not admitted never
-answers. Admission is a human act; no model's reading ever admits anything (Core C-005, SC-005).
+procedures, each citing its sources. Only checked and approved documentation goes into the library, and handing it to
+the person who loads the library data is that check and approval: no approval is recorded in the pack. A pack's manifest
+has a `status`, `library` or `demo`. A `library` pack answers; a `demo` pack answers only in demo mode (section 8). No
+model's reading ever approves anything (Core C-005, SC-005, SC-013).
 
-- **Enforced today:** `solarchat/leaf/contract.py`'s `is_admitted` treats a pack as admitted only when both the
-  admitting person and the date are recorded; `test/test_leaf.py` shows the demo pack is not admitted.
-  `scripts/checks/packs.py` refuses a pack whose admission is half-recorded or whose date is malformed, a source
-  with no licence written down, and a passage, flow or procedure that cites no source or a source the manifest does
+- **Enforced today:** `solarchat/leaf/contract.py`'s `is_demo` says whether a pack is a demo
+  pack, which answers only in demo mode; `test/test_leaf.py` shows the seed pack is one.
+  `scripts/checks/packs.py` refuses a pack whose `status` is not `library` or `demo`, a `library` pack with a page
+  marked unknown, a source with no licence written down, and a passage, flow or procedure that cites no source or a source the manifest does
   not list (`test/test_packs.py`, with a deliberately broken pack for each fault under
   `test/fixtures/broken/packs/`).
 - **Designed:** the pack check run over every pack in `packs/` once the demo pack is converted (1.4).
 
 ### 3. Every answer names its source, or says "I do not know" (HAD-03)
 
-A reply is one of exactly three things: an **answer**, which carries at least one reference to an admitted passage
+A reply is one of exactly three things: an **answer**, which carries at least one reference to a passage
 and says nothing that passage does not support; **"I do not know"**, which carries none; or a **stop** (section 5).
 A question the switched-on packs do not cover gets "I do not know", never a guess. This removes dangers 1, 2 and 6.
 
@@ -94,7 +95,7 @@ removes dangers 3 and 5: no "what's next?" carries a worker past a stop.
   it current (`test/test_safety.py`). The pack check refuses a pack that names a rule by id or uses one of a short list
   of phrases telling the reader to ignore, skip, bypass, override or disregard a rule, a stop or the supervisor
   (`test/test_packs.py`, planted breaks under `test/fixtures/broken/packs/`); a paraphrase outside that list passes
-  it and stays with the person who admits the pack.
+  it and stays with the person who loads the library.
 - **Designed:** the maintainer's read of the rules (1.3 stays open until then; the points marked "Ghost to confirm"
   in `docs/SAFETY-RULES.md` are the agent's draft); every walk stopping at a rule whatever the pack says, using each
   rule's triggers (1.7).
@@ -102,7 +103,7 @@ removes dangers 3 and 5: no "what's next?" carries a worker past a stop.
 ### 6. When a model is added, it gets no tools and no freedom (SC-002)
 
 A model is called in exactly one module, with no tools and no connectors, so it cannot run code or reach anything.
-Offline, a small local model may only choose which admitted passage to show; it writes no instructions of its own.
+Offline, a small local model may only choose which passage to show; it writes no instructions of its own.
 Online, the model answers only from the passages it is given, names them, and says it does not know otherwise
 (SC-005). Searching, indexing and every check call no model; no test calls one (replies are recorded); a run against
 the live model is an evaluation run, started by hand and recorded.
@@ -122,25 +123,25 @@ pack's steps in their order and stops where the pack and the safety rules stop (
 
 ### 8. A demo is labelled as one (SC-010)
 
-For a demonstration only, a switch may run a pack that is not admitted. Every screen shown under it carries the
+For a demonstration only, a switch may run a `demo` pack. Every screen shown under it carries the
 banner **"DEMO: not reviewed by an engineer, do not use on a site"**, and without the switch such a pack is refused.
 
-- **Designed:** 1.5. The demo pack `packs/seed-mc4-leads/` is not admitted, and `docs/HANDOFF.md` lists five of its
-  claims that could not be sourced; they must be checked by an engineer before the pack is admitted.
+- **Designed:** 1.5. The demo pack `packs/seed-mc4-leads/` is a `demo` pack, and `docs/HANDOFF.md` lists five of its
+  claims that could not be sourced; they must be checked by an engineer before it goes into the library.
 
 ## What Solarchat does not claim
 
 - It is not a substitute for training, certification, the equipment maker's instructions or the site's own safety
   procedures, which always come first.
-- A pack is only as good as its admission. The format and the check prove a pack is complete and traceable; whether
-  its text is true is the admitting person's judgement.
+- A pack is only as good as the documentation handed over. The format and the check prove a pack is complete and
+  traceable; whether its text is true is the judgement of the person who loads the library.
 - Today nothing in the repository answers a worker. The safeguards marked "designed" above are not yet running.
 
 ## Where each rule lives
 
 | Rule | Where it is written | Where it is held |
 | --- | --- | --- |
-| Answers only from admitted text, with its source | `docs/CONTRACT.md` HAD-03, HAD-06; `theGhost.md` SC-005 | `solarchat/leaf/contract.py`, `scripts/checks/packs.py`, `test/test_leaf.py`, `test/test_packs.py` |
+| Answers only from the packs, with its source | `docs/CONTRACT.md` HAD-03, HAD-06; `theGhost.md` SC-005 | `solarchat/leaf/contract.py`, `scripts/checks/packs.py`, `test/test_leaf.py`, `test/test_packs.py` |
 | A pack's text is data | HAD-05; Core C-007 | `solarchat/leaf/contract.py` (`Passage`) |
 | Safety rules outside every pack | HAD-04; `docs/ROADMAP.md` P-17 | `scripts/checks/packs.py` (`flow_problems`), the `safety` module (1.3) |
 | No model in the code; one door when there is | SC-002; `docs/modules.json` MOD-03 | `test/test_modules.py` |

@@ -3,9 +3,7 @@
   "title": "Connecting a solar panel by its MC4 leads",
   "installation_type": "crystalline-panel-mc4-leads",
   "version": "0.1-draft",
-  "status": "demo, not admitted",
-  "admitted_by": null,
-  "admitted_on": null,
+  "status": "demo",
   "language": "en",
   "sources": [
     {

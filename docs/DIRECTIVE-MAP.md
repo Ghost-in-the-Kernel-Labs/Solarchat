@@ -2,7 +2,7 @@
 
 Written by `scripts/directive_map.py` from `theGhost.md`, `docs/CONTRACT.md` and the code's citations; do not edit here. A function holds a directive when it cites it: `# Decision: SC-005 (why)` or `# Invariant: HAD-06 (why)` directly above its `def`, or an `Invariant:` line in its docstring (SC-011). "No function" means the directive is held by a document, a test or a review: its Held by line in `theGhost.md` or `docs/CONTRACT.md` says which.
 
-22 of 59 directives are cited by a function.
+23 of 60 directives are cited by a function.
 
 | Directive | Title | Held in code by |
 | --- | --- | --- |
@@ -51,7 +51,7 @@ Written by `scripts/directive_map.py` from `theGhost.md`, `docs/CONTRACT.md` and
 | SC-002 | Core C-006 is refused for the answering step; the model is called through one door, and no test calls it | no function |
 | SC-003 | Core C-017's byte-identical goldens hold for the deterministic parts; an answer is judged by the evaluation set | no function |
 | SC-004 | Core C-018's mutation covers the deterministic code; prompt text is excluded | no function |
-| SC-005 | Core C-005's confirmation happens at the pack; the bot answers only from admitted text, with its source | `scripts/checks/packs.py:admission_problems`, `scripts/checks/packs.py:source_problems` |
+| SC-005 | Core C-005's confirmation happens at the pack; the bot answers only from admitted text, with its source | `scripts/checks/packs.py:source_problems` |
 | SC-006 | Core C-036's check that no instruction names a model is refused; the grade map stays | no function |
 | SC-007 | Core C-033 is narrowed for demo packs: a picture from the web may be copied in, with its provenance | `scripts/checks/packs.py:picture_entries`, `scripts/checks/packs.py:unlisted_pictures` |
 | SC-008 | Core C-018's mutation run is refused; a test is still never weakened, and every check keeps its planted break | no function |
@@ -59,9 +59,10 @@ Written by `scripts/directive_map.py` from `theGhost.md`, `docs/CONTRACT.md` and
 | SC-010 | A labelled demo mode may run a pack that is not admitted; for Monday's demo the walker comes before the evaluation set | no function |
 | SC-011 | The code is written for human reviewers: named variables, commented functions, two READMEs, and the decisions mapped to the functions that hold them | no function |
 | SC-012 | An answer cites the page of the manual it used: each source has a kind, a document's citation carries a page, and unknown pages are counted | `scripts/checks/packs.py:kind_problems`, `scripts/checks/packs.py:source_problems`, `scripts/checks/packs.py:reference_problems`, `scripts/checks/packs.py:unknown_pages`, `scripts/checks/packs.py:unknown_page_count` |
+| SC-013 | Handing documentation to the person who loads the library is the approval; a pack is `library` or `demo`, and no approval is recorded | `scripts/checks/packs.py:status_problems`, `scripts/checks/packs.py:unknown_page_problems`, `solarchat/leaf/contract.py:is_demo` |
 | HAD-01 | The leaf module imports nothing of the project's own | `solarchat/leaf/__init__.py` |
 | HAD-02 | Every number a document reports comes from a run the repository can repeat | `solarchat/leaf/__init__.py` |
-| HAD-03 | Hadley answers only from admitted text, names it, or says it does not know | `scripts/checks/packs.py:reference_problems`, `solarchat/leaf/contract.py:Reply` |
+| HAD-03 | Hadley answers only from the packs, names the passage, or says it does not know | `scripts/checks/packs.py:reference_problems`, `solarchat/leaf/contract.py:Reply` |
 | HAD-04 | The safety rules sit outside every pack, and no pack can remove or change one | `scripts/checks/packs.py:flow_problems`, `scripts/checks/packs.py:safety_rule_problems`, `solarchat/leaf/contract.py:Reply`, `solarchat/leaf/contract.py:SafetyRule`, `solarchat/safety/__init__.py`, `solarchat/safety/rules.py:sequence_problem`, `solarchat/safety/rules.py:load_rules` |
 | HAD-05 | A pack's text is data, never instructions | `solarchat/leaf/contract.py:Passage` |
-| HAD-06 | A pack that is not admitted is never used to answer | `scripts/checks/packs.py:admission_problems`, `solarchat/leaf/contract.py:is_admitted` |
+| HAD-06 | A demo pack never answers outside demo mode | `scripts/checks/packs.py:status_problems`, `solarchat/leaf/contract.py:is_demo` |

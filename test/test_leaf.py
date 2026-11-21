@@ -1,8 +1,8 @@
-"""The leaf holds the contract's reply and admission rules (docs/CONTRACT.md HAD-03, HAD-04, HAD-06)."""
+"""The leaf holds the contract's reply and pack-status rules (docs/CONTRACT.md HAD-03, HAD-04, HAD-06)."""
 import json
 import unittest
 
-from solarchat.leaf.contract import PassageRef, Reply, ReplyKind, is_admitted
+from solarchat.leaf.contract import PassageRef, Reply, ReplyKind, is_demo
 from test.support import ROOT
 
 STEP = PassageRef("seed-mc4-leads", "step-06")
@@ -29,14 +29,13 @@ class TheReply(unittest.TestCase):
             Reply(ReplyKind.ANSWER, "Join plus to plus.", (STEP,), safety_rule_id="live-dc")
 
 
-class Admission(unittest.TestCase):
-    def test_a_pack_naming_who_and_when_is_admitted(self) -> None:
-        self.assertTrue(is_admitted({"admitted_by": "A. Engineer", "admitted_on": "2026-12-01"}))
+class PackStatus(unittest.TestCase):
+    def test_a_demo_pack_is_demo(self) -> None:
+        self.assertTrue(is_demo({"status": "demo"}))
 
-    def test_half_a_record_is_not(self) -> None:
-        self.assertFalse(is_admitted({"admitted_by": "A. Engineer", "admitted_on": None}))
-        self.assertFalse(is_admitted({}))
+    def test_a_library_pack_is_not_demo(self) -> None:
+        self.assertFalse(is_demo({"status": "library"}))
 
-    def test_the_demo_pack_is_not_admitted(self) -> None:
+    def test_the_seed_pack_is_demo(self) -> None:
         manifest = json.loads((ROOT / "packs" / "seed-mc4-leads" / "manifest.json").read_text())
-        self.assertFalse(is_admitted(manifest))
+        self.assertTrue(is_demo(manifest))

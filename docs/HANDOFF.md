@@ -15,7 +15,7 @@ What Solarchat is, in the roadmap's words (`docs/ROADMAP.md` §1 to §3, F-01 to
 that walks workers on solar sites through installing panels and finding faults, on a phone, answering only from
 knowledge packs; online it calls Claude Sonnet through the Anthropic API with no tools and no connectors, and reads
 photos; offline it runs on the packs, the flows and the safety rules, with at most a small model that only chooses
-which admitted passage to show.
+which passage to show.
 
 ## Next, in order
 
@@ -28,7 +28,7 @@ which admitted passage to show.
    five "Ghost to confirm" marks (below, For Ghost 1); a change of an answer is a change to `rules.json`, then
    `scripts/safety_rules_doc.py`.
 3. **The demo of Monday 2026-11-23** (SC-010), after 1.3: 1.4 the seed pack in the format (convert
-   `packs/seed-mc4-leads/` to passages, flows and procedures; still not admitted), 1.5 demo mode, 1.6 the walker
+   `packs/seed-mc4-leads/` to passages, flows and procedures; still a `demo` pack), 1.5 demo mode, 1.6 the walker
    (`solarchat/walker`, a module Ghost approved), 1.7 the safety rules in the walker (it must settle whether a
    rule's triggers match the step's text or the worker's replies, and match whole words: the 1.3 worker's notes),
    1.8 the offline shell. Each went to a fresh worker of its grade with the brief of `docs/when/hand-out-a-task.md`,
@@ -49,6 +49,8 @@ which admitted passage to show.
   a tune-up commit every twenty-five commits, not eight (SC-009, J-020); the pack format's procedures, linear
   flows and installation_type (J-022); Monday's demo as an offline walk-through with a labelled demo mode, and the
   walker module (SC-010, J-024); the human maintainability standard (SC-011, J-024).
+- 2026-11-21: only checked documentation goes into the library, and handing it over is the approval; no approval
+  record, a pack is `library` or `demo` (SC-013, J-028).
 - The wording of SC-002 to SC-008 is the agent's, for Ghost to confirm.
 
 ## For Ghost: waiting on you
@@ -90,6 +92,7 @@ which admitted passage to show.
    the score writes its reason in the journal, and a strong Cost line on an item scored lower says why. Ghost-Core's
    template could carry the same section (a Core change, in a session with push access to it). Saved on
    `agent/coordinator-conditional`; land it on your word.
+13. SC-013 (landed on your word, 2026-11-21): handing documentation to the person who loads the library is the approval; a pack's `status` is `library` or `demo`, no approval record exists, and a `library` pack with an unknown page is refused. Confirm the wording; the seed pack is `demo` with its 89 unknown pages.
 
 Audit advisories (tune-up step 2): the python gate runs no audit step, so none are listed. An audit tool
 (`pip-audit` or the like) would be a new dependency, Ghost's to approve; until then the review's layers 1, 2 and 4
@@ -101,7 +104,7 @@ stand alone (`docs/DEPENDENCY-REVIEW.md`).
 
 ## What to distrust
 
-- The demo pack is not admitted (SC-005) and was written to a provisional layout before 1.2 and 1.3 existed. Its
+- The demo pack is `demo`, not `library` (SC-013) and was written to a provisional layout before 1.2 and 1.3 existed. Its
   drawings were looked at once, rendered together; its text was not read in full by the coordinator.
 - The project's ghost and the roadmap are the agent's drafts from Ghost's words, landed for Ghost to correct.
 - A session's venv: `python3.12 -m venv .venv && .venv/bin/pip install --only-binary :all: --require-hashes -r requirements.lock`.

@@ -1,20 +1,20 @@
-"""A knowledge pack is well formed, as docs/CONTRACT.md's "The pack format" states it (SC-005, SC-007, HAD-03 to HAD-06).
+"""A knowledge pack is well formed, as docs/CONTRACT.md's "The pack format" states it (SC-005, SC-007, SC-013, HAD-03 to HAD-06).
 
-`python3 -I scripts/checks/packs.py <pack folder>` prints the faults and, how many pages are still unknown (SC-012).
+`python3 -I scripts/checks/packs.py <pack folder>` prints the faults and, how many pages are still unknown (SC-012). A pack's
+`status` is `library` or `demo`; a `library` pack with an unknown page is refused, a `demo` pack is not (SC-013).
 
 A pack may not name a safety rule (`SR-` and digits) or tell the reader to ignore, skip, bypass, override or disregard a
 safety rule, a stop or the supervisor (HAD-04, TODO 1.3). The override phrases are a short conservative list: a
-paraphrase ("carry on anyway", "the stop does not apply here") passes it, and stays with the person who admits a pack.
+paraphrase ("carry on anyway", "the stop does not apply here") passes it, and stays with the person who loads the library.
 
 `problems(folder)` reads one pack folder (manifest.json, then passages.json, flows.json, procedures.json, images/) and returns one line per
 fault, `[]` for a well-formed pack. It reads the folder's files through scripts/checks/common.py, not the disk's walk
 of a clone (C-001). It is not run over `packs/` yet: the demo pack is brought to the format in TODO 1.4. What it cannot
-judge stays with the person who admits a pack: whether a licence allows redistribution, whether a passage is true.
+judge stays with the person who loads the library: whether a licence allows redistribution, whether a passage is true.
 """
 import json
 import re
 import sys
-from datetime import date
 from pathlib import Path
 
 if __name__ == "__main__":  # run as a script from the project's root: the root holds the scripts package
@@ -26,6 +26,7 @@ MANIFEST_TEXT_FIELDS = ("id", "title", "version")
 SOURCE_TEXT_FIELDS = ("id", "title", "url", "licence", "retrieved")
 SOURCE_KINDS = ("document", "web")
 UNKNOWN_PAGE = "unknown"
+PACK_STATUSES = ("library", "demo")
 THIRD_PARTY_PICTURE_TEXT_FIELDS = ("file", "source_url", "owner", "licence", "shows")
 PASSAGE_TEXT_FIELDS = ("id", "title", "text")
 FLOW_TEXT_FIELDS = ("id", "title", "symptom", "fix", "stop")
@@ -87,20 +88,14 @@ def list_of_objects(value: object, location: str, faults: list[str], empty_list_
     return value
 
 
-# Decision: SC-005 (a person admits a pack, named with the date)
-# Invariant: HAD-06 (a pack that is not admitted never answers)
-def admission_problems(manifest: dict) -> list[str]:
-    """Both admitted_by and admitted_on null (not admitted), or both set: a name, and a date as YYYY-MM-DD (HAD-06)."""
-    admitted_by, admitted_on = manifest.get("admitted_by"), manifest.get("admitted_on")
-    if admitted_by is None and admitted_on is None:
+# Decision: SC-013 (a pack is a library pack or a demo pack; no approval is recorded in the manifest)
+# Invariant: HAD-06 (a demo pack never answers outside demo mode)
+def status_problems(manifest: dict) -> list[str]:
+    """The manifest's `status` must be exactly "library" or "demo": a manifest with none, or with "draft", gives
+    ['manifest.json: status must be "library" or "demo"']."""
+    if manifest.get("status") in PACK_STATUSES:
         return []
-    faults = missing_fields(manifest, ("admitted_by", "admitted_on"), "manifest.json")
-    if not is_blank(admitted_on):
-        try:
-            date.fromisoformat(admitted_on)
-        except ValueError:
-            faults.append("manifest.json: admitted_on is not a date as YYYY-MM-DD")
-    return faults
+    return ['manifest.json: status must be "library" or "demo"']
 
 
 def identity_problems(manifest: dict) -> list[str]:
@@ -124,7 +119,7 @@ def kind_problems(source: dict) -> list[str]:
     return [f"manifest.json source {source.get('id')!r}: kind must be \"document\" or \"web\""]
 
 
-# Decision: SC-005 (every source carries its licence, weighed at admission)
+# Decision: SC-005 (every source carries its licence, weighed by the person who loads the library)
 # Decision: SC-012 (every source carries its kind, which says how it is cited)
 def source_problems(manifest: dict) -> tuple[list[str], dict[str, object]]:
     """The lines for the manifest's sources and a map from each source's id to its kind: a source with no licence gives
@@ -156,7 +151,7 @@ def manifest_problems(manifest: object) -> tuple[list[str], dict[str, object], s
     """The manifest's lines, its sources' kinds by id and its listed third-party picture files."""
     if not isinstance(manifest, dict):
         return ["manifest.json: is not an object"], {}, set()
-    faults = missing_fields(manifest, MANIFEST_TEXT_FIELDS, "manifest.json") + identity_problems(manifest) + admission_problems(manifest)
+    faults = missing_fields(manifest, MANIFEST_TEXT_FIELDS, "manifest.json") + identity_problems(manifest) + status_problems(manifest)
     if not is_blank(manifest.get("id")) and not ID_PATTERN.match(manifest["id"]):
         faults.append("manifest.json: id must be lowercase words joined by hyphens")
     manifest_faults, source_kinds = source_problems(manifest)
@@ -214,6 +209,15 @@ def unknown_pages(passages: list[dict], flows: list[dict], procedures: list[dict
             lines += [f"{kind_name} {entry.get('id')!r}: source {cited.get('source')!r}" for cited in citations
                       if isinstance(cited, dict) and cited.get("page") == UNKNOWN_PAGE]
     return lines
+
+
+# Decision: SC-013 (a library pack holds no unknown page; a demo pack may, and the count still shows it)
+def unknown_page_problems(manifest: object, passages: list[dict], flows: list[dict], procedures: list[dict]) -> list[str]:
+    """One line per unknown page when the pack's status is "library", none for a demo pack:
+    "passage 'p': source 'S3': page is unknown; a library pack cites every page (SC-013)"."""
+    if not isinstance(manifest, dict) or manifest.get("status") != "library":
+        return []
+    return [f"{citation}: page is unknown; a library pack cites every page (SC-013)" for citation in unknown_pages(passages, flows, procedures)]
 
 
 def passage_problems(passages: list[dict], source_kinds: dict[str, object], folder: Path) -> list[str]:
@@ -350,6 +354,7 @@ def problems(folder: Path) -> list[str]:
     faults += passage_problems(passages, source_kinds, folder) + flow_problems(flows, source_kinds, folder)
     faults += procedure_problems(procedures, source_kinds, folder)
     faults += safety_rule_problems(located_entries(passages, flows, procedures))
+    faults += unknown_page_problems(manifest, passages, flows, procedures)
     return faults + id_problems(passages + flows + procedures) + unlisted_pictures(folder, listed_picture_files)
 
 

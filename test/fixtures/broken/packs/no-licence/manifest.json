@@ -22,6 +22,5 @@
       "shows": "The panel's specification label."
     }
   ],
-  "admitted_by": "Ghost",
-  "admitted_on": "2026-11-21"
+  "status": "library"
 }

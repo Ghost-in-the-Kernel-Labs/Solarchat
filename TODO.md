@@ -24,7 +24,7 @@ Check: one pack in the repository passes 1.2's check; its manifest names a sourc
 
 ### 1.5 Demo mode
 
-Check: a demo switch lets a pack that is not admitted run, and every screen shown under it carries the banner "DEMO: not reviewed by an engineer, do not use on a site"; without the switch such a pack is refused (HAD-06, SC-010); a test holds both.
+Check: a demo switch lets a `demo` pack run, and every screen shown under it carries the banner "DEMO: not reviewed by an engineer, do not use on a site"; without the switch such a pack is refused (HAD-06, SC-010); a test holds both.
 
 ### 1.6 The walker
 
@@ -36,7 +36,7 @@ Check: every walk stops at a safety rule of 1.3 that applies, whatever the pack 
 
 ### 1.8 The offline shell
 
-Check: `solarchat/cli` runs a conversation end to end with the network off: choose a pack, a procedure or a flow, walk it step by step, and see the demo banner when the pack is not admitted; a test drives it through stdin.
+Check: `solarchat/cli` runs a conversation end to end with the network off: choose a pack, a procedure or a flow, walk it step by step, and see the demo banner when the pack is a `demo` pack; a test drives it through stdin.
 
 ### 1.9 The evaluation set, version 1
 

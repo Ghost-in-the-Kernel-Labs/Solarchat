@@ -77,3 +77,10 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Opened**: `CLAUDE.md`, `docs/when/coordinate.md`, `docs/paths/process.md`, `docs/when/handoff.md`, `scripts/commit.sh`, `scripts/ship.sh`.
 - **Complaints**: a worktree-isolated agent's shell refuses git commands chained with `&&`; each git command had to be its own call.
 - **Suggestions**: none.
+
+### 2026-11-21 · The approval change (SC-013) · Claude Sonnet 5.5
+
+- **Task**: replace the pack admission record with a `library` or `demo` status: decision, contract, pack check, leaf, fixtures, tests, seed pack, docs.
+- **Opened**: `docs/paths/process.md`, `scripts/commit.sh`, `scripts/ship.sh`, `theGhost.md` (SC-005, SC-010, SC-012), `scripts/checks/packs.py`, `solarchat/leaf/contract.py`, `scripts/directive_map.py`, `docs/CONTRACT.md`, `test/test_packs.py`, `test/test_leaf.py`, the fixtures, `docs/HANDOFF.md`, `docs/journal/J-000-099.md`.
+- **Complaints**: no routing row for the pack format or the leaf's contract, so the files to open came from the brief; the glossary, `docs/modules.json` and `packs/TYPES.md` also carried the word "admitted" and are in no list; `docs/DONE.md` keeps "admitted" in a finished item's check, left as history.
+- **Suggestions**: a routing row "the pack format: change a manifest field" starting at `docs/CONTRACT.md`, `scripts/checks/packs.py`, `test/test_packs.py` and the fixtures; `is_demo` fails open on a bad status (the pack check refuses it first), so the walker should refuse a status it does not know.

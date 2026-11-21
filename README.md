@@ -2,7 +2,7 @@
 
 Solarchat is an assistant, named **Hadley**, that walks workers on solar sites through installing panels and
 finding faults, one step at a time, on a phone. Hadley answers only from **knowledge packs**: manuals and
-troubleshooting guides that a person has checked and admitted. It never improvises electrical advice, and it stops
+troubleshooting guides that a person has checked and handed to whoever loads the library. It never improvises electrical advice, and it stops
 and sends the worker to the site supervisor or engineer wherever a mistake could hurt someone.
 
 This README is for a person reviewing or maintaining the code. How Hadley is kept from giving dangerous advice is
@@ -30,7 +30,7 @@ import, and `test/test_modules.py` refuses an import it does not allow.
 
 | Module | What it does | State |
 | --- | --- | --- |
-| `solarchat/leaf/` | The contract in code: the passage and its reference, a reply (an answer, "I do not know", or a stop) that cannot be built in a form the contract forbids, and the test of whether a pack is admitted. Every other module imports it; it imports nothing of the project's own. | built |
+| `solarchat/leaf/` | The contract in code: the passage and its reference, a reply (an answer, "I do not know", or a stop) that cannot be built in a form the contract forbids, and the test of whether a pack is a demo pack. Every other module imports it; it imports nothing of the project's own. | built |
 | `solarchat/packs/` | Reads a knowledge pack from disk and checks it. | planned (the check is in `scripts/checks/packs.py` today) |
 | `solarchat/safety/` | The fixed safety rules, kept outside every pack, and the decision to stop and send the worker to the supervisor. | planned (1.3, 1.7) |
 | `solarchat/walker/` | Steps a worker through a procedure or a troubleshooting flow, one step at a time, to a fix or a stop. | planned (1.6) |
@@ -40,7 +40,7 @@ import, and `test/test_modules.py` refuses an import it does not allow.
 ### The knowledge: `packs/`
 
 One folder per knowledge pack. `packs/seed-mc4-leads/` is the demo pack (connecting a panel by its MC4 leads),
-written before the format existed and marked **not admitted**: no engineer has reviewed it. `packs/TYPES.md` lists
+written before the format existed and marked `"status": "demo"`: no engineer has reviewed it. `packs/TYPES.md` lists
 the installation types a pack can cover. The format a pack must follow is the section "The pack format" in
 `docs/CONTRACT.md`.
 
@@ -54,7 +54,7 @@ the installation types a pack can cover. The format a pack must follow is the se
 | `docs/SAFETY-AND-COMPLIANCE.md` | How Hadley is kept to checked instructions and away from improvised advice. |
 | `docs/GHOST-IN-THE-KERNEL.md` | The philosophy the project is built on: the system should remember why it exists. |
 | `docs/ROADMAP.md`, `TODO.md`, `docs/DONE.md` | The plan, the open items in order, and the finished ones. |
-| `docs/GLOSSARY.md` | The project's words, one meaning each (pack, passage, flow, mode, admitted, safety rule, and the rest). |
+| `docs/GLOSSARY.md` | The project's words, one meaning each (pack, passage, flow, mode, pack status, safety rule, and the rest). |
 | `docs/journal/` | What happened and why, one entry per event (`J-nnn`). |
 | `docs/HANDOFF.md` | What to work on next, and what waits on the maintainer. |
 | `docs/SUPPLY-CHAIN.md`, `docs/DEPENDENCY-REVIEW.md`, `docs/REVIEWED-VERSIONS.md` | How a dependency is allowed in and kept safe. |

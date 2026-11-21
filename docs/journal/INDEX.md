@@ -31,3 +31,4 @@ Written from `docs/journal/` by `scripts/journal_index.py`; do not edit by hand.
 | J-025 | Tune-up commit: the first human maintainability pass (SC-011) | measurement | `J-000-099.md` |
 | J-026 | Page citations: SC-012, a source's kind, a document's page, and the count of unknown pages | decision | `J-000-099.md` |
 | J-027 | 1.3 The safety rules, version 1, drafted for Ghost's read | feature | `J-000-099.md` |
+| J-028 | SC-013: handing documentation over is the approval; a pack is library or demo | decision | `J-000-099.md` |

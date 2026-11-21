@@ -1,5 +1,5 @@
 {
-  "id": "half-admitted",
+  "id": "library-unknown-page",
   "title": "Connecting a panel to a power station",
   "make": "Examplesun",
   "model": "ES-100",
@@ -23,6 +23,5 @@
       "shows": "The panel's specification label."
     }
   ],
-  "admitted_by": "Ghost",
-  "admitted_on": null
+  "status": "library"
 }

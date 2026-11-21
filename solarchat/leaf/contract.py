@@ -1,4 +1,4 @@
-"""The types every module shares: a passage and its reference, a reply and its three kinds, admission, and a safety rule.
+"""The types every module shares: a passage and its reference, a reply and its three kinds, a pack's status, and a safety rule.
 
 Built from docs/CONTRACT.md; each type cites the invariant it holds. Standard library only (HAD-01).
 """
@@ -69,13 +69,14 @@ def reply_problem(reply: Reply) -> str | None:
     return None
 
 
-def is_admitted(manifest: dict) -> bool:
-    """Whether a pack may answer: its manifest names who admitted it and when.
+def is_demo(manifest: dict) -> bool:
+    """Whether a pack is a demo pack, which answers only in demo mode; a library pack answers always.
 
-    Invariant: HAD-06 (a pack that is not admitted is never used to answer).
-    {"admitted_by": "A. Engineer", "admitted_on": "2026-12-01"} gives True; the demo pack's nulls give False.
+    Decision: SC-013 (a pack is a library pack or a demo pack).
+    Invariant: HAD-06 (a demo pack never answers outside demo mode).
+    {"status": "demo"} gives True; {"status": "library"} gives False. The pack check refuses any other status.
     """
-    return bool(manifest.get("admitted_by")) and bool(manifest.get("admitted_on"))
+    return manifest.get("status") == "demo"
 
 
 @dataclass(frozen=True)
