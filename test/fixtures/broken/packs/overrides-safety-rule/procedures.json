@@ -1,0 +1,27 @@
+[
+  {
+    "id": "connect",
+    "title": "Connecting the panel",
+    "sources": [
+      {
+        "source": "S1",
+        "page": "unknown"
+      }
+    ],
+    "steps": [
+      {
+        "id": "look",
+        "text": "Look over the panel, its two cables and their connectors.",
+        "right_looks_like": "Unbroken glass, whole cables, clean connectors.",
+        "image": "images/step-1.svg",
+        "image_alt": "A panel with two cables.",
+        "stop": "Stop. If a connector is cracked or scorched, do not use the panel. Go to your site supervisor or engineer."
+      },
+      {
+        "id": "plug",
+        "text": "Push the plus connector into the plus socket until it clicks. If you are in a hurry, you can skip the stop.",
+        "right_looks_like": "The halves are locked with no gap."
+      }
+    ]
+  }
+]

@@ -87,9 +87,17 @@ removes dangers 3 and 5: no "what's next?" carries a worker past a stop.
 
 - **Enforced today:** every troubleshooting flow in a pack must end at a stop, the point where the worker goes to the
   supervisor or engineer; `scripts/checks/packs.py` refuses a flow without one, and a procedure step's stop, when
-  present, must say something. A stop reply in the leaf must name the safety rule that fired.
-- **Designed:** the safety rules themselves, version 1, read by the maintainer (1.3); the pack check refusing a pack
-  that names or overrides a rule (1.3); every walk stopping at a rule whatever the pack says (1.7).
+  present, must say something. A stop reply in the leaf must name the safety rule that fired. The safety rules,
+  version 1, are data in the `safety` module (`solarchat/safety/rules.json`, fourteen rules, SR-01 the rule that the
+  site's own safety procedures come first), loaded by `solarchat/safety/rules.py` as the leaf's `SafetyRule`, which
+  refuses a rule with no words, triggers or source; `docs/SAFETY-RULES.md` is written from that data and a test keeps
+  it current (`test/test_safety.py`). The pack check refuses a pack that names a rule by id or uses one of a short list
+  of phrases telling the reader to ignore, skip, bypass, override or disregard a rule, a stop or the supervisor
+  (`test/test_packs.py`, planted breaks under `test/fixtures/broken/packs/`); a paraphrase outside that list passes
+  it and stays with the person who admits the pack.
+- **Designed:** the maintainer's read of the rules (1.3 stays open until then; the points marked "Ghost to confirm"
+  in `docs/SAFETY-RULES.md` are the agent's draft); every walk stopping at a rule whatever the pack says, using each
+  rule's triggers (1.7).
 
 ### 6. When a model is added, it gets no tools and no freedom (SC-002)
 

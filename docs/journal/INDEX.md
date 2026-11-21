@@ -30,3 +30,4 @@ Written from `docs/journal/` by `scripts/journal_index.py`; do not edit by hand.
 | J-024 | Monday's demo and the human maintainability standard: SC-010, SC-011, the walker module, Phase 1 reordered | decision | `J-000-099.md` |
 | J-025 | Tune-up commit: the first human maintainability pass (SC-011) | measurement | `J-000-099.md` |
 | J-026 | Page citations: SC-012, a source's kind, a document's page, and the count of unknown pages | decision | `J-000-099.md` |
+| J-027 | 1.3 The safety rules, version 1, drafted for Ghost's read | feature | `J-000-099.md` |

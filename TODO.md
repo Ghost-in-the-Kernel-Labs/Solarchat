@@ -18,10 +18,6 @@ question a later item depends on is copied into that item's text, so the item re
 
 ## Phase 1: the pack and the oracle
 
-### 1.3 The safety rules, version 1
-
-Check: a document outside every pack lists the stop points for the newest contractor on a site, each with the words the worker is shown, and says the site's own safety procedures come first; the pack check refuses a pack that names or overrides one; Ghost has read the list.
-
 ### 1.4 The seed pack
 
 Check: one pack in the repository passes 1.2's check; its manifest names a source whose licence allows redistribution, and the licence text or its link is recorded; it covers connecting a panel, polarity, and a panel that shows no output.

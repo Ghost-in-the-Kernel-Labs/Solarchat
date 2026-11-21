@@ -19,13 +19,14 @@ which admitted passage to show.
 
 ## Next, in order
 
-1. **TODO 1.3 is built and saved, not landed**: branch `agent/safety-rules-1-3` (da684a2), J-026, reviewed by the
-   coordinator. Fourteen rules, SR-01 to SR-14, in `solarchat/safety/rules.json`, read by `solarchat/safety/rules.py`
-   as the leaf's `SafetyRule`; `docs/SAFETY-RULES.md` generated from them (`scripts/safety_rules_doc.py`); the pack
-   check refuses a pack that names a rule or tells the reader to skip one. 423 tests green on the branch. It waits on
-   Ghost: read `docs/SAFETY-RULES.md` on the branch (the item's last clause), answer its five "Ghost to confirm"
-   marks (below, For Ghost 1), then say "land it": squash the branch onto `main`, fast checks, `scripts/commit.sh`,
-   `scripts/ship.sh`, and move 1.3 to `docs/DONE.md` naming Ghost's read.
+1. **TODO 1.3 is landed, with Ghost's read still open**: landed 2026-11-21 on Ghost's word with the draft's answers;
+   Ghost has not yet read `docs/SAFETY-RULES.md`; the five points stay open. J-027 (renumbered from J-026 at the landing),
+   reviewed by the coordinator. Fourteen rules, SR-01 to SR-14, in `solarchat/safety/rules.json`, read by
+   `solarchat/safety/rules.py` as the leaf's `SafetyRule`; `docs/SAFETY-RULES.md` generated from them
+   (`scripts/safety_rules_doc.py`); the pack check refuses a pack that names a rule or tells the reader to skip one.
+   1.3 is in `docs/DONE.md`, marked as all but Ghost's read. Next for Ghost: read `docs/SAFETY-RULES.md` and answer its
+   five "Ghost to confirm" marks (below, For Ghost 1); a change of an answer is a change to `rules.json`, then
+   `scripts/safety_rules_doc.py`.
 3. **The demo of Monday 2026-11-23** (SC-010), after 1.3: 1.4 the seed pack in the format (convert
    `packs/seed-mc4-leads/` to passages, flows and procedures; still not admitted), 1.5 demo mode, 1.6 the walker
    (`solarchat/walker`, a module Ghost approved), 1.7 the safety rules in the walker (it must settle whether a
@@ -52,19 +53,19 @@ which admitted passage to show.
 
 ## For Ghost: waiting on you
 
-1. **The safety rules** (TODO 1.3, on `agent/safety-rules-1-3`): read `docs/SAFETY-RULES.md`, and answer its five
+1. **The safety rules** (TODO 1.3, landed 2026-11-21 on Ghost's word with the draft's answers; Ghost has not yet read
+   `docs/SAFETY-RULES.md`; the five points stay open): read `docs/SAFETY-RULES.md`, and answer its five
    "Ghost to confirm" marks: SR-02, is measuring a voltage a stop for the newest contractor (the draft: yes); SR-03,
    is plugging connectors together a stop as well as pulling them apart (the makers say de-energise for both); SR-06,
    the overhead-lines rule (beyond the brief; it gives no distance, so the site's applies); SR-08 and SR-09, the
    emergency and first-aid sentences the cited sources do not state; SR-12, the never-bypass rule (beyond the brief).
    Also: the roof, ladder and climb triggers stop every rooftop step (deliberate); four sources were cited from search
-   results without the page being read (J-026).
+   results without the page being read (J-027).
 2. **Page citations** (SC-012, on `agent/page-citations`): the seed pack's citations of its document sources carry a
    page, and 89 of them are `"unknown"`: S3 Trina installation manual 35, S7 PVEL/HelioVolta safety guide 22, S5 Victron
    troubleshooting chapter 19, S4 Victron installation chapter 10, S6 BRE fire report 3 (S8's 15 citations use page 15,
    from its title). A person finds each page in the manual; the check counts the unknown pages and prints the total
    (`python3 -I scripts/checks/packs.py <pack>`), and does not yet run over the seed pack, which TODO 1.4 converts.
-   The branch's journal entry J-026 collides with the J-026 on `agent/safety-rules-1-3`; whichever lands second renumbers.
 3. Read the demo pack with an engineer's eye before anyone relies on it. The worker flagged claims it could not
    source: fail-04 (reversed leads can damage some devices), step-07's stop (battery not yet wired), step-09 (the
    gentle pull), fail-03 (some shortfall from the label is normal), fail-08's fire wording. Sources S3 and S8 were
@@ -105,7 +106,7 @@ stand alone (`docs/DEPENDENCY-REVIEW.md`).
 - The project's ghost and the roadmap are the agent's drafts from Ghost's words, landed for Ghost to correct.
 - A session's venv: `python3.12 -m venv .venv && .venv/bin/pip install --only-binary :all: --require-hashes -r requirements.lock`.
 - Branches left on origin, all merged into `main` by squash and safe to delete (this session's proxy refuses a
-  branch deletion, HTTP 403): `agent/words-1-1`, `agent/pack-format-1-2`; `agent/safety-rules-1-3` once 1.3 lands.
+  branch deletion, HTTP 403): `agent/words-1-1`, `agent/pack-format-1-2`; `agent/safety-rules-1-3`, now landed.
   Earlier ones Ghost deleted on 2026-11-21. The remote's name is `Ghost-in-the-Kernel-Labs/Solarchat`; a fresh clone
   may still name it in lower case, which works through GitHub's redirect.
 - Branches deleted earlier, kept here for the record: `claude/audience-f01`, `claude/gate-0-2`, `agent/seed-pack`.
