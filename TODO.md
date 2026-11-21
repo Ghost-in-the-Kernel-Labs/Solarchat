@@ -18,10 +18,6 @@ question a later item depends on is copied into that item's text, so the item re
 
 ## Phase 1: the pack and the oracle
 
-### 1.5 The evaluation set, version 1
-
-Check: at least thirty in-scope questions each naming the passage that answers it; fifteen out-of-scope questions marked refuse; questions in the pack's field that its passages do not cover, marked "I do not know"; ten safety cases marked stop or emergency; warn cases marked warn (the rule's words shown, then the walk continues); must-not-stop cases (step-12's safe method, fail-04's polarity fix, plugging connectors in, a meter where the worker is trained); a check holds the file's shape and that every named passage exists; the set's hash is recorded and a later change without a decision is refused. It needs only SC-015's code (the rules' responses and the leaf's warn, 1.11 and 1.12), SC-015 being in force; the engineer reviews the frozen set at the end (6.4).
-
 ### 1.6 The answering door and the automatic evaluation runner
 
 Check: one function, `answer(question, packs, demo_mode) -> Reply` (the leaf's `Reply`), is the door through which every mode answers: offline search now, the model later; `scripts/eval.py` feeds every question of the evaluation set (1.5) to it and scores each reply against its expected outcome: the right reply kind; the named passage cited for an in-scope question; "I do not know" where expected; stop, warn or emergency where expected; no stop on a must-not-stop case; it prints a score table and exits non-zero if any safety case or must-not-stop case fails; it runs in the fast loop against the offline mode; the model mode runs on recorded replies in tests, and live only by a separate command; the interface's design is written by a strong-grade agent before it is built (SC-018).

@@ -46,6 +46,14 @@ in the pack format (passages, flows and a procedure) and marked `"status": "demo
 the installation types a pack can cover. The format a pack must follow is the section "The pack format" in
 `docs/CONTRACT.md`.
 
+### The evaluation set: `evals/`
+
+`evals/v1.json` is the frozen evaluation set, version 1 (TODO 1.5): questions a worker on site would type, each with
+the reply the bot must give (an answer citing a named passage, "I do not know", a stop, an emergency, a warn, or
+anything but a stop), written against the seed pack. `evals/v1.sha256` holds its hash; the set is frozen, and a change
+needs a decision and the new hash. The automatic runner (TODO 1.6) scores the bot on it; the electrical engineer reviews
+it at the end (TODO 6.4).
+
 ### The rules: documents at the root and in `docs/`
 
 | File | What it holds |
@@ -79,6 +87,7 @@ Ghost-Core, the template the project was stamped from.
 | `scripts/score.py` | Places each open TODO item at a grade (how strong an agent it needs), from facts. |
 | `scripts/review_scan.py` | Scans a dependency update's diff for warning signs before it is allowed in. |
 | `scripts/checks/packs.py` | Checks a knowledge pack against the format: refuses a missing licence, a flow with no stop, a passage with no source, a picture with no alt text, and more. |
+| `scripts/checks/evals.py` | Checks the evaluation set (`evals/v1.json`): its shape and classes, that every passage and rule it names exists, that each rule's response matches the class and really fires, the counts, and the frozen hash. |
 | `scripts/checks/library.py` | Checks the reference library's sources (`library/sources/`): every field, the licence allow-list, the hash against the original, a non-empty text. |
 | `scripts/checks/contract.py`, `modules.py`, `imports.py` | Hold the code to the contract, the module map and the lockfile. |
 | `scripts/checks/secrets.py`, `supply_chain.py`, `dependency_review.py` | Refuse a committed key, a hook or unpinned workflow, and an unreviewed dependency. |

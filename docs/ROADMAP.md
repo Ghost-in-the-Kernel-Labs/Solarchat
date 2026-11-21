@@ -164,7 +164,7 @@ Decided on 2026-11-21 (J-031 proposed them; Ghost answered in J-032, and added i
   "I do not know"; safety cases that must stop or call an emergency; warn cases that must show the rule's words and
   continue; and must-not-stop cases (step-12's safe method, fail-04's polarity fix, plugging connectors in, a meter
   where the worker is trained), so a check catches over-stopping as well as under-stopping. Its freeze needs only SC-015 in force, which it is; the engineer reviews the frozen
-  set at the end (6.4). It still comes before any search or model (Core C-003).
+  set at the end (6.4). It still comes before any search or model (Core C-003). Done: J-039.
 - 1.6 The answering door and the automatic evaluation runner (new, SC-018): one function,
   `answer(question, packs, demo_mode) -> Reply` (the leaf's `Reply`), through which every mode answers: offline search
   now, the model later. `scripts/eval.py` feeds every question of the evaluation set to it and scores each reply against

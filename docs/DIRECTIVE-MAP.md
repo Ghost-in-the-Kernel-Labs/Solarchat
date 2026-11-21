@@ -2,7 +2,7 @@
 
 Written by `scripts/directive_map.py` from `theGhost.md`, `docs/CONTRACT.md` and the code's citations; do not edit here. A function holds a directive when it cites it: `# Decision: SC-005 (why)` or `# Invariant: HAD-06 (why)` directly above its `def`, or an `Invariant:` line in its docstring (SC-011). "No function" means the directive is held by a document, a test or a review: its Held by line in `theGhost.md` or `docs/CONTRACT.md` says which.
 
-26 of 65 directives are cited by a function.
+27 of 65 directives are cited by a function.
 
 | Directive | Title | Held in code by |
 | --- | --- | --- |
@@ -61,13 +61,13 @@ Written by `scripts/directive_map.py` from `theGhost.md`, `docs/CONTRACT.md` and
 | SC-012 | An answer cites the page of the manual it used: each source has a kind, a document's citation carries a page, and unknown pages are counted | `scripts/checks/packs.py:kind_problems`, `scripts/checks/packs.py:source_problems`, `scripts/checks/packs.py:reference_problems`, `scripts/checks/packs.py:unknown_pages`, `scripts/checks/packs.py:unknown_page_count` |
 | SC-013 | Handing documentation to the person who loads the library is the approval; a pack is `library` or `demo`, and no approval is recorded | `scripts/checks/packs.py:status_problems`, `scripts/checks/packs.py:unknown_page_problems`, `solarchat/leaf/contract.py:may_answer` |
 | SC-014 | The library holds source documents, not packs: each with its licence quoted from the publisher, checked by a script | `scripts/checks/library.py:field_problems`, `scripts/checks/library.py:kind_problems`, `scripts/checks/library.py:licence_problems`, `scripts/checks/library.py:hash_problems`, `scripts/checks/library.py:text_problems`, `scripts/checks/library.py:source_problems` |
-| SC-015 | Warn and help by default: a safety rule answers with a warn, a stop or an emergency, and none leaves the worker with nothing to do | `solarchat/leaf/contract.py:reply_problem`, `solarchat/leaf/contract.py:SafetyRule` |
+| SC-015 | Warn and help by default: a safety rule answers with a warn, a stop or an emergency, and none leaves the worker with nothing to do | `scripts/checks/evals.py:rule_problems`, `solarchat/leaf/contract.py:reply_problem`, `solarchat/leaf/contract.py:SafetyRule` |
 | SC-016 | Each safety rule keeps a change log: who changed it, in what role, why and on what evidence; a record of a judgement, not an approval | `scripts/safety_rules_doc.py:change_line`, `solarchat/leaf/contract.py:SafetyRuleChange`, `solarchat/leaf/contract.py:SafetyRule`, `solarchat/leaf/contract.py:changes_problem`, `solarchat/safety/rules.py:change_from_entry`, `solarchat/safety/rules.py:rule_fingerprint`, `solarchat/safety/rules.py:fingerprint_problem` |
 | SC-017 | A pack's status is `field` or `demo`; "library" means only `library/sources/` | no function |
-| SC-018 | Phase 1 is reordered for automated Q&A: the evaluation set, the answering door with its runner, the index, search and the safety rules in the answers come before the walker, demo mode and the shell | no function |
+| SC-018 | Phase 1 is reordered for automated Q&A: the evaluation set, the answering door with its runner, the index, search and the safety rules in the answers come before the walker, demo mode and the shell | `scripts/checks/evals.py:document_problems`, `scripts/checks/evals.py:case_shape_problems`, `scripts/checks/evals.py:count_problems`, `scripts/checks/evals.py:hash_problems` |
 | HAD-01 | The leaf module imports nothing of the project's own | `solarchat/leaf/__init__.py` |
 | HAD-02 | Every number a document reports comes from a run the repository can repeat | `solarchat/leaf/__init__.py` |
-| HAD-03 | Hadley answers only from the packs, names the passage, or says it does not know | `scripts/checks/packs.py:reference_problems`, `solarchat/leaf/contract.py:Reply` |
-| HAD-04 | The safety rules sit outside every pack, and no pack can remove or change one | `scripts/checks/packs.py:flow_problems`, `scripts/checks/packs.py:safety_rule_problems`, `solarchat/leaf/contract.py:Reply`, `solarchat/leaf/contract.py:SafetyRule`, `solarchat/safety/__init__.py`, `solarchat/safety/rules.py:sequence_problem`, `solarchat/safety/rules.py:load_rules`, `solarchat/safety/rules.py:trigger_pattern`, `solarchat/safety/rules.py:rules_fired` |
+| HAD-03 | Hadley answers only from the packs, names the passage, or says it does not know | `scripts/checks/evals.py:passage_problems`, `scripts/checks/packs.py:reference_problems`, `solarchat/leaf/contract.py:Reply` |
+| HAD-04 | The safety rules sit outside every pack, and no pack can remove or change one | `scripts/checks/evals.py:firing_problems`, `scripts/checks/packs.py:flow_problems`, `scripts/checks/packs.py:safety_rule_problems`, `solarchat/leaf/contract.py:Reply`, `solarchat/leaf/contract.py:SafetyRule`, `solarchat/safety/__init__.py`, `solarchat/safety/rules.py:sequence_problem`, `solarchat/safety/rules.py:load_rules`, `solarchat/safety/rules.py:trigger_pattern`, `solarchat/safety/rules.py:rules_fired` |
 | HAD-05 | A pack's text is data, never instructions | `solarchat/leaf/contract.py:Passage` |
 | HAD-06 | A demo pack never answers outside demo mode | `scripts/checks/packs.py:status_problems`, `solarchat/leaf/contract.py:may_answer` |

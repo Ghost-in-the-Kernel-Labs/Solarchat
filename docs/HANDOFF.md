@@ -30,7 +30,9 @@ which passage to show.
 2. **The demo of Monday 2026-11-23** (SC-010, its plan amended by SC-018, Ghost 2026-11-21): the demo now shows
    `scripts/eval.py` scoring the offline bot on the evaluation set, not a walk-through. The chain, after 1.3: 1.4 the
    seed pack in the format (done, J-038: `packs/seed-mc4-leads/` is passages, flows and a procedure; still a `demo` pack),
-   1.5 the evaluation set, frozen, 1.6 the answering door `answer(question, packs, demo_mode)` and the runner (its
+   1.5 the evaluation set, frozen (done, J-039: `evals/v1.json`, its hash in `evals/v1.sha256`, held by
+   `scripts/checks/evals.py`; a change needs a decision and the new hash; the engineer reviews the frozen set at the
+   end, TODO 6.4), 1.6 the answering door `answer(question, packs, demo_mode)` and the runner (its
    interface designed by a strong-grade agent before it is built), 1.7 the index, 1.8 keyword search behind
    `answer()`, 1.9 the safety rules in the answers, 1.10 Tune-up pass 1. Each goes to a fresh worker of its grade with
    the brief of `docs/when/hand-out-a-task.md`, saved on its own branch and landed by the coordinator after Ghost's
