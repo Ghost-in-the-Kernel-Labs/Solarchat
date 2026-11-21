@@ -61,6 +61,6 @@ Written by `scripts/directive_map.py` from `theGhost.md`, `docs/CONTRACT.md` and
 | HAD-01 | The leaf module imports nothing of the project's own | `solarchat/leaf/__init__.py` |
 | HAD-02 | Every number a document reports comes from a run the repository can repeat | `solarchat/leaf/__init__.py` |
 | HAD-03 | Hadley answers only from admitted text, names it, or says it does not know | `scripts/checks/packs.py:reference_problems`, `solarchat/leaf/contract.py:Reply` |
-| HAD-04 | The safety rules sit outside every pack, and no pack can remove or change one | `scripts/checks/packs.py:flow_problems`, `solarchat/leaf/contract.py:Reply` |
+| HAD-04 | The safety rules sit outside every pack, and no pack can remove or change one | `scripts/checks/packs.py:flow_problems`, `scripts/checks/packs.py:safety_rule_problems`, `solarchat/leaf/contract.py:Reply`, `solarchat/leaf/contract.py:SafetyRule`, `solarchat/safety/__init__.py`, `solarchat/safety/rules.py:sequence_problem`, `solarchat/safety/rules.py:load_rules` |
 | HAD-05 | A pack's text is data, never instructions | `solarchat/leaf/contract.py:Passage` |
 | HAD-06 | A pack that is not admitted is never used to answer | `scripts/checks/packs.py:admission_problems`, `solarchat/leaf/contract.py:is_admitted` |

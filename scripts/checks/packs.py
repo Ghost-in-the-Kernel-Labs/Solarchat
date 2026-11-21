@@ -1,5 +1,9 @@
 """A knowledge pack is well formed, as docs/CONTRACT.md's "The pack format" states it (SC-005, SC-007, HAD-03 to HAD-06).
 
+A pack may not name a safety rule (`SR-` and digits) or tell the reader to ignore, skip, bypass, override or disregard a
+safety rule, a stop or the supervisor (HAD-04, TODO 1.3). The override phrases are a short conservative list: a
+paraphrase ("carry on anyway", "the stop does not apply here") passes it, and stays with the person who admits a pack.
+
 `problems(folder)` reads one pack folder (manifest.json, then passages.json, flows.json, procedures.json, images/) and returns one line per
 fault, `[]` for a well-formed pack. It reads the folder's files through scripts/checks/common.py, not the disk's walk
 of a clone (C-001). It is not run over `packs/` yet: the demo pack is brought to the format in TODO 1.4. What it cannot
@@ -21,6 +25,14 @@ FLOW_TEXT_FIELDS = ("id", "title", "symptom", "fix", "stop")
 PROCEDURE_TEXT_FIELDS = ("id", "title")
 STEP_TEXT_FIELDS = ("text", "right_looks_like")
 THIRD_PARTY_PICTURE_FOLDER = "images/third-party/"
+SAFETY_RULE_ID_IN_TEXT = re.compile(r"\bSR-\d+\b", re.IGNORECASE)
+OVERRIDE_VERBS = r"(?:ignore|ignoring|skip|skipping|bypass|bypassing|override|overriding|disregard|disregarding)"
+OVERRIDE_TARGETS = (r"(?:safety (?:rules?|checks?|steps?|procedures?|warnings?|instructions?|advice)"
+                    r"|(?:the|this|that|a|any|each|every) stops?|supervisor|engineer)")
+NO_NEED_TO_ASK = r"(?:no need|(?:do not|don't|dont) need) to (?:ask|call|tell|go to|contact|wait for|check with)"
+OVERRIDE_PHRASE = re.compile(rf"\b{OVERRIDE_VERBS}\b(?:\W+\w+){{0,3}}?\W+{OVERRIDE_TARGETS}\b"
+                             rf"|\b{NO_NEED_TO_ASK}\W+(?:\w+\W+){{0,2}}?(?:supervisor|engineer)\b", re.IGNORECASE)
+NEGATION_WORDS = ("never", "not", "don't", "dont", "cannot", "can't", "nor")
 
 
 def is_blank(value: object) -> bool:
@@ -232,6 +244,49 @@ def unlisted_pictures(folder: Path, listed_picture_files: set[str]) -> list[str]
     return faults + [f"{file_name}: listed in the manifest and not in the pack" for file_name in sorted(listed_picture_files - files_in_pack)]
 
 
+def entry_texts(value: object) -> list[str]:
+    """Every string anywhere in a pack entry, nested checks and steps included: {"a": "x", "b": [{"c": "y"}]} gives ["x", "y"]."""
+    if isinstance(value, str):
+        return [value]
+    if isinstance(value, dict):
+        return [text for nested in value.values() for text in entry_texts(nested)]
+    if isinstance(value, list):
+        return [text for nested in value for text in entry_texts(nested)]
+    return []
+
+
+def override_phrases(text: str) -> list[str]:
+    """The phrases in text that tell the reader to set aside a safety rule, a stop or the supervisor, unless negated just
+    before: "You can skip the stop here" gives ["skip the stop"]; "Never ignore a stop" gives []."""
+    found_phrases: list[str] = []
+    for phrase_match in OVERRIDE_PHRASE.finditer(text):
+        words_before = text[:phrase_match.start()].lower().split()[-2:]
+        if not any(word.strip(".,;:!?") in NEGATION_WORDS for word in words_before):
+            found_phrases.append(phrase_match.group(0))
+    return found_phrases
+
+
+# Invariant: HAD-04 (the safety rules are the safety module's: a pack cannot name, remove, reword or switch one off)
+def safety_rule_problems(entries: list[tuple[str, dict]]) -> list[str]:
+    """A passage, flow or procedure that names a safety rule by id, or tells the reader to ignore, skip, bypass, override
+    or disregard a rule, a stop or the supervisor: a passage saying "SR-02 does not apply" gives
+    "passage 'p': names safety rule SR-02; the rules are the safety module's, never a pack's (HAD-04)"."""
+    faults: list[str] = []
+    for location, entry in entries:
+        entry_text = "\n".join(entry_texts(entry))
+        for rule_id in dict.fromkeys(rule_id.upper() for rule_id in SAFETY_RULE_ID_IN_TEXT.findall(entry_text)):
+            faults.append(f"{location}: names safety rule {rule_id}; the rules are the safety module's, never a pack's (HAD-04)")
+        for phrase in dict.fromkeys(override_phrases(entry_text)):
+            faults.append(f"{location}: tells the reader to set aside a safety rule, a stop or the supervisor ({phrase!r}) (HAD-04)")
+    return faults
+
+
+def located_entries(passages: list[dict], flows: list[dict], procedures: list[dict]) -> list[tuple[str, dict]]:
+    """Each content entry with its location as the faults name it: [("passage 'voltage'", {...}), ("flow 'no-output'", {...})]."""
+    kinds = (("passage", passages), ("flow", flows), ("procedure", procedures))
+    return [(f"{kind} {entry.get('id')!r}", entry) for kind, kind_entries in kinds for entry in kind_entries]
+
+
 def problems(folder: Path) -> list[str]:
     """Every fault in the pack folder, in a stable order; [] when it is well formed."""
     faults: list[str] = []
@@ -246,4 +301,5 @@ def problems(folder: Path) -> list[str]:
         faults.append("the pack has no passage, flow or procedure")
     faults += passage_problems(passages, source_ids, folder) + flow_problems(flows, source_ids, folder)
     faults += procedure_problems(procedures, source_ids, folder)
+    faults += safety_rule_problems(located_entries(passages, flows, procedures))
     return faults + id_problems(passages + flows + procedures) + unlisted_pictures(folder, listed_picture_files)

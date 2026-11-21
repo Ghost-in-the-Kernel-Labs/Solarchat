@@ -1,4 +1,4 @@
-"""A well-formed pack passes the pack check and each planted break is refused (TODO 1.2; SC-005, SC-007, HAD-06)."""
+"""A well-formed pack passes the pack check and each planted break is refused (TODO 1.2, 1.3; SC-005, SC-007, HAD-04, HAD-06)."""
 import json
 import shutil
 import unittest
@@ -60,6 +60,14 @@ class TheFixtures(unittest.TestCase):
 
     def test_a_picture_with_no_alt_text_is_refused(self) -> None:
         self.assertEqual(packs.problems(BROKEN / "packs" / "picture-no-alt"), ["passage 'voltage': image_alt is missing or empty"])
+
+    def test_a_pack_naming_a_safety_rule_is_refused(self) -> None:
+        self.assertEqual(packs.problems(BROKEN / "packs" / "names-safety-rule"),
+                         ["passage 'voltage': names safety rule SR-02; the rules are the safety module's, never a pack's (HAD-04)"])
+
+    def test_a_pack_overriding_a_stop_is_refused(self) -> None:
+        self.assertEqual(packs.problems(BROKEN / "packs" / "overrides-safety-rule"),
+                         ["procedure 'connect': tells the reader to set aside a safety rule, a stop or the supervisor ('skip the stop') (HAD-04)"])
 
 
 class TheCheck(unittest.TestCase):
@@ -188,3 +196,28 @@ class TheCheck(unittest.TestCase):
         folder = copy_good()
         edit(folder, "procedures", lambda p: p[0].update(sources=[]))
         self.assertEqual(packs.problems(folder), ["procedure 'connect': sources must name at least one source"])
+
+
+class TheSafetyRules(unittest.TestCase):
+    def test_a_rule_named_in_a_flow_check_is_refused(self) -> None:
+        folder = copy_good()
+        edit(folder, "flows", lambda f: f[0]["checks"][0].update(text="As sr-7 allows, touch the frame."))
+        self.assertEqual(packs.problems(folder), ["flow 'no-output': names safety rule SR-7; the rules are the safety module's, never a pack's (HAD-04)"])
+
+    def test_each_override_verb_and_target_is_refused(self) -> None:
+        for override_text in ("Ignore the safety rules.", "Bypass the supervisor.", "Override this stop.",
+                              "Disregard any safety warning.", "There is no need to ask your supervisor."):
+            with self.subTest(override_text=override_text):
+                self.assertNotEqual(packs.override_phrases(override_text), [])
+
+    def test_a_negated_override_and_plain_text_pass(self) -> None:
+        for allowed_text in ("Never ignore a stop.", "Do not skip the stop.", "Skip step 3 if the light stops.",
+                             "Skip this step for safety reasons.", "Do not do this without your supervisor."):
+            with self.subTest(allowed_text=allowed_text):
+                self.assertEqual(packs.override_phrases(allowed_text), [])
+
+    def test_an_override_in_a_flow_stop_is_refused(self) -> None:
+        folder = copy_good()
+        edit(folder, "flows", lambda f: f[0].update(stop="You may ignore the engineer and carry on."))
+        self.assertEqual(packs.problems(folder),
+                         ["flow 'no-output': tells the reader to set aside a safety rule, a stop or the supervisor ('ignore the engineer') (HAD-04)"])
