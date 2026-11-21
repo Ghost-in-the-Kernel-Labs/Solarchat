@@ -2,7 +2,7 @@
 
 Written by `scripts/directive_map.py` from `theGhost.md`, `docs/CONTRACT.md` and the code's citations; do not edit here. A function holds a directive when it cites it: `# Decision: SC-005 (why)` or `# Invariant: HAD-06 (why)` directly above its `def`, or an `Invariant:` line in its docstring (SC-011). "No function" means the directive is held by a document, a test or a review: its Held by line in `theGhost.md` or `docs/CONTRACT.md` says which.
 
-32 of 70 directives are cited by a function.
+33 of 70 directives are cited by a function.
 
 | Directive | Title | Held in code by |
 | --- | --- | --- |
@@ -68,7 +68,7 @@ Written by `scripts/directive_map.py` from `theGhost.md`, `docs/CONTRACT.md` and
 | SC-019 | Every mode answers through one door that takes its answerer as an argument; the runner scores it against the frozen set and holds the result as a per-case ratchet | `scripts/eval.py:options_problem`, `scripts/eval_core.py:reply_passes`, `scripts/eval_record.py:write_record`, `solarchat/answer/__init__.py`, `solarchat/answer/door.py:answer`, `solarchat/answer/stub.py:NoAnswer`, `solarchat/leaf/contract.py:Passage`, `solarchat/leaf/contract.py:Finding`, `solarchat/leaf/contract.py:Turn`, `solarchat/leaf/contract.py:Answerer`, `solarchat/model/claude.py:ClaudeAnswerer`, `solarchat/packs/load.py:load_pack` |
 | SC-020 | A session profile: at the start of a session the bot asks three or four short questions about what the worker is authorised for; a safety rule may lower its response for a profile, and nothing else may | no function |
 | SC-021 | The official Anthropic Python SDK (`anthropic`) is a runtime dependency, imported only by the `model` module, and the online model is Claude Sonnet 5.5 | `solarchat/model/claude.py:describe_error` |
-| SC-022 | No model credential ever sits on a device; only Solarchat's service holds one, from a secrets manager; the offline mode needs none | no function |
+| SC-022 | No model credential ever sits on a device; only Solarchat's service holds one, from a secrets manager; the offline mode needs none | `solarchat/model/key.py`, `solarchat/project/keys.py` |
 | SC-023 | The conversational bot is tuned by a sampled rule bank, graded by Haiku and read as a trend, never a gate; a harmful reply is triaged content first, and a guard is added only when no passage is the cause | `scripts/checks/bank.py:quoting_problems`, `scripts/checks/bank.py:shape_problems`, `scripts/checks/bank.py:source_problems` |
 | HAD-01 | The leaf module imports nothing of the project's own | `solarchat/leaf/__init__.py` |
 | HAD-02 | Every number a document reports comes from a run the repository can repeat | `solarchat/leaf/__init__.py` |

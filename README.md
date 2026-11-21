@@ -118,6 +118,21 @@ The fast loop needs nothing installed. The full gate needs the virtual environme
 python3.12 -m venv .venv && .venv/bin/pip install --only-binary :all: --require-hashes -r requirements.lock
 ```
 
+## Running the demo on Windows
+
+Clone the repository, then from the clone in PowerShell:
+
+```powershell
+py -3.12 -m venv .venv
+.venv\Scripts\pip install --only-binary :all: --require-hashes -r requirements.lock
+$env:Path = "$PWD\bin;$env:Path"   # this window only
+solarchat --help
+solarchat --key
+solarchat --pack packs\seed-mc4-leads --demo
+```
+
+In cmd.exe the PATH line is `set PATH=%CD%\bin;%PATH%`. After it, `solarchat` works from any folder. `solarchat --key` with no value asks for the key hidden, which keeps it out of PowerShell's history; it is stored in `%APPDATA%\solarchat\key`, outside the clone, and never printed or uploaded. On Linux and macOS the launcher is `bin/solarchat`.
+
 ## How a change is made
 
 A change is saved on a working branch (`scripts/save.sh`), passes the fast checks (`scripts/gate.sh --fast`), is

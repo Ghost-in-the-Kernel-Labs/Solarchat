@@ -49,3 +49,10 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Opened**: `theGhost.md` (SC-022), `docs/ROADMAP.md` (F-08, F-09, 5.4), `solarchat/cli/main.py`, `solarchat/cli/__main__.py`, `pyproject.toml`, `requirements.lock`, `TODO.md`, `docs/DONE.md`.
 - **Complaints**: none new; the decision that the project is not an installed package is stated only in `pyproject.toml`'s first comment.
 - **Suggestions**: none.
+
+### 2026-11-21 · The command menu and the local key (J-055) · Claude Sonnet 5.5
+
+- **Task**: TODO 2.5: a `solarchat` command with a help menu and a local key store for the Windows demo, the key never printed and never in the repository.
+- **Opened**: `CLAUDE.md`, `solarchat/cli/main.py`, `solarchat/cli/__main__.py`, `solarchat/project/chat.py`, `solarchat/model/claude.py`, `docs/modules.json`, `test/test_cli.py`, `scripts/checks/secrets.py`, `theGhost.md` (SC-022), `TODO.md`, `docs/journal/J-000-099.md`.
+- **Complaints**: the Check and the brief named a root file `solarchat` that the package folder of the same name makes impossible; the item's contract was not tried against the file tree when it was written. `python3 -I -m unittest test.x` cannot import `test` (use no `-I`).
+- **Suggestions**: a check that a launcher name in a TODO Check does not clash with a path in the tree; `test/test_eval.py` line 154 also expects no key and should use `no_key()` (outside this brief's files).

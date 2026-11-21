@@ -4,7 +4,6 @@ import contextlib
 import hashlib
 import io
 import json
-import os
 import re
 import shutil
 import sys
@@ -15,7 +14,7 @@ from unittest import mock
 
 from scripts import eval as runner
 from scripts.eval_record import known_fixed, write_record
-from test.support import BROKEN, ROOT, scratch
+from test.support import BROKEN, ROOT, no_key, scratch
 
 FIXTURES = ROOT / "test" / "fixtures" / "evals"
 TINY = FIXTURES / "tiny.json"
@@ -151,7 +150,7 @@ class TheExitCodes(unittest.TestCase):
         self.assertEqual(run(on_tiny(new_record(), ["--demo"], TINY, packs))[0], 1)
 
     def test_no_model_client_is_loaded_by_any_of_it(self) -> None:
-        with mock.patch.dict(os.environ, {"ANTHROPIC_API_KEY": ""}):  # no key: the live run stops before any client is built
+        with no_key():  # no key anywhere, a stored one included: the live run stops before any client is built
             self.assertEqual(run(on_tiny(new_record(), ["--answerer", "claude", "--live"]))[0], 2)
         self.assertFalse([name for name in sys.modules if name.split(".")[0] in ("anthropic", "openai")])
 
