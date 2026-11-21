@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300" role="img" aria-labelledby="t">
+  <title id="t">Push the connector halves together until they click, with no gap</title>
+  <rect x="0" y="0" width="400" height="300" fill="#ffffff"/>
+  <g font-family="Arial, Helvetica, sans-serif" fill="#1a1a1a">
+    <text x="16" y="32" font-size="20" font-weight="bold">PUSH UNTIL IT CLICKS</text>
+    <rect x="16" y="76" width="60" height="14" fill="#c62828"/>
+    <rect x="76" y="62" width="100" height="42" rx="6" fill="#c62828"/>
+    <rect x="176" y="62" width="100" height="42" rx="6" fill="#c62828"/>
+    <rect x="276" y="76" width="60" height="14" fill="#c62828"/>
+    <path d="M176 58 v50" stroke="#ffffff" stroke-width="2"/>
+    <text x="176" y="140" font-size="20" font-weight="bold" text-anchor="middle">click, no gap</text>
+    <circle cx="364" cy="83" r="16" fill="#2e7d32"/>
+    <path d="M355 83 l6 7 l12 -14" fill="none" stroke="#ffffff" stroke-width="4"/>
+    <rect x="16" y="164" width="368" height="122" rx="8" fill="#fdecea" stroke="#c62828" stroke-width="3"/>
+    <text x="32" y="192" font-size="20" font-weight="bold" fill="#c62828">WRONG: part way in</text>
+    <rect x="32" y="222" width="40" height="14" fill="#c62828"/>
+    <rect x="72" y="208" width="90" height="42" rx="6" fill="#c62828"/>
+    <rect x="186" y="208" width="90" height="42" rx="6" fill="#c62828"/>
+    <rect x="276" y="222" width="30" height="14" fill="#c62828"/>
+    <text x="174" y="276" font-size="18" font-weight="bold" text-anchor="middle">gap</text>
+    <path d="M166 258 h16" stroke="#1a1a1a" stroke-width="3"/>
+    <path d="M326 212 l36 36 M362 212 l-36 36" stroke="#c62828" stroke-width="6"/>
+  </g>
+</svg>

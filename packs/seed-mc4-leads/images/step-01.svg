@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300" role="img" aria-labelledby="t">
+  <title id="t">Panel Voc must be below the device's highest solar input voltage</title>
+  <rect x="0" y="0" width="400" height="300" fill="#ffffff"/>
+  <g font-family="Arial, Helvetica, sans-serif" fill="#1a1a1a">
+    <rect x="16" y="40" width="168" height="150" rx="8" fill="#eef3f8" stroke="#1f4e79" stroke-width="3"/>
+    <text x="100" y="72" font-size="20" font-weight="bold" text-anchor="middle">PANEL LABEL</text>
+    <rect x="30" y="96" width="140" height="40" rx="4" fill="#ffffff" stroke="#1a1a1a" stroke-width="2"/>
+    <text x="100" y="124" font-size="22" font-weight="bold" text-anchor="middle">Voc</text>
+    <text x="100" y="170" font-size="18" text-anchor="middle">on the back</text>
+    <rect x="216" y="40" width="168" height="150" rx="8" fill="#f3f3f3" stroke="#555555" stroke-width="3"/>
+    <text x="300" y="72" font-size="20" font-weight="bold" text-anchor="middle">DEVICE</text>
+    <rect x="230" y="96" width="140" height="40" rx="4" fill="#ffffff" stroke="#1a1a1a" stroke-width="2"/>
+    <text x="300" y="124" font-size="18" font-weight="bold" text-anchor="middle">Max solar in</text>
+    <text x="300" y="170" font-size="18" text-anchor="middle">in its manual</text>
+    <text x="200" y="128" font-size="34" font-weight="bold" text-anchor="middle">&lt;</text>
+    <text x="200" y="240" font-size="22" font-weight="bold" text-anchor="middle">Voc must be lower</text>
+    <circle cx="200" cy="274" r="16" fill="#2e7d32"/>
+    <path d="M191 274 l6 7 l12 -14" fill="none" stroke="#ffffff" stroke-width="4"/>
+  </g>
+</svg>

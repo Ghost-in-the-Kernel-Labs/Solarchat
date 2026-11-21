@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300" role="img" aria-labelledby="t">
+  <title id="t">Find the plus and minus marks on the panel leads</title>
+  <rect x="0" y="0" width="400" height="300" fill="#ffffff"/>
+  <g font-family="Arial, Helvetica, sans-serif" fill="#1a1a1a">
+    <text x="16" y="32" font-size="20" font-weight="bold">LOOK FOR THE MARKS</text>
+    <rect x="16" y="78" width="70" height="14" fill="#c62828"/>
+    <rect x="86" y="62" width="120" height="46" rx="6" fill="#c62828"/>
+    <text x="146" y="96" font-size="34" font-weight="bold" text-anchor="middle" fill="#ffffff">+</text>
+    <path d="M250 70 L206 82" stroke="#1a1a1a" stroke-width="3"/>
+    <text x="256" y="76" font-size="20" font-weight="bold" fill="#c62828">PLUS</text>
+    <rect x="16" y="178" width="70" height="14" fill="#111111"/>
+    <rect x="86" y="162" width="120" height="46" rx="6" fill="#111111"/>
+    <text x="146" y="196" font-size="34" font-weight="bold" text-anchor="middle" fill="#ffffff">−</text>
+    <path d="M250 170 L206 182" stroke="#1a1a1a" stroke-width="3"/>
+    <text x="256" y="176" font-size="20" font-weight="bold">MINUS</text>
+    <text x="200" y="262" font-size="18" text-anchor="middle">Go by the + and − marks,</text>
+    <text x="200" y="286" font-size="18" text-anchor="middle">not by the cable colour</text>
+  </g>
+</svg>

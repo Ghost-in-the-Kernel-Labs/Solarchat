@@ -1,0 +1,463 @@
+[
+  {
+    "id": "fail-01",
+    "symptom": "The panel is plugged in but the device shows no solar power at all.",
+    "likely_causes": [
+      "Not enough light: night, heavy cloud, or the panel is shaded or still covered",
+      "An off switch between the panel and the device is still off",
+      "A connector pair is not fully pushed together",
+      "Plus and minus are swapped",
+      "A charge controller with no battery connected to it",
+      "A fault in the panel, its leads or the device"
+    ],
+    "checks": [
+      {
+        "text": "Make sure the panel is uncovered, facing the sun, and nothing shades any part of it. Try again in full daylight.",
+        "image": "images/step-11.svg",
+        "sources": [
+          "S5",
+          "S9"
+        ]
+      },
+      {
+        "text": "If there is an off switch between the panel and the device, check that it is on.",
+        "sources": [
+          "S3"
+        ]
+      },
+      {
+        "text": "Cover the panel fully. Then look at each connector pair: the halves should be locked with no gap. Push any loose pair together until it clicks.",
+        "image": "images/step-09.svg",
+        "sources": [
+          "S2",
+          "S3",
+          "S7"
+        ]
+      },
+      {
+        "text": "With the panel still covered, check that plus goes to plus and minus to minus all the way to the device.",
+        "image": "images/step-06.svg",
+        "sources": [
+          "S5",
+          "S8"
+        ]
+      },
+      {
+        "text": "If the device is a charge controller, check that its display or light is on. A blank controller is getting no power from its battery.",
+        "sources": [
+          "S4",
+          "S9"
+        ]
+      },
+      {
+        "text": "Look up any error code or warning light in the device's manual.",
+        "sources": [
+          "S5",
+          "S9"
+        ]
+      }
+    ],
+    "fix": "Correct whatever the checks found, with the panel covered, then uncover it and look at the device again.",
+    "stop_when": "Stop and go to your site supervisor or site engineer if the device still shows nothing after these checks, if a controller's display stays blank, or if anything looks or smells burnt.",
+    "sources": [
+      "S2",
+      "S3",
+      "S4",
+      "S5",
+      "S9"
+    ]
+  },
+  {
+    "id": "fail-02",
+    "symptom": "It works, but the device shows much less power than I expected.",
+    "likely_causes": [
+      "Shade on part of the panel, even a small shadow",
+      "Dirt, dust or bird droppings on the glass",
+      "The panel is not facing the sun, or the sun is low in the sky",
+      "Cloud or haze",
+      "A loose connector"
+    ],
+    "checks": [
+      {
+        "text": "Look for any shadow on the panel from trees, posts, cables or buildings, and move the panel or the object if you safely can.",
+        "sources": [
+          "S3",
+          "S5",
+          "S9"
+        ]
+      },
+      {
+        "text": "If the panel is at ground level, wipe the glass with a soft cloth and clean water. Do not stand or kneel on the panel. Do not climb onto a roof to clean it.",
+        "sources": [
+          "S3"
+        ]
+      },
+      {
+        "text": "Turn the panel to face the sun more directly, and check again around midday.",
+        "sources": [
+          "S3",
+          "S5"
+        ]
+      },
+      {
+        "text": "Cover the panel and check that every connector pair is fully locked with no gap.",
+        "image": "images/step-09.svg",
+        "sources": [
+          "S5",
+          "S7"
+        ]
+      }
+    ],
+    "fix": "Remove the shade, clean the glass, face the panel to the sun, and make sure each connector is locked.",
+    "stop_when": "Stop and go to your site supervisor or site engineer if power stays low in clear midday sun with a clean, unshaded panel, or if the panel is on a roof.",
+    "sources": [
+      "S3",
+      "S5",
+      "S7",
+      "S9"
+    ]
+  },
+  {
+    "id": "fail-03",
+    "symptom": "The power is less than the watts printed on the panel's label, even in sun.",
+    "likely_causes": [
+      "The label's figures are measured in fixed test conditions that real sun rarely matches",
+      "Heat, a low sun, haze or a little shade"
+    ],
+    "checks": [
+      {
+        "text": "Check in clear midday sun, with the panel clean, unshaded and facing the sun.",
+        "sources": [
+          "S3",
+          "S5"
+        ]
+      }
+    ],
+    "fix": "Some shortfall from the label figure is normal. Give the panel the best light you can.",
+    "stop_when": "Stop and go to your site supervisor or site engineer if the power is close to nothing in full sun, or falls suddenly and stays low.",
+    "sources": [
+      "S3",
+      "S5"
+    ]
+  },
+  {
+    "id": "fail-04",
+    "symptom": "I think I connected plus and minus the wrong way round.",
+    "likely_causes": [
+      "Leads joined by cable colour or by guess instead of the plus and minus marks"
+    ],
+    "checks": [
+      {
+        "text": "Cover the panel fully first. Then compare the marks on each joined pair, from the panel to the device.",
+        "image": "images/step-05.svg",
+        "sources": [
+          "S3",
+          "S5"
+        ]
+      },
+      {
+        "text": "Watch for warning signs: a device that feels hot, a burning smell, smoke, or a melted or darkened connector.",
+        "sources": [
+          "S5",
+          "S7"
+        ]
+      }
+    ],
+    "fix": "With the panel covered, open the pairs with the release tool, then join plus to plus and minus to minus. Uncover the panel and check the device.",
+    "stop_when": "Stop and go to your site supervisor or site engineer if there is heat, smoke, a burning smell or any melted part, or if the device does not work once the leads are correct. Some devices are damaged by reversed leads.",
+    "sources": [
+      "S2",
+      "S3",
+      "S5",
+      "S7"
+    ]
+  },
+  {
+    "id": "fail-05",
+    "symptom": "The connectors will not push together, or they will not click.",
+    "likely_causes": [
+      "The two halves are of different makes or types",
+      "Two halves of the same kind (two plugs or two sockets) are being joined",
+      "Dirt or grit inside a connector"
+    ],
+    "checks": [
+      {
+        "text": "Check that one half is a plug and the other a socket, and that you are joining plus to plus.",
+        "image": "images/step-06.svg",
+        "sources": [
+          "S2",
+          "S3"
+        ]
+      },
+      {
+        "text": "Check that both halves are the same make and type.",
+        "image": "images/step-03.svg",
+        "sources": [
+          "S1",
+          "S2",
+          "S7"
+        ]
+      },
+      {
+        "text": "With the panel covered, look into each connector for dirt. Do not poke anything inside.",
+        "sources": [
+          "S3"
+        ]
+      }
+    ],
+    "fix": "Join a matching plug and socket of the same make, pushed straight together. Never force them.",
+    "stop_when": "Stop and go to your site supervisor or site engineer if the makes differ, if a connector is dirty or damaged inside, or if a matching pair still will not lock.",
+    "sources": [
+      "S1",
+      "S2",
+      "S3",
+      "S7"
+    ]
+  },
+  {
+    "id": "fail-06",
+    "symptom": "The connector on my panel and the one on my cable are different makes, but they fit.",
+    "likely_causes": [
+      "Connectors sold as compatible with another make"
+    ],
+    "checks": [
+      {
+        "text": "Compare the name or logo, the body shape and the back nut of both halves.",
+        "image": "images/step-03.svg",
+        "sources": [
+          "S1",
+          "S7"
+        ]
+      }
+    ],
+    "fix": "Do not join them, even if they fit. Mixed makes can fail to seal or make poor contact, and that can lead to overheating or fire.",
+    "stop_when": "Always stop here. Ask your site supervisor or site engineer for a matching part. Do not cut or change a connector yourself.",
+    "sources": [
+      "S1",
+      "S2",
+      "S6",
+      "S7"
+    ]
+  },
+  {
+    "id": "fail-07",
+    "symptom": "The device shows an overvoltage error, or says the solar input is too high.",
+    "likely_causes": [
+      "The panel's voltage is above the device's limit",
+      "Too many panels joined in a row (in series)",
+      "Cold weather has raised the panel's voltage"
+    ],
+    "checks": [
+      {
+        "text": "Compare the Voc on the panel's label, added up for every panel in the row, with the highest solar input voltage in the device's manual.",
+        "image": "images/step-01.svg",
+        "sources": [
+          "S3",
+          "S4",
+          "S8"
+        ]
+      },
+      {
+        "text": "Check whether the device's manual allows panels to be joined in a row at all.",
+        "sources": [
+          "S8"
+        ]
+      }
+    ],
+    "fix": "Cover the panels, open the connectors with the release tool, and connect fewer panels in a row, as the device's manual allows.",
+    "stop_when": "Stop and go to your site supervisor or site engineer if you are not sure how many panels the device can take, or if the error stays after the change. Too high a voltage can damage the device.",
+    "sources": [
+      "S3",
+      "S4",
+      "S5",
+      "S8"
+    ]
+  },
+  {
+    "id": "fail-08",
+    "symptom": "A connector is hot, melted, darkened, or smells burnt.",
+    "likely_causes": [
+      "A connector not fully pushed together",
+      "Connectors of different makes",
+      "Water or dirt inside a connector",
+      "A connector badly made or damaged"
+    ],
+    "checks": [
+      {
+        "text": "Without touching it, look for plastic that is melted, darkened or out of shape, as in the picture.",
+        "image": "images/third-party/mc4-connector-heat-damage.jpg",
+        "sources": [
+          "S5",
+          "S7"
+        ]
+      },
+      {
+        "text": "Do not touch the connector. Keep everyone back. If you safely can, cover the panel fully or turn off the off switch, without touching the connector.",
+        "image": "images/step-04.svg",
+        "sources": [
+          "S3",
+          "S7"
+        ]
+      }
+    ],
+    "fix": "None for you to do. A heat-damaged connector must be replaced. Report it to your site supervisor or site engineer.",
+    "stop_when": "Always stop. Do not pull the connector apart and do not use the system. Go to your site supervisor or site engineer. If there is smoke or flame, move away and follow the site's emergency procedure.",
+    "sources": [
+      "S3",
+      "S5",
+      "S6",
+      "S7"
+    ]
+  },
+  {
+    "id": "fail-09",
+    "symptom": "A cable or connector is cut, cracked, chewed or crushed.",
+    "likely_causes": [
+      "Damage from animals, tools, feet, vehicles or sharp edges",
+      "A cable pulled tight or bent sharply"
+    ],
+    "checks": [
+      {
+        "text": "Without touching any bare metal, look along each cable and at each connector for cuts or cracks.",
+        "image": "images/step-02.svg",
+        "sources": [
+          "S3",
+          "S7"
+        ]
+      }
+    ],
+    "fix": "None for you to do. Do not tape, cut, join or repair the cable or connector.",
+    "stop_when": "Always stop. Cover the panel and go to your site supervisor or site engineer.",
+    "sources": [
+      "S3",
+      "S7"
+    ]
+  },
+  {
+    "id": "fail-10",
+    "symptom": "The connectors will not come apart.",
+    "likely_causes": [
+      "They are locked, as they are designed to be, and need their release tool"
+    ],
+    "checks": [
+      {
+        "text": "Check that the panel is fully covered or the off switch is off before you try.",
+        "image": "images/step-04.svg",
+        "sources": [
+          "S2",
+          "S3"
+        ]
+      },
+      {
+        "text": "Check that you have the release tool made for this make of connector.",
+        "image": "images/step-12.svg",
+        "sources": [
+          "S2"
+        ]
+      }
+    ],
+    "fix": "With the panel covered, use the right release tool to free the locking tabs, then separate the halves.",
+    "stop_when": "Stop and go to your site supervisor or site engineer if you have no release tool. Do not use pliers or a screwdriver, and do not pull on the cables.",
+    "sources": [
+      "S2",
+      "S3"
+    ]
+  },
+  {
+    "id": "fail-11",
+    "symptom": "The connectors are lying on the ground or in water.",
+    "likely_causes": [
+      "The cable has not been held up off the ground"
+    ],
+    "checks": [
+      {
+        "text": "Cover the panel fully before you touch wet connectors or cables.",
+        "image": "images/step-04.svg",
+        "sources": [
+          "S3"
+        ]
+      },
+      {
+        "text": "Look for rust, green marks or dirt on the connectors.",
+        "sources": [
+          "S3",
+          "S7"
+        ]
+      }
+    ],
+    "fix": "With the panel covered, lift the cable and fix it so the connectors sit off the ground, away from where water gathers.",
+    "stop_when": "Stop and go to your site supervisor or site engineer if any connector shows rust, green marks or water inside, or if the panel stops working.",
+    "sources": [
+      "S1",
+      "S3",
+      "S7"
+    ]
+  },
+  {
+    "id": "fail-12",
+    "symptom": "The power cuts out on damp mornings or after rain, then comes back.",
+    "likely_causes": [
+      "Water getting into a connector that is not fully closed or sealed",
+      "Connectors lying where water gathers"
+    ],
+    "checks": [
+      {
+        "text": "When the panel is covered and dry, check that every connector pair is fully locked and held off the ground.",
+        "image": "images/step-10.svg",
+        "sources": [
+          "S7"
+        ]
+      }
+    ],
+    "fix": "Lock any loose pair and lift connectors out of the wet, with the panel covered.",
+    "stop_when": "Stop and go to your site supervisor or site engineer if the cut-outs carry on. Water inside a connector is a fault the site engineer must fix.",
+    "sources": [
+      "S1",
+      "S7"
+    ]
+  },
+  {
+    "id": "fail-13",
+    "symptom": "The panel's glass is broken or cracked.",
+    "likely_causes": [
+      "A knock, a fall, hail, or someone standing on it"
+    ],
+    "checks": [
+      {
+        "text": "Do not touch the panel's surface or frame.",
+        "sources": [
+          "S3"
+        ]
+      }
+    ],
+    "fix": "None for you to do. A broken panel cannot be repaired and must not be used.",
+    "stop_when": "Always stop. Keep people away and go to your site supervisor or site engineer.",
+    "sources": [
+      "S3"
+    ]
+  },
+  {
+    "id": "fail-14",
+    "symptom": "My charge controller's screen and lights are all off.",
+    "likely_causes": [
+      "The battery is not connected to the controller",
+      "A blown battery fuse",
+      "A flat battery"
+    ],
+    "checks": [
+      {
+        "text": "Check whether the battery was connected to the controller before the panel, as the controller's manual asks.",
+        "image": "images/step-07.svg",
+        "sources": [
+          "S4"
+        ]
+      }
+    ],
+    "fix": "None for you to do on the battery side.",
+    "stop_when": "Always stop. Do not open the controller, replace a fuse, or work on the battery wiring. Go to your site supervisor or site engineer.",
+    "sources": [
+      "S4",
+      "S9"
+    ]
+  }
+]

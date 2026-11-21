@@ -1,0 +1,131 @@
+{
+  "id": "seed-mc4-leads",
+  "title": "Connecting a solar panel by its MC4 leads",
+  "installation_type": "crystalline-panel-mc4-leads",
+  "version": "0.1-draft",
+  "status": "demo, not admitted",
+  "admitted_by": null,
+  "admitted_on": null,
+  "language": "en",
+  "sources": [
+    {
+      "id": "S1",
+      "title": "Solar PV audit checklist (print all)",
+      "publisher": "Solar Victoria, State Government of Victoria (Australia)",
+      "url": "https://www.solar.vic.gov.au/solar-pv-audit-checklist/print-all",
+      "licence": "Creative Commons Attribution 4.0 International (CC BY 4.0), per the site's copyright page; images, logos and third-party content excluded. Attribution asked for: © Copyright State of Victoria (Department of Energy, Environment and Climate Action)",
+      "licence_url": "https://www.solar.vic.gov.au/copyright",
+      "retrieved": "2026-11-20",
+      "reached": true
+    },
+    {
+      "id": "S2",
+      "title": "MC4 connector",
+      "publisher": "Wikipedia (Wikimedia Foundation)",
+      "url": "https://en.wikipedia.org/wiki/MC4_connector",
+      "licence": "Creative Commons Attribution-ShareAlike 4.0 (CC BY-SA 4.0), as stated on the page",
+      "licence_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "retrieved": "2026-11-20",
+      "reached": true
+    },
+    {
+      "id": "S3",
+      "title": "Installation Manual, IEC & UL version (crystalline modules), Doc PS-M-0434 Ver. C, 2017",
+      "publisher": "Trina Solar (copy hosted by a reseller's file store)",
+      "url": "https://cdn.shopify.com/s/files/1/0079/6003/5417/files/Trina-Solar-Panel-Installation-Manual-IEC-UL-July-2017-EN.pdf",
+      "licence": "not stated (cited as a source of fact only; no text or picture copied)",
+      "licence_url": null,
+      "retrieved": "2026-11-20",
+      "reached": true
+    },
+    {
+      "id": "S4",
+      "title": "Manual SmartSolar MPPT 75/10 up to 100/20, chapter 4: Installation",
+      "publisher": "Victron Energy",
+      "url": "https://www.victronenergy.com/media/pg/Manual_SmartSolar_MPPT_75-10_up_to_100-20/en/installation.html",
+      "licence": "not stated (page footer: © 2026 Victron Energy; cited as a source of fact only)",
+      "licence_url": null,
+      "retrieved": "2026-11-20",
+      "reached": true
+    },
+    {
+      "id": "S5",
+      "title": "Manual SmartSolar MPPT 75/10 up to 100/20, chapter 8: Troubleshooting",
+      "publisher": "Victron Energy",
+      "url": "https://www.victronenergy.com/media/pg/Manual_SmartSolar_MPPT_75-10_up_to_100-20/en/troubleshooting.html",
+      "licence": "not stated (cited as a source of fact only)",
+      "licence_url": null,
+      "retrieved": "2026-11-20",
+      "reached": true
+    },
+    {
+      "id": "S6",
+      "title": "Fire and Solar PV Systems: Recommendations for the Photovoltaic Industry, report P100874-1006 issue 2.5, 2017",
+      "publisher": "BRE National Solar Centre, for the UK Department for Business, Energy and Industrial Strategy (published on GOV.UK)",
+      "url": "https://assets.publishing.service.gov.uk/media/5a81bf5740f0b62302698f20/fire-solar-pv-systems-industry-recommendations.pdf",
+      "licence": "not an open licence: © Building Research Establishment Ltd; the report says it may be distributed only in its entirety, without amendment, with attribution to BRE (cited as a source of fact only)",
+      "licence_url": null,
+      "retrieved": "2026-11-20",
+      "reached": true
+    },
+    {
+      "id": "S7",
+      "title": "The Ultimate Safety Guide for Solar PV Connectors, February 2022",
+      "publisher": "PVEL and HelioVolta",
+      "url": "https://www.pvel.com/wp-content/uploads/PVEL-HelioVolta-Ultimate-Safety-Guide-for-Solar-PV-Connectors-Feb-2022.pdf",
+      "licence": "not an open licence: ©2022 HelioVolta and PVEL, all rights reserved (cited as a source of fact only)",
+      "licence_url": null,
+      "retrieved": "2026-11-20",
+      "reached": true
+    },
+    {
+      "id": "S8",
+      "title": "EcoFlow R600 user manual, page 15: solar panel connection",
+      "publisher": "EcoFlow (copy hosted by ManualsLib)",
+      "url": "https://www.manualslib.com/manual/1992101/Ecoflow-R600.html?page=15",
+      "licence": "not stated (cited as a source of fact only)",
+      "licence_url": null,
+      "retrieved": "2026-11-20",
+      "reached": true
+    },
+    {
+      "id": "S9",
+      "title": "Troubleshooting Solar Panel Output: Low or No Charge Issues",
+      "publisher": "Starpower Advance Solar Technology (support article)",
+      "url": "https://starpoweradvancesolartechnology.freshdesk.com/support/solutions/articles/51000496908-troubleshooting-solar-panel-output-low-or-no-charge-issues",
+      "licence": "not stated (cited as a source of fact only)",
+      "licence_url": null,
+      "retrieved": "2026-11-20",
+      "reached": true
+    }
+  ],
+  "third_party_images": [
+    {
+      "file": "images/third-party/mc4-connector-pair-marks.jpg",
+      "source_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/MC4_Connector_Front_and_Top_View.jpg/960px-MC4_Connector_Front_and_Top_View.jpg",
+      "page_url": "https://commons.wikimedia.org/wiki/File:MC4_Connector_Front_and_Top_View.jpg",
+      "owner_or_author": "Orion Lawlor",
+      "licence": "CC0 (public domain dedication), as stated on the file page",
+      "retrieved": "2026-11-20",
+      "shows": "A pair of MC4-type connectors, front and side views: the plus connector with a red sealing ring and locking clips on the left, the minus connector on the right, each with its + or − sign moulded on the body."
+    },
+    {
+      "file": "images/third-party/panel-back-label-and-leads.jpg",
+      "source_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/165W_solar_panel%2C_back.jpg/960px-165W_solar_panel%2C_back.jpg",
+      "page_url": "https://commons.wikimedia.org/wiki/File:165W_solar_panel,_back.jpg",
+      "owner_or_author": "Veikk0.ma",
+      "licence": "CC BY 4.0, as stated on the file page",
+      "retrieved": "2026-11-20",
+      "shows": "The back of a 165 W panel: the junction box, the specification label listing the open-circuit voltage (Voc) and maximum system voltage, and two black leads ending in MC4-type connectors."
+    },
+    {
+      "file": "images/third-party/mc4-connector-heat-damage.jpg",
+      "source_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/MC4-plug_damage-11ASD.jpg/500px-MC4-plug_damage-11ASD.jpg",
+      "page_url": "https://commons.wikimedia.org/wiki/File:MC4-plug_damage-11ASD.jpg",
+      "owner_or_author": "Asurnipal",
+      "licence": "CC BY-SA 4.0, as stated on the file page",
+      "retrieved": "2026-11-20",
+      "shows": "An MC4 plug damaged by a bad contact: the plastic around the contact is melted and darkened, with a red arrow pointing to the damage. An example of what wrong looks like."
+    }
+  ]
+}

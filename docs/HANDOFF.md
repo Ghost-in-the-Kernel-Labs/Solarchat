@@ -2,53 +2,64 @@
 
 Read `CLAUDE.md` first, then this. `TODO.md` is the chain in order; `docs/DONE.md` is what is finished.
 
-## Where the project stands (2026-11-20)
+## Where the project stands (2026-11-21)
 
-Stamped from Ghost-Core today and landed on `main` at Ghost's word (J-005) with the founding refusals (SC-002 to
-SC-005), the project's ghost, the roadmap and the founding lockfile. Nothing of Solarchat's own is built. Open in
-Phase 0: 0.2 (the full gate), 0.4 (the contract and modules), 0.5 (any further founding decision), 0.6.
+Founded, planned, and holding one demo pack; no product code yet. `main` carries the stamp, decisions SC-001 to
+SC-008, the project's ghost, the roadmap (Phases 1 to 6), the six-pin lockfile, and the demo pack
+`packs/seed-mc4-leads/` (J-017). The full gate passes (J-016, a tune-up commit; the count restarted there).
 
-## Settled by Ghost, 2026-11-20
+What Solarchat is, in the roadmap's words (`docs/ROADMAP.md` §1 to §3, F-01 to F-15): an assistant named Hadley
+that walks workers on solar sites through installing panels and finding faults, on a phone, answering only from
+knowledge packs; online it calls Claude Sonnet through the Anthropic API with no tools and no connectors, and reads
+photos; offline it runs on the packs, the flows and the safety rules, with at most a small model that only chooses
+which admitted passage to show.
 
-- The prefix is SC, the stack python, the floor grade mid.
-- SC-002 to SC-005 (J-002): the answering step calls a model through one module and no test does; goldens for the
-  deterministic parts and the evaluation set for answers; mutation over deterministic code, not prompt text; a
-  person admits a pack's text and the bot answers only from it. The wording is the agent's, for your confirmation,
-  and covers TODO 0.5's refusals; any other founding decision of yours is still to write.
-- Retrieval starts as keyword search in the standard library (Core C-002); the model client is the first dependency
-  that will be proposed to you (Core C-012).
+## Next, in order
+
+1. **TODO 0.4, the contract and the module map.** Sets the package name, which removes the last `STAMP` marker
+   (`pyproject.toml`) and the placeholder `PROJECT` in `scripts/checks/imports.py`, and so closes 0.2 with it. The
+   module map is where SC-002's "one module holds the model client" becomes a test.
+2. **TODO 0.5 and 0.6**: any further founding decision of Ghost's; Tune-up pass 0.
+3. **Phase 1**, 1.1 to 1.6: the words, the pack format and its check (the real deliverable: the deploying company
+   builds its libraries to it, F-15), the safety rules for the newest contractor on a site, then bringing the demo
+   pack to that format (1.4 stays open until then), then the frozen evaluation set.
+
+## Settled by Ghost
+
+- 2026-11-20: prefix SC, the python stack, floor grade mid; SC-002 to SC-005 (J-002); the online model, photos,
+  speech (J-006, F-07 to F-09); offline the small model only chooses, online first, an app and a website (J-008);
+  the manner and the name Hadley (J-009, J-010); no connectors, pictures per step (J-011); demo packs may carry web
+  pictures with provenance (J-012, SC-007); the model-name check removed (J-007, SC-006).
+- 2026-11-21: the users are workers on sites, not homeowners (J-013); no mutation run (J-015, SC-008).
+- The wording of SC-002 to SC-008 is the agent's, for Ghost to confirm.
 
 ## For Ghost: waiting on you
 
-1. Name this project's ghost (`docs/GHOST-IN-THE-KERNEL.md`, TODO 0.1).
-2. Pin the stack's image digest and dependencies; wire mutation (TODO 0.2); every `STAMP` marker in the tree is a line to fill (`grep -rn STAMP .`).
-3. Write the roadmap's §1 to §6 and Phase 1's items in `TODO.md` (TODO 0.3).
-4. Write the first invariants of the contract and set `docs/modules.json` (TODO 0.4).
-5. Write the founding decisions in `theGhost.md`, a decision for each core decision this project refuses among them (TODO 0.5): agents cannot author them.
+1. Read the demo pack with an engineer's eye before anyone relies on it. The worker flagged claims it could not
+   source: fail-04 (reversed leads can damage some devices), step-07's stop (battery not yet wired), step-09 (the
+   gentle pull), fail-03 (some shortfall from the label is normal), fail-08's fire wording. Sources S3 and S8 were
+   read from third-party mirrors and want official copies.
+2. The demo pack fits a small kit (a charge controller, a power station, covering the panel) better than a large
+   site. A second demo pack, stringing modules on a utility site, would be nearer the users of F-01.
+3. `CLAUDE.md`'s three rules still state Core C-033 without SC-007's narrowing, which is why the worker kept to
+   openly licensed pictures. Say whether `CLAUDE.md` should name SC-007.
+4. Whether the deploying company may be named in the repository (the agent has not written its name).
+5. The app's stack (roadmap 5.1): one web client that is both the website and an installable app, or a native app.
+6. Which make and model the first real pack covers (roadmap 6.2); Ghost named First Solar as the most troublesome.
+7. A trademark search on the name Hadley before it reaches an app store.
+8. `scripts/ship.sh` is stamped without its executable bit (run it as `bash scripts/ship.sh`); a mode change to a
+   gate file is yours.
 
 ## Trials: questions settled by a run, not an argument
 
-(none yet)
+(none yet; roadmap 3.7 and 5.1 name the first two)
 
 ## What to distrust
 
-- TODO 0.2: the python gate passes since J-014 and J-015 (ruff, readability, the lockfile check; no mutation run).
-  `scripts/checks/imports.py` still names the placeholder `PROJECT` until TODO 0.4 sets the package.
-  A session's venv: `python3.12 -m venv .venv && .venv/bin/pip install --only-binary :all: --require-hashes -r requirements.lock`.
-
-## Drafts for Ghost to read (J-003)
-
-- The project's ghost (`docs/GHOST-IN-THE-KERNEL.md`) and the roadmap (`docs/ROADMAP.md`, Phases 1 to 6; `TODO.md`,
-  Phase 1) are the agent's drafts from your words of 2026-11-20. Landed as drafts at your word (J-005); correct them freely with later commits.
-- Settled by you (J-006): the online model is Claude Sonnet through the Anthropic API, with photos; speech wanted;
-  offline, a light open model downloaded inside an app (F-07 to F-09).
-- Settled by you (J-008): offline, the small model only chooses the admitted passage and flow, as the worst-case
-  backup; online first whenever there is a connection; a phone app and a website (F-10, F-11, P-19).
-- Settled by you (J-010): the assistant is named Hadley (F-13).
-- Settled by you (J-013): the users are workers on sites (new contractors, the deploying company's crews, outside
-  employees installing on its behalf), not homeowners; F-01 corrected, 1.3 unblocked.
-- Settled by you (J-015): no mutation run (SC-008, superseding SC-004); the lock is six pins.
-- The seed pack's draft waits on `agent/seed-pack` for its own landing after J-016's tune-up commit.
-- Settled by you (J-011): no connectors; packs carry failures by type, the steps and a picture per step (F-14); a
-  first draft of the seed pack goes to a strong-grade worker now, ahead of 1.2, on `agent/seed-pack`.
-- Open, the agent's question to you: the app's stack (5.1).
+- The demo pack is not admitted (SC-005) and was written to a provisional layout before 1.2 and 1.3 existed. Its
+  drawings were looked at once, rendered together; its text was not read in full by the coordinator.
+- The project's ghost and the roadmap are the agent's drafts from Ghost's words, landed for Ghost to correct.
+- `docs/AGENT.md`'s Fast loop and Gate cells are Ghost-Core's numbers until Tune-up pass 0 re-measures them here.
+- A session's venv: `python3.12 -m venv .venv && .venv/bin/pip install --only-binary :all: --require-hashes -r requirements.lock`.
+- Branches left on origin, all merged into `main` by squash and safe to delete: `claude/sleepy-babbage-k6ojqm`,
+  `claude/audience-f01`, `claude/gate-0-2`, `agent/seed-pack`.

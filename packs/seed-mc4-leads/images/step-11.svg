@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300" role="img" aria-labelledby="t">
+  <title id="t">Uncovered panel in sun; the device shows solar power coming in</title>
+  <rect x="0" y="0" width="400" height="300" fill="#ffffff"/>
+  <g font-family="Arial, Helvetica, sans-serif" fill="#1a1a1a">
+    <text x="16" y="30" font-size="20" font-weight="bold">UNCOVER AND CHECK</text>
+    <circle cx="44" cy="74" r="22" fill="#f9a825"/>
+    <path d="M44 40 v-8 M44 116 v-8 M10 74 h-8 M86 74 h-8" stroke="#f9a825" stroke-width="4"/>
+    <rect x="76" y="80" width="140" height="110" rx="4" fill="#1f4e79" stroke="#555555" stroke-width="3"/>
+    <path d="M216 150 H258" stroke="#c62828" stroke-width="5"/>
+    <path d="M216 170 H258" stroke="#111111" stroke-width="5"/>
+    <rect x="258" y="100" width="126" height="110" rx="8" fill="#f3f3f3" stroke="#555555" stroke-width="3"/>
+    <rect x="270" y="114" width="102" height="56" rx="4" fill="#263238"/>
+    <circle cx="290" cy="142" r="9" fill="#f9a825"/>
+    <text x="350" y="150" font-size="20" font-weight="bold" text-anchor="middle" fill="#ffffff">W</text>
+    <text x="321" y="196" font-size="16" text-anchor="middle">solar in</text>
+    <circle cx="200" cy="250" r="16" fill="#2e7d32"/>
+    <path d="M191 250 l6 7 l12 -14" fill="none" stroke="#ffffff" stroke-width="4"/>
+    <text x="200" y="288" font-size="18" text-anchor="middle">Sun symbol or watts above zero</text>
+  </g>
+</svg>

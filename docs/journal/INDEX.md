@@ -20,3 +20,4 @@ Written from `docs/journal/` by `scripts/journal_index.py`; do not edit by hand.
 | J-014 | The python gate now reaches mutation; mutation cannot start on the template's own tests | failure-caught | `J-000-099.md` |
 | J-015 | The mutation run removed at Ghost's word | decision | `J-000-099.md` |
 | J-016 | Tune-up commit: the first eight commits | measurement | `J-000-099.md` |
+| J-017 | The demo pack landed: connecting a panel by its MC4 leads | feature | `J-000-099.md` |

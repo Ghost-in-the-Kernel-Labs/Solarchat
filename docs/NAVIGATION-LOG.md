@@ -21,3 +21,10 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Opened**: the files it opened, in order.
 - **Complaints**: what slowed or misled it.
 - **Suggestions**: what it would change.
+
+### 2026-11-20 · TODO 1.4 the seed pack, first draft (demo) · Claude Opus 5.5
+
+- **Task**: draft the seed pack under `packs/seed-mc4-leads/` to the provisional layout, from public sources read in the session; mid-task, a brief change (SC-007) allowed web pictures under `images/third-party/`.
+- **Opened**: `docs/ROADMAP.md`, `theGhost.md` (SC-005), `docs/journal/J-000-099.md` (J-010, J-011), `docs/SUPPLY-CHAIN.md` (rule 6), `docs/when/handoff.md`, `docs/NAVIGATION-LOG.md`, `scripts/fast.sh`.
+- **Complaints**: the mid-task change allowed pictures "under ordinary copyright", which `CLAUDE.md`'s three rules (C-033) forbid in the repository, and the change was not yet on the branch to read; I kept to openly licensed pictures. Several public-body sources sat behind bot checks (403, 503), so the strongest government guidance on mismatched connectors could not be read.
+- **Suggestions**: write SC-007 so it states its relation to C-033 before a worker gets it; give the provisional layout a field for a photo's alt text.

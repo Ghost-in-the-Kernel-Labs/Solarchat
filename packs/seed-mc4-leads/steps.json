@@ -1,0 +1,166 @@
+[
+  {
+    "id": "step-01",
+    "title": "Check the voltages match",
+    "text": "The site's safety procedures and your supervisor's instructions always come first. Find the open-circuit voltage (Voc) on the panel's label. Find the highest solar input voltage in the manual of the device it feeds. The panel's Voc must be below that limit. Cold weather raises a panel's voltage, so leave room to spare.",
+    "right_looks_like": "The panel's Voc is clearly lower than the device's highest solar input voltage.",
+    "image": "images/step-01.svg",
+    "image_alt": "Two labels side by side. On the left, the panel label shows a line marked Voc. On the right, the device label shows a line marked Max solar input. An arrow shows the panel figure is smaller than the device figure, with a green tick.",
+    "photo": "images/third-party/panel-back-label-and-leads.jpg",
+    "sources": [
+      "S3",
+      "S4",
+      "S8"
+    ],
+    "stop": "Stop. If you cannot find both figures, or the panel's Voc is not clearly below the device's limit, do not connect. Go to your site supervisor or site engineer."
+  },
+  {
+    "id": "step-02",
+    "title": "Look over the panel and its leads",
+    "text": "Before you connect anything, look closely at the panel, its two cables and their connectors. Look for broken or cracked glass, cuts in the cable cover, and connectors that are cracked, melted, darkened or dirty. Do not touch any metal inside a connector.",
+    "right_looks_like": "Unbroken glass, whole cables, and clean, undamaged connectors.",
+    "image": "images/step-02.svg",
+    "image_alt": "A panel seen from behind with two cables, one red marked plus and one black marked minus, each ending in a clean connector with a green tick. A small inset marked wrong shows a cracked, scorched connector with a red cross.",
+    "sources": [
+      "S3",
+      "S7"
+    ],
+    "stop": "Stop. If the glass is broken, a cable is cut, or a connector is cracked, melted or scorched, do not use the panel. Do not tape or repair it. Go to your site supervisor or site engineer."
+  },
+  {
+    "id": "step-03",
+    "title": "Check the connectors are the same make",
+    "text": "Look at the connector on the panel lead and the one you will plug it into. They must come from the same maker and be the same type. Compare the shape of the body, the nut at the back, and any name or logo moulded on them. Looking alike is not enough.",
+    "right_looks_like": "Both halves carry the same name and have the same shape.",
+    "image": "images/step-03.svg",
+    "image_alt": "Two connector halves with the same shape and the same maker's mark, with a green tick. A small inset marked wrong shows two halves of different shapes and different marks, with a red cross.",
+    "sources": [
+      "S1",
+      "S2",
+      "S6",
+      "S7"
+    ],
+    "stop": "Stop. If the two halves are different makes, or you cannot tell, do not join them. Ask your site supervisor or site engineer for a matching part."
+  },
+  {
+    "id": "step-04",
+    "title": "Make the panel safe to handle",
+    "text": "A panel makes electricity whenever light falls on it, even on a dull day. Before you connect or disconnect anything, turn the panel face down onto something soft, or cover the whole front with a thick, dark cover such as a blanket. If there is an off switch between the panel and the device, turn it off.",
+    "right_looks_like": "No part of the panel's front is open to the light.",
+    "image": "images/step-04.svg",
+    "image_alt": "A panel with its whole front covered by a dark blanket, with a green tick. A small inset marked wrong shows the blanket covering only half the panel, with a red cross.",
+    "sources": [
+      "S3"
+    ],
+    "stop": null
+  },
+  {
+    "id": "step-05",
+    "title": "Find positive and negative",
+    "text": "Find which panel lead is positive and which is negative. Look for a plus sign (+) and a minus sign (−) on each connector, on the cable near the panel, or on the panel's label. Go by these marks, not by the colour of the cable.",
+    "right_looks_like": "You know which lead is plus and which is minus.",
+    "image": "images/step-05.svg",
+    "image_alt": "Close view of two connectors at the ends of the panel leads. One shows a plus sign and is drawn in red; the other shows a minus sign and is drawn in black. Arrows point to the moulded signs.",
+    "photo": "images/third-party/mc4-connector-pair-marks.jpg",
+    "sources": [
+      "S2",
+      "S3"
+    ],
+    "stop": "Stop. If you cannot find a plus and a minus mark on the leads or the label, do not guess. Go to your site supervisor or site engineer."
+  },
+  {
+    "id": "step-06",
+    "title": "Match plus to plus",
+    "text": "Find the plus and minus marks on the device's solar input, or on the adapter cable that came with it. The panel's plus lead must go to the device's plus. The panel's minus lead must go to the device's minus. Lay each pair side by side before joining them.",
+    "right_looks_like": "Plus lies next to plus and minus next to minus, ready to join.",
+    "image": "images/step-06.svg",
+    "image_alt": "The panel's plus lead lined up with the adapter's plus lead, both red, and the panel's minus lead lined up with the adapter's minus lead, both black, with a green tick. A small inset marked wrong shows red crossed to black, with a red cross.",
+    "sources": [
+      "S4",
+      "S5",
+      "S8"
+    ],
+    "stop": null
+  },
+  {
+    "id": "step-07",
+    "title": "Charge controller: battery first",
+    "text": "This step is only for a charge controller. The battery must already be connected to the controller before the panel is. The panel always goes on last. If you are feeding a portable power station, skip this step.",
+    "right_looks_like": "The controller is already wired to the battery and its display or light is on.",
+    "image": "images/step-07.svg",
+    "image_alt": "A numbered order: 1, a battery wired to a charge controller, whose light is on. 2, the panel leads waiting to be connected to the controller. An arrow shows the panel comes second.",
+    "sources": [
+      "S4"
+    ],
+    "stop": "Stop. If the battery is not yet wired to the controller, do not wire it yourself. That is a job for the site engineer. Go to your site supervisor."
+  },
+  {
+    "id": "step-08",
+    "title": "Joining two panels in a row",
+    "text": "This step is only for joining panels in a row (in series). Plug the plus lead of one panel into the minus lead of the next. Adding panels in a row adds their voltages, so add up their Voc figures first. The total must still be below the device's limit from step 1.",
+    "right_looks_like": "Plus of one panel joined to minus of the next, with one free plus and one free minus left at the ends.",
+    "image": "images/step-08.svg",
+    "image_alt": "Two panels side by side. The red plus lead of the left panel is joined to the black minus lead of the right panel. One black minus lead is left free on the left and one red plus lead is left free on the right, marked to device.",
+    "sources": [
+      "S3",
+      "S5",
+      "S8"
+    ],
+    "stop": "Stop. If the added-up voltage is not clearly below the device's limit, or the device's manual says not to join panels in a row, do not join them. Go to your site supervisor or site engineer."
+  },
+  {
+    "id": "step-09",
+    "title": "Push each pair together until it clicks",
+    "text": "With the panel still covered, hold each connector by its plastic body and push the pair straight together until you hear or feel a click. Then pull gently on the two bodies, not the cables. They should stay locked, with no gap between the halves.",
+    "right_looks_like": "The two halves are locked together with no gap showing.",
+    "image": "images/step-09.svg",
+    "image_alt": "Two connector halves pushed fully together, with no gap and a click mark, and a green tick. A small inset marked wrong shows the halves only part way in, with a visible gap and a red cross.",
+    "sources": [
+      "S2",
+      "S3",
+      "S7"
+    ],
+    "stop": null
+  },
+  {
+    "id": "step-10",
+    "title": "Lay the cable safely",
+    "text": "Let the cable come out of each connector straight, then curve gently. Do not bend it sharply at the connector or leave it pulled tight. Keep connectors off the ground and away from places where water gathers. Fix the cable so wind cannot swing it.",
+    "right_looks_like": "Gentle curves, no strain, and connectors held up off the ground and out of water.",
+    "image": "images/step-10.svg",
+    "image_alt": "A joined connector held up on a post, off the ground with the cable leaving it straight and then curving gently, with a green tick. A small inset marked wrong shows the cable bent sharply at the connector and lying in a puddle, with a red cross.",
+    "sources": [
+      "S1",
+      "S3",
+      "S7"
+    ],
+    "stop": null
+  },
+  {
+    "id": "step-11",
+    "title": "Uncover the panel and check",
+    "text": "Turn on the off switch if you turned one off. Then uncover the panel and face it to the sun with nothing shading it. Look at the device. Its display or light should show that solar power is coming in. In weak light, early or late in the day, it may show little or nothing.",
+    "right_looks_like": "The device shows solar input, such as a sun symbol or a number of watts above zero.",
+    "image": "images/step-11.svg",
+    "image_alt": "An uncovered panel in sunshine, connected to a device whose screen shows a sun symbol and a number of watts, with a green tick.",
+    "sources": [
+      "S4",
+      "S5",
+      "S8"
+    ],
+    "stop": null
+  },
+  {
+    "id": "step-12",
+    "title": "Disconnecting later",
+    "text": "Never pull connectors apart while power is flowing, as this can cause a spark that damages them. First cover the panel fully or turn off the off switch. Then free each pair with the release tool made for that connector. They are designed not to come apart by hand.",
+    "right_looks_like": "The panel is covered and the release tool is used to open the lock.",
+    "image": "images/step-12.svg",
+    "image_alt": "A covered panel, and a release tool pressed onto the locking tabs of a connector pair to open it, with a green tick. A small inset marked wrong shows arrows pulling a connector pair apart beside an uncovered panel in sunshine, with a red cross.",
+    "sources": [
+      "S2",
+      "S3"
+    ],
+    "stop": "Stop. If you do not have the right release tool, do not force the connectors apart with pliers or a screwdriver. Go to your site supervisor or site engineer."
+  }
+]
