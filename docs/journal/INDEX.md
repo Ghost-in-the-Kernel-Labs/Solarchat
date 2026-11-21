@@ -36,3 +36,4 @@ Written from `docs/journal/` by `scripts/journal_index.py`; do not edit by hand.
 | J-030 | The safety rules' triggers and wording after the audit, and how triggers match | decision | `J-000-099.md` |
 | J-031 | The plan held against Ghost's vision: warn and help, the engineer's QA, and the change log, proposed | direction | `J-000-099.md` |
 | J-032 | Ghost's answers to J-031's seven questions: SC-015, SC-016, F-16, F-17 in force; SR-03 at warn; the pack status becomes field | decision | `J-000-099.md` |
+| J-033 | Ghost's further word: the engineer comes in only at the end, and the project is built for that one review | decision | `J-000-099.md` |

@@ -51,6 +51,11 @@ Solarchat's own:
   that the drop is never a dead end (F-10).
 - **P-18 Written for a phone and a tired person.** One step at a time, short, in plain words, and the
   conversation can be picked up where it stopped (F-03).
+- **P-20 Built to be reviewed once, at the end.** An electrical engineer, not yet known, reviews the bot at the end of
+  the project (F-16), so every judgement made before then is recorded where one reader can find it: each safety
+  rule's change log (SC-016), each "engineer to confirm" mark, each unknown page, each unsourced claim, each rule's
+  response. A judgement nobody wrote down cannot be confirmed or reversed. The review packet (1.14) is generated
+  from that data and held current by the fast loop; nothing before the review waits on the engineer.
 
 
 ## 3. Settled facts
@@ -72,7 +77,7 @@ Solarchat's own:
 | F-14 | The model has no connectors (a photo is read by the model directly). A pack holds, by installation type, the failures commonly met, the correct installation steps, and a picture for each step of what right looks like; the assistant shows the pictures step by step. | Ghost, 2026-11-20, in chat (J-011) | The pack format (1.2) carries a picture per step and failures grouped by type; pictures in the repository are the project's own drawings or openly licensed, never copied (Core C-033); a place where a real photograph is wanted is listed for a person to supply. |
 | F-15 | The libraries built here are demos. The finished libraries are made by the company that deploys the product. | Ghost, 2026-11-20, in chat (J-012) | A demo pack may carry web pictures with their provenance (SC-007); the pack format and its admission check (1.2) are what the deploying company builds to, so they matter more than the demo's content. |
 | F-06 | Three modes are wanted: hosted behind an API, local, and offline. | Ghost, 2026-11-20, in chat | One kernel, three shells (P-15); the phases below. |
-| F-16 | Solarchat is QA'd by an electrical engineer. | Ghost, 2026-11-21, by email | The safety rules' judgements are the engineer's to confirm, not Ghost's: every "Ghost to confirm" mark on a safety rule reads "engineer to confirm", and a rule is relaxed only on the engineer's confirmed judgement (SC-015, SC-016, in force on Ghost's answer of 2026-11-21; SR-03's `warn` is Ghost's word pending the engineer's review). The engineer reviews the safety rules and the demo pack's flagged claims before the evaluation set is frozen (1.14, then 1.9). A pack's own text is still approved by its handover (SC-013); the engineer QAs the bot, not each deployment's packs. Who the engineer is: not yet named (Ghost, 2026-11-21); naming one is Ghost's next action, and a natural place to ask is the solar company Ghost is in contact with. Until one is named, Ghost may confirm precision fixes (matching bugs, not safety judgements), logged as "maintainer" (SC-015). |
+| F-16 | An electrical engineer, not yet known, reviews the bot once, at the end of the project; everything is built to be reviewed then, and nothing before then waits on an engineer. | Ghost, 2026-11-21, by email (QA by an electrical engineer) and in chat (the engineer comes in only at the end) | The safety rules' judgements are made now, on Ghost's word, each logged under SC-016 with the role "maintainer" and marked "engineer to confirm" (the mark formerly "Ghost to confirm"); the engineer confirms or reverses each at the final review (6.4). Ghost's judgements are provisional, never an engineer's, and the log says so. The project is designed for that one review (P-20): the review packet (1.14) gathers what the engineer must judge. A pack's own text is still approved by its handover (SC-013); the engineer reviews the bot, not each deployment's packs. Who the engineer is: unknown; Ghost may name one in time, and nothing waits on it. |
 | F-17 | Solarchat is a field-manual assistant: hardware faults often come down to people not knowing the proper steps. It answers setup and troubleshooting questions only from checked manuals, cites the passage and the page, and says "I do not know" when the manuals do not cover the question; its starting library is OSHA, NIOSH and Solar Victoria material (`library/sources/`); it is a demonstration of building outside one's own expertise from external knowledge; citation plus refusing unsupported questions should make it more reliable than a standard bot. | Ghost, 2026-11-21, by email | §1's thesis stands. "More reliable than a standard bot" is a claim the evaluation set measures (HAD-02, Core C-004), never one a document makes. The builder's expertise is not a source: the library and the packs are, so a claim with no source in them is flagged, not written (HANDOFF, For Ghost 3). |
 
 ## 4. What is deliberately not built
@@ -144,10 +149,7 @@ What a wrong answer is has to be written down before anything can give one (Core
   "page not yet found" where the page is `"unknown"` (SC-012); free text it cannot place gets "I do not know", with
   no passage (HAD-03).
 
-Decided on 2026-11-21 (J-031 proposed them; Ghost answered in J-032), to align the plan with Ghost's vision of that day (F-16, F-17); 1.9 moves to the waiting phase, so `TODO.md` holds it and the new items in Phase W until Ghost moves them back (1.9 waits on the engineer's review, 1.14 on an engineer, who is not yet named). The order they run in, after
-Monday's demo (1.4 to 1.8) and before the evaluation set's freeze: 1.11, 1.12, 1.13, 1.14, then 1.9. The chain's check
-reads numbers in order, so when they move back the evaluation set takes the number after 1.14 and 1.9 reads "moved",
-as 2.3 moved to 1.6 (SC-010); a number like "1.6a" is invisible to `scripts/checks/todo.py`.
+Decided on 2026-11-21 (J-031 proposed them; Ghost answered in J-032, and added in J-033 that the engineer comes in only at the end), to align the plan with Ghost's vision of that day (F-16, F-17). `TODO.md` holds 1.11 to 1.14 in Phase W until Ghost moves them back; nothing in them waits on an engineer. The order they run in, after Monday's demo (1.4 to 1.8): 1.11, 1.12, 1.13, 1.14. The evaluation set (1.9) keeps its place in Phase 1 after 1.8, needing only SC-015's code (1.11 and 1.12's rules and leaf); the engineer's review moved out of Phase 1 to 6.4, the end of the roadmap. The chain's check reads numbers in order, so a number like "1.6a" is invisible to `scripts/checks/todo.py`.
 
 - 1.11 The safety rules' change log (SC-016, in force): each rule's `changes`, `{date, by, role, why, evidence}`,
   backfilled for version 1 (J-027) and the audit's changes (J-030); the safety check refuses a rule changed with no
@@ -163,21 +165,15 @@ as 2.3 moved to 1.6 (SC-010); a number like "1.6a" is invisible to `scripts/chec
   the worker what to watch for. SR-02's meter, probe, test-lead and crimp triggers fire on no text of today's demo
   pack, but would stop every troubleshooting flow that measures and every crimping step. The precision fixes (a
   negation before a trigger; a check that lists signs to watch for) are Ghost's to confirm with "engineer to
-  confirm"; SR-02's triggers moving to a warn is a relaxation and the engineer's (1.14). Each change logged (1.11);
+  confirm"; SR-02's triggers moving to a warn is a relaxation, Ghost's to decide on his word and the engineer's to confirm at the end (6.4). Each change logged (1.11);
   `test/test_safety.py`'s pin of what the demo pack fires updated.
-- 1.14 The engineer's review (F-16), before the evaluation set is frozen: an electrical engineer reads SR-01 to SR-14
-  (words, triggers, responses, and each claim against its source's page in `library/sources/` where the library
-  holds it), decides the first queue of SC-015 (SR-03, SR-02's meter and crimp triggers, SR-05, SR-11's split), the
-  four marks still open (SR-02, SR-06, SR-08 and SR-09's first-aid sentence, SR-12), the demo pack's five flagged
-  claims (fail-04, step-07, step-09, fail-03, fail-08) and its two mirrored sources (S3, S8), and the evaluation set's
-  safety, warn and must-not-stop cases. Each judgement is a change-log entry with the role "electrical engineer".
-  Waits on: an engineer.
+- 1.14 The engineer's review packet (P-20, F-16): `scripts/engineer_review_doc.py` writes one document, `docs/ENGINEER-REVIEW.md`, from the data, and the fast loop holds it current (`--check`, as for `docs/SAFETY-RULES.md`). It gathers everything the engineer must judge: every "engineer to confirm" mark on a safety rule; every SC-016 change entry whose role is not an electrical engineer (Ghost's SR-03 warn among them), marked "pending engineer"; every pack page still `"unknown"` (SC-012); every claim flagged as unsourced (HANDOFF For Ghost 3's list: fail-04, step-07, step-09, fail-03, fail-08, and the mirrored sources S3 and S8); and each rule's response (SC-015). The item is written here and not built yet. It needs 1.11's change log and 1.12's responses to have something to gather.
 - 1.9 The evaluation set, version 1, frozen: in-scope questions with the passage that answers each; out-of-scope
   questions that must be refused; questions in the pack's own field that its passages do not cover, which must get
   "I do not know"; safety cases that must stop or call an emergency; warn cases that must show the rule's words and
   continue; and must-not-stop cases (step-12's safe method, fail-04's polarity fix, plugging connectors in, a meter
-  where the worker is trained), so a check catches over-stopping as well as under-stopping. The engineer reviews its
-  safety classes (1.14), and the freeze waits on SC-015. It still comes before any search or model (Core C-003).
+  where the worker is trained), so a check catches over-stopping as well as under-stopping. Its freeze needs only SC-015 in force, which it is; the engineer reviews the frozen
+  set at the end (6.4). It still comes before any search or model (Core C-003).
 - 1.10 Tune-up pass 1, with the human maintainability pass (SC-011)
 
 ### Phase 2: the offline mode (the floor)
@@ -192,7 +188,7 @@ as 2.3 moved to 1.6 (SC-010); a number like "1.6a" is invisible to `scripts/chec
   what the worker types or says as well as the pack's text, never Hadley's own replies. SR-14's "do not know" and
   "don't know" are settled first against HAD-03: "I don't know which lead is positive" is a question, answered from
   the packs or with "I do not know", not a stop; SR-14 keeps the worker's words that say they are untrained or unsure
-  of the work itself ("not trained", "never done"). The engineer confirms the trigger list (F-16, SC-016).
+  of the work itself ("not trained", "never done"). Ghost decides the trigger list on his word (SC-016, role maintainer); the engineer confirms it at the end (6.4).
 - 2.8 A site-safety pack built from the library (J-031): passages that quote `library/sources/` (OSHA,
   NIOSH, Solar Victoria) with each source's id and page, so a worker's general safety question ("how far from an
   overhead line?") gets a cited answer instead of "I do not know". A `demo` pack until it is handed over (SC-013). It
@@ -211,8 +207,9 @@ as 2.3 moved to 1.6 (SC-010); a number like "1.6a" is invisible to `scripts/chec
 - 3.2 The answering step: the found passages and the question in, an answer that cites its passage or says it
   does not know out; no tools.
 - 3.3 Tests against recorded replies; no test calls a model.
-- 3.4 The evaluation run, by hand, its scores recorded; the refusal threshold set by Ghost, the safety thresholds
-  (stops, emergencies, warns, and the must-not-stop cases) by the engineer (F-16).
+- 3.4 The evaluation run, by hand, its scores recorded; the refusal threshold and the safety thresholds
+  (stops, emergencies, warns, and the must-not-stop cases) set by Ghost provisionally, and the engineer confirms them
+  at the end (6.4, F-16).
 - 3.5 The manner (F-12): written once beside the prompt, with evaluation cases that the same question gets the
   same steps with and without it, and that a safety stop carries no humour.
 - 3.6 A photo in the conversation: the bot says what it reads (the label, the connectors), the customer confirms,
@@ -251,5 +248,6 @@ stack and so Ghost's decision before any of it is built.
   at deployment.
 - 6.2 The first real make and model. Waits on Ghost: which.
 - 6.3 The handover: when the bot stops, a summary for the engineer of what was tried and seen.
-- 6.4 A pilot, with an engineer reading the answers (Core C-005).
-- 6.5 Tune-up pass 6
+- 6.4 The engineer's final review (F-16, P-20), the last step before the pilot: an electrical engineer, not yet known, works through `docs/ENGINEER-REVIEW.md` (1.14): SR-01 to SR-14 (words, triggers, responses, and each claim against its source's page in `library/sources/` where the library holds it), SC-015's queue (SR-03's warn, SR-02's meter and crimp triggers, SR-05, SR-11's split), the four open marks (SR-02, SR-06, SR-08 and SR-09's first-aid sentence, SR-12), the demo pack's flagged claims and its two mirrored sources, the frozen evaluation set (1.9) and 3.4's thresholds. Each judgement confirms or reverses a change-log entry, and the engineer's own entries carry the role "electrical engineer". Waits on: an engineer.
+- 6.5 A pilot, with an engineer reading the answers (Core C-005).
+- 6.6 Tune-up pass 6

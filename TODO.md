@@ -40,6 +40,10 @@ The walker finds the rules that apply to a step's text with `rules_fired(text)` 
 
 Check: `solarchat/cli` runs a conversation end to end with the network off: choose a pack, a procedure or a flow, walk it step by step, and see the demo banner when the pack is a `demo` pack; every step shown lists its passage's sources by title, with the page for a document source or "page not yet found" where the page is `"unknown"` (SC-012); free text the shell cannot place gets "I do not know", with no passage (HAD-03); a test drives it through stdin.
 
+### 1.9 The evaluation set, version 1
+
+Check: at least thirty in-scope questions each naming the passage that answers it; fifteen out-of-scope questions marked refuse; questions in the pack's field that its passages do not cover, marked "I do not know"; ten safety cases marked stop or emergency; warn cases marked warn (the rule's words shown, then the walk continues); must-not-stop cases (step-12's safe method, fail-04's polarity fix, plugging connectors in, a meter where the worker is trained); a check holds the file's shape and that every named passage exists; the set's hash is recorded and a later change without a decision is refused. It needs only SC-015's code (the rules' responses and the leaf's warn, 1.11 and 1.12), SC-015 being in force; the engineer reviews the frozen set at the end (6.4).
+
 ### 1.10 Tune-up pass 1
 
 Check: `docs/when/tune-up.md` followed in full; the metrics table written; the navigation log reviewed; the human maintainability pass for the code written since the last one (SC-011).
@@ -52,13 +56,6 @@ Check: `theGhost.md` holds Ghost's founding decisions for Solarchat, a decision 
 
 Moved: from Phase 0
 Waits on: Ghost's founding decisions (the questions in `docs/HANDOFF.md`, "For Ghost": the app's stack, the first real pack's make and model, naming the deploying company, SC-007 in `CLAUDE.md`, the trademark search)
-
-### 1.9 The evaluation set, version 1
-
-Check: at least thirty in-scope questions each naming the passage that answers it; fifteen out-of-scope questions marked refuse; questions in the pack's field that its passages do not cover, marked "I do not know"; ten safety cases marked stop or emergency; warn cases marked warn (the rule's words shown, then the walk continues); must-not-stop cases (step-12's safe method, fail-04's polarity fix, plugging connectors in, a meter where the worker is trained); a check holds the file's shape and that every named passage exists; the engineer has reviewed the safety, warn and must-not-stop cases (1.14); the set's hash is recorded and a later change without a decision is refused. When Ghost moves it back it runs after 1.14 and takes the number after it (`docs/ROADMAP.md` §6, Phase 1).
-
-Moved: from Phase 1
-Waits on: the engineer's review (1.14); SC-015, the response classes the set is written in, is in force
 
 ### 1.11 The safety rules' change log
 
@@ -76,14 +73,21 @@ Waits on: Ghost's go-ahead to run it; SC-015 is in force and the leaf change is 
 
 ### 1.13 The over-firing of SR-03 and SR-02
 
-Check: on the demo pack, SR-03 no longer fires on step-12's prohibition or on the safe method it prescribes (fail-04, fail-07, fail-10), and SR-08 no longer fires on fail-04's list of signs to watch for, each change logged (1.11) with "engineer to confirm"; SR-02's meter, probe, test-lead and crimp triggers are put to the engineer (1.14), not changed here; `test/test_safety.py`'s pin of what the demo pack fires updated; a planted step that does part connectors under load still fires SR-03.
+Check: on the demo pack, SR-03 no longer fires on step-12's prohibition or on the safe method it prescribes (fail-04, fail-07, fail-10), and SR-08 no longer fires on fail-04's list of signs to watch for, each change logged (1.11) with "engineer to confirm"; SR-02's meter, probe, test-lead and crimp triggers are kept for the engineer's final review (6.4), not changed here; `test/test_safety.py`'s pin of what the demo pack fires updated; a planted step that does part connectors under load still fires SR-03.
 
 Moved: from Phase 1
-Waits on: Ghost's go-ahead to run it; SC-016 is in force, and Ghost may confirm a precision fix before an engineer is named (SC-015, 2026-11-21)
+Waits on: Ghost's go-ahead to run it; SC-016 is in force, and Ghost may confirm a precision fix on his word, logged as maintainer (SC-015); nothing waits on an engineer
 
-### 1.14 The engineer's review
+### 1.14 The engineer's review packet
 
-Check: an electrical engineer has read SR-01 to SR-14 (words, triggers, responses, and each claim against its source's page in `library/sources/` where the library holds it), the first queue of SC-015 (SR-03, SR-02's meter and crimp triggers, SR-05, SR-11's split), the four open marks (SR-02, SR-06, SR-08 and SR-09's first-aid sentence, SR-12), the demo pack's five flagged claims (fail-04, step-07, step-09, fail-03, fail-08) with its mirrored sources S3 and S8, and the evaluation set's safety, warn and must-not-stop cases; each judgement is a change-log entry (1.11) with the role "electrical engineer".
+Check: `scripts/engineer_review_doc.py` writes `docs/ENGINEER-REVIEW.md` from the data, and `--check` in the fast loop fails when it is stale; it lists every "engineer to confirm" mark, every SC-016 change entry whose role is not an electrical engineer marked "pending engineer", every pack page still `"unknown"`, every claim flagged as unsourced (HANDOFF For Ghost 3's list), and each rule's response; a planted break shows the check refusing a stale packet (P-20, F-16).
 
 Moved: from Phase 1
-Waits on: an engineer (not yet named; naming one is Ghost's next action, F-16)
+Waits on: Ghost's go-ahead to run it; it needs 1.11's change log and 1.12's responses; nothing waits on an engineer
+
+### 6.4 The engineer's final review
+
+Check: an electrical engineer has read `docs/ENGINEER-REVIEW.md` (1.14) and the frozen evaluation set (1.9) and judged every item in them: SR-01 to SR-14 (words, triggers, responses, and each claim against its source's page in `library/sources/` where the library holds it), SC-015's queue (SR-03's warn, SR-02's meter and crimp triggers, SR-05, SR-11's split), the four open marks (SR-02, SR-06, SR-08 and SR-09's first-aid sentence, SR-12), the demo pack's five flagged claims (fail-04, step-07, step-09, fail-03, fail-08) with its mirrored sources S3 and S8, and 3.4's thresholds; each judgement confirms or reverses a change-log entry (SC-016) with the role "electrical engineer".
+
+Moved: from Phase 6
+Waits on: an engineer (unknown; comes in only at the end of the project, F-16)

@@ -25,7 +25,7 @@ which passage to show.
    `solarchat/safety/rules.py` as the leaf's `SafetyRule`; `docs/SAFETY-RULES.md` generated from them
    (`scripts/safety_rules_doc.py`); the pack check refuses a pack that names a rule or tells the reader to skip one.
    1.3 is in `docs/DONE.md`, marked as all but Ghost's read. Next: the four marks still open in `docs/SAFETY-RULES.md`
-   (below, For Ghost 1), headed "Ghost to confirm" there, are the engineer's to confirm under F-16 (the engineer is not yet named); a change
+   (below, For Ghost 1), headed "Ghost to confirm" there, wait for the engineer's final review under F-16 (the engineer comes in at the end); a change
    of an answer is a change to `rules.json`, then `scripts/safety_rules_doc.py`.
 2. **The demo of Monday 2026-11-23** (SC-010), after 1.3: 1.4 the seed pack in the format (convert
    `packs/seed-mc4-leads/` to passages, flows and procedures; still a `demo` pack), 1.5 demo mode, 1.6 the walker
@@ -33,8 +33,8 @@ which passage to show.
    rule's triggers match the step's text or the worker's replies, and match whole words: the 1.3 worker's notes),
    1.8 the offline shell. Each went to a fresh worker of its grade with the brief of `docs/when/hand-out-a-task.md`,
    saved on its own branch and landed by the coordinator after Ghost's word; 1.3 went to the strong grade.
-3. **1.9 the evaluation set**, frozen before any search or model (decided with J-032: 1.9 waits in Phase W on
-   the engineer's review, behind 1.11 to 1.14; For Ghost 16); 1.10 Tune-up pass 1, with the next human
+3. **1.9 the evaluation set**, frozen before any search or model (J-033: back in Phase 1, after SC-015's code; the engineer
+   reviews the frozen set at the end, TODO 6.4; For Ghost 16); 1.10 Tune-up pass 1, with the next human
    maintainability pass (SC-011: Ghost-Core's toolkit under `scripts/` a few files at a time, each with its proof
    that nothing changed; then the tests).
 
@@ -59,8 +59,8 @@ which passage to show.
 1. **The safety rules** (TODO 1.3, landed 2026-11-21 on Ghost's word with the draft's answers; Ghost has not yet read
    `docs/SAFETY-RULES.md`): SR-03 is resolved (Ghost, 2026-11-21: connecting is daily work, not a stop; the rule is now
    "never pull connectors apart under load", J-030). Four points stay open, the marks headed "Ghost to confirm" in
-   `docs/SAFETY-RULES.md` (generated from `rules.json`'s `ghost_to_confirm`; under F-16 they are the
-   engineer's to confirm, and 1.11 renames the field): SR-02, is measuring a voltage a stop for the newest contractor (the draft: yes); SR-06, the
+   `docs/SAFETY-RULES.md` (generated from `rules.json`'s `ghost_to_confirm`; under F-16 they wait for the
+   engineer's final review, and 1.11 renames the field): SR-02, is measuring a voltage a stop for the newest contractor (the draft: yes); SR-06, the
    overhead-lines rule (beyond the brief; it now gives the 10 ft distance and carries the audit's finding, perimeter
    lines, service drops and OSHA's Fort Riley 2018 citation); SR-08 and SR-09, the emergency and first-aid sentences
    the cited sources do not state; SR-12, the never-bypass rule (beyond the brief). Triggers now match whole words and
@@ -104,11 +104,12 @@ which passage to show.
    not safety judgements, before an engineer is named, logged as "maintainer"); **SC-016** each safety rule's change log;
    facts **F-16** (an electrical engineer QAs the bot) and **F-17** (your field-manual vision); **SC-017** the pack status
    `library` renamed `field`, so "library" means only `library/sources/`. The leaf change (`ReplyKind.WARN`,
-   `SafetyRule.response`) is approved; 1.9 is in Phase W behind 1.11 to 1.14. Built after this entry: the code for
-   SC-015 and SC-016, then the `field` rename. **Open: name the engineer** (F-16): the electrical engineer who reviews
-   SR-01 to SR-14, the first queue of SC-015 (SR-03's `warn`, SR-02's meter and crimp triggers, SR-05, SR-11's split) and
-   the evaluation set's safety cases (TODO 1.14). A natural place to ask is the solar company you are in contact with.
-   Until one is named, the rules' `by` fields read "Ghost" and "maintainer", never an engineer.
+   `SafetyRule.response`) is approved. Built after this entry: the code for
+   SC-015 and SC-016, then the `field` rename. **Ghost's further word, the same day (J-033): the engineer comes in at the
+   end; nothing waits on them before then.** The electrical engineer is unknown and reviews the bot once, at the end of
+   the project (F-16, P-20, TODO 6.4); what is decided now on Ghost's word is logged under SC-016 with the role
+   "maintainer", pending engineer, and the engineer confirms or reverses each at that review. 1.9 is back in
+   Phase 1; the review packet (TODO 1.14) will gather what the engineer must judge. No open item remains for you here.
 
 Audit advisories (tune-up step 2): the python gate runs no audit step, so none are listed. An audit tool
 (`pip-audit` or the like) would be a new dependency, Ghost's to approve; until then the review's layers 1, 2 and 4
