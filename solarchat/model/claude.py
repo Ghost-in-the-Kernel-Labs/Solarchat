@@ -6,16 +6,15 @@ read from the environment by the SDK itself and is never printed, logged or stor
 answerer, decides which ids may be cited, the reply's kind and the safety rules (HAD-03, HAD-04).
 """
 import json
-import os
 from dataclasses import dataclass
 from typing import Any
 
 from solarchat.leaf.contract import Finding, Passage, PassageRef, Turn
+from solarchat.model.key import KEY_VARIABLE, resolve_key
 
 DEFAULT_MODEL = "claude-sonnet-5-5"
 BETA = "server-side-fallback-2026-07-01"
 MAX_TOKENS = 4000
-KEY_VARIABLE = "ANTHROPIC_API_KEY"
 CACHE_WRITE_FACTOR = 1.25
 
 
@@ -128,12 +127,14 @@ def messages_for(question: str, history: tuple[Turn, ...]) -> list[dict[str, str
 
 
 def default_client() -> Any:
-    """A client that reads the key from the environment by itself; a missing key raises ModelError naming the variable,
+    """A client given the key (the environment's, else the stored one, SC-022 6); a missing key raises ModelError naming the variable,
     never a value."""
-    if not os.environ.get(KEY_VARIABLE):
-        raise ModelError(f"{KEY_VARIABLE} is not set; the Claude answerer needs it (the stub answerer needs no key)")
+    key = resolve_key()
+    if not key:
+        raise ModelError(f"{KEY_VARIABLE} is not set and no key is stored; run `solarchat --key` to store one "
+                         "(the stub answerer needs no key)")
     import anthropic  # the one import of the model client in the project (SC-021)
-    return anthropic.Anthropic()
+    return anthropic.Anthropic(api_key=key)
 
 
 def sdk_errors() -> Any | None:

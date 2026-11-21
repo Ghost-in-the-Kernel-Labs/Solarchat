@@ -11,7 +11,7 @@ from solarchat.leaf.contract import Finding, PassageRef, ReplyKind, Turn
 from solarchat.model.claude import (BETA, DEFAULT_MODEL, MAX_TOKENS, MODELS, SCHEMA, SYSTEM_PROMPT, ClaudeAnswerer, ModelError, Usage, rates_words,
                                     default_client, describe_error, estimated_cost, system_text)
 from solarchat.packs.load import load_pack
-from test.support import ROOT
+from test.support import ROOT, no_key
 
 GOOD = load_pack(ROOT / "test" / "fixtures" / "packs" / "good")
 VOLTAGE = PassageRef("good", "voltage")
@@ -282,8 +282,7 @@ class TheErrors(unittest.TestCase):
                 self.assertNotIn(MARKER, self.raised(error))
 
     def test_a_missing_key_is_a_plain_error_naming_the_variable_and_no_client_is_built(self) -> None:
-        with mock.patch.dict(os.environ, {}, clear=False):
-            os.environ.pop("ANTHROPIC_API_KEY", None)
+        with no_key():
             with self.assertRaisesRegex(ModelError, "ANTHROPIC_API_KEY is not set"):
                 default_client()
             with self.assertRaisesRegex(ModelError, "ANTHROPIC_API_KEY is not set"):

@@ -1,0 +1,4 @@
+#!/bin/sh
+# Run Solarchat from this clone with its own .venv; every argument is passed through (TODO 2.5).
+root=$(cd "$(dirname "$0")/.." && pwd)
+PYTHONPATH="$root" exec "$root/.venv/bin/python" -m solarchat.cli "$@"

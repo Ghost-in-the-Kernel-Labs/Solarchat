@@ -12,7 +12,7 @@ from solarchat.leaf.contract import DEMO_BANNER, Finding, PassageRef, Reply, Rep
 from solarchat.model.claude import ModelError
 from solarchat.project.chat import converse, render, spoken
 from solarchat.packs.load import load_pack
-from test.support import ROOT
+from test.support import ROOT, no_key
 
 SEED = ROOT / "packs" / "seed-mc4-leads"
 STEP = PassageRef("seed-mc4-leads", "step-06")
@@ -83,13 +83,13 @@ class TheStubChat(unittest.TestCase):
         self.assertEqual(chat("", ["--answerer", "stub"])[0], 2)
 
     def test_claude_is_the_default_and_with_no_key_exits_2_in_plain_words_and_calls_nothing(self) -> None:
-        with mock.patch.dict(os.environ, {"ANTHROPIC_API_KEY": ""}):
+        with no_key():
             code, out, err = chat("", ["--pack", str(SEED), "--demo"])
         self.assertEqual((code, out), (2, ""))
         self.assertIn("ANTHROPIC_API_KEY is not set", err)
 
     def test_model_is_an_option_haiku_is_allowed_and_another_model_exits_2(self) -> None:
-        with mock.patch.dict(os.environ, {"ANTHROPIC_API_KEY": ""}):
+        with no_key():
             code, _, err = chat("", ["--pack", str(SEED), "--demo", "--model", "claude-haiku-5-5"])
         self.assertEqual(code, 2)
         self.assertIn("ANTHROPIC_API_KEY is not set", err)

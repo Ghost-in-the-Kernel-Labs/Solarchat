@@ -13,7 +13,7 @@ from scripts.eval_core import Result
 from scripts.eval_live import Recording, cited_ids, failure_block, replies_path, usage_lines
 from solarchat.leaf.contract import DEMO_BANNER, Finding, PassageRef, Reply, ReplyKind
 from solarchat.model.claude import Usage
-from test.support import ROOT, scratch
+from test.support import ROOT, no_key, scratch
 
 FIXTURES = ROOT / "test" / "fixtures" / "evals"
 TINY = FIXTURES / "tiny.json"
@@ -131,7 +131,7 @@ class TheLiveRun(unittest.TestCase):
 
     def test_with_no_key_it_exits_2_in_plain_words_and_never_loads_the_model_client(self) -> None:
         err = io.StringIO()
-        with mock.patch.dict(os.environ, {"ANTHROPIC_API_KEY": ""}), contextlib.redirect_stderr(err):
+        with no_key(), contextlib.redirect_stderr(err):
             code = runner.main(["--set", str(TINY), "--packs", str(PACKS), "--record", str(scratch() / "r.json"),
                                 "--live", "--answerer", "claude"])
         self.assertEqual(code, 2)
