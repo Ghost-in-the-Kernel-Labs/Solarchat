@@ -28,3 +28,24 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Opened**: `docs/HANDOFF.md`, `TODO.md`, `docs/paths/process.md`, `docs/CONTRACT.md`, `docs/modules.json`, `docs/when/tune-up.md`, `docs/when/hand-out-a-task.md`, `docs/when/coordinate.md`, `scripts/commit.sh`, `docs/GHOST-IN-THE-KERNEL.md`, and each worker's diff.
 - **Complaints**: the session began on the wrong repository, its branch name already used and the repository's default branch a session branch (all fixed with Ghost). This session cannot delete a remote branch (403). A `--docs-only` landing cannot ship until the fast checks run (written into `docs/paths/process.md`, J-019). Three workers shared one checkout, so the coordinator could edit nothing while one ran.
 - **Suggestions**: give each worker its own worktree, so the coordinator can keep landing while a worker builds; `scripts/save.sh` could print the remote's redirect once rather than on every push.
+
+### 2026-11-21 · The coordinator's conditional in CLAUDE.md · Claude Opus 5.5
+
+- **Task**: Ghost: few mid-grade workers are started; give CLAUDE.md a conditional that sends the coordinator, and
+  only the coordinator, to the agent-assignment logic of the ghost (C-026, C-027, C-036).
+- **Opened**: `docs/HANDOFF.md`, `docs/when/coordinate.md`, `docs/when/grades.md`, `scripts/checks/claude_md.py`,
+  `docs/AGENT.md`.
+- **Complaints**: the session opened with three Ghost projects side by side and its assigned branch in another
+  one; "the handoff document" matched three files, and the agent read the wrong project's twice before Ghost named
+  this one. Nothing in the repositories says which of several open projects a brief means.
+- **Suggestions**: a line in each project's CLAUDE.md: when more than one Ghost project is open and the brief names
+  none, ask which before reading. `scripts/score.py` calls five of 1.3 to 1.9 `unplaced`: their items name no
+  file, so the score cannot place them and a coordinator is tempted to keep them; items that name their files.
+
+### 2026-11-21 · Workers out of the checkout · Claude Opus 5.5
+
+- **Task**: Ghost: run every worker in its own clone beside the main checkout, and record it in CLAUDE.md.
+- **Opened**: `CLAUDE.md`, `docs/when/coordinate.md`.
+- **Complaints**: a worker editing in the coordinator's checkout set off the stop hook's "uncommitted changes"
+  while it ran; the coordinator could not commit without saving the worker's half-done tree.
+- **Suggestions**: none beyond the rule itself, which answers the earlier debrief's worktree suggestion.

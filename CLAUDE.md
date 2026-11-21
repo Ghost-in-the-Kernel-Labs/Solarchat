@@ -2,6 +2,14 @@
 
 A domain-only chatbot that walks a customer through setting up and troubleshooting specific makes and models of solar panels, answering only from swappable knowledge packs of manuals and debugging guides; it runs no code. Stamped from Ghost-Core ca0637d; the checks are Python 3 standard library and run with nothing installed.
 
+## If you are the coordinator
+
+You are the coordinator if Ghost started you, or you start other agents; a worker the Agent tool started is not,
+and skips this section. Before your first item, read `docs/when/coordinate.md`, "Who does each item" (the
+assignment rule, C-036), and `docs/when/grades.md`. The score places every item; you build only what it places at
+the strong grade, and every other item goes to a fresh worker of its grade, never into your own turns.
+Every worker runs in its own clone beside this checkout, never in it, so your tree stays clean while it works.
+
 ## Where to start: find the task's row
 
 Open the two to five files the row starts at, nothing else yet; read the contract it names; run its
@@ -34,7 +42,6 @@ Each line is the situation, then the file to read then and not before.
 
 - Your brief does not settle a choice, a check is still red after your first attempt at a change, or
   you are the grade an agent below you asked for help (`docs/when/grades.md`): `docs/when/escalation.md`.
-- You coordinate other agents rather than build: `docs/when/coordinate.md`.
 - Another agent's work breaks yours, contradicts your task, or keeps changing what you just changed:
   stop, and read `docs/when/conflict.md`. Whatever happens, never stop a process, rewrite a commit,
   or reset a tree you did not start.

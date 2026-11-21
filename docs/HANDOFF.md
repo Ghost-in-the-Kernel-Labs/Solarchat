@@ -77,6 +77,12 @@ which admitted passage to show.
    from `main`); a hook is outside what an agent may change (`docs/when/coordinate.md`), so it is reported here.
 11. `scripts/ship.sh` is stamped without its executable bit (run it as `bash scripts/ship.sh`); a mode change to a
    gate file is yours.
+12. **The coordinator's conditional** (2026-11-21, Ghost's ask): `CLAUDE.md` gains "If you are the coordinator",
+   sending it to `docs/when/coordinate.md`, "Who does each item", the assignment rule of C-026, C-027 and C-036 in
+   seven steps. The wording is the agent's, and two steps go past the ghost's text for your confirmation: a raise above
+   the score writes its reason in the journal, and a strong Cost line on an item scored lower says why. Ghost-Core's
+   template could carry the same section (a Core change, in a session with push access to it). Saved on
+   `agent/coordinator-conditional`; land it on your word.
 
 Audit advisories (tune-up step 2): the python gate runs no audit step, so none are listed. An audit tool
 (`pip-audit` or the like) would be a new dependency, Ghost's to approve; until then the review's layers 1, 2 and 4
