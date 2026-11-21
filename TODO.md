@@ -82,7 +82,9 @@ Waits on: the walker (2.2 and 2.3, in Phase 2); nothing waits on an engineer
 
 ### 1.13 The over-firing of SR-03 and SR-02
 
-Check: on the demo pack, SR-03 no longer fires on step-12's prohibition or on the safe method it prescribes (fail-04, fail-07, fail-10), and SR-08 no longer fires on fail-04's list of signs to watch for, each change logged (1.11) with "engineer to confirm"; SR-02's meter, probe, test-lead and crimp triggers are kept for the engineer's final review (6.4), not changed here; `test/test_safety.py`'s pin of what the demo pack fires updated; a planted step that does part connectors under load still fires SR-03.
+Check: on the demo pack, SR-03 no longer fires on step-12's prohibition or on the safe method it prescribes (fail-04, fail-07, fail-10), and SR-08 no longer fires on fail-04's list of signs to watch for, each change logged (1.11) with "engineer to confirm"; SR-02's meter, probe and test-lead triggers are kept for the engineer's final review (6.4), not changed here (its crimp trigger was removed on Ghost's word, J-041); `test/test_safety.py`'s pin of what the demo pack fires updated; a planted step that does part connectors under load still fires SR-03.
+
+Done so far (J-041, Ghost's word of 2026-11-21): SR-10's trigger 'add a panel in series' is removed (mns-06 no longer over-fires) and SR-02's trigger 'crimp' is removed, each logged pending engineer review (F-16). Left open: mns-03 (SR-08 on fail-04-check-2) moves to 2.6, matching on the worker's words; mns-09 (SR-02 on 'multimeter') waits on Ghost's decision about meters. Not closed.
 
 Moved: from Phase 1
 Waits on: Ghost's go-ahead to run it; SC-016 is in force, and Ghost may confirm a precision fix on his word, logged as maintainer (SC-015); nothing waits on an engineer

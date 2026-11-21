@@ -19,7 +19,7 @@
     "id": "SR-02",
     "title": "A panel is live whenever light falls on it",
     "applies_when": "A step has you touch, cut, strip, open or test any wire, terminal or bare metal of a panel, a string or its wiring. A panel makes voltage in daylight, even in cloud, and its DC side stays live when the inverter or the mains is switched off.",
-    "triggers": ["energised", "energized", "bare wire", "bare copper", "exposed conductor", "cut the cable", "cut the wire", "strip the cable", "strip the wire", "measure the voltage", "test the voltage", "multimeter", "voltmeter", "probe", "test leads", "clamp meter", "insulation tester", "crimp"],
+    "triggers": ["energised", "energized", "bare wire", "bare copper", "exposed conductor", "cut the cable", "cut the wire", "strip the cable", "strip the wire", "measure the voltage", "test the voltage", "multimeter", "voltmeter", "probe", "test leads", "clamp meter", "insulation tester"],
     "words_shown": "Stop. Treat every panel and its wiring as live in daylight. Switching off the inverter or the mains does not make it safe. Do not touch, cut or test it yourself. Go to your site supervisor or engineer.",
     "response": "stop",
     "sources": [
@@ -31,7 +31,8 @@
     "engineer_to_confirm": "Whether measuring a voltage with a meter is a stop for the newest contractor. The draft says yes (the triggers 'multimeter', 'measure the voltage'), because a meter on a live string is live work; if crews are trained to measure, this trigger will stop many troubleshooting flows.",
     "changes": [
       {"date": "2026-11-21", "by": "Claude Opus 5.5", "role": "agent, drafting", "why": "Version 1: drafted from public guidance for the newest contractor on a site; engineer to confirm.", "evidence": "J-027; the sources listed on this rule"},
-      {"date": "2026-11-21", "by": "Ghost", "role": "maintainer", "why": "Triggers match whole words and phrases, and the rule's triggers and wording follow the audit, applied on Ghost's word; engineer to confirm.", "evidence": "docs/audits/2026-11-21-safety-rules.md; J-030", "fingerprint": "6b8bc896060102b8e3fe543544922a30f89f9e41d3a9a2b21705d21c7f1ee279"}
+      {"date": "2026-11-21", "by": "Ghost", "role": "maintainer", "why": "Triggers match whole words and phrases, and the rule's triggers and wording follow the audit, applied on Ghost's word; engineer to confirm.", "evidence": "docs/audits/2026-11-21-safety-rules.md; J-030", "fingerprint": "6b8bc896060102b8e3fe543544922a30f89f9e41d3a9a2b21705d21c7f1ee279"},
+      {"date": "2026-11-21", "by": "Ghost", "role": "maintainer", "why": "Removed the trigger 'crimp': crimping a connector onto a cable is done on cable that is not yet connected, which is routine installer work; pending engineer review (F-16)", "evidence": "J-041", "fingerprint": "680c54e5126e8d9cd4f943abb8949b8633ac54686004e6c4fc01f78ae3a37064"}
     ]
   },
   {
@@ -160,7 +161,7 @@
     "id": "SR-10",
     "title": "A voltage above what a device is rated for",
     "applies_when": "The panels' voltage, or the string's, is or could be above the device's highest input voltage, or a step adds panels in series. A panel's voltage rises in the cold, so a string that fits on a warm day may not on a cold morning.",
-    "triggers": ["above the maximum", "exceeds the maximum", "above the rating", "over the rating", "higher than the rating", "higher than the maximum", "add a panel in series"],
+    "triggers": ["above the maximum", "exceeds the maximum", "above the rating", "over the rating", "higher than the rating", "higher than the maximum"],
     "words_shown": "Stop. Do not connect. Too high a voltage can destroy the device and start a fire, and panels give more volts when cold. Go to your site supervisor or engineer.",
     "response": "stop",
     "sources": [
@@ -168,7 +169,8 @@
     ],
     "changes": [
       {"date": "2026-11-21", "by": "Claude Opus 5.5", "role": "agent, drafting", "why": "Version 1: drafted from public guidance for the newest contractor on a site; engineer to confirm.", "evidence": "J-027; the sources listed on this rule"},
-      {"date": "2026-11-21", "by": "Ghost", "role": "maintainer", "why": "Triggers match whole words and phrases, and the rule's triggers and wording follow the audit, applied on Ghost's word; engineer to confirm.", "evidence": "docs/audits/2026-11-21-safety-rules.md; J-030", "fingerprint": "7422253123741cfe5533abf8de5a51b0092578fd902a5699ef1dc9cf88aa26b4"}
+      {"date": "2026-11-21", "by": "Ghost", "role": "maintainer", "why": "Triggers match whole words and phrases, and the rule's triggers and wording follow the audit, applied on Ghost's word; engineer to confirm.", "evidence": "docs/audits/2026-11-21-safety-rules.md; J-030", "fingerprint": "7422253123741cfe5533abf8de5a51b0092578fd902a5699ef1dc9cf88aa26b4"},
+      {"date": "2026-11-21", "by": "Ghost", "role": "maintainer", "why": "Removed the trigger 'add a panel in series': adding a panel in series is allowed when the total Voc stays below the device's limit (step-08), and evaluation case mns-06 is must-not-stop; 'above the maximum' still fires; pending engineer review (F-16)", "evidence": "J-041; evals/v1.json mns-06", "fingerprint": "4240b7af7923bdaac3529f8b04d25c5524461ae67d58f51b01a6b97941096d35"}
     ]
   },
   {

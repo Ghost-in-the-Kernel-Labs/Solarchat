@@ -56,9 +56,9 @@ Status: a draft for Ghost to read (TODO 1.3 stays open until Ghost has read it).
 
 **Response:** stop
 
-**Triggers:** `energised`, `energized`, `bare wire`, `bare copper`, `exposed conductor`, `cut the cable`, `cut the wire`, `strip the cable`, `strip the wire`, `measure the voltage`, `test the voltage`, `multimeter`, `voltmeter`, `probe`, `test leads`, `clamp meter`, `insulation tester`, `crimp`
+**Triggers:** `energised`, `energized`, `bare wire`, `bare copper`, `exposed conductor`, `cut the cable`, `cut the wire`, `strip the cable`, `strip the wire`, `measure the voltage`, `test the voltage`, `multimeter`, `voltmeter`, `probe`, `test leads`, `clamp meter`, `insulation tester`
 
-**Latest change:** 2026-11-21, Ghost (maintainer): Triggers match whole words and phrases, and the rule's triggers and wording follow the audit, applied on Ghost's word; engineer to confirm. Evidence: docs/audits/2026-11-21-safety-rules.md; J-030. Pending engineer.
+**Latest change:** 2026-11-21, Ghost (maintainer): Removed the trigger 'crimp': crimping a connector onto a cable is done on cable that is not yet connected, which is routine installer work; pending engineer review (F-16). Evidence: J-041. Pending engineer.
 
 **Sources:**
 
@@ -220,9 +220,9 @@ Status: a draft for Ghost to read (TODO 1.3 stays open until Ghost has read it).
 
 **Response:** stop
 
-**Triggers:** `above the maximum`, `exceeds the maximum`, `above the rating`, `over the rating`, `higher than the rating`, `higher than the maximum`, `add a panel in series`
+**Triggers:** `above the maximum`, `exceeds the maximum`, `above the rating`, `over the rating`, `higher than the rating`, `higher than the maximum`
 
-**Latest change:** 2026-11-21, Ghost (maintainer): Triggers match whole words and phrases, and the rule's triggers and wording follow the audit, applied on Ghost's word; engineer to confirm. Evidence: docs/audits/2026-11-21-safety-rules.md; J-030. Pending engineer.
+**Latest change:** 2026-11-21, Ghost (maintainer): Removed the trigger 'add a panel in series': adding a panel in series is allowed when the total Voc stays below the device's limit (step-08), and evaluation case mns-06 is must-not-stop; 'above the maximum' still fires; pending engineer review (F-16). Evidence: J-041; evals/v1.json mns-06. Pending engineer.
 
 **Sources:**
 

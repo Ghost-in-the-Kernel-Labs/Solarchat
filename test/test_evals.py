@@ -196,8 +196,10 @@ class TheRealSet(unittest.TestCase):
         self.assertTrue(set(evals.REQUIRED_STOP_RULES) <= stopped)
 
     def test_the_must_not_stop_cases_that_a_rule_fires_on_are_the_known_over_firings(self) -> None:
-        """Evidence for TODO 1.13: a stop rule fires on the question or the expected passages of exactly these three;
-        when 1.13 narrows a trigger, this pin moves with it (SC-016's change entry says why)."""
+        """Evidence for TODO 1.13: a stop rule fires on the question or the expected passages of exactly these two;
+        mns-06 is fixed (SR-10's 'add a panel in series' was removed, J-041); mns-03 waits on item 2.6 (matching on the
+        worker's words) and mns-09 waits on Ghost's decision about meters; when a trigger is narrowed, this pin moves
+        with it (SC-016's change entry says why)."""
         texts = {passage["id"]: passage["text"] for passage in json.loads((evals.PACK_FOLDER / "passages.json").read_text(encoding="utf-8"))}
         rules = {rule.rule_id: rule.response for rule in evals.load_rules()}
         over_firing = {}
@@ -208,7 +210,7 @@ class TheRealSet(unittest.TestCase):
             stopping = sorted(rule for rule in fired if rules[rule] != "warn")
             if stopping:
                 over_firing[case["id"]] = stopping
-        self.assertEqual(over_firing, {"mns-03": ["SR-08"], "mns-06": ["SR-10"], "mns-09": ["SR-02"]})
+        self.assertEqual(over_firing, {"mns-03": ["SR-08"], "mns-09": ["SR-02"]})
 
 
 if __name__ == "__main__":
