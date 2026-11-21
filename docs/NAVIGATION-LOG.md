@@ -84,3 +84,10 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Opened**: `CLAUDE.md`, `docs/when/grades.md`, `scripts/checks/bank.py`, `scripts/eval.py`, `solarchat/model/claude.py`, `test/support.py`, `test/test_cli.py`, `test/test_packs.py`, `test/test_speech.py`, `solarchat/project/speech.py`, `scripts/next_id.py`, `scripts/checks/readability.py`, `docs/when/coordinate.md`, `docs/paths/process.md`, `docs/journal/J-000-099.md`, `docs/NAVIGATION-LOG.md`.
 - **Complaints**: the brief's pass line for the lint cannot be met without a choice for nine `Any` annotations in `claude.py`; the repository does not say whether `Any` is meant to stay there. The readability check wants a docstring on test helper methods too, which `test_speech.py` does not need for its test methods.
 - **Suggestions**: decide the types for `claude.py` (a `Protocol` for the client and `ModuleType` for `errors` is the obvious candidate); add `ruff check .` to the fast loop, so a lint failure is found when it is made, not at the gate.
+
+### 2026-11-21 · Fix-forward, `Any` in `claude.py` (J-061) · Claude Sonnet 5.5
+
+- **Task**: replace the nine `typing.Any` in `solarchat/model/claude.py` with the coordinator's Protocols so `ruff check .` passes, changing no behaviour.
+- **Opened**: `CLAUDE.md`, `solarchat/model/claude.py`, `docs/when/handoff.md`, `scripts/checks/readability.py`, `docs/when/hand-out-a-task.md`, `docs/NAVIGATION-LOG.md`, `docs/journal/INDEX.md`, `docs/journal/J-000-099.md`, `docs/JOURNAL.md`.
+- **Complaints**: none; the fast loop's metrics test fails after any source-line change until `scripts/metrics.py --write` runs, which the brief had to name.
+- **Suggestions**: `docs/when/handoff.md` could list `python3 -I scripts/metrics.py --write` and `scripts/directive_map.py` among the finishing steps when source lines or `# Decision:` citations change.
