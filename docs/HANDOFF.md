@@ -123,6 +123,19 @@ which passage to show.
    the project (F-16, P-20, TODO 6.4); what is decided now on Ghost's word is logged under SC-016 with the role
    "maintainer", pending engineer, and the engineer confirms or reverses each at that review. The evaluation
    set (then 1.9, now 1.5, SC-018) is back in Phase 1; the review packet (TODO 1.14) will gather what the engineer must judge. No open item remains for you here.
+17. **The answering door and the runner, designed: SC-019, proposed, awaiting you** (J-040; the design is
+   `docs/designs/answering-door.md`, its section 10 the questions). TODO 1.6 is not built until you confirm. Ranked:
+   (1) the new module `answer` (`solarchat/answer`, importing leaf, packs and safety), and the model client in its own
+   module `model` in Phase 3 rather than in `answer`; (2) the leaf change: `Finding`, `Answerer`, `Passage.title`,
+   `MAX_CITED_PASSAGES = 3`, `DEMO_BANNER`, later `SEARCH_MIN_SCORE` (or the two types in `answer` instead); (3) the
+   fast loop holding the runner's committed record as a per-case ratchet (`--check`), so it is green on day one while
+   the stub fails every stop, emergency and warn case, and the plain run keeps TODO 1.6's exit 1; (4) 1.13 back
+   before 1.9, or fail-04's must-not-stop fall accepted at 1.9 under a decision (`fail-04-check-2` and `fail-04-stop`
+   fire SR-08); (5) the safety rules matched on the cited passages only until 2.6, or 2.6's matching of the worker's
+   words brought forward; (6) no accuracy threshold before a baseline, yours to set after 1.8 and at 3.4; (7) the
+   search threshold tuned on the frozen set that scores it, for version 1; (8) one rule per reply: the most severe
+   response, then the lowest id; (9) the known failures mns-03, mns-06 and mns-09 listed in `evals/known-failures.json`,
+   printed and counted as failures and excusing no fall; (10) `docs/designs/` as the home of designs.
 
 Audit advisories (tune-up step 2): the python gate runs no audit step, so none are listed. An audit tool
 (`pip-audit` or the like) would be a new dependency, Ghost's to approve; until then the review's layers 1, 2 and 4

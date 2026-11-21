@@ -43,3 +43,4 @@ Written from `docs/journal/` by `scripts/journal_index.py`; do not edit by hand.
 | J-037 | Ghost reorders Phase 1 for automated Q&A: the runner before the walker (SC-018) | decision | `J-000-099.md` |
 | J-038 | The seed pack is converted to the pack format (TODO 1.4) | feature | `J-000-099.md` |
 | J-039 | The evaluation set, version 1, frozen (TODO 1.5) | feature | `J-000-099.md` |
+| J-040 | The answering door and the evaluation runner are designed, and proposed as SC-019 (TODO 1.6) | decision | `J-000-099.md` |
