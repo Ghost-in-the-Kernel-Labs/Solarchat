@@ -31,7 +31,8 @@ which admitted passage to show.
   pictures with provenance (J-012, SC-007); the model-name check removed (J-007, SC-006).
 - 2026-11-21: the users are workers on sites, not homeowners (J-013); no mutation run (J-015, SC-008); the package
   `solarchat`, the five modules, the prefix HAD and the contract keeping its name (J-018); the repository's default
-  branch set to `main` and the old branches deleted (J-019); run Tune-up pass 0 (J-019).
+  branch set to `main` and the old branches deleted (J-019); run Tune-up pass 0 (J-019);
+  a tune-up commit every twenty-five commits, not eight (SC-009, J-020).
 - The wording of SC-002 to SC-008 is the agent's, for Ghost to confirm.
 
 ## For Ghost: waiting on you
@@ -66,6 +67,5 @@ stand alone (`docs/DEPENDENCY-REVIEW.md`).
 - The demo pack is not admitted (SC-005) and was written to a provisional layout before 1.2 and 1.3 existed. Its
   drawings were looked at once, rendered together; its text was not read in full by the coordinator.
 - The project's ghost and the roadmap are the agent's drafts from Ghost's words, landed for Ghost to correct.
-- `docs/AGENT.md`'s Fast loop and Gate cells are Ghost-Core's numbers until Tune-up pass 0 re-measures them here.
 - A session's venv: `python3.12 -m venv .venv && .venv/bin/pip install --only-binary :all: --require-hashes -r requirements.lock`.
 - Branches left on origin, all merged into `main` by squash and safe to delete: `claude/audience-f01`, `claude/gate-0-2`, `agent/seed-pack`.

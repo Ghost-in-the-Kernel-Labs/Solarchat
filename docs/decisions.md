@@ -53,3 +53,4 @@ Written by `scripts/decisions_index.py` from `theGhost.md`; do not edit here. Se
 | SC-006 | Core C-036's check that no instruction names a model is refused; the grade map stays | in force | agents |
 | SC-007 | Core C-033 is narrowed for demo packs: a picture from the web may be copied in, with its provenance | in force | privacy |
 | SC-008 | Core C-018's mutation run is refused; a test is still never weakened, and every check keeps its planted break | in force | mutation |
+| SC-009 | Core C-024's tune-up commit comes every twenty-five commits, not every eight | in force | tune-up |

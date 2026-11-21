@@ -33,7 +33,7 @@ The core's principles, copied from Ghost-Core when this project was stamped; add
 - **P-08 One canonical word per concept, from the first file** (C-011).
 - **P-09 Ratchets only where there is debt** (C-023).
 - **P-10 Proven by a run, not on paper.** "Done" never means "on paper" (C-004).
-- **P-11 The agent's environment is a first-class deliverable**, funded at one commit in eight (C-022, C-024).
+- **P-11 The agent's environment is a first-class deliverable**, funded at one commit in twenty-five (C-022, C-024, SC-009).
 - **P-12 Cloud-primary.** Nothing requires the maintainer's own machine (AGT-01).
 - **P-13 CI minutes are spent by hand** (C-032).
 - **P-14 Core checks run with nothing installed.** Python 3 standard library, `-I` (C-022).

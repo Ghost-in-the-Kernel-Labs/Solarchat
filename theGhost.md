@@ -550,3 +550,13 @@ The core decisions above are inherited (Core C-001 to C-041); this project's beg
 - **See also:** Core C-018, Core C-001; SC-003
 - **Supersedes:** SC-004
 - **subject:** mutation
+
+### SC-009: Core C-024's tune-up commit comes every twenty-five commits, not every eight
+- **Decision:** `scripts/commit.sh` refuses any but a `tune-up:` commit once twenty-five commits have landed on `main`'s first-parent line since the last tune-up, where Core C-024 says eight. Everything else in C-024 stands: the tune-up pass that closes every phase, the steps of `docs/when/tune-up.md`, the deferral line on Ghost's word, a `tune-up:` commit accepted at any count.
+- **Why:** Ghost, 2026-11-21, in chat: "set tune up frequency to once per 25 commits." What the eight protected, said once by the agent: the navigation review and the re-measure come round before small misses pile up; at twenty-five, the phase's tune-up pass does more of that work, and a debrief waits longer to be read.
+- **Held by:** `scripts/commit.sh` (`TUNE_UP_EVERY`), `test/test_gates.py` (the tune-up rule at 24, 25 and after), `test/test_fast_checks.py` (the count on `main`), `docs/when/tune-up.md`.
+- **Source:** Ghost, 2026-11-21, in chat; set by the agent at Ghost's word.
+- **Status:** in force
+- **Reverses if:** the navigation log fills with misses that a tune-up commit would have fixed before the phase's pass.
+- **See also:** Core C-024, Core C-025
+- **subject:** tune-up
