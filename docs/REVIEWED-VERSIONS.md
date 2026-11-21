@@ -8,8 +8,10 @@ reviewer's (SAFE, UNSAFE, UNSURE); Reputation is CLEAN or CONCERN; Decision is `
 fast loop on any pin with no row (a lockfile entry, a workflow's action, a Dockerfile's image digest, a
 vendored manifest's row). On adoption every pin already held gets an `unreviewed baseline` row (Kind
 `baseline`, From, Verdict and Reputation `—`): the pin is the first review's old side, taken as held
-and not as read. The template has no dependencies; its baseline rows are the workflow's action and
-the Java starter's image, which a stamped project carries with them.
+and not as read. The workflow's action and the Java starter's image are Ghost-Core's baseline rows, carried by the stamp
+(Solarchat has no Dockerfile). The founding lockfile's pins are baseline rows (J-004); the rows for click, coverage,
+libcst, mutmut and their dependencies stay as the record after the mutation run was removed (SC-008) and the lock no
+longer holds them. The Anthropic SDK and the 15 packages it brought are `new` rows, each read in full (J-045, SC-021).
 
 | Date | Package | From | To | Kind | Verdict | Reputation | Decision | Journal | Notes |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |

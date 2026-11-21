@@ -59,3 +59,4 @@ Written from `docs/journal/` by `scripts/journal_index.py`; do not edit by hand.
 | J-053 | The rule bank's format and check: twenty hand-written rules, and what "quoting" means (TODO 1.19) | feature | `J-000-099.md` |
 | J-054 | The demo from a local clone: a local key on a developer's machine (SC-022 amended), the command menu and speech out planned | decision | `J-000-099.md` |
 | J-055 | The command menu and the local key are built (TODO 2.5) | feature | `J-000-099.md` |
+| J-056 | Documentation brought current (written as J-056 because the journal refuses a gap; the brief called it J-057) | contradiction | `J-000-099.md` |
