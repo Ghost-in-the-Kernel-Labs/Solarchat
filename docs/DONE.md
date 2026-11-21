@@ -63,3 +63,6 @@ Done 2026-11-21 (J-048). Brought forward from 3.1 and 3.2 on Ghost's word ("the 
 
 Closed 2026-11-21, not built (J-051): absorbed into the rule bank by SC-023, in force on Ghost's word; its four behaviours (one step per turn, waiting, asking rather than assuming, keeping track) become the bank's families `pace`, `ask` and `track` (TODO 1.19 to 1.24), and no frozen per-turn set is made.
 
+### 1.19 The rule bank's format and check
+
+Done 2026-11-21 (J-053). Check: built to `docs/designs/rule-bank-and-triage.md` section 3, SC-023 in force: `evals/bank/<family>.json` files in the shape of 3.2, seeded by hand with about twenty rules (1.17's four behaviours as `pace`, `ask` and `track` rules, and five safety cases of `evals/v1.json` as `safety` rules whose source names the case); `scripts/checks/bank.py` in the fast loop refuses a missing field, a reused or out-of-order id, no turns or more than three, a `graded_reply` beyond the turns, a question that does not end in "?", a source that does not resolve (pack passage, safety rule, library id, frozen case) and a rule quoting the bot's system prompt, each shown by a planted break under `test/fixtures/broken/bank/`; `test/test_bank.py` holds them. No model is called. ✓

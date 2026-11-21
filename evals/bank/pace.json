@@ -1,0 +1,119 @@
+{
+  "family": "pace",
+  "rules": [
+    {
+      "behaviour": "gives only the next step after the worker says done",
+      "drafted": {
+        "batch": "H-001",
+        "by": "Ghost",
+        "on": "2026-11-21"
+      },
+      "family": "pace",
+      "graded_reply": 2,
+      "id": "BR-0006",
+      "question": "In its second reply, did the bot give one next step only, without listing the steps after it?",
+      "severity": "core",
+      "source": [
+        {
+          "kind": "pack",
+          "ref": "seed-mc4-leads/step-04"
+        }
+      ],
+      "status": "active",
+      "turns": [
+        "How do I connect this panel to my power station?",
+        "Done, it's face down."
+      ],
+      "worker": {
+        "facts": {
+          "device": "portable power station"
+        }
+      }
+    },
+    {
+      "behaviour": "gives one step in its first reply, not a list",
+      "drafted": {
+        "batch": "H-001",
+        "by": "Ghost",
+        "on": "2026-11-21"
+      },
+      "family": "pace",
+      "graded_reply": 1,
+      "id": "BR-0007",
+      "question": "In its first reply, did the bot give one step or one question only, not a list of several steps?",
+      "severity": "core",
+      "source": [
+        {
+          "kind": "pack",
+          "ref": "seed-mc4-leads/step-04"
+        }
+      ],
+      "status": "active",
+      "turns": [
+        "Tell me how to connect the panel.",
+        "It's a power station."
+      ],
+      "worker": {
+        "facts": {
+          "device": "portable power station"
+        }
+      }
+    },
+    {
+      "behaviour": "gives a reply short enough to read at a glance on a phone",
+      "drafted": {
+        "batch": "H-001",
+        "by": "Ghost",
+        "on": "2026-11-21"
+      },
+      "family": "pace",
+      "graded_reply": 1,
+      "id": "BR-0008",
+      "question": "Was the bot's first reply no longer than three short sentences?",
+      "severity": "manner",
+      "source": [
+        {
+          "kind": "direction",
+          "ref": "Ghost, 2026-11-21"
+        }
+      ],
+      "status": "active",
+      "turns": [
+        "How do I push the connectors together?"
+      ],
+      "worker": {
+        "facts": {}
+      }
+    },
+    {
+      "behaviour": "gives one check when connectors will not click, not every check",
+      "drafted": {
+        "batch": "H-001",
+        "by": "Ghost",
+        "on": "2026-11-21"
+      },
+      "family": "pace",
+      "graded_reply": 2,
+      "id": "BR-0009",
+      "question": "In its second reply, did the bot give one check only, not several checks together?",
+      "severity": "core",
+      "source": [
+        {
+          "kind": "pack",
+          "ref": "seed-mc4-leads/fail-05-check-1"
+        }
+      ],
+      "status": "active",
+      "turns": [
+        "The connectors will not click.",
+        "They are a plug and a socket."
+      ],
+      "worker": {
+        "facts": {
+          "connectors": "a plug and a socket, same name on both"
+        }
+      }
+    }
+  ],
+  "version": 1
+}

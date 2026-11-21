@@ -110,7 +110,7 @@ and the set never reads the bank.
 The bank's check, `scripts/checks/bank.py` in the fast loop (standard library): the shape above; ids unique,
 in order, never reused; one to three turns; `graded_reply` within the turns; the question ends in "?"; every source
 resolves (the passage in the pack, the rule in `rules.json`, the library id, the case in `evals/v1.json`); and a
-rule's text never quotes the bot's system prompt. A planted break per refusal under
+rule's text never quotes the bot's system prompt: no string field of a rule shares a run of six consecutive words with `SYSTEM_PROMPT` (`solarchat/model/claude.py`), words being runs of letters and digits after lowercasing, so punctuation and spacing do not hide a copy (six, not five, so that ordinary phrases such as "the next thing the worker" do not trip it by accident). A planted break per refusal under
 `test/fixtures/broken/bank/`.
 
 ### 3.3 Drafting by Opus
