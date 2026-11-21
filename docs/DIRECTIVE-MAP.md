@@ -66,7 +66,7 @@ Written by `scripts/directive_map.py` from `theGhost.md`, `docs/CONTRACT.md` and
 | SC-017 | A pack's status is `field` or `demo`; "library" means only `library/sources/` | no function |
 | SC-018 | Phase 1 is reordered for automated Q&A: the evaluation set, the answering door with its runner, the index, search and the safety rules in the answers come before the walker, demo mode and the shell | `scripts/checks/evals.py:document_problems`, `scripts/checks/evals.py:case_shape_problems`, `scripts/checks/evals.py:count_problems`, `scripts/checks/evals.py:hash_problems` |
 | SC-019 | Every mode answers through one door that takes its answerer as an argument; the runner scores it against the frozen set and holds the result as a per-case ratchet | no function |
-| SC-020 | Once per session the bot asks whether the worker's supervisor has signed them off for meter tests on this site; on yes SR-02's meter triggers warn with a precaution, on no they stop | no function |
+| SC-020 | A session profile: at the start of a session the bot asks three or four short questions about what the worker is authorised for; a safety rule may lower its response for a profile, and nothing else may | no function |
 | HAD-01 | The leaf module imports nothing of the project's own | `solarchat/leaf/__init__.py` |
 | HAD-02 | Every number a document reports comes from a run the repository can repeat | `solarchat/leaf/__init__.py` |
 | HAD-03 | Hadley answers only from the packs, names the passage, or says it does not know | `scripts/checks/evals.py:passage_problems`, `scripts/checks/packs.py:reference_problems`, `solarchat/leaf/contract.py:Reply` |

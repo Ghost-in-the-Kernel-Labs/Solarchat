@@ -46,3 +46,4 @@ Written from `docs/journal/` by `scripts/journal_index.py`; do not edit by hand.
 | J-040 | The answering door and the evaluation runner are designed, and proposed as SC-019 (TODO 1.6) | decision | `J-000-099.md` |
 | J-041 | Two over-firing triggers removed on Ghost's word: SR-10 "add a panel in series" and SR-02 "crimp" (TODO 1.13, part) | feature | `J-000-099.md` |
 | J-042 | Ghost answers SC-019's ten questions and adds the meter sign-off (SC-019 in force, SC-020, TODO 1.10) | decision | `J-000-099.md` |
+| J-043 | Ghost widens the meter sign-off into a session profile (SC-020, TODO 1.10) | decision | `J-000-099.md` |

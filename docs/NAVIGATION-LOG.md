@@ -173,3 +173,10 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Opened**: `CLAUDE.md`, `docs/paths/process.md`, `docs/designs/answering-door.md`, `theGhost.md` (SC-018, SC-019), `docs/HANDOFF.md`, `TODO.md`, `docs/ROADMAP.md`, `docs/DONE.md`, `docs/modules.json`, `test/test_modules.py`, `scripts/checks/todo.py`, `docs/journal/J-000-099.md`, `docs/NAVIGATION-LOG.md`, `evals/v1.json` (the cases named), `scripts/ship.sh`.
 - **Complaints**: the worktree shell refuses a command that joins git with other steps, so commands went one at a time; the numbers 1.11 to 1.14 are taken by done and waiting items, so a new item after 1.9 forces the tune-up pass to 1.15, a gap a reader will ask about; the instruction "update references in current documents only" has no list of which documents are current, so history (journal, DONE, this log) was left as written and the rest edited by search.
 - **Suggestions**: `docs/paths/process.md` could say where a renumbering's old-to-new map goes (the journal entry, as SC-018's did) and that the waiting phase's numbers constrain a new item's; a check that a design's "awaiting Ghost" line is gone when its decision is in force.
+
+### 2026-11-21 · SC-020 widened to a session profile (J-043) · Claude Opus 5.5
+
+- **Task**: rewrite SC-020 from the meter sign-off to Ghost's session profile, carry it into TODO 1.10, the roadmap, HANDOFF and the design's note, as a documentation-only commit before TODO 1.6's code.
+- **Opened**: `theGhost.md` (SC-020), `TODO.md` (1.10), `docs/ROADMAP.md`, `docs/HANDOFF.md`, `docs/designs/answering-door.md`, `docs/journal/J-000-099.md`, `docs/NAVIGATION-LOG.md`.
+- **Complaints**: the direction arrived mid-task, after commit 1 had landed, so a landed decision is edited in place; no rule says whether a day-old decision is rewritten or superseded.
+- **Suggestions**: `theGhost.md`'s header could say when to rewrite an in-force decision on the maintainer's word and when to supersede it.

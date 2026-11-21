@@ -131,9 +131,7 @@ which passage to show.
    1.9 (old 1.10 Tune-up pass 1 is now 1.15); (6) no accuracy threshold before a baseline, yours to set after 1.8 and at 3.4;
    (7) the search threshold tuned on the frozen set, for version 1, a held-out set a later item; (8) the most severe
    response, then the lowest id; (9) the known failures mns-03, mns-06 and mns-09 in `evals/known-failures.json`;
-   (10) `docs/designs/` as the home of designs. The meters, your addition: SC-020, a sign-off question once per session;
-   its design is 1.10's first step and still open (how the sign-off is held, how the runner gives a case a session state
-   without editing the frozen set, whether the meter triggers split from SR-02). Answered; nothing waits on you here.
+   (10) `docs/designs/` as the home of designs. The meters, your addition, widened the same day to a session profile: SC-020, three or four short questions at the start of a session (role; signed off for meter tests, connector work, work at height), a rule alone may lower its response for a profile and never an emergency, the profile may change how much is explained and never which steps or stops, self-declared with the company's override, recorded per session for the engineer; its design is 1.10's first step and still open (how the profile is held, how rules name their lowerings, the side file's shape, whether the meter triggers split from SR-02). Answered; nothing waits on you here.
 
 Audit advisories (tune-up step 2): the python gate runs no audit step, so none are listed. An audit tool
 (`pip-audit` or the like) would be a new dependency, Ghost's to approve; until then the review's layers 1, 2 and 4

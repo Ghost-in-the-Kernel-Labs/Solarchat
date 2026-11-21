@@ -64,4 +64,4 @@ Written by `scripts/decisions_index.py` from `theGhost.md`; do not edit here. Se
 | SC-017 | A pack's status is `field` or `demo`; "library" means only `library/sources/` | in force | pack format |
 | SC-018 | Phase 1 is reordered for automated Q&A: the evaluation set, the answering door with its runner, the index, search and the safety rules in the answers come before the walker, demo mode and the shell | in force | plan order |
 | SC-019 | Every mode answers through one door that takes its answerer as an argument; the runner scores it against the frozen set and holds the result as a per-case ratchet | in force | answering door |
-| SC-020 | Once per session the bot asks whether the worker's supervisor has signed them off for meter tests on this site; on yes SR-02's meter triggers warn with a precaution, on no they stop | in force | meters |
+| SC-020 | A session profile: at the start of a session the bot asks three or four short questions about what the worker is authorised for; a safety rule may lower its response for a profile, and nothing else may | in force | session profile |

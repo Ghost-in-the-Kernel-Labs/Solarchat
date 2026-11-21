@@ -386,7 +386,7 @@ holds the question for that reason. 1.14's check will name the section when it i
 All ten as recommended. Three of them change this page's later reading: (4) mns-03 is the worker-words item's, so it is
 a known failure `until` TODO 1.10 and not 1.13; (5) 2.6 moves up to TODO 1.10 right after 1.9, so the door's step 6
 will match the question's words there (a hazard in the worker's words fires its rule whatever passage is found), and
-the sections above that say "until TODO 2.6" now mean 1.10; and the meter sign-off question of SC-020 is built in 1.10,
-settling first how a session's sign-off is held, how the runner gives a case a session state without editing the
-frozen set (a side file keyed by case id), and whether the meter triggers split from SR-02. 1.6 is built as written
+the sections above that say "until TODO 2.6" now mean 1.10; and the session profile of SC-020 (the meter sign-off, widened by Ghost to a few short questions about what the worker is authorised for) is built in 1.10,
+settling first how the profile is held, how a rule names its lowerings, the side file's shape (keyed by case id, so the frozen set is
+untouched) and whether the meter triggers split from SR-02. 1.6 is built as written
 here, with the known failures mns-03 (until 1.10) and mns-09 (until 1.10, SC-020), (mns-06 was fixed meanwhile by 1.13's removal of SR-10's "add a panel in series", J-041, so it is not listed).
