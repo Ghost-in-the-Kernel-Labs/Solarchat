@@ -1,5 +1,5 @@
 # Tool configuration only: this project is not a package to install (Neon Rain R-001, R-017).
-# STAMP: replace PROJECT with the product package's folder (docs/modules.json's package).
+# The product package is solarchat/ (docs/modules.json's package, TODO 0.4).
 
 [tool.pytest.ini_options]
 testpaths = ["test"]

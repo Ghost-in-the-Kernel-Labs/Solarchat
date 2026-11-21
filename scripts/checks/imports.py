@@ -1,5 +1,5 @@
 """Every outside import in our Python is in requirements.lock or the standard library (C-034 rule 2).
-Run: python3 -I scripts/checks/imports.py. STAMP: set OUR_CODE. It reads git's file list (scripts/checks/common.py;
+Run: python3 -I scripts/checks/imports.py. OUR_CODE is the product package and the tool folders. It reads git's file list (scripts/checks/common.py;
 C-001): a Python file on disk that git does not track is not read. The lock is read from the disk: it is the allow-list,
 not a file under check, and an untracked lock read as empty would only refuse more."""
 import ast
@@ -11,7 +11,7 @@ if __name__ == "__main__":  # run as a script from the project's root: the root 
     sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 from scripts.checks.common import matching, tracked_files  # noqa: E402
 
-OUR_CODE: tuple[str, ...] = ("PROJECT", "scripts", "test")
+OUR_CODE: tuple[str, ...] = ("solarchat", "scripts", "test")
 ROOT = Path(__file__).resolve().parent.parent.parent
 
 # The planted breaks import packages no lock holds, on purpose; they are fixtures, not our code (J-004).

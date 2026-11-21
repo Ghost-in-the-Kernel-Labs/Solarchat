@@ -21,3 +21,4 @@ Written from `docs/journal/` by `scripts/journal_index.py`; do not edit by hand.
 | J-015 | The mutation run removed at Ghost's word | decision | `J-000-099.md` |
 | J-016 | Tune-up commit: the first eight commits | measurement | `J-000-099.md` |
 | J-017 | The demo pack landed: connecting a panel by its MC4 leads | feature | `J-000-099.md` |
+| J-018 | The contract and the module map: the package solarchat, invariants HAD-01 to HAD-06, the leaf | decision | `J-000-099.md` |

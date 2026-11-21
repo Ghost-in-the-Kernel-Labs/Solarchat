@@ -13,12 +13,13 @@ def leaf_folder(root: Path) -> Path:
 
 
 class TheRepository(unittest.TestCase):
-    def test_the_template_contract_is_numbered(self) -> None:
+    def test_the_contract_is_numbered(self) -> None:
         self.assertEqual(contract.numbering_problems((ROOT / "docs" / "CONTRACT.md").read_text()), [])
 
-    def test_the_template_names_no_invariant_the_contract_lacks(self) -> None:
+    def test_the_leaf_and_the_contract_name_the_same_invariants(self) -> None:
+        """Held both ways since TODO 0.4 gave the leaf its folder (solarchat/leaf)."""
         document = (ROOT / "docs" / "CONTRACT.md").read_text()
-        self.assertEqual(contract.reference_problems(document, leaf_folder(ROOT), held=False, root=ROOT), [])
+        self.assertEqual(contract.reference_problems(document, leaf_folder(ROOT), held=True, root=ROOT), [])
 
     def test_the_planted_breaks_are_caught(self) -> None:
         root = BROKEN / "contract"

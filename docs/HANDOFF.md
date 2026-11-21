@@ -4,9 +4,11 @@ Read `CLAUDE.md` first, then this. `TODO.md` is the chain in order; `docs/DONE.m
 
 ## Where the project stands (2026-11-21)
 
-Founded, planned, and holding one demo pack; no product code yet. `main` carries the stamp, decisions SC-001 to
+Founded, planned, and holding one demo pack and the leaf. `main` carries the stamp, decisions SC-001 to
 SC-008, the project's ghost, the roadmap (Phases 1 to 6), the six-pin lockfile, and the demo pack
 `packs/seed-mc4-leads/` (J-017). The full gate passes (J-016, a tune-up commit; the count restarted there).
+The session branch `claude/sleepy-babbage-k6ojqm` adds TODO 0.4 (J-018): the package `solarchat/`, the contract's
+HAD-01 to HAD-06, the module map (leaf, packs, safety, project, cli) and the leaf's types; 0.2 closed with it.
 
 What Solarchat is, in the roadmap's words (`docs/ROADMAP.md` §1 to §3, F-01 to F-15): an assistant named Hadley
 that walks workers on solar sites through installing panels and finding faults, on a phone, answering only from
@@ -16,9 +18,7 @@ which admitted passage to show.
 
 ## Next, in order
 
-1. **TODO 0.4, the contract and the module map.** Sets the package name, which removes the last `STAMP` marker
-   (`pyproject.toml`) and the placeholder `PROJECT` in `scripts/checks/imports.py`, and so closes 0.2 with it. The
-   module map is where SC-002's "one module holds the model client" becomes a test.
+1. **Land J-018** on `main` once Ghost says so (fast checks, `scripts/commit.sh`, `scripts/ship.sh`).
 2. **TODO 0.5 and 0.6**: any further founding decision of Ghost's; Tune-up pass 0.
 3. **Phase 1**, 1.1 to 1.6: the words, the pack format and its check (the real deliverable: the deploying company
    builds its libraries to it, F-15), the safety rules for the newest contractor on a site, then bringing the demo
@@ -30,7 +30,8 @@ which admitted passage to show.
   speech (J-006, F-07 to F-09); offline the small model only chooses, online first, an app and a website (J-008);
   the manner and the name Hadley (J-009, J-010); no connectors, pictures per step (J-011); demo packs may carry web
   pictures with provenance (J-012, SC-007); the model-name check removed (J-007, SC-006).
-- 2026-11-21: the users are workers on sites, not homeowners (J-013); no mutation run (J-015, SC-008).
+- 2026-11-21: the users are workers on sites, not homeowners (J-013); no mutation run (J-015, SC-008); the package
+  `solarchat`, the five modules, the prefix HAD and the contract keeping its name (J-018).
 - The wording of SC-002 to SC-008 is the agent's, for Ghost to confirm.
 
 ## For Ghost: waiting on you
@@ -47,7 +48,9 @@ which admitted passage to show.
 5. The app's stack (roadmap 5.1): one web client that is both the website and an installable app, or a native app.
 6. Which make and model the first real pack covers (roadmap 6.2); Ghost named First Solar as the most troublesome.
 7. A trademark search on the name Hadley before it reaches an app store.
-8. `scripts/ship.sh` is stamped without its executable bit (run it as `bash scripts/ship.sh`); a mode change to a
+8. A stop hook asks for a push whenever a branch is ahead of origin (2026-11-21: it fired on a branch restarted
+   from `main`); a hook is outside what an agent may change (`docs/when/coordinate.md`), so it is reported here.
+9. `scripts/ship.sh` is stamped without its executable bit (run it as `bash scripts/ship.sh`); a mode change to a
    gate file is yours.
 
 ## Trials: questions settled by a run, not an argument
@@ -61,5 +64,4 @@ which admitted passage to show.
 - The project's ghost and the roadmap are the agent's drafts from Ghost's words, landed for Ghost to correct.
 - `docs/AGENT.md`'s Fast loop and Gate cells are Ghost-Core's numbers until Tune-up pass 0 re-measures them here.
 - A session's venv: `python3.12 -m venv .venv && .venv/bin/pip install --only-binary :all: --require-hashes -r requirements.lock`.
-- Branches left on origin, all merged into `main` by squash and safe to delete: `claude/sleepy-babbage-k6ojqm`,
-  `claude/audience-f01`, `claude/gate-0-2`, `agent/seed-pack`.
+- Branches left on origin, all merged into `main` by squash and safe to delete: `claude/audience-f01`, `claude/gate-0-2`, `agent/seed-pack`.
