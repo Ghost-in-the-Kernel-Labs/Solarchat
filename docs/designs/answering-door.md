@@ -1,13 +1,13 @@
 # Design: the answering door and the evaluation runner (TODO 1.6)
 
 Written by a strong-grade agent before 1.6 is built (SC-018), against the evaluation set as landed in 357877c
-(`evals/v1.json`, 90 cases, J-039); proposed as SC-019, **awaiting Ghost**. Nothing here
-is built until SC-019 is `in force`. A mid-grade worker builds from this page alone; where it is not precise
+(`evals/v1.json`, 90 cases, J-039); SC-019, **in force** (Ghost answered its ten questions on 2026-11-21, in chat, as recommended; see the end
+of section 10 for what that changes). A mid-grade worker builds from this page alone; where it is not precise
 enough, the fix is to this page, not a guess (Core C-003, CLAUDE.md).
 
 Read with it: HAD-03, HAD-04, HAD-06 (`docs/CONTRACT.md`), SC-012, SC-015, SC-018 (`theGhost.md`),
-`solarchat/leaf/contract.py`, `solarchat/safety/rules.py`. Designs have no home yet: this folder,
-`docs/designs/`, is proposed as theirs (one file per item, named for what it designs), beside `docs/audits/`.
+`solarchat/leaf/contract.py`, `solarchat/safety/rules.py`. Designs have a home, this folder,
+`docs/designs/` (question 10, answered); it is theirs (one file per item, named for what it designs), beside `docs/audits/`.
 
 ## 1. The shape in one paragraph
 
@@ -380,3 +380,13 @@ holds the question for that reason. 1.14's check will name the section when it i
 9. **Known failures** (section 6.7): mns-03, mns-06 and mns-09 listed in `evals/known-failures.json`, printed and
    counted as failures, excusing no fall, and removed in the commit that fixes them.
 10. **`docs/designs/`** as the home of designs.
+
+### Ghost's answers, 2026-11-21 (in chat: "go with your recommendations, sign-off question for meters")
+
+All ten as recommended. Three of them change this page's later reading: (4) mns-03 is the worker-words item's, so it is
+a known failure `until` TODO 1.10 and not 1.13; (5) 2.6 moves up to TODO 1.10 right after 1.9, so the door's step 6
+will match the question's words there (a hazard in the worker's words fires its rule whatever passage is found), and
+the sections above that say "until TODO 2.6" now mean 1.10; and the meter sign-off question of SC-020 is built in 1.10,
+settling first how a session's sign-off is held, how the runner gives a case a session state without editing the
+frozen set (a side file keyed by case id), and whether the meter triggers split from SR-02. 1.6 is built as written
+here, with the known failures mns-03 (until 1.10) and mns-09 (until 1.10, SC-020), (mns-06 was fixed meanwhile by 1.13's removal of SR-10's "add a panel in series", J-041, so it is not listed).

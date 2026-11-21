@@ -34,14 +34,14 @@ which passage to show.
    `scripts/checks/evals.py`; a change needs a decision and the new hash; the engineer reviews the frozen set at the
    end, TODO 6.4), 1.6 the answering door `answer(question, packs, demo_mode)` and the runner (its
    interface designed by a strong-grade agent before it is built), 1.7 the index, 1.8 keyword search behind
-   `answer()`, 1.9 the safety rules in the answers, 1.10 Tune-up pass 1. Each goes to a fresh worker of its grade with
+   `answer()`, 1.9 the safety rules in the answers, 1.10 the safety rules matched on the worker's words (moved up from 2.6, Ghost 2026-11-21, SC-019), 1.15 Tune-up pass 1. Each goes to a fresh worker of its grade with
    the brief of `docs/when/hand-out-a-task.md`, saved on its own branch and landed by the coordinator after Ghost's
    word; 1.3 went to the strong grade.
 3. **Phase 2 opens with what the demo first meant** (SC-018: old 1.5 to 1.8 moved down): 2.1 demo mode, 2.2 the walker
    (`solarchat/walker`, a module Ghost approved), 2.3 the safety rules in the walker (whole-word matching on the
-   step's text is settled, HAD-04), 2.4 the offline shell; 2.8 is Tune-up pass 2. The evaluation set is frozen before
+   step's text is settled, HAD-04), 2.4 the offline shell; 2.8 is Tune-up pass 2 (2.6 left for Phase 1 as 1.10). The evaluation set is frozen before
    any search or model (J-033: back in Phase 1, after SC-015's code; the engineer reviews the frozen set at the end,
-   TODO 6.4; For Ghost 16). 1.10 Tune-up pass 1 carries the next human maintainability pass (SC-011: Ghost-Core's
+   TODO 6.4; For Ghost 16). 1.15 Tune-up pass 1 carries the next human maintainability pass (SC-011: Ghost-Core's
    toolkit under `scripts/` a few files at a time, each with its proof that nothing changed; then the tests).
 
 ## Settled by Ghost
@@ -123,19 +123,17 @@ which passage to show.
    the project (F-16, P-20, TODO 6.4); what is decided now on Ghost's word is logged under SC-016 with the role
    "maintainer", pending engineer, and the engineer confirms or reverses each at that review. The evaluation
    set (then 1.9, now 1.5, SC-018) is back in Phase 1; the review packet (TODO 1.14) will gather what the engineer must judge. No open item remains for you here.
-17. **The answering door and the runner, designed: SC-019, proposed, awaiting you** (J-040; the design is
-   `docs/designs/answering-door.md`, its section 10 the questions). TODO 1.6 is not built until you confirm. Ranked:
-   (1) the new module `answer` (`solarchat/answer`, importing leaf, packs and safety), and the model client in its own
-   module `model` in Phase 3 rather than in `answer`; (2) the leaf change: `Finding`, `Answerer`, `Passage.title`,
-   `MAX_CITED_PASSAGES = 3`, `DEMO_BANNER`, later `SEARCH_MIN_SCORE` (or the two types in `answer` instead); (3) the
-   fast loop holding the runner's committed record as a per-case ratchet (`--check`), so it is green on day one while
-   the stub fails every stop, emergency and warn case, and the plain run keeps TODO 1.6's exit 1; (4) 1.13 back
-   before 1.9, or fail-04's must-not-stop fall accepted at 1.9 under a decision (`fail-04-check-2` and `fail-04-stop`
-   fire SR-08); (5) the safety rules matched on the cited passages only until 2.6, or 2.6's matching of the worker's
-   words brought forward; (6) no accuracy threshold before a baseline, yours to set after 1.8 and at 3.4; (7) the
-   search threshold tuned on the frozen set that scores it, for version 1; (8) one rule per reply: the most severe
-   response, then the lowest id; (9) the known failures mns-03, mns-06 and mns-09 listed in `evals/known-failures.json`,
-   printed and counted as failures and excusing no fall; (10) `docs/designs/` as the home of designs.
+17. **The answering door and the runner, designed: SC-019, in force, answered by you on 2026-11-21 in chat** (J-040, J-042;
+   the design is `docs/designs/answering-door.md`, its section 10 the questions). "Go with your recommendations, sign-off
+   question for meters." All ten went as recommended: (1) the new module `answer`, and the model client in its own module
+   `model` in Phase 3; (2) the leaf change; (3) the fast loop holds the record as a per-case ratchet; (4) mns-03 is the
+   worker-words item's, not 1.13's; (5) 2.6, the safety rules matched on the worker's words, moved up to 1.10, right after
+   1.9 (old 1.10 Tune-up pass 1 is now 1.15); (6) no accuracy threshold before a baseline, yours to set after 1.8 and at 3.4;
+   (7) the search threshold tuned on the frozen set, for version 1, a held-out set a later item; (8) the most severe
+   response, then the lowest id; (9) the known failures mns-03, mns-06 and mns-09 in `evals/known-failures.json`;
+   (10) `docs/designs/` as the home of designs. The meters, your addition: SC-020, a sign-off question once per session;
+   its design is 1.10's first step and still open (how the sign-off is held, how the runner gives a case a session state
+   without editing the frozen set, whether the meter triggers split from SR-02). Answered; nothing waits on you here.
 
 Audit advisories (tune-up step 2): the python gate runs no audit step, so none are listed. An audit tool
 (`pip-audit` or the like) would be a new dependency, Ghost's to approve; until then the review's layers 1, 2 and 4

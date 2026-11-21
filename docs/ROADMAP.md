@@ -152,8 +152,8 @@ Decided on 2026-11-21 (J-031 proposed them; Ghost answered in J-032, and added i
   stop (why, the safe next action, what to bring the supervisor), or an emergency; 2.3's test extended to each.
 - 1.13 The over-firing of SR-03 and SR-02: SR-03 fires on step-12's "Never pull connectors apart", a prohibition
   HAD-04 says a trigger must not match, and on the safe method SR-03 itself prescribes (fail-04, fail-07, fail-10:
-  cover the panel, open the pairs with the release tool); fail-04 also fires SR-08 on "smoke" in a check that tells
-  the worker what to watch for. SR-02's meter, probe, test-lead and crimp triggers fire on no text of today's demo
+  cover the panel, open the pairs with the release tool). (fail-04 also fires SR-08 on "smoke" in a check that tells
+  the worker what to watch for: Ghost, 2026-11-21, made that mns-03's fix part of 1.10, not this item.) SR-02's meter, probe, test-lead and crimp triggers fire on no text of today's demo
   pack, but would stop every troubleshooting flow that measures and every crimping step. The precision fixes (a
   negation before a trigger; a check that lists signs to watch for) are Ghost's to confirm with "engineer to
   confirm"; SR-02's triggers moving to a warn is a relaxation, Ghost's to decide on his word and the engineer's to confirm at the end (6.4). Each change logged (1.11);
@@ -172,7 +172,7 @@ Decided on 2026-11-21 (J-031 proposed them; Ghost answered in J-032, and added i
   expected; stop, warn or emergency where expected; no stop on a must-not-stop case. It prints a score table and exits
   non-zero if any safety case or must-not-stop case fails. It runs in the fast loop against the offline mode; the model
   mode runs on recorded replies in tests, and live only by a separate command. The interface's design is written by a
-  strong-grade agent before it is built: `docs/designs/answering-door.md` (SC-019, proposed), where the door also
+  strong-grade agent before it is built: `docs/designs/answering-door.md` (SC-019), where the door also
   takes the answerer as an argument, `answer(question, packs, demo_mode, answerer)`, and the fast loop holds the
   runner's committed record as a per-case ratchet.
 - 1.7 The index (moved up from 2.1, SC-018): a pack on disk becomes an index, the same bytes every time (goldens, SC-003).
@@ -180,7 +180,8 @@ Decided on 2026-11-21 (J-031 proposed them; Ghost answered in J-032, and added i
   the runner (1.6) against the evaluation set (1.5).
 - 1.9 The safety rules in the answers (moved up from 2.4, SC-018): a reply on a passage whose text fires a rule carries
   that rule's response (SC-015). The walker's half of the safety rules is 2.3.
-- 1.10 Tune-up pass 1, with the human maintainability pass (SC-011)
+- 1.10 The safety rules matched on the worker's words (moved up from 2.6 by Ghost's answer to SC-019's question 5, 2026-11-21; J-031; the review's "2.4b"; renumbered from 2.7, SC-018): a rule's triggers match what the worker types or says as well as the pack's text, never Hadley's own replies, whatever passage is found: "I got a shock" fires SR-09 with no passage at all. SR-14's "do not know" and "don't know" are settled first against HAD-03: "I don't know which lead is positive" is a question, answered from the packs or with "I do not know", not a stop; SR-14 keeps the worker's words that say they are untrained or unsure of the work itself ("not trained", "never done"). It also builds SC-020, the meter sign-off: once per session Hadley asks whether the worker's supervisor has signed them off for meter tests on this site; on yes SR-02's meter triggers warn with the precaution (a meter and test leads rated for the string's DC voltage; measure at the connectors; never across a loaded circuit), on no they stop; its design settles first how a session's sign-off is held, how the runner gives a case a session state without editing the frozen `evals/v1.json` (a side file keyed by case id, for example), and whether the meter triggers split from SR-02 into their own rule. mns-03 (SR-08 on the "smoke" of fail-04's list of signs to watch for) is this item's, not 1.13's. Ghost decides the trigger list on his word (SC-016, role maintainer); the engineer confirms it at the end (6.4).
+- 1.15 Tune-up pass 1, with the human maintainability pass (SC-011)
 
 ### Phase 2: the offline mode (the floor)
 
@@ -197,11 +198,6 @@ runner of Phase 1 (SC-018): the walker, the safety rules in it, and the shell ar
   source or "page not yet found" where the page is `"unknown"` (SC-012); free text it cannot place gets "I do not
   know", with no passage (HAD-03).
 - 2.5 Switching packs on and off, and two packs for different models side by side.
-- 2.6 The safety rules matched on the worker's words (J-031; the review's "2.4b"; renumbered from 2.7, SC-018): a rule's triggers match
-  what the worker types or says as well as the pack's text, never Hadley's own replies. SR-14's "do not know" and
-  "don't know" are settled first against HAD-03: "I don't know which lead is positive" is a question, answered from
-  the packs or with "I do not know", not a stop; SR-14 keeps the worker's words that say they are untrained or unsure
-  of the work itself ("not trained", "never done"). Ghost decides the trigger list on his word (SC-016, role maintainer); the engineer confirms it at the end (6.4).
 - 2.7 A site-safety pack built from the library (J-031; renumbered from 2.8, SC-018): passages that quote `library/sources/` (OSHA,
   NIOSH, Solar Victoria) with each source's id and page, so a worker's general safety question ("how far from an
   overhead line?") gets a cited answer instead of "I do not know". A `demo` pack until it is handed over (SC-013). It
