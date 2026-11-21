@@ -35,3 +35,10 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Opened**: `docs/when/coordinate.md`, `docs/when/grades.md`, `theGhost.md` (SC-019, SC-023), `docs/HANDOFF.md`, `TODO.md`, `docs/DONE.md`, `scripts/checks/todo.py`, `test/test_todo.py`, `docs/when/tune-up.md`, `docs/designs/rule-bank-and-triage.md`, `docs/ROADMAP.md`, `docs/journal/J-000-099.md`.
 - **Complaints**: how to close an item absorbed rather than done is not written anywhere (it went to `docs/DONE.md` with "Closed, not built"); the order rule that forces a phase's tune-up pass to be renumbered whenever items are added is only in `scripts/checks/todo.py`; `scripts/eval.py --live` writes its recordings under `evals/recorded/`, inside the tree, so every live run trips the stop hook.
 - **Suggestions**: a line in `docs/paths/process.md` for closing an absorbed item; send live recordings to `build/` (1.20 is the natural place).
+
+### 2026-11-21 · The demo's key and voice, recorded (SC-022 amended, J-053) · Claude Opus 5.5
+
+- **Task**: record Ghost's demo ask and answers, amend SC-022, and write TODO 2.5 and 2.7.
+- **Opened**: `theGhost.md` (SC-022), `docs/ROADMAP.md` (F-08, F-09, 5.4), `solarchat/cli/main.py`, `solarchat/cli/__main__.py`, `pyproject.toml`, `requirements.lock`, `TODO.md`, `docs/DONE.md`.
+- **Complaints**: none new; the decision that the project is not an installed package is stated only in `pyproject.toml`'s first comment.
+- **Suggestions**: none.
