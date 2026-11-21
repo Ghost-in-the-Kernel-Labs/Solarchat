@@ -139,17 +139,8 @@ What a wrong answer is has to be written down before anything can give one (Core
   steps, each with a picture, and the common failures (F-14). Ghost asked for a first draft ahead of 1.2 (J-011):
   it is built to a provisional layout under `packs/`, marked `demo`, and is brought to 1.2's format before the item closes; it becomes a `field` pack only when a person hands it
   over as checked documentation (SC-013).
-- 1.5 Demo mode: a labelled switch that lets a `demo` pack run, for a demo only (SC-010, SC-013).
-- 1.6 The walker, moved from 2.3 for the demo of 2026-11-23 (SC-010): one step at a time through a procedure or
-  a flow, to a fix or a stop.
-- 1.7 The safety rules enforced in the walker, moved from 2.4's walker half (SC-010). Every rule stops here; a
-  rule's response (warn, stop, emergency) is 1.12's, once SC-015 is in force.
-- 1.8 The offline shell, moved from 2.6 (SC-010): a command-line conversation that runs end to end with the
-  network off. Every step it shows lists its passage's sources by title, with the page for a document source or
-  "page not yet found" where the page is `"unknown"` (SC-012); free text it cannot place gets "I do not know", with
-  no passage (HAD-03).
 
-Decided on 2026-11-21 (J-031 proposed them; Ghost answered in J-032, and added in J-033 that the engineer comes in only at the end), to align the plan with Ghost's vision of that day (F-16, F-17). `TODO.md` holds 1.11 to 1.14 in Phase W until Ghost moves them back; nothing in them waits on an engineer. The order they run in, after Monday's demo (1.4 to 1.8): 1.11, 1.12, 1.13, 1.14. The evaluation set (1.9) keeps its place in Phase 1 after 1.8, needing only SC-015's code (1.11 and 1.12's rules and leaf); the engineer's review moved out of Phase 1 to 6.4, the end of the roadmap. The chain's check reads numbers in order, so a number like "1.6a" is invisible to `scripts/checks/todo.py`.
+Decided on 2026-11-21 (J-031 proposed them; Ghost answered in J-032, and added in J-033 that the engineer comes in only at the end), to align the plan with Ghost's vision of that day (F-16, F-17). `TODO.md` holds 1.11 to 1.14 in Phase W until Ghost moves them back; nothing in them waits on an engineer. The order they run in, after the walker of Phase 2 (2.2 and 2.3, where 1.12 waits): 1.11, 1.12, 1.13, 1.14. The evaluation set (1.5) keeps its place in Phase 1 after the seed pack, needing only SC-015's code (1.11 and 1.12's rules and leaf); the engineer's review moved out of Phase 1 to 6.4, the end of the roadmap. On 2026-11-21 Ghost reordered Phase 1 again (SC-018, J-037): the evaluation set, the answering door with its automatic runner, the index, keyword search and the safety rules in the answers come before the demo mode, the walker and the offline shell, which open Phase 2. The chain's check reads numbers in order, so a number like "1.6a" is invisible to `scripts/checks/todo.py`.
 
 - 1.11 The safety rules' change log (SC-016, in force; done, J-034): each rule's `changes`, `{date, by, role, why, evidence}`,
   backfilled for version 1 (J-027) and the audit's changes (J-030); the safety check refuses a rule changed with no
@@ -158,7 +149,7 @@ Decided on 2026-11-21 (J-031 proposed them; Ghost answered in J-032, and added i
 - 1.12 Response types (SC-015, in force; the roadmap review's "1.6a"): each rule's `response` in `rules.json`, at
   its starting value (SR-03 `warn` on Ghost's word, SR-08 and SR-09 `emergency`, every other rule `stop`; done, J-034); the leaf's `ReplyKind.WARN` and
   `SafetyRule.response` (a leaf change, approved by Ghost under Core C-012 on 2026-11-21); the walker shows a warn and continues, a helpful
-  stop (why, the safe next action, what to bring the supervisor), or an emergency; 1.7's test extended to each.
+  stop (why, the safe next action, what to bring the supervisor), or an emergency; 2.3's test extended to each.
 - 1.13 The over-firing of SR-03 and SR-02: SR-03 fires on step-12's "Never pull connectors apart", a prohibition
   HAD-04 says a trigger must not match, and on the safe method SR-03 itself prescribes (fail-04, fail-07, fail-10:
   cover the panel, open the pairs with the release tool); fail-04 also fires SR-08 on "smoke" in a check that tells
@@ -168,28 +159,48 @@ Decided on 2026-11-21 (J-031 proposed them; Ghost answered in J-032, and added i
   confirm"; SR-02's triggers moving to a warn is a relaxation, Ghost's to decide on his word and the engineer's to confirm at the end (6.4). Each change logged (1.11);
   `test/test_safety.py`'s pin of what the demo pack fires updated.
 - 1.14 The engineer's review packet (P-20, F-16): `scripts/engineer_review_doc.py` writes one document, `docs/ENGINEER-REVIEW.md`, from the data, and the fast loop holds it current (`--check`, as for `docs/SAFETY-RULES.md`). It gathers everything the engineer must judge: every "engineer to confirm" mark on a safety rule; every SC-016 change entry whose role is not an electrical engineer (Ghost's SR-03 warn among them), marked "pending engineer"; every pack page still `"unknown"` (SC-012); every claim flagged as unsourced (HANDOFF For Ghost 3's list: fail-04, step-07, step-09, fail-03, fail-08, and the mirrored sources S3 and S8); and each rule's response (SC-015). The item is written here and not built yet. It needs 1.11's change log and 1.12's responses to have something to gather.
-- 1.9 The evaluation set, version 1, frozen: in-scope questions with the passage that answers each; out-of-scope
+- 1.5 The evaluation set, version 1, frozen (moved up from 1.9, SC-018): in-scope questions with the passage that answers each; out-of-scope
   questions that must be refused; questions in the pack's own field that its passages do not cover, which must get
   "I do not know"; safety cases that must stop or call an emergency; warn cases that must show the rule's words and
   continue; and must-not-stop cases (step-12's safe method, fail-04's polarity fix, plugging connectors in, a meter
   where the worker is trained), so a check catches over-stopping as well as under-stopping. Its freeze needs only SC-015 in force, which it is; the engineer reviews the frozen
   set at the end (6.4). It still comes before any search or model (Core C-003).
+- 1.6 The answering door and the automatic evaluation runner (new, SC-018): one function,
+  `answer(question, packs, demo_mode) -> Reply` (the leaf's `Reply`), through which every mode answers: offline search
+  now, the model later. `scripts/eval.py` feeds every question of the evaluation set to it and scores each reply against
+  its expected outcome: the right reply kind; the named passage cited for an in-scope question; "I do not know" where
+  expected; stop, warn or emergency where expected; no stop on a must-not-stop case. It prints a score table and exits
+  non-zero if any safety case or must-not-stop case fails. It runs in the fast loop against the offline mode; the model
+  mode runs on recorded replies in tests, and live only by a separate command. The interface's design is written by a
+  strong-grade agent before it is built.
+- 1.7 The index (moved up from 2.1, SC-018): a pack on disk becomes an index, the same bytes every time (goldens, SC-003).
+- 1.8 Keyword search behind `answer()` (moved up from 2.2, SC-018): keyword ranking in the standard library, scored by
+  the runner (1.6) against the evaluation set (1.5).
+- 1.9 The safety rules in the answers (moved up from 2.4, SC-018): a reply on a passage whose text fires a rule carries
+  that rule's response (SC-015). The walker's half of the safety rules is 2.3.
 - 1.10 Tune-up pass 1, with the human maintainability pass (SC-011)
 
 ### Phase 2: the offline mode (the floor)
 
-- 2.1 Ingestion: a pack on disk becomes an index, the same bytes every time (goldens, SC-003).
-- 2.2 Search: keyword ranking in the standard library, scored against 1.9's in-scope questions.
-- 2.3 (moved to 1.6, SC-010)
-- 2.4 The safety rules enforced in the search (the walker's half moved to 1.7, SC-010).
+Opened by the offline walk-through that Monday's demo of 2026-11-23 first meant (SC-010), now behind the answering
+runner of Phase 1 (SC-018): the walker, the safety rules in it, and the shell are built on a bot already scored.
+
+- 2.1 Demo mode (moved from 1.5): a labelled switch that lets a `demo` pack run, for a demo only (SC-010, SC-013).
+- 2.2 The walker (moved from 1.6; it came to Phase 1 from the old 2.3 for the demo, SC-010): one step at a time through
+  a procedure or a flow, to a fix or a stop.
+- 2.3 The safety rules enforced in the walker (moved from 1.7): every rule stops here; a rule's response (warn, stop,
+  emergency) is 1.12's, once SC-015 is in force. The answers' half is 1.9.
+- 2.4 The offline shell (moved from 1.8; it came from the old 2.6, SC-010): a command-line conversation that runs end
+  to end with the network off. Every step it shows lists its passage's sources by title, with the page for a document
+  source or "page not yet found" where the page is `"unknown"` (SC-012); free text it cannot place gets "I do not
+  know", with no passage (HAD-03).
 - 2.5 Switching packs on and off, and two packs for different models side by side.
-- 2.6 (moved to 1.8, SC-010)
-- 2.7 The safety rules matched on the worker's words (J-031; the review's "2.4b"): a rule's triggers match
+- 2.6 The safety rules matched on the worker's words (J-031; the review's "2.4b"; renumbered from 2.7, SC-018): a rule's triggers match
   what the worker types or says as well as the pack's text, never Hadley's own replies. SR-14's "do not know" and
   "don't know" are settled first against HAD-03: "I don't know which lead is positive" is a question, answered from
   the packs or with "I do not know", not a stop; SR-14 keeps the worker's words that say they are untrained or unsure
   of the work itself ("not trained", "never done"). Ghost decides the trigger list on his word (SC-016, role maintainer); the engineer confirms it at the end (6.4).
-- 2.8 A site-safety pack built from the library (J-031): passages that quote `library/sources/` (OSHA,
+- 2.7 A site-safety pack built from the library (J-031; renumbered from 2.8, SC-018): passages that quote `library/sources/` (OSHA,
   NIOSH, Solar Victoria) with each source's id and page, so a worker's general safety question ("how far from an
   overhead line?") gets a cited answer instead of "I do not know". A `demo` pack until it is handed over (SC-013). It
   never names a safety rule (the pack check refuses that) and does not replace one: the rules stay the fixed layer
@@ -197,7 +208,7 @@ Decided on 2026-11-21 (J-031 proposed them; Ghost answered in J-032, and added i
   or `installation_type`, and the check does not hold the list of types, so `installation_type` "every installation
   type (site safety)" passes today; what is proposed is that line in `packs/TYPES.md` and one sentence in HAD-06
   saying a pack may cover every installation type, so the reading is deliberate rather than a gap.
-- 2.9 Tune-up pass 2 (renumbered from 2.7 when 2.7 and 2.8 were proposed)
+- 2.8 Tune-up pass 2 (renumbered from 2.9, SC-018)
 
 ### Phase 3: the local mode (a model on top)
 
@@ -207,7 +218,7 @@ Decided on 2026-11-21 (J-031 proposed them; Ghost answered in J-032, and added i
 - 3.2 The answering step: the found passages and the question in, an answer that cites its passage or says it
   does not know out; no tools.
 - 3.3 Tests against recorded replies; no test calls a model.
-- 3.4 The evaluation run, by hand, its scores recorded; the refusal threshold and the safety thresholds
+- 3.4 The runner on the model mode (`scripts/eval.py`, 1.6, SC-018), its scores recorded; the refusal threshold and the safety thresholds
   (stops, emergencies, warns, and the must-not-stop cases) set by Ghost provisionally, and the engineer confirms them
   at the end (6.4, F-16).
 - 3.5 The manner (F-12): written once beside the prompt, with evaluation cases that the same question gets the
@@ -248,6 +259,6 @@ stack and so Ghost's decision before any of it is built.
   at deployment.
 - 6.2 The first real make and model. Waits on Ghost: which.
 - 6.3 The handover: when the bot stops, a summary for the engineer of what was tried and seen.
-- 6.4 The engineer's final review (F-16, P-20), the last step before the pilot: an electrical engineer, not yet known, works through `docs/ENGINEER-REVIEW.md` (1.14): SR-01 to SR-14 (words, triggers, responses, and each claim against its source's page in `library/sources/` where the library holds it), SC-015's queue (SR-03's warn, SR-02's meter and crimp triggers, SR-05, SR-11's split), the four open marks (SR-02, SR-06, SR-08 and SR-09's first-aid sentence, SR-12), the demo pack's flagged claims and its two mirrored sources, the frozen evaluation set (1.9) and 3.4's thresholds. Each judgement confirms or reverses a change-log entry, and the engineer's own entries carry the role "electrical engineer". Waits on: an engineer.
+- 6.4 The engineer's final review (F-16, P-20), the last step before the pilot: an electrical engineer, not yet known, works through `docs/ENGINEER-REVIEW.md` (1.14): SR-01 to SR-14 (words, triggers, responses, and each claim against its source's page in `library/sources/` where the library holds it), SC-015's queue (SR-03's warn, SR-02's meter and crimp triggers, SR-05, SR-11's split), the four open marks (SR-02, SR-06, SR-08 and SR-09's first-aid sentence, SR-12), the demo pack's flagged claims and its two mirrored sources, the frozen evaluation set (1.5) and 3.4's thresholds. Each judgement confirms or reverses a change-log entry, and the engineer's own entries carry the role "electrical engineer". Waits on: an engineer.
 - 6.5 A pilot, with an engineer reading the answers (Core C-005).
 - 6.6 Tune-up pass 6

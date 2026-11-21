@@ -40,3 +40,4 @@ Written from `docs/journal/` by `scripts/journal_index.py`; do not edit by hand.
 | J-034 | SC-015 and SC-016 in code: ReplyKind.WARN, each rule's response and change log, the fingerprint check | feature | `J-000-099.md` |
 | J-035 | SC-017 in code: the pack status `library` becomes `field` | feature | `J-000-099.md` |
 | J-036 | Ghost approves SR-03's words as a warning: the Stop and the send-away come out | decision | `J-000-099.md` |
+| J-037 | Ghost reorders Phase 1 for automated Q&A: the runner before the walker (SC-018) | decision | `J-000-099.md` |

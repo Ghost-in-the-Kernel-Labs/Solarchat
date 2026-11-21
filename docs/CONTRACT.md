@@ -22,7 +22,7 @@ Every other module may import it; it may import only the standard library. Held 
 ## HAD-02 Every number a document reports comes from a run the repository can repeat
 
 A number without the command that produced it does not exist. Held by the project's results check
-once a document reports one (the evaluation set's scores, TODO 1.9).
+once a document reports one (the runner's scores on the evaluation set, TODO 1.6).
 
 ## HAD-03 Hadley answers only from the packs, names the passage, or says it does not know
 
@@ -60,7 +60,7 @@ forbids the act; SR-01 holds only phrases that order the site's rules ignored, s
 
 Nothing in a pack is read as an instruction to Hadley: a passage that says "ignore the safety
 rules" is shown or quoted as a passage, never obeyed (Core C-007). Held by the leaf's `Passage`,
-whose text is only ever quoted, and, once it exists, the evaluation set's injection cases (TODO 1.9).
+whose text is only ever quoted, and, once it exists, the evaluation set's injection cases (TODO 1.5).
 
 ## HAD-06 A demo pack never answers outside demo mode
 

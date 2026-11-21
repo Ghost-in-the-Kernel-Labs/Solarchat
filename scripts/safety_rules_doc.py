@@ -30,7 +30,7 @@ HEADER = (
     "(P-18). When one applies, Hadley gives the rule's response (SC-015): a **warn** shows the words below and the walk "
     "continues, a **stop** shows them with why, the safe next action and what to bring the supervisor, an **emergency** "
     "tells the worker to step back and call for help. Each rule's triggers are the words that, found in a step's text, "
-    "make it apply; the walker uses them from TODO 1.7. Each rule's latest change is shown (SC-016); a point marked "
+    "make it apply; the walker uses them from TODO 2.3, the answers from 1.9. Each rule's latest change is shown (SC-016); a point marked "
     "**Engineer to confirm** waits for the engineer's final review (F-16), and an entry whose role is not an electrical "
     "engineer is Ghost's or the agent's judgement, pending that review.\n\n"
     "Status: a draft for Ghost to read (TODO 1.3 stays open until Ghost has read it). The sources are public guidance the rules "

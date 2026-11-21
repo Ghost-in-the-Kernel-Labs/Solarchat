@@ -2,7 +2,7 @@
 
 Written by `scripts/directive_map.py` from `theGhost.md`, `docs/CONTRACT.md` and the code's citations; do not edit here. A function holds a directive when it cites it: `# Decision: SC-005 (why)` or `# Invariant: HAD-06 (why)` directly above its `def`, or an `Invariant:` line in its docstring (SC-011). "No function" means the directive is held by a document, a test or a review: its Held by line in `theGhost.md` or `docs/CONTRACT.md` says which.
 
-26 of 64 directives are cited by a function.
+26 of 65 directives are cited by a function.
 
 | Directive | Title | Held in code by |
 | --- | --- | --- |
@@ -64,6 +64,7 @@ Written by `scripts/directive_map.py` from `theGhost.md`, `docs/CONTRACT.md` and
 | SC-015 | Warn and help by default: a safety rule answers with a warn, a stop or an emergency, and none leaves the worker with nothing to do | `solarchat/leaf/contract.py:reply_problem`, `solarchat/leaf/contract.py:SafetyRule` |
 | SC-016 | Each safety rule keeps a change log: who changed it, in what role, why and on what evidence; a record of a judgement, not an approval | `scripts/safety_rules_doc.py:change_line`, `solarchat/leaf/contract.py:SafetyRuleChange`, `solarchat/leaf/contract.py:SafetyRule`, `solarchat/leaf/contract.py:changes_problem`, `solarchat/safety/rules.py:change_from_entry`, `solarchat/safety/rules.py:rule_fingerprint`, `solarchat/safety/rules.py:fingerprint_problem` |
 | SC-017 | A pack's status is `field` or `demo`; "library" means only `library/sources/` | no function |
+| SC-018 | Phase 1 is reordered for automated Q&A: the evaluation set, the answering door with its runner, the index, search and the safety rules in the answers come before the walker, demo mode and the shell | no function |
 | HAD-01 | The leaf module imports nothing of the project's own | `solarchat/leaf/__init__.py` |
 | HAD-02 | Every number a document reports comes from a run the repository can repeat | `solarchat/leaf/__init__.py` |
 | HAD-03 | Hadley answers only from the packs, names the passage, or says it does not know | `scripts/checks/packs.py:reference_problems`, `solarchat/leaf/contract.py:Reply` |

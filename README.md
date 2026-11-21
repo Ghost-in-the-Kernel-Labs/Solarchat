@@ -13,11 +13,13 @@ explained in full in [docs/SAFETY-AND-COMPLIANCE.md](docs/SAFETY-AND-COMPLIANCE.
 - **Built:** the contract every module shares (`docs/CONTRACT.md`), the knowledge-pack format and the check that
   refuses a broken pack, the shared types in `solarchat/leaf/`, and the checks and gates that hold the repository to
   its rules.
-- **Being built for the demo of 2026-11-23:** the safety rules, the demo pack in the new format, a clearly labelled
-  demo mode, the walker that steps a worker through a procedure or a fault, and a command-line conversation that
-  runs with the network off (`TODO.md`, items 1.3 to 1.8).
-- **Later:** the frozen evaluation set (1.9), keyword search, a small local model that only chooses which checked
-  passage to show, the hosted service, and the phone app (`docs/ROADMAP.md`, Phases 2 to 6).
+- **Being built for the demo of 2026-11-23:** the demo pack in the new format, the frozen evaluation set, the
+  answering door and the runner that scores the bot on that question set, the index, keyword search and the safety
+  rules in the answers (`TODO.md`, items 1.4 to 1.9). The demo shows the runner scoring the offline bot on the
+  question set (SC-018).
+- **Later:** the demo mode, the walker that steps a worker through a procedure or a fault, and a command-line
+  conversation that runs with the network off (Phase 2); a small local model that only chooses which checked
+  passage to show, the hosted service, and the phone app (`docs/ROADMAP.md`, Phases 3 to 6).
 
 No language model is called anywhere in the code today.
 
@@ -32,10 +34,10 @@ import, and `test/test_modules.py` refuses an import it does not allow.
 | --- | --- | --- |
 | `solarchat/leaf/` | The contract in code: the passage and its reference, a reply (an answer, "I do not know", or a stop) that cannot be built in a form the contract forbids, and the test of whether a pack is a demo pack. Every other module imports it; it imports nothing of the project's own. | built |
 | `solarchat/packs/` | Reads a knowledge pack from disk and checks it. | planned (the check is in `scripts/checks/packs.py` today) |
-| `solarchat/safety/` | The fixed safety rules, kept outside every pack, and the decision to stop and send the worker to the supervisor. | planned (1.3, 1.7) |
-| `solarchat/walker/` | Steps a worker through a procedure or a troubleshooting flow, one step at a time, to a fix or a stop. | planned (1.6) |
+| `solarchat/safety/` | The fixed safety rules, kept outside every pack, and the decision to stop and send the worker to the supervisor. | planned (1.3, 1.9, 2.3) |
+| `solarchat/walker/` | Steps a worker through a procedure or a troubleshooting flow, one step at a time, to a fix or a stop. | planned (2.2) |
 | `solarchat/project/` | Calls the other modules in order. | planned |
-| `solarchat/cli/` | The command-line conversation; parses input and calls `project`, with no logic of its own. | planned (1.8) |
+| `solarchat/cli/` | The command-line conversation; parses input and calls `project`, with no logic of its own. | planned (2.4) |
 
 ### The knowledge: `packs/`
 

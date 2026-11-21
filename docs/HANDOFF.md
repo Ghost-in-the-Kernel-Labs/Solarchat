@@ -27,16 +27,20 @@ which passage to show.
    1.3 is in `docs/DONE.md`, marked as all but Ghost's read. Next: the four marks still open in `docs/SAFETY-RULES.md`
    (below, For Ghost 1), headed "Ghost to confirm" there, wait for the engineer's final review under F-16 (the engineer comes in at the end); a change
    of an answer is a change to `rules.json`, then `scripts/safety_rules_doc.py`.
-2. **The demo of Monday 2026-11-23** (SC-010), after 1.3: 1.4 the seed pack in the format (convert
-   `packs/seed-mc4-leads/` to passages, flows and procedures; still a `demo` pack), 1.5 demo mode, 1.6 the walker
-   (`solarchat/walker`, a module Ghost approved), 1.7 the safety rules in the walker (it must settle whether a
-   rule's triggers match the step's text or the worker's replies, and match whole words: the 1.3 worker's notes),
-   1.8 the offline shell. Each went to a fresh worker of its grade with the brief of `docs/when/hand-out-a-task.md`,
-   saved on its own branch and landed by the coordinator after Ghost's word; 1.3 went to the strong grade.
-3. **1.9 the evaluation set**, frozen before any search or model (J-033: back in Phase 1, after SC-015's code; the engineer
-   reviews the frozen set at the end, TODO 6.4; For Ghost 16); 1.10 Tune-up pass 1, with the next human
-   maintainability pass (SC-011: Ghost-Core's toolkit under `scripts/` a few files at a time, each with its proof
-   that nothing changed; then the tests).
+2. **The demo of Monday 2026-11-23** (SC-010, its plan amended by SC-018, Ghost 2026-11-21): the demo now shows
+   `scripts/eval.py` scoring the offline bot on the evaluation set, not a walk-through. The chain, after 1.3: 1.4 the
+   seed pack in the format (convert `packs/seed-mc4-leads/` to passages, flows and procedures; still a `demo` pack),
+   1.5 the evaluation set, frozen, 1.6 the answering door `answer(question, packs, demo_mode)` and the runner (its
+   interface designed by a strong-grade agent before it is built), 1.7 the index, 1.8 keyword search behind
+   `answer()`, 1.9 the safety rules in the answers, 1.10 Tune-up pass 1. Each goes to a fresh worker of its grade with
+   the brief of `docs/when/hand-out-a-task.md`, saved on its own branch and landed by the coordinator after Ghost's
+   word; 1.3 went to the strong grade.
+3. **Phase 2 opens with what the demo first meant** (SC-018: old 1.5 to 1.8 moved down): 2.1 demo mode, 2.2 the walker
+   (`solarchat/walker`, a module Ghost approved), 2.3 the safety rules in the walker (whole-word matching on the
+   step's text is settled, HAD-04), 2.4 the offline shell; 2.8 is Tune-up pass 2. The evaluation set is frozen before
+   any search or model (J-033: back in Phase 1, after SC-015's code; the engineer reviews the frozen set at the end,
+   TODO 6.4; For Ghost 16). 1.10 Tune-up pass 1 carries the next human maintainability pass (SC-011: Ghost-Core's
+   toolkit under `scripts/` a few files at a time, each with its proof that nothing changed; then the tests).
 
 ## Settled by Ghost
 
@@ -52,6 +56,10 @@ which passage to show.
   walker module (SC-010, J-024); the human maintainability standard (SC-011, J-024).
 - 2026-11-21: only checked documentation goes into a field pack, and handing it over is the approval; no approval
   record, a pack is `field` or `demo` (SC-013, J-028; renamed from `library` by SC-017).
+- 2026-11-21: the next goal is a chatbot that can be interrogated automatically with a question set: Phase 1 now runs
+  the seed pack, the evaluation set, the answering door and its runner, the index, keyword search and the safety rules in
+  the answers; the walker, demo mode and offline shell open Phase 2; Monday's demo shows the runner scoring the offline
+  bot (SC-018, J-037; it amends SC-010's plan).
 - The wording of SC-002 to SC-008 is the agent's, for Ghost to confirm.
 
 ## For Ghost: waiting on you
@@ -109,8 +117,8 @@ which passage to show.
    `field` rename. **Ghost's further word, the same day (J-033): the engineer comes in at the
    end; nothing waits on them before then.** The electrical engineer is unknown and reviews the bot once, at the end of
    the project (F-16, P-20, TODO 6.4); what is decided now on Ghost's word is logged under SC-016 with the role
-   "maintainer", pending engineer, and the engineer confirms or reverses each at that review. 1.9 is back in
-   Phase 1; the review packet (TODO 1.14) will gather what the engineer must judge. No open item remains for you here.
+   "maintainer", pending engineer, and the engineer confirms or reverses each at that review. The evaluation
+   set (then 1.9, now 1.5, SC-018) is back in Phase 1; the review packet (TODO 1.14) will gather what the engineer must judge. No open item remains for you here.
 
 Audit advisories (tune-up step 2): the python gate runs no audit step, so none are listed. An audit tool
 (`pip-audit` or the like) would be a new dependency, Ghost's to approve; until then the review's layers 1, 2 and 4

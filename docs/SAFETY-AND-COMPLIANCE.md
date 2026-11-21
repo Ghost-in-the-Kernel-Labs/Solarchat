@@ -40,7 +40,7 @@ never depends on it to be safe.
 - **Enforced today:** no language model is called anywhere in the code. `test/test_modules.py` refuses an import of
   any model client (Anthropic, OpenAI, Google, Cohere, Mistral, Groq, LangChain and others) from any module that
   does not name it, and no module names one (`docs/modules.json`, rule MOD-03).
-- **Designed:** the walker that shows the steps (`TODO.md` 1.6) and the offline command-line conversation (1.8).
+- **Designed:** the walker that shows the steps (`TODO.md` 2.2) and the offline command-line conversation (2.4).
 
 ### 2. Hadley answers only from the packs, and only checked documentation is in a field pack (HAD-03, HAD-06, SC-005, SC-013)
 
@@ -67,7 +67,7 @@ A question the switched-on packs do not cover gets "I do not know", never a gues
 
 - **Enforced today:** `solarchat/leaf/contract.py`'s `Reply` cannot be created as an answer without a passage
   reference, nor as a warn without one, nor as "I do not know" or a stop with one; `test/test_leaf.py` shows each refused.
-- **Designed:** the frozen evaluation set (1.9) of in-scope questions, each with the passage that answers it, and
+- **Designed:** the frozen evaluation set (1.5) of in-scope questions, each with the passage that answers it, and
   out-of-scope questions that must get "I do not know".
 
 ### 4. A pack's text is data, never instructions (HAD-05, Core C-007)
@@ -77,7 +77,7 @@ is shown or quoted as text, never obeyed. This removes danger 4.
 
 - **Enforced today:** in the leaf, a `Passage` holds text only, to be quoted. With no model in the code, no pack
   text reaches anything that could act on it.
-- **Designed:** injection cases in the evaluation set (1.9), before any model is added.
+- **Designed:** injection cases in the evaluation set (1.5), before any model is added.
 
 ### 5. The safety rules sit outside every pack and override it (HAD-04, P-17)
 
@@ -99,7 +99,7 @@ removes dangers 3 and 5: no "what's next?" carries a worker past a stop.
   it and stays with the person who loads the packs.
 - **Designed:** the maintainer's read of the rules (1.3 stays open until then; the points marked "Engineer to confirm"
   in `docs/SAFETY-RULES.md` are the agent's draft, and under F-16 they wait for an electrical engineer's
-  final review at the end of the project); every walk stopping at a rule whatever the pack says, using each rule's triggers (1.7).
+  final review at the end of the project); every walk stopping at a rule whatever the pack says, using each rule's triggers (2.3 in the walker, 1.9 in the answers).
 - **Enforced today (J-034):** each rule answers with a warn, a helpful stop or an emergency,
   starting cautious (SR-03 at a warn on Ghost's word) and relaxed on Ghost's word, logged as maintainer and confirmed or
   reversed by an electrical engineer at the final review (SC-015); each rule keeps a change log of who changed it, in
@@ -126,15 +126,15 @@ cases that must stop) is written and frozen before any search or model exists. A
 or the model that lowers a recorded score is refused. The walker built for the demo answers no question: it shows a
 pack's steps in their order and stops where the pack and the safety rules stop (SC-010).
 
-- **Enforced today:** the order is held in `TODO.md` (search and models come after 1.9).
-- **Designed:** the evaluation set and its check (1.9).
+- **Enforced today:** the order is held in `TODO.md` (search and models come after 1.5).
+- **Designed:** the evaluation set and its check (1.5).
 
 ### 8. A demo is labelled as one (SC-010)
 
 For a demonstration only, a switch may run a `demo` pack. Every screen shown under it carries the
 banner **"DEMO: not reviewed by an engineer, do not use on a site"**, and without the switch such a pack is refused.
 
-- **Designed:** 1.5. The demo pack `packs/seed-mc4-leads/` is a `demo` pack, and `docs/HANDOFF.md` lists five of its
+- **Designed:** 2.1. The demo pack `packs/seed-mc4-leads/` is a `demo` pack, and `docs/HANDOFF.md` lists five of its
   claims that could not be sourced; they must be checked by an engineer before it goes into a field pack.
 
 ## What Solarchat does not claim
@@ -153,5 +153,5 @@ banner **"DEMO: not reviewed by an engineer, do not use on a site"**, and withou
 | A pack's text is data | HAD-05; Core C-007 | `solarchat/leaf/contract.py` (`Passage`) |
 | Safety rules outside every pack | HAD-04; `docs/ROADMAP.md` P-17 | `scripts/checks/packs.py` (`flow_problems`), the `safety` module (1.3) |
 | No model in the code; one door when there is | SC-002; `docs/modules.json` MOD-03 | `test/test_modules.py` |
-| The test before the thing it tests | Core C-003; SC-003 | `TODO.md` order; the evaluation set (1.9) |
-| A demo is labelled | SC-010 | the demo switch and its test (1.5) |
+| The test before the thing it tests | Core C-003; SC-003 | `TODO.md` order; the evaluation set (1.5) |
+| A demo is labelled | SC-010 | the demo switch and its test (2.1) |

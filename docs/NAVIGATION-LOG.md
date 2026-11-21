@@ -133,3 +133,10 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Opened**: `CLAUDE.md`, `solarchat/safety/rules.py`, `solarchat/safety/rules.json`, `docs/NAVIGATION-LOG.md`, `docs/journal/J-000-099.md`, `scripts/next_id.py`.
 - **Complaints**: the worktree shell refuses a heredoc or any multi-step call, so the edit script went in through the file tool; no routing row for a safety rule yet (an earlier entry says so).
 - **Suggestions**: none.
+
+### 2026-11-21 · Phase 1 reordered for automated Q&A (SC-018, J-037) · Claude Sonnet 5.5
+
+- **Task**: reorder Phase 1 on Ghost's word (the evaluation set, a new answering door and automatic runner, the index, search and the safety rules in the answers before the walker, demo mode and the shell), open Phase 2 with the moved items, renumber, record SC-018 and J-037, and land it as a documentation commit.
+- **Opened**: `CLAUDE.md`, `docs/paths/process.md`, `TODO.md`, `scripts/checks/todo.py`, `docs/ROADMAP.md`, `docs/HANDOFF.md`, `theGhost.md` (SC-010, SC-015, SC-017), `docs/DONE.md`, `docs/journal/J-000-099.md`, `docs/CONTRACT.md`, `docs/SAFETY-AND-COMPLIANCE.md`, `README.md`, `packs/TYPES.md`.
+- **Complaints**: TODO.md has no Phase 2, so moving items "to the start of Phase 2" meant opening one with its own tune-up pass and leaving 2.5 to 2.7 in the roadmap only; the plan row of `docs/paths/process.md` says how to add items before a pass but not how to move items between phases; item numbers are cited in about fifteen documents with no list of them, so the move was found by grep; the worktree shell refuses a call that names git beside another step, and also a command that merely mentions `.gitignore`.
+- **Suggestions**: let `docs/paths/process.md`'s plan row say that a reorder renumbers every citation and name the grep ("1.5" to "1.9", "2.1" to "2.9" as item references); a check that every `TODO N.M` citation in a current document names an item that exists in TODO.md, DONE.md or the roadmap.
