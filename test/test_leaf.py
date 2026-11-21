@@ -10,23 +10,23 @@ STEP = PassageRef("seed-mc4-leads", "step-06")
 
 class TheReply(unittest.TestCase):
     def test_an_answer_with_a_passage_stands(self) -> None:
-        self.assertEqual(Reply(ReplyKind.ANSWER, "Join plus to plus.", (STEP,)).sources, (STEP,))
+        self.assertEqual(Reply(ReplyKind.ANSWER, "Join plus to plus.", (STEP,)).passage_refs, (STEP,))
 
     def test_an_answer_with_no_passage_is_refused(self) -> None:
         with self.assertRaisesRegex(ValueError, "HAD-03"):
             Reply(ReplyKind.ANSWER, "Join plus to plus.")
 
     def test_do_not_know_names_no_passage(self) -> None:
-        self.assertEqual(Reply(ReplyKind.DO_NOT_KNOW, "I do not know.").sources, ())
+        self.assertEqual(Reply(ReplyKind.DO_NOT_KNOW, "I do not know.").passage_refs, ())
         with self.assertRaisesRegex(ValueError, "HAD-03"):
             Reply(ReplyKind.DO_NOT_KNOW, "I do not know.", (STEP,))
 
     def test_a_stop_names_its_rule_and_nothing_else_does(self) -> None:
-        self.assertEqual(Reply(ReplyKind.STOP, "Stop; call the supervisor.", rule="live-dc").rule, "live-dc")
+        self.assertEqual(Reply(ReplyKind.STOP, "Stop; call the supervisor.", safety_rule_id="live-dc").safety_rule_id, "live-dc")
         with self.assertRaisesRegex(ValueError, "HAD-04"):
             Reply(ReplyKind.STOP, "Stop; call the supervisor.")
         with self.assertRaisesRegex(ValueError, "HAD-04"):
-            Reply(ReplyKind.ANSWER, "Join plus to plus.", (STEP,), rule="live-dc")
+            Reply(ReplyKind.ANSWER, "Join plus to plus.", (STEP,), safety_rule_id="live-dc")
 
 
 class Admission(unittest.TestCase):

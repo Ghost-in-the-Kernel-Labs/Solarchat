@@ -10,8 +10,8 @@ from enum import Enum
 class PassageRef:
     """Where an answer's words come from: PassageRef("seed-mc4-leads", "step-06")."""
 
-    pack: str
-    passage: str
+    pack_id: str
+    passage_id: str
 
 
 @dataclass(frozen=True)
@@ -35,7 +35,7 @@ class ReplyKind(Enum):
 
 @dataclass(frozen=True)
 class Reply:
-    """One reply, refused at construction when its kind and its sources disagree.
+    """One reply, refused at construction when its kind and the passages or rule it names disagree.
 
     Invariant: HAD-03 (an answer names at least one admitted passage; "do not know" and a stop name none).
     Invariant: HAD-04 (a stop names the safety rule that fired; the rules are the safety module's, never a pack's).
@@ -45,23 +45,23 @@ class Reply:
 
     kind: ReplyKind
     text: str
-    sources: tuple[PassageRef, ...] = ()
-    rule: str | None = None
+    passage_refs: tuple[PassageRef, ...] = ()
+    safety_rule_id: str | None = None
 
     def __post_init__(self) -> None:
         """Raise ValueError when the reply breaks HAD-03 or HAD-04 (the examples are in the class docstring)."""
-        problem = reply_problem(self)
-        if problem:
-            raise ValueError(problem)
+        contract_breach = reply_problem(self)
+        if contract_breach:
+            raise ValueError(contract_breach)
 
 
 def reply_problem(reply: Reply) -> str | None:
     """What makes a reply impossible, or None: an answer with no sources gives "an answer names at least one passage"."""
-    if reply.kind is ReplyKind.ANSWER and not reply.sources:
+    if reply.kind is ReplyKind.ANSWER and not reply.passage_refs:
         return "an answer names at least one passage (HAD-03)"
-    if reply.kind is not ReplyKind.ANSWER and reply.sources:
+    if reply.kind is not ReplyKind.ANSWER and reply.passage_refs:
         return f"a {reply.kind.value} reply names no passage (HAD-03)"
-    if (reply.kind is ReplyKind.STOP) != bool(reply.rule):
+    if (reply.kind is ReplyKind.STOP) != bool(reply.safety_rule_id):
         return "a stop, and only a stop, names the safety rule that fired (HAD-04)"
     return None
 
