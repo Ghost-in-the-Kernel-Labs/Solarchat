@@ -169,7 +169,7 @@ def record_path_of(args: argparse.Namespace, run: Run) -> Path:
     """Where the record lives: --record, else evals/results/offline.json, recorded-<replies stem>.json or
     model-<answerer>.json; it may not be the set itself (exit 2)."""
     names = {"offline": "offline.json", "recorded": f"recorded-{Path(args.replies or '').stem}.json",
-             "model": f"model-{run.answerer_name}.json"}
+             "claude": f"model-{run.answerer_name}.json"}
     path = Path(args.record) if args.record else RESULTS_FOLDER / names[args.answerer]
     if path.resolve() == run.set_path.resolve():
         raise CannotRun(f"--record {path} is the set itself, which is never written (docs/designs/answering-door.md 6.6)")

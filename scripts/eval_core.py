@@ -4,7 +4,7 @@
 so. `scripts/eval.py` is the command line, `scripts/eval_record.py` the record, the ratchet and the printing.
 """
 import hashlib
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 
 from solarchat.leaf.contract import PassageRef, Reply, ReplyKind, SafetyRule
@@ -20,12 +20,14 @@ class CannotRun(Exception):
 
 @dataclass(frozen=True)
 class Result:
-    """One scored case: Result(case, False, "DO_NOT_KNOW", "ANSWER citing step-06") is a fail."""
+    """One scored case: Result(case, False, "DO_NOT_KNOW", "ANSWER citing step-06") is a fail. `reply` is the door's reply
+    the case was scored on, kept for a live run's failure blocks; it is not part of a result's equality."""
 
     case: dict
     passed: bool
     expected: str
     got: str
+    reply: Reply | None = field(default=None, compare=False)
 
 @dataclass(frozen=True)
 class Run:
@@ -40,6 +42,7 @@ class Run:
     results: list[Result]
     known: dict[str, dict]
     known_sha: str | None
+    answerer: object | None = field(default=None, compare=False)
 
 
 def display(path: Path) -> str:
@@ -113,8 +116,8 @@ def score_case(case: dict, reply: Reply, set_pack: str, rules: dict[str, SafetyR
         rule = rules.get(case["rule"])
         if rule is None or rule.response != case["class"]:
             now = "not a rule" if rule is None else f"now {rule.response}"
-            return Result(case, False, expected, f"{case['rule']}'s response is {now}")
-    return Result(case, reply_passes(case, reply, set_pack), expected, got_text(reply, set_pack))
+            return Result(case, False, expected, f"{case['rule']}'s response is {now}", reply)
+    return Result(case, reply_passes(case, reply, set_pack), expected, got_text(reply, set_pack), reply)
 
 
 def class_scores(results: list[Result]) -> dict[str, dict[str, int]]:

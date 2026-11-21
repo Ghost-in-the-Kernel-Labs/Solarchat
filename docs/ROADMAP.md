@@ -181,7 +181,9 @@ Decided on 2026-11-21 (J-031 proposed them; Ghost answered in J-032, and added i
 - 1.9 The safety rules in the answers (moved up from 2.4, SC-018): a reply on a passage whose text fires a rule carries
   that rule's response (SC-015). The walker's half of the safety rules is 2.3.
 - 1.10 The safety rules matched on the worker's words (moved up from 2.6 by Ghost's answer to SC-019's question 5, 2026-11-21; J-031; the review's "2.4b"; renumbered from 2.7, SC-018): a rule's triggers match what the worker types or says as well as the pack's text, never Hadley's own replies, whatever passage is found: "I got a shock" fires SR-09 with no passage at all. SR-14's "do not know" and "don't know" are settled first against HAD-03: "I don't know which lead is positive" is a question, answered from the packs or with "I do not know", not a stop; SR-14 keeps the worker's words that say they are untrained or unsure of the work itself ("not trained", "never done"). It also builds SC-020, the session profile (Ghost, 2026-11-21): at the start of a session three or four short questions (role; signed off by the supervisor, on this site, for meter tests, connector work, work at height with fall protection), about what the worker is authorised for, not credentials; only a safety rule may lower its response for a profile (SR-02's meter triggers: stop to warn with the precaution, a meter and test leads rated for the string's DC voltage, measure at the connectors, never across a loaded circuit), never a pack, never an emergency; the profile may change how much is explained, never which steps or stops; self-declared, overridden by the deploying company's setting; recorded per session and shown to the engineer (P-20). Its design settles first how the profile is held, how rules name their lowerings, the side file's shape (keyed by case id; mns-09 runs as signed off for meter tests) and whether the meter triggers split from SR-02. mns-03 (SR-08 on the "smoke" of fail-04's list of signs to watch for) is this item's, not 1.13's. Ghost decides the trigger list on his word (SC-016, role maintainer); the engineer confirms it at the end (6.4).
-- 1.15 Tune-up pass 1, with the human maintainability pass (SC-011)
+- 1.16 The model answerer, brought forward (Ghost, 2026-11-21, SC-021, SC-022; from 3.1 and 3.2): `solarchat/model/claude.py`, the only code that imports the SDK, an answerer of the door on Claude Sonnet 5.5 (`claude-sonnet-5-5`, F-07) with no tools and no connectors and a system prompt of one step or one question per turn; the door carries the conversation (`Turn`, `history`, SC-019 amended); the chat command `python3 -m solarchat.cli`; and `scripts/eval.py --live --answerer claude`, which prints each failure as a concrete block, the score table, the tokens and the estimated cost and writes the replies for replay (3.3's recorded replies). 3.4's live run on the model mode is Ghost's, by hand. Done: J-048.
+- 1.17 The conversational evaluation set, version 2 (Ghost, 2026-11-21: "as little information conveyed per turn as is needed to do the task"): scripted multi-turn dialogues that check one step per turn, waiting, asking rather than assuming, and keeping track of the conversation. Written here and in `TODO.md`; not built.
+- 1.18 Tune-up pass 1, with the human maintainability pass (SC-011) (renumbered from 1.15 by 1.16 and 1.17)
 
 ### Phase 2: the offline mode (the floor)
 
@@ -210,10 +212,10 @@ runner of Phase 1 (SC-018): the walker, the safety rules in it, and the shell ar
 
 ### Phase 3: the local mode (a model on top)
 
-- 3.1 The model door: one module, the only one that imports a model client (a dependency proposed to Ghost;
+- 3.1 The model door (brought forward as 1.16: built, Ghost, 2026-11-21): one module, the only one that imports a model client (a dependency proposed to Ghost;
   Core C-012, SC-002). The online model is Claude Sonnet through the Anthropic API (F-07); it is given no tools
   and no connectors.
-- 3.2 The answering step: the found passages and the question in, an answer that cites its passage or says it
+- 3.2 The answering step (brought forward as 1.16): the found passages and the question in, an answer that cites its passage or says it
   does not know out; no tools.
 - 3.3 Tests against recorded replies; no test calls a model.
 - 3.4 The runner on the model mode (`scripts/eval.py`, 1.6, SC-018), its scores recorded; the refusal threshold and the safety thresholds

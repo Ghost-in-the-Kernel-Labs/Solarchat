@@ -8,7 +8,7 @@ reply of this door is a stop or a warn. Standard library, the leaf and the packs
 from dataclasses import replace
 
 from solarchat.leaf.contract import (DEMO_BANNER, MAX_CITED_PASSAGES, Answerer, Finding, Passage, PassageRef, Reply,
-                                     ReplyKind, may_answer)
+                                     ReplyKind, Turn, may_answer)
 from solarchat.packs.load import Pack, citation_lines
 
 DO_NOT_KNOW_TEXT = "I do not know. The packs switched on do not cover this."
@@ -65,18 +65,20 @@ def usable_places(packs: tuple[Pack, ...], demo_mode: bool) -> dict[PassageRef, 
 
 # Decision: SC-019 (one door, an answerer passed in; the steps in order, each returning at once when it gives a reply)
 # Invariant: HAD-06 (only may_answer lets a pack's passages reach the answerer)
-def answer(question: str, packs: tuple[Pack, ...], demo_mode: bool, answerer: Answerer) -> Reply:
+def answer(question: str, packs: tuple[Pack, ...], demo_mode: bool, answerer: Answerer,
+           history: tuple[Turn, ...] = ()) -> Reply:
     """The reply to a question: answer("", packs, True, NoAnswer()) is "I do not know" with the banner and the answerer
     is never called; a finding citing one given passage is an ANSWER with its sources. Steps: empty question; packs that
     may answer; find; hold the answerer to the contract; "I do not know"; the answer; the demo banner. (Step 6, the
-    safety rules, is TODO 1.9's.) What the answerer raises is a bug and reaches the caller."""
+    safety rules, is TODO 1.9's.) `history` is the turns so far, passed to the answerer unchanged (SC-019, amended
+    2026-11-21); the door's other steps do not read it. What the answerer raises is a bug and reaches the caller."""
     if not question.strip():
         return with_banner(do_not_know(DO_NOT_KNOW_TEXT), demo_mode)
     places = usable_places(packs, demo_mode)
     if not places:
         return with_banner(do_not_know(NO_PACK_TEXT), demo_mode)
     given = tuple(passage for _, passage in places.values())
-    finding = answerer.find(question, given)
+    finding = answerer.find(question, given, history)
     if breaks_contract(finding, given) or not finding.refs:
         return with_banner(do_not_know(DO_NOT_KNOW_TEXT), demo_mode)
     reply = Reply(ReplyKind.ANSWER, answer_body(finding, places), finding.refs)

@@ -4,6 +4,7 @@ import contextlib
 import hashlib
 import io
 import json
+import os
 import re
 import shutil
 import sys
@@ -95,8 +96,8 @@ class TheExitCodes(unittest.TestCase):
 
     def test_exit_2_when_it_cannot_run(self) -> None:
         record = new_record()
-        cases = {"an unknown option": ["--nope"], "model without --live": ["--answerer", "model"],
-                 "--live alone": ["--live"], "model and --live (no client yet)": ["--answerer", "model", "--live"],
+        cases = {"an unknown option": ["--nope"], "claude without --live": ["--answerer", "claude"],
+                 "--live alone": ["--live"], "the old name, model": ["--answerer", "model", "--live"],
                  "--record-replies without --live": ["--record-replies", "x.json"],
                  "recorded without replies": ["--answerer", "recorded"],
                  "check and write together": ["--check", "--write"],
@@ -150,7 +151,8 @@ class TheExitCodes(unittest.TestCase):
         self.assertEqual(run(on_tiny(new_record(), ["--demo"], TINY, packs))[0], 1)
 
     def test_no_model_client_is_loaded_by_any_of_it(self) -> None:
-        run(on_tiny(new_record(), ["--answerer", "model", "--live"]))
+        with mock.patch.dict(os.environ, {"ANTHROPIC_API_KEY": ""}):  # no key: the live run stops before any client is built
+            self.assertEqual(run(on_tiny(new_record(), ["--answerer", "claude", "--live"]))[0], 2)
         self.assertFalse([name for name in sys.modules if name.split(".")[0] in ("anthropic", "openai")])
 
 

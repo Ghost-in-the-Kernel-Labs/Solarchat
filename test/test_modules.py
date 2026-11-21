@@ -2,7 +2,7 @@
 import json
 import unittest
 
-from scripts.checks import modules
+from scripts.checks import imports, modules
 from test.support import BROKEN, ROOT
 
 
@@ -15,6 +15,20 @@ class TheRepository(unittest.TestCase):
         self.assertEqual(spec["leaf"], "leaf")
         self.assertEqual(spec["modules"]["leaf"]["mayImport"], [])
         self.assertEqual(spec["modules"]["cli"]["mayImport"], ["project"])
+
+    def test_only_the_model_module_imports_anthropic_and_only_it_may(self) -> None:
+        importers = [path.relative_to(ROOT).as_posix() for top in ("solarchat", "scripts", "test")
+                     for path in sorted((ROOT / top).rglob("*.py")) if "fixtures" not in path.parts
+                     and "anthropic" in imports.top_level_imports(path.read_text(encoding="utf-8"))]
+        self.assertEqual(importers, ["solarchat/model/claude.py"])
+        listed = [name for name, entry in modules.spec_of(ROOT)["modules"].items() if "anthropic" in entry.get("outside", [])]
+        self.assertEqual(listed, ["model"])
+
+    def test_the_chat_command_reaches_the_door_and_the_model_only_through_project(self) -> None:
+        spec = modules.spec_of(ROOT)["modules"]
+        self.assertEqual(spec["cli"]["mayImport"], ["project"])
+        self.assertIn("model.claude.ClaudeAnswerer", spec["model"]["entryPoints"])
+        self.assertTrue({"answer", "model"} <= set(spec["project"]["mayImport"]))
 
     def test_the_planted_breaks_are_caught(self) -> None:
         self.assertEqual(modules.problems(BROKEN / "modules"), [

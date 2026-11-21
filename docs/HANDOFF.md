@@ -34,14 +34,14 @@ which passage to show.
    `scripts/checks/evals.py`; a change needs a decision and the new hash; the engineer reviews the frozen set at the
    end, TODO 6.4), 1.6 the answering door `answer(question, packs, demo_mode)` and the runner (its
    interface designed by a strong-grade agent before it is built), 1.7 the index, 1.8 keyword search behind
-   `answer()`, 1.9 the safety rules in the answers, 1.10 the safety rules matched on the worker's words (moved up from 2.6, Ghost 2026-11-21, SC-019), 1.15 Tune-up pass 1. Each goes to a fresh worker of its grade with
+   `answer()`, 1.9 the safety rules in the answers, 1.10 the safety rules matched on the worker's words (moved up from 2.6, Ghost 2026-11-21, SC-019), 1.16 the model answerer (brought forward, done), 1.17 the conversational evaluation set (written, not built), 1.18 Tune-up pass 1 (renumbered from 1.15). Each goes to a fresh worker of its grade with
    the brief of `docs/when/hand-out-a-task.md`, saved on its own branch and landed by the coordinator after Ghost's
    word; 1.3 went to the strong grade.
 3. **Phase 2 opens with what the demo first meant** (SC-018: old 1.5 to 1.8 moved down): 2.1 demo mode, 2.2 the walker
    (`solarchat/walker`, a module Ghost approved), 2.3 the safety rules in the walker (whole-word matching on the
    step's text is settled, HAD-04), 2.4 the offline shell; 2.8 is Tune-up pass 2 (2.6 left for Phase 1 as 1.10). The evaluation set is frozen before
    any search or model (J-033: back in Phase 1, after SC-015's code; the engineer reviews the frozen set at the end,
-   TODO 6.4; For Ghost 16). 1.15 Tune-up pass 1 carries the next human maintainability pass (SC-011: Ghost-Core's
+   TODO 6.4; For Ghost 16). 1.18 Tune-up pass 1 (was 1.15) carries the next human maintainability pass (SC-011: Ghost-Core's
    toolkit under `scripts/` a few files at a time, each with its proof that nothing changed; then the tests).
 
 ## Settled by Ghost

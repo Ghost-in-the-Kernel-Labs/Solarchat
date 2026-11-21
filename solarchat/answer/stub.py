@@ -1,5 +1,5 @@
 """The offline answerer until TODO 1.8's keyword search replaces it: it never finds anything (SC-019)."""
-from solarchat.leaf.contract import Finding, Passage
+from solarchat.leaf.contract import Finding, Passage, Turn
 
 
 class NoAnswer:
@@ -10,6 +10,6 @@ class NoAnswer:
 
     name = "no-answer"
 
-    def find(self, question: str, passages: tuple[Passage, ...]) -> Finding:
-        """An empty finding for every question: NoAnswer().find("anything", ()) gives Finding()."""
+    def find(self, question: str, passages: tuple[Passage, ...], history: tuple[Turn, ...] = ()) -> Finding:
+        """An empty finding for every question, whatever the history: NoAnswer().find("anything", ()) gives Finding()."""
         return Finding()

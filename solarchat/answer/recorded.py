@@ -6,7 +6,7 @@ A replies file is `{"version": 1, "set_sha256": "...", "answerer": "claude-...",
 import json
 from pathlib import Path
 
-from solarchat.leaf.contract import Finding, Passage, PassageRef
+from solarchat.leaf.contract import Finding, Passage, PassageRef, Turn
 
 REPLIES_VERSION = 1
 
@@ -37,6 +37,7 @@ class RecordedAnswerer:
         except (OSError, ValueError, KeyError, TypeError, AttributeError) as error:
             raise ValueError(f"{path}: not a replies file ({error})") from error
 
-    def find(self, question: str, passages: tuple[Passage, ...]) -> Finding:
-        """The recorded finding for this exact question, else an empty one: find("not recorded", ()) gives Finding()."""
+    def find(self, question: str, passages: tuple[Passage, ...], history: tuple[Turn, ...] = ()) -> Finding:
+        """The recorded finding for this exact question (the history is ignored), else an empty one:
+        find("not recorded", ()) gives Finding()."""
         return self.findings.get(question, Finding())

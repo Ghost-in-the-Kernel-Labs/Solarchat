@@ -1,6 +1,6 @@
 """The evaluation runner: feeds every case of the frozen set to the answering door and scores each reply (TODO 1.6; SC-019).
 
-    python3 -I scripts/eval.py [--set PATH] [--packs DIR] [--answerer offline|recorded|model] [--replies PATH]
+    python3 -I scripts/eval.py [--set PATH] [--packs DIR] [--answerer offline|recorded|claude] [--replies PATH]
         [--live] [--record-replies PATH] [--demo] [--record PATH] [--check | --write [--accept-fall CASE=ID ...]]
 
 It loads the set, runs `scripts/checks/evals.py`'s `problems` on it (exit 2 on any), calls `answer()` once per case, scores
@@ -8,11 +8,14 @@ the reply by the case's class (`scripts/eval_core.py`, the table of `docs/design
 per-class table and each failure, and compares the run with the committed record, `evals/results/offline.json`
 (`scripts/eval_record.py`; byte-stable, no date). Exit: 0 a plain run with no safety-class failure, `--check` equal to the
 record, `--write` written; 1 a plain run with a safety-class failure (stop, emergency, warn, must-not-stop); 2 it cannot
-run (usage, a set that fails its check, a missing pack, a demo pack without `--demo`, `model` without `--live`, a replies
-file for another set, `--record` naming the set); 3 `--check` and no record or a run that differs; 4 `--write` refused (a
+run (usage, a set that fails its check, a missing pack, a demo pack without `--demo`, `claude` without `--live`, no key for
+`--live`, a replies file for another set, `--record` naming the set); 3 `--check` and no record or a run that differs; 4 `--write` refused (a
 case the record shows passing now fails with no `--accept-fall CASE=ID`, or a known failure the record shows failing now
-passes). `known-failures.json`, beside the set, explains a failure and never excuses one. `--live` is the only way a model
-is called, and no model client exists yet (roadmap 3.1).
+passes). `known-failures.json`, beside the set, explains a failure and never excuses one. `--live --answerer claude` is the
+only way a model is called (by hand, SC-002; it needs `ANTHROPIC_API_KEY` in the environment, never printed): it prints each
+failure as a block, the table, the tokens and the estimated cost, and writes every reply to
+`evals/recorded/claude-sonnet-5-5.json` (or `--record-replies PATH`) for `--answerer recorded --replies` to replay
+(`scripts/eval_live.py`).
 """
 import argparse
 import json
@@ -24,6 +27,7 @@ if __name__ == "__main__":  # run as a script from the project's root: the root 
     sys.path.insert(0, str(ROOT))
 from scripts.checks import evals as set_check  # noqa: E402
 from scripts.eval_core import SAFETY_CLASSES, CannotRun, Result, Run, display, score_case, sha_of  # noqa: E402
+from scripts.eval_live import REPLIES_PATH, live_answerer, live_report, save_replies  # noqa: E402
 from scripts.eval_record import (build_record, check_lines, failed, failure_lines, known_fixed, load_old,  # noqa: E402
                                  record_path_of, record_text, safety_failed, table_lines, write_record)
 from solarchat.answer.door import answer  # noqa: E402
@@ -41,7 +45,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="scripts/eval.py", description="Score the answering door on the frozen set.")
     parser.add_argument("--set", default=str(ROOT / "evals" / "v1.json"))
     parser.add_argument("--packs", default=str(ROOT / "packs"))
-    parser.add_argument("--answerer", choices=("offline", "recorded", "model"), default="offline")
+    parser.add_argument("--answerer", choices=("offline", "recorded", "claude"), default="offline")
     parser.add_argument("--replies")
     parser.add_argument("--live", action="store_true")
     parser.add_argument("--record-replies")
@@ -56,12 +60,12 @@ def build_parser() -> argparse.ArgumentParser:
 
 # Decision: SC-019 (--live is the only way a model is called; no other run can load a model client)
 def options_problem(args: argparse.Namespace) -> str | None:
-    """What is wrong with the options, or None: --answerer model without --live gives "--answerer model needs --live"."""
-    if args.answerer == "model" and not args.live:
-        return "--answerer model needs --live (the model is only ever called by hand, SC-002)"
-    if args.live:
-        return "no model answerer yet, roadmap 3.1" if args.answerer == "model" else "--live goes with --answerer model"
-    if args.record_replies:
+    """What is wrong with the options, or None: --answerer claude without --live gives "--answerer claude needs --live"."""
+    if args.answerer == "claude" and not args.live:
+        return "--answerer claude needs --live (the model is only ever called by hand, SC-002)"
+    if args.live and args.answerer != "claude":
+        return "--live goes with --answerer claude"
+    if args.record_replies and not args.live:
         return "--record-replies needs --live"
     if args.accept_fall and not args.write:
         return "--accept-fall goes with --write"
@@ -115,10 +119,13 @@ def load_known(set_path: Path, document: dict) -> tuple[dict[str, dict], str | N
 
 
 def choose_answerer(args: argparse.Namespace, set_sha: str) -> object:
-    """The answerer the options name: offline is NoAnswer (TODO 1.8 replaces it); recorded replays --replies and must
-    be recorded against this set, or CannotRun."""
+    """The answerer the options name: offline is NoAnswer (TODO 1.8 replaces it); claude is the live model answerer, which
+    records what it finds (no key is CannotRun); recorded replays --replies and must be recorded against this set, or
+    CannotRun."""
     if args.answerer == "offline":
         return NoAnswer()
+    if args.answerer == "claude":
+        return live_answerer()
     try:
         recorded = RecordedAnswerer(Path(args.replies))
     except ValueError as error:
@@ -151,7 +158,7 @@ def prepare(args: argparse.Namespace) -> Run:
     results = [score_case(case, answer(case["question"], (pack,), args.demo, answerer), document["pack"], rules)
                for case in document["cases"]]
     known, known_sha = load_known(set_path, document)
-    return Run(set_path, set_sha, document, pack, answerer.name, args.demo, results, known, known_sha)
+    return Run(set_path, set_sha, document, pack, answerer.name, args.demo, results, known, known_sha, answerer)
 
 
 def conclude(args: argparse.Namespace, run: Run) -> int:
@@ -171,7 +178,11 @@ def conclude(args: argparse.Namespace, run: Run) -> int:
     else:
         code = 1 if safety_failed(run) else 0
     known_failing = sum(result.case["id"] in run.known for result in failed(run))
-    print("\n".join(table_lines(run) + failure_lines(run, known_fixed(run, old)) + extra))
+    if args.live:
+        body = live_report(run) + extra + [save_replies(run, Path(args.record_replies or REPLIES_PATH))]
+    else:
+        body = table_lines(run) + failure_lines(run, known_fixed(run, old)) + extra
+    print("\n".join(body))
     print(f"eval: {sum(r.passed for r in run.results)}/{len(run.results)} passed, {len(safety_failed(run))} safety failures "
           f"({known_failing} known); record {display(record_path)} {status}; exit {code}")
     return code

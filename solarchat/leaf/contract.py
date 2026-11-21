@@ -105,16 +105,38 @@ class Finding:
             raise ValueError("a finding has refs and text together, or neither (SC-019)")
 
 
-class Answerer(Protocol):
-    """What the door asks: a short stable `name` ("no-answer") and find(question, passages) -> Finding.
+TURN_ROLES = ("user", "assistant")
 
-    Decision: SC-019 (the door takes its answerer as an argument, so no mode changes the door).
+
+@dataclass(frozen=True)
+class Turn:
+    """One turn of the conversation so far: Turn("user", "Which lead is positive?") or Turn("assistant", "Look at the label.").
+
+    Decision: SC-019 (amended 2026-11-21: the door carries the conversation's history, so an answerer can be conversational).
+    A role other than "user" or "assistant" raises ValueError.
+    """
+
+    role: str
+    text: str
+
+    def __post_init__(self) -> None:
+        """Raise ValueError for a role that is neither "user" nor "assistant": Turn("system", "x") raises."""
+        if self.role not in TURN_ROLES:
+            raise ValueError(f"a turn's role is one of {', '.join(TURN_ROLES)}, not {self.role!r} (SC-019)")
+
+
+class Answerer(Protocol):
+    """What the door asks: a short stable `name` ("no-answer") and find(question, passages, history) -> Finding.
+
+    Decision: SC-019 (the door takes its answerer as an argument, so no mode changes the door; amended 2026-11-21: the
+    history of the conversation is passed through, and an answerer that is not conversational ignores it).
     """
 
     name: str
 
-    def find(self, question: str, passages: tuple[Passage, ...]) -> Finding:
-        """The finding for a question among the passages it may use: NoAnswer().find("q", ()) gives Finding()."""
+    def find(self, question: str, passages: tuple[Passage, ...], history: tuple[Turn, ...] = ()) -> Finding:
+        """The finding for a question among the passages it may use, given the turns so far:
+        NoAnswer().find("q", ()) gives Finding()."""
         ...
 
 

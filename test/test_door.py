@@ -7,7 +7,7 @@ from pathlib import Path
 from solarchat.answer.door import DO_NOT_KNOW_TEXT, NO_PACK_TEXT, answer
 from solarchat.answer.recorded import RecordedAnswerer
 from solarchat.answer.stub import NoAnswer
-from solarchat.leaf.contract import DEMO_BANNER, Finding, Passage, PassageRef, ReplyKind
+from solarchat.leaf.contract import DEMO_BANNER, Finding, Passage, PassageRef, ReplyKind, Turn
 from solarchat.packs.load import Pack, load_pack
 from test.support import ROOT, scratch
 
@@ -26,10 +26,12 @@ class Spy:
         """Hold the finding to return and start with nothing asked."""
         self.finding = finding
         self.asked: list[tuple[str, tuple[Passage, ...]]] = []
+        self.histories: list[tuple[Turn, ...]] = []
 
-    def find(self, question: str, passages: tuple[Passage, ...]) -> Finding:
+    def find(self, question: str, passages: tuple[Passage, ...], history: tuple[Turn, ...] = ()) -> Finding:
         """Record the call and return the fixed finding: Spy(Finding()).find("q", ()) gives Finding()."""
         self.asked.append((question, passages))
+        self.histories.append(history)
         return self.finding
 
 
@@ -38,7 +40,7 @@ class Raising:
 
     name = "raising"
 
-    def find(self, question: str, passages: tuple[Passage, ...]) -> Finding:
+    def find(self, question: str, passages: tuple[Passage, ...], history: tuple[Turn, ...] = ()) -> Finding:
         """Raise RuntimeError, as a buggy answerer would."""
         raise RuntimeError("the answerer broke")
 
@@ -199,6 +201,35 @@ class TheRecordedAnswerer(unittest.TestCase):
             RecordedAnswerer(replies_file({"replies": {"q": {"refs": [["good", "voltage"]], "text": ""}}}))
         with self.assertRaisesRegex(ValueError, "not a replies file"):
             RecordedAnswerer(replies_file({"answerer": None, "replies": []}))
+
+
+class TheHistory(unittest.TestCase):
+    """The conversation's turns reach the answerer unchanged and change nothing else in the door (SC-019, amended 2026-11-21)."""
+
+    def test_the_history_is_passed_through_to_the_answerer_unchanged(self) -> None:
+        spy = one(VOLTAGE)
+        turns = (Turn("user", "Hi"), Turn("assistant", "Which device?"))
+        answer("The inverter.", (GOOD,), False, spy, turns)
+        self.assertEqual(spy.histories, [turns])
+
+    def test_with_no_history_the_answerer_is_given_an_empty_one(self) -> None:
+        spy = one(VOLTAGE)
+        answer("Where is the Voc?", (GOOD,), False, spy)
+        self.assertEqual(spy.histories, [()])
+
+    def test_the_history_does_not_change_the_reply(self) -> None:
+        turns = (Turn("user", "Hi"), Turn("assistant", "Hello"))
+        self.assertEqual(answer("q", (GOOD,), False, one(VOLTAGE), turns), answer("q", (GOOD,), False, one(VOLTAGE)))
+
+    def test_the_offline_answerers_ignore_the_history(self) -> None:
+        turns = (Turn("user", "Hi"),)
+        self.assertEqual(NoAnswer().find("q", GOOD.passages, turns), Finding())
+        self.assertEqual(RecordedAnswerer(replies_file()).find("Where is the Voc?", GOOD.passages, turns).refs, (VOLTAGE,))
+
+    def test_a_turn_has_a_user_or_an_assistant_role_only(self) -> None:
+        self.assertEqual(Turn("user", "x").role, "user")
+        with self.assertRaises(ValueError):
+            Turn("system", "x")
 
 
 if __name__ == "__main__":

@@ -51,3 +51,4 @@ Written from `docs/journal/` by `scripts/journal_index.py`; do not edit by hand.
 | J-045 | The Anthropic SDK is approved as a dependency and comes in (SC-021) | decision | `J-000-099.md` |
 | J-046 | API-key management is decided: no model credential on a device (SC-022) | decision | `J-000-099.md` |
 | J-047 | The answering door and the evaluation runner are built (TODO 1.6) | feature | `J-000-099.md` |
+| J-048 | The Claude answerer, the chat command and the live evaluation run are built (TODO 1.16) | feature | `J-000-099.md` |

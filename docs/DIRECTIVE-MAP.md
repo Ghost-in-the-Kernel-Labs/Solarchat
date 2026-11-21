@@ -2,7 +2,7 @@
 
 Written by `scripts/directive_map.py` from `theGhost.md`, `docs/CONTRACT.md` and the code's citations; do not edit here. A function holds a directive when it cites it: `# Decision: SC-005 (why)` or `# Invariant: HAD-06 (why)` directly above its `def`, or an `Invariant:` line in its docstring (SC-011). "No function" means the directive is held by a document, a test or a review: its Held by line in `theGhost.md` or `docs/CONTRACT.md` says which.
 
-30 of 69 directives are cited by a function.
+31 of 69 directives are cited by a function.
 
 | Directive | Title | Held in code by |
 | --- | --- | --- |
@@ -65,13 +65,13 @@ Written by `scripts/directive_map.py` from `theGhost.md`, `docs/CONTRACT.md` and
 | SC-016 | Each safety rule keeps a change log: who changed it, in what role, why and on what evidence; a record of a judgement, not an approval | `scripts/eval_core.py:score_case`, `scripts/safety_rules_doc.py:change_line`, `solarchat/leaf/contract.py:SafetyRuleChange`, `solarchat/leaf/contract.py:SafetyRule`, `solarchat/leaf/contract.py:changes_problem`, `solarchat/safety/rules.py:change_from_entry`, `solarchat/safety/rules.py:rule_fingerprint`, `solarchat/safety/rules.py:fingerprint_problem` |
 | SC-017 | A pack's status is `field` or `demo`; "library" means only `library/sources/` | no function |
 | SC-018 | Phase 1 is reordered for automated Q&A: the evaluation set, the answering door with its runner, the index, search and the safety rules in the answers come before the walker, demo mode and the shell | `scripts/checks/evals.py:document_problems`, `scripts/checks/evals.py:case_shape_problems`, `scripts/checks/evals.py:count_problems`, `scripts/checks/evals.py:hash_problems` |
-| SC-019 | Every mode answers through one door that takes its answerer as an argument; the runner scores it against the frozen set and holds the result as a per-case ratchet | `scripts/eval.py:options_problem`, `scripts/eval_core.py:reply_passes`, `scripts/eval_record.py:write_record`, `solarchat/answer/__init__.py`, `solarchat/answer/door.py:answer`, `solarchat/answer/stub.py:NoAnswer`, `solarchat/leaf/contract.py:Passage`, `solarchat/leaf/contract.py:Finding`, `solarchat/leaf/contract.py:Answerer`, `solarchat/packs/load.py:load_pack` |
+| SC-019 | Every mode answers through one door that takes its answerer as an argument; the runner scores it against the frozen set and holds the result as a per-case ratchet | `scripts/eval.py:options_problem`, `scripts/eval_core.py:reply_passes`, `scripts/eval_record.py:write_record`, `solarchat/answer/__init__.py`, `solarchat/answer/door.py:answer`, `solarchat/answer/stub.py:NoAnswer`, `solarchat/leaf/contract.py:Passage`, `solarchat/leaf/contract.py:Finding`, `solarchat/leaf/contract.py:Turn`, `solarchat/leaf/contract.py:Answerer`, `solarchat/model/claude.py:ClaudeAnswerer`, `solarchat/packs/load.py:load_pack` |
 | SC-020 | A session profile: at the start of a session the bot asks three or four short questions about what the worker is authorised for; a safety rule may lower its response for a profile, and nothing else may | no function |
-| SC-021 | The official Anthropic Python SDK (`anthropic`) is a runtime dependency, imported only by the `model` module, and the online model is Claude Sonnet 5.5 | no function |
+| SC-021 | The official Anthropic Python SDK (`anthropic`) is a runtime dependency, imported only by the `model` module, and the online model is Claude Sonnet 5.5 | `solarchat/model/claude.py:describe_error` |
 | SC-022 | No model credential ever sits on a device; only Solarchat's service holds one, from a secrets manager; the offline mode needs none | no function |
 | HAD-01 | The leaf module imports nothing of the project's own | `solarchat/leaf/__init__.py` |
 | HAD-02 | Every number a document reports comes from a run the repository can repeat | `solarchat/leaf/__init__.py` |
 | HAD-03 | Hadley answers only from the packs, names the passage, or says it does not know | `scripts/checks/evals.py:passage_problems`, `scripts/checks/packs.py:reference_problems`, `solarchat/answer/door.py:breaks_contract`, `solarchat/answer/door.py:answer_body`, `solarchat/leaf/contract.py:Reply` |
 | HAD-04 | The safety rules sit outside every pack, and no pack can remove or change one | `scripts/checks/evals.py:firing_problems`, `scripts/checks/packs.py:flow_problems`, `scripts/checks/packs.py:safety_rule_problems`, `solarchat/leaf/contract.py:Reply`, `solarchat/leaf/contract.py:SafetyRule`, `solarchat/safety/__init__.py`, `solarchat/safety/rules.py:sequence_problem`, `solarchat/safety/rules.py:load_rules`, `solarchat/safety/rules.py:trigger_pattern`, `solarchat/safety/rules.py:rules_fired` |
-| HAD-05 | A pack's text is data, never instructions | `solarchat/leaf/contract.py:Passage` |
+| HAD-05 | A pack's text is data, never instructions | `solarchat/leaf/contract.py:Passage`, `solarchat/model/claude.py:system_text` |
 | HAD-06 | A demo pack never answers outside demo mode | `scripts/checks/packs.py:status_problems`, `solarchat/answer/door.py:answer`, `solarchat/leaf/contract.py:may_answer` |
