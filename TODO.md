@@ -16,14 +16,6 @@ question a later item depends on is copied into that item's text, so the item re
 
 ## Phase 0: founding
 
-### 0.5 The founding decisions
-
-Check: `theGhost.md` holds Ghost's founding decisions for Solarchat, a decision for each core decision it refuses among them, each with Ghost as its Source. Agents cannot author Ghost's decisions: an agent drafts the questions for Ghost in `docs/HANDOFF.md`, and a builder that reports "waiting on Ghost" has done its job.
-
-### 0.6 Tune-up pass 0
-
-Check: `docs/when/tune-up.md` followed in full; the metrics table written; the navigation log's "Last review" set.
-
 ## Phase 1: the pack and the oracle
 
 ### 1.1 The words
@@ -49,3 +41,12 @@ Check: at least thirty in-scope questions each naming the passage that answers i
 ### 1.6 Tune-up pass 1
 
 Check: `docs/when/tune-up.md` followed in full; the metrics table written; the navigation log reviewed.
+
+## Phase W: waiting on Ghost
+
+### 0.5 The founding decisions
+
+Check: `theGhost.md` holds Ghost's founding decisions for Solarchat, a decision for each core decision it refuses among them, each with Ghost as its Source. Agents cannot author Ghost's decisions: an agent drafts the questions for Ghost in `docs/HANDOFF.md`, and a builder that reports "waiting on Ghost" has done its job.
+
+Moved: from Phase 0
+Waits on: Ghost's founding decisions (the questions in `docs/HANDOFF.md`, "For Ghost": the app's stack, the first real pack's make and model, naming the deploying company, SC-007 in `CLAUDE.md`, the trademark search)

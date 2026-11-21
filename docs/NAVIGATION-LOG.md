@@ -11,7 +11,7 @@ to the ruling grade; record the review in the journal; set the line below to the
 review ran at (`git rev-parse --short HEAD`, not the tune-up's own, which does not exist yet). Each entry's **Opened** list, read against the routing row its task matched, is the measure
 of whether a fresh agent found its way: files, in order; `CLAUDE.md` does not count.
 
-Last review: d9b72fd (2026-11-21, tune-up commit, J-016)
+Last review: 7ef5101 (2026-11-21, Tune-up pass 0, J-019)
 
 ## Entries
 
@@ -21,17 +21,3 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Opened**: the files it opened, in order.
 - **Complaints**: what slowed or misled it.
 - **Suggestions**: what it would change.
-
-### 2026-11-20 · TODO 1.4 the seed pack, first draft (demo) · Claude Opus 5.5
-
-- **Task**: draft the seed pack under `packs/seed-mc4-leads/` to the provisional layout, from public sources read in the session; mid-task, a brief change (SC-007) allowed web pictures under `images/third-party/`.
-- **Opened**: `docs/ROADMAP.md`, `theGhost.md` (SC-005), `docs/journal/J-000-099.md` (J-010, J-011), `docs/SUPPLY-CHAIN.md` (rule 6), `docs/when/handoff.md`, `docs/NAVIGATION-LOG.md`, `scripts/fast.sh`.
-- **Complaints**: the mid-task change allowed pictures "under ordinary copyright", which `CLAUDE.md`'s three rules (C-033) forbid in the repository, and the change was not yet on the branch to read; I kept to openly licensed pictures. Several public-body sources sat behind bot checks (403, 503), so the strongest government guidance on mismatched connectors could not be read.
-- **Suggestions**: write SC-007 so it states its relation to C-033 before a worker gets it; give the provisional layout a field for a photo's alt text.
-
-### 2026-11-21 · TODO 0.4 the contract and the leaf module · Claude Opus 5.5
-
-- **Task**: set the package, the module map and the contract's first invariants, then build the leaf.
-- **Opened**: `docs/HANDOFF.md`, `TODO.md`, `docs/paths/process.md`, `docs/CONTRACT.md`, `docs/modules.json`, `pyproject.toml`, `docs/ROADMAP.md` (§5, §6), `theGhost.md` (SC-002, SC-005, C-012), `test/test_contract.py`, `scripts/checks/contract.py`, `scripts/checks/modules.py`, `stacks/python/gate.sh`.
-- **Complaints**: the session was started on the wrong repository, and the handoff of the other project read first looked like this one's until the paths were checked. TODO 0.4's check asks for a rename the contract test forbids (F-001). The real-tree contract test was left at `held=False`, so a stamped project's leaf could miss an invariant with every test green.
-- **Suggestions**: the stamp's 0.4 check could say "set `held=True` in `test/test_contract.py`"; `docs/FINDINGS.md` could show one example row, since the id is three digits and the status one word, which only the test said.

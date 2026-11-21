@@ -20,3 +20,7 @@ Done 2026-11-20 (J-003, J-005). Check: `docs/ROADMAP.md` §1 to §6 written for 
 ### 0.4 The contract and the leaf module
 
 Done 2026-11-21 (J-018). Check: `docs/CONTRACT.md` written with its first invariants, HAD-01 to HAD-06, and kept under its template name, since `test/test_contract.py` reads that path (F-001; Ghost approved the plan in chat); `docs/modules.json`'s package (`solarchat.`) and modules (leaf, packs, safety, project, cli) set, Ghost's approval in chat (C-012); `test/test_contract.py`, now held both ways on `solarchat/leaf/`, and `test/test_modules.py` green on the real folders. ✓
+
+### 0.6 Tune-up pass 0
+
+Done 2026-11-21 (J-019). Check: `docs/when/tune-up.md` followed in full (step 3 does not apply: Solarchat stamps no project); the metrics table written from the warm full gate (fast loop 21.4 s, gate 0.8 min); the navigation log's "Last review" set to 7ef5101. 0.5 moved to Phase W, waiting on Ghost. ✓
