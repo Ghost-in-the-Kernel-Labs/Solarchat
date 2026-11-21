@@ -33,6 +33,9 @@ CLAUDE.md sends the coordinator here before its first item. The rule, in the ord
    .venv/bin/pip install --only-binary :all: --require-hashes -r requirements.lock`), and a worker makes a real
    `.venv/` directory of symlinks to that venv's entries. A worker never symlinks `.venv` itself: the gitignore rule
    `/.venv/` does not match a symlink, so the gate records it and `scripts/commit.sh` refuses.
+   A worktree agent's shell refuses a call that names git beside another step (`&&`, a loop, a heredoc), so a worker
+   runs each git command alone and writes a multi-step edit with the file tool or a script in the scratchpad; the
+   brief says so, and says that downloads may sit in the scratchpad too.
 5. **The ladder.** A worker makes one attempt at a change the checks reject for a reason it cannot explain, then
    goes one grade up (`docs/when/escalation.md`). The coordinator answers a mid worker's escalation with what it
    needs; it does not take the item back.

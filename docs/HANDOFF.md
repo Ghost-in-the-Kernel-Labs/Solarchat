@@ -155,6 +155,15 @@ which passage to show.
       confirm C-033's reading.
    9. **The spot-check model**: Sonnet 5.5 every run (recommended), Opus 5.5 by hand.
 
+19. **Tune-up commit 1, questions that need a file or a decision outside a tune-up's list** (J-052): (a) `scripts/next_id.py`
+    takes a journal id that an unmerged `origin/agent/*` branch already holds (three debriefs: J-026, J-027, J-051);
+    have it read those branches too. (b) A script that builds a worktree's `.venv` of symlinks (three debriefs; the
+    steps are in `docs/when/coordinate.md`), and one that adds a safety rule's change entry and sets its fingerprint
+    (two debriefs). Each is a new script, which a tune-up does not write. (c) `scripts/checks/todo.py` could accept a
+    `Waits on: none outside` kind so a chain item that only follows another need not sit in the waiting phase (one
+    debrief). (d) `theGhost.md`'s header could say when an in-force decision is rewritten on Ghost's word and when it is
+    superseded (one debrief); a decision of Ghost's, and `theGhost.md` is not a tune-up's to edit.
+
 Audit advisories (tune-up step 2): the python gate runs no audit step, so none are listed. An audit tool
 (`pip-audit` or the like) would be a new dependency, Ghost's to approve; until then the review's layers 1, 2 and 4
 stand alone (`docs/DEPENDENCY-REVIEW.md`).
