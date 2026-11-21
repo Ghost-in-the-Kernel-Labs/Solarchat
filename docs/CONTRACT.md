@@ -52,3 +52,78 @@ whose text is only ever quoted, and, once it exists, the evaluation set's inject
 A pack is admitted when its manifest names the person who admitted it and the date (SC-005); any
 other pack, the demo packs included, may be read and checked but never answers. Held by the leaf's
 `is_admitted` (`test/test_leaf.py`) and, once it exists, the pack check (TODO 1.2).
+
+## The pack format
+
+A pack is what the deploying company builds, so this section is the format: a pack can be written from it without reading
+code. `scripts/checks/packs.py` holds it (`test/test_packs.py`; a well-formed pack in `test/fixtures/packs/good/`, each
+planted break in `test/fixtures/broken/packs/`). A pack is a folder of three JSON files (UTF-8) and its pictures,
+named for the pack's id:
+
+```
+<pack-id>/manifest.json    the manifest
+<pack-id>/passages.json    a list of passages
+<pack-id>/flows.json       a list of flows
+<pack-id>/images/          the pictures; third-party ones under images/third-party/
+```
+
+A field named here is required and is text with something in it, unless it says otherwise. An id is lowercase letters and
+digits joined by hyphens (`no-output`). A pack's text is data (HAD-05): nothing in it is an instruction.
+
+### The manifest
+
+| Field | Holds |
+| --- | --- |
+| `id` | the pack's id, the same as its folder's name; with a passage's id it names an answer's source (HAD-03) |
+| `title` | the name a worker is shown when a pack is chosen (extra: a pack needs a name a person can read) |
+| `make` | the maker the pack covers; `any` for a pack not tied to one maker |
+| `model` | the model the pack covers; `any` for a pack not tied to one model |
+| `version` | the pack's own version, changed whenever its text changes, so an admission names what was admitted |
+| `sources` | a non-empty list of sources: where each fact in the pack comes from |
+| `third_party_images` | a list (it may be empty or absent) of the pictures copied from elsewhere (SC-007) |
+| `admitted_by` | the person who admitted the pack, or `null` while it is not admitted |
+| `admitted_on` | the date of the admission as `YYYY-MM-DD`, or `null` while it is not admitted |
+
+A pack is admitted when `admitted_by` and `admitted_on` are both set (HAD-06). Both `null` is a pack that is not admitted;
+one set and the other not is refused.
+
+A source has: `id` (the id passages and flows cite it by, unique in the pack), `title`, `url` (where it was read; extra: so
+a person can check it), `licence` (the licence as the source states it, or the words `not stated`; never left out, since
+what a source allows is what the person admitting a pack must weigh, SC-005) and `retrieved` (the date it was read; extra:
+a source changes). The check holds that the licence is written down, not that it allows redistribution; that is the
+person's judgement at admission, and a licence that forbids redistribution never puts its pack in the repository (Core C-033).
+
+A third-party picture has: `file` (a path under `images/third-party/`), `source_url`, `owner` (the owner or author),
+`licence` (as stated) and `shows` (what it shows). Every file under `images/third-party/` has exactly one entry, and every
+entry has its file (SC-007).
+
+### A passage
+
+`passages.json` is a non-empty list. A passage is one piece of text an answer can be built from and named by:
+
+| Field | Holds |
+| --- | --- |
+| `id` | the passage's id; with the pack's id it is the reference an answer carries (HAD-03) |
+| `title` | a short heading (extra: so a worker and a person admitting the pack can tell passages apart) |
+| `text` | the text, in plain words, which an answer may quote and may not go beyond |
+| `sources` | a non-empty list of source ids from the manifest; a passage with no source is refused |
+| `image`, `image_alt` | optional: a picture, as a path under `images/` that exists in the pack, and the words that stand in for it for a person who cannot see it; a picture needs its `image_alt` (extra: a worker on a phone in sun may not see a picture) |
+
+### A flow
+
+`flows.json` is a non-empty list. A flow is one troubleshooting path, shown one step at a time:
+
+| Field | Holds |
+| --- | --- |
+| `id` | the flow's id; passage ids and flow ids are one set, each used once |
+| `title` | a short heading |
+| `symptom` | what the worker sees that starts the flow |
+| `checks` | a non-empty list, in order; each has `text`, and optionally `image` and `image_alt` as in a passage |
+| `fix` | what to do when a check finds the cause |
+| `stop` | where to stop: the point at which the worker goes to the site supervisor or engineer, and the words they are shown; a flow with no `stop` is refused (HAD-04: a pack may add steps that stop, never remove a rule) |
+| `sources` | a non-empty list of source ids from the manifest |
+
+### What the check does not hold
+
+Whether a licence allows redistribution, whether a passage is true, and whether a pack's text names or overrides a safety
+rule: the first two are the admitting person's judgement, the third is added to the check with the safety rules (TODO 1.3).

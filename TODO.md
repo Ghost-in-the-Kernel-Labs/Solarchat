@@ -18,10 +18,6 @@ question a later item depends on is copied into that item's text, so the item re
 
 ## Phase 1: the pack and the oracle
 
-### 1.2 The pack format
-
-Check: the contract document states the manifest's fields (make, model, version, source, licence, admitted by, admitted on), a passage and a flow (symptom, check, fix, stop); a check under `scripts/checks/` accepts a well-formed pack and refuses each planted break (a missing licence, a flow with no end, a passage with no source).
-
 ### 1.3 The safety rules, version 1
 
 Check: a document outside every pack lists the stop points for the newest contractor on a site, each with the words the worker is shown, and says the site's own safety procedures come first; the pack check refuses a pack that names or overrides one; Ghost has read the list.
