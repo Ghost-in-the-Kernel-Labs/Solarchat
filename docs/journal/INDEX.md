@@ -60,3 +60,4 @@ Written from `docs/journal/` by `scripts/journal_index.py`; do not edit by hand.
 | J-054 | The demo from a local clone: a local key on a developer's machine (SC-022 amended), the command menu and speech out planned | decision | `J-000-099.md` |
 | J-055 | The command menu and the local key are built (TODO 2.5) | feature | `J-000-099.md` |
 | J-056 | The bot reads its replies aloud: speech out for the Windows demo (TODO 2.7) | feature | `J-000-099.md` |
+| J-057 | Fix-forward: `ruff check .` fails on main (nine places left for a choice) | measurement | `J-000-099.md` |

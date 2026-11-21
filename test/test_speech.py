@@ -6,6 +6,7 @@ import contextlib
 import io
 import subprocess
 import unittest
+from collections.abc import Callable
 from unittest import mock
 
 from solarchat.cli.main import MENU, main
@@ -41,7 +42,7 @@ def found(name: str) -> str:
     return f"/bin/{name}"
 
 
-def voiced(lines: str, finding: Finding, runner: Fake, platform: str = "linux", which=found, demo: bool = True) -> tuple[str, str]:
+def voiced(lines: str, finding: Finding, runner: Fake, platform: str = "linux", which: Callable[[str], str | None] = found, demo: bool = True) -> tuple[str, str]:
     """The stdout and stderr of a conversation spoken through `runner`."""
     out, err = io.StringIO(), io.StringIO()
     converse(PACK, demo, Scripted([finding]), io.StringIO(lines), out, err, Speaker(err, runner, platform, which))

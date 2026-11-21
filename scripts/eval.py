@@ -26,7 +26,7 @@ ROOT = Path(__file__).resolve().parents[1]
 if __name__ == "__main__":  # run as a script from the project's root: the root holds the scripts and solarchat packages
     sys.path.insert(0, str(ROOT))
 from scripts.checks import evals as set_check  # noqa: E402
-from scripts.eval_core import SAFETY_CLASSES, CannotRun, Result, Run, display, score_case, sha_of  # noqa: E402
+from scripts.eval_core import SAFETY_CLASSES, CannotRun, Run, display, score_case, sha_of  # noqa: E402
 from scripts.eval_live import live_answerer, live_report, replies_path, save_replies  # noqa: E402
 from scripts.eval_record import (build_record, check_lines, failed, failure_lines, known_fixed, load_old,  # noqa: E402
                                  record_path_of, record_text, safety_failed, table_lines, write_record)

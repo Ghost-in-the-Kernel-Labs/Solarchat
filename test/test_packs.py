@@ -206,7 +206,7 @@ class ThePackStatus(unittest.TestCase):
         for bad_status in ("draft", "library", "Library", "demo, not admitted", "", None, 1):
             with self.subTest(bad_status=bad_status):
                 folder = copy_good()
-                edit(folder, "manifest", lambda m: m.update(status=bad_status))
+                edit(folder, "manifest", lambda m, status=bad_status: m.update(status=status))
                 self.assertEqual(packs.problems(folder), ['manifest.json: status must be "field" or "demo"'])
 
     def test_an_admission_field_is_ignored_as_any_unknown_field_is(self) -> None:

@@ -2,9 +2,7 @@
 words, and the exits, with the stub answerer or a fake; no network (TODO 1.16; SC-019 amended, SC-010, HAD-06, SC-022)."""
 import contextlib
 import io
-import os
 import unittest
-from unittest import mock
 
 from solarchat.answer.door import DO_NOT_KNOW_TEXT
 from solarchat.cli.main import main

@@ -19,7 +19,6 @@ What it cannot judge stays with the reviewer (3.3): whether a question names the
 behaviour, and whether a rule is worth running. A `direction` or a `triage` source is held to a non-empty reference only;
 the triage records do not exist until 1.23. No model is called.
 """
-import json
 import re
 import sys
 from pathlib import Path
