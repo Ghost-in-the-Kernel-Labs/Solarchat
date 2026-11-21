@@ -59,3 +59,5 @@ Written by `scripts/decisions_index.py` from `theGhost.md`; do not edit here. Se
 | SC-012 | An answer cites the page of the manual it used: each source has a kind, a document's citation carries a page, and unknown pages are counted | in force | pack format |
 | SC-013 | Handing documentation to the person who loads the library is the approval; a pack is `library` or `demo`, and no approval is recorded | in force | pack format |
 | SC-014 | The library holds source documents, not packs: each with its licence quoted from the publisher, checked by a script | in force | reference library |
+| SC-015 | Warn and help by default: a safety rule answers with a warn, a stop or an emergency, and none leaves the worker with nothing to do | proposed | safety rules |
+| SC-016 | Each safety rule keeps a change log: who changed it, in what role, why and on what evidence; a record of a judgement, not an approval | proposed | safety rules |

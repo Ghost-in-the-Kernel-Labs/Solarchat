@@ -97,8 +97,11 @@ removes dangers 3 and 5: no "what's next?" carries a worker past a stop.
   (`test/test_packs.py`, planted breaks under `test/fixtures/broken/packs/`); a paraphrase outside that list passes
   it and stays with the person who loads the library.
 - **Designed:** the maintainer's read of the rules (1.3 stays open until then; the points marked "Ghost to confirm"
-  in `docs/SAFETY-RULES.md` are the agent's draft); every walk stopping at a rule whatever the pack says, using each
-  rule's triggers (1.7).
+  in `docs/SAFETY-RULES.md` are the agent's draft, and under F-16, proposed, they are an electrical engineer's to
+  confirm); every walk stopping at a rule whatever the pack says, using each rule's triggers (1.7).
+- **Proposed, not decided:** each rule answers with a warn, a helpful stop or an emergency, starting cautious and
+  relaxed only by an electrical engineer (SC-015); each rule keeps a change log of who changed it, in what role, why
+  and on what evidence (SC-016); the engineer's review before the evaluation set is frozen (TODO 1.14).
 
 ### 6. When a model is added, it gets no tools and no freedom (SC-002)
 

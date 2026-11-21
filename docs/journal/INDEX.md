@@ -34,3 +34,4 @@ Written from `docs/journal/` by `scripts/journal_index.py`; do not edit by hand.
 | J-028 | SC-013: handing documentation over is the approval; a pack is library or demo | decision | `J-000-099.md` |
 | J-029 | SC-014: the reference library of source documents | decision | `J-000-099.md` |
 | J-030 | The safety rules' triggers and wording after the audit, and how triggers match | decision | `J-000-099.md` |
+| J-031 | The plan held against Ghost's vision: warn and help, the engineer's QA, and the change log, proposed | direction | `J-000-099.md` |

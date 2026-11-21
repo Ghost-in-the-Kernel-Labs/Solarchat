@@ -20,20 +20,21 @@ which passage to show.
 ## Next, in order
 
 1. **TODO 1.3 is landed, with Ghost's read still open**: landed 2026-11-21 on Ghost's word with the draft's answers;
-   Ghost has not yet read `docs/SAFETY-RULES.md`; the five points stay open. J-027 (renumbered from J-026 at the landing),
+   Ghost has not yet read `docs/SAFETY-RULES.md`; SR-03 was settled by Ghost's word (J-030) and four points stay open. J-027 (renumbered from J-026 at the landing),
    reviewed by the coordinator. Fourteen rules, SR-01 to SR-14, in `solarchat/safety/rules.json`, read by
    `solarchat/safety/rules.py` as the leaf's `SafetyRule`; `docs/SAFETY-RULES.md` generated from them
    (`scripts/safety_rules_doc.py`); the pack check refuses a pack that names a rule or tells the reader to skip one.
-   1.3 is in `docs/DONE.md`, marked as all but Ghost's read. Next for Ghost: read `docs/SAFETY-RULES.md` and answer its
-   five "Ghost to confirm" marks (below, For Ghost 1); a change of an answer is a change to `rules.json`, then
-   `scripts/safety_rules_doc.py`.
-3. **The demo of Monday 2026-11-23** (SC-010), after 1.3: 1.4 the seed pack in the format (convert
+   1.3 is in `docs/DONE.md`, marked as all but Ghost's read. Next: the four marks still open in `docs/SAFETY-RULES.md`
+   (below, For Ghost 1), headed "Ghost to confirm" there, are the engineer's to confirm under F-16 (proposed); a change
+   of an answer is a change to `rules.json`, then `scripts/safety_rules_doc.py`.
+2. **The demo of Monday 2026-11-23** (SC-010), after 1.3: 1.4 the seed pack in the format (convert
    `packs/seed-mc4-leads/` to passages, flows and procedures; still a `demo` pack), 1.5 demo mode, 1.6 the walker
    (`solarchat/walker`, a module Ghost approved), 1.7 the safety rules in the walker (it must settle whether a
    rule's triggers match the step's text or the worker's replies, and match whole words: the 1.3 worker's notes),
    1.8 the offline shell. Each went to a fresh worker of its grade with the brief of `docs/when/hand-out-a-task.md`,
    saved on its own branch and landed by the coordinator after Ghost's word; 1.3 went to the strong grade.
-4. **1.9 the evaluation set**, frozen before any search or model; 1.10 Tune-up pass 1, with the next human
+3. **1.9 the evaluation set**, frozen before any search or model (proposed with J-031: 1.9 waits in Phase W on
+   SC-015 and the engineer's review, behind 1.11 to 1.14; For Ghost 16); 1.10 Tune-up pass 1, with the next human
    maintainability pass (SC-011: Ghost-Core's toolkit under `scripts/` a few files at a time, each with its proof
    that nothing changed; then the tests).
 
@@ -57,16 +58,17 @@ which passage to show.
 
 1. **The safety rules** (TODO 1.3, landed 2026-11-21 on Ghost's word with the draft's answers; Ghost has not yet read
    `docs/SAFETY-RULES.md`): SR-03 is resolved (Ghost, 2026-11-21: connecting is daily work, not a stop; the rule is now
-   "never pull connectors apart under load", J-030). Four points stay open, the "Ghost to confirm" marks in
-   `docs/SAFETY-RULES.md`: SR-02, is measuring a voltage a stop for the newest contractor (the draft: yes); SR-06, the
+   "never pull connectors apart under load", J-030). Four points stay open, the marks headed "Ghost to confirm" in
+   `docs/SAFETY-RULES.md` (generated from `rules.json`'s `ghost_to_confirm`; under F-16, proposed, they are the
+   engineer's to confirm, and 1.11 renames the field): SR-02, is measuring a voltage a stop for the newest contractor (the draft: yes); SR-06, the
    overhead-lines rule (beyond the brief; it now gives the 10 ft distance and carries the audit's finding, perimeter
    lines, service drops and OSHA's Fort Riley 2018 citation); SR-08 and SR-09, the emergency and first-aid sentences
    the cited sources do not state; SR-12, the never-bypass rule (beyond the brief). Triggers now match whole words and
    phrases only (HAD-04, `rules_fired`); step 2 of the fix (response types, matching on the worker's words) is a later
    design decision. Also: four sources were cited from search results without the page being read (J-027), and the two
    new OSHA regulation addresses (1910.333, 1926.1408) were not opened (osha.gov refuses this environment).
-2. **Page citations** (SC-012, on `agent/page-citations`): the seed pack's citations of its document sources carry a
-   page, and 89 of them are `"unknown"`: S3 Trina installation manual 35, S7 PVEL/HelioVolta safety guide 22, S5 Victron
+2. **Page citations** (SC-012, landed on `main` in 3e40d86; the branch `agent/page-citations` is merged and safe to
+   delete): the seed pack's citations of its document sources carry a page, and 89 of them are `"unknown"`: S3 Trina installation manual 35, S7 PVEL/HelioVolta safety guide 22, S5 Victron
    troubleshooting chapter 19, S4 Victron installation chapter 10, S6 BRE fire report 3 (S8's 15 citations use page 15,
    from its title). A person finds each page in the manual; the check counts the unknown pages and prints the total
    (`python3 -I scripts/checks/packs.py <pack>`), and does not yet run over the seed pack, which TODO 1.4 converts.
@@ -88,14 +90,31 @@ which passage to show.
    from `main`); a hook is outside what an agent may change (`docs/when/coordinate.md`), so it is reported here.
 12. `scripts/ship.sh` is stamped without its executable bit (run it as `bash scripts/ship.sh`); a mode change to a
    gate file is yours.
-12. **The coordinator's conditional** (2026-11-21, Ghost's ask): `CLAUDE.md` gains "If you are the coordinator",
-   sending it to `docs/when/coordinate.md`, "Who does each item", the assignment rule of C-026, C-027 and C-036 in
+13. **The coordinator's conditional** (2026-11-21, Ghost's ask): `CLAUDE.md` sends the coordinator to
+   `docs/when/coordinate.md`, "Who does each item", the assignment rule of C-026, C-027 and C-036 in
    seven steps. The wording is the agent's, and two steps go past the ghost's text for your confirmation: a raise above
    the score writes its reason in the journal, and a strong Cost line on an item scored lower says why. Ghost-Core's
-   template could carry the same section (a Core change, in a session with push access to it). Saved on
-   `agent/coordinator-conditional`; land it on your word.
-13. SC-013 (landed on your word, 2026-11-21): handing documentation to the person who loads the library is the approval; a pack's `status` is `library` or `demo`, no approval record exists, and a `library` pack with an unknown page is refused. Confirm the wording; the seed pack is `demo` with its 89 unknown pages.
-14. **The reference library** (SC-014, J-029, landed on your ask; extended 2026-11-21): `library/sources/` holds source documents, not packs, each with its licence quoted and a hash. OSHA regulations from eCFR (17 U.S.C. 105 and the GPO notice): 29 CFR 1910 Subparts S, D (walking-working surfaces) and I (PPE), 1910.269, 1910.147, 1910.179 and 1910.180 (one folder), 1926 Subparts K and M, 1926.1407 to 1926.1411 and 1926.1417. NIOSH 2009-113 (92 pages; its own "public domain" line) and Solar Victoria's PV audit checklist (CC BY 4.0). **Eight OSHA web pages you pasted by hand** (the seven solar pages and Lithium-ion Hazards; osha.gov refuses automated clients): no original is kept, `text.txt` is your paste without its two header lines, `sha256` is of that text, and each `note` says so; the licence evidence is 17 U.S.C. 105. **Originals dropped, text and sha256 kept:** the NIOSH PDF (its credits mark five photo sources with (c)) and the Solar Victoria HTML (flag images; the site's licence excludes images). The eCFR licence statement is the GPO's (ecfr.gov's own pages sit behind a bot check). **California FACE solar fatality reports: not added, not checked.** The FACE page (cdph.ca.gov/Programs/CCDPHP/DEODC/OHB/FACE/Pages/Solar.aspx) could not be fetched from this environment (a TLS certificate error through the proxy, and a 503 from the fetch tool), so neither its report list nor its terms of use or copyright statement was read. California state works are not automatically public domain: please open the page, and add a report only if the site allows copying or the report states it was funded by a NIOSH cooperative agreement. The safety rules' sources now carry library ids in their titles (SR-03, SR-05, SR-06, SR-11, and the 1910.333 and 1926.1408 links).
+   template could carry the same section (a Core change, in a session with push access to it). Landed on `main` in
+   da53935 (renumbered from a second 12, J-031); confirm the two steps.
+14. SC-013 (landed on your word, 2026-11-21): handing documentation to the person who loads the library is the approval; a pack's `status` is `library` or `demo`, no approval record exists, and a `library` pack with an unknown page is refused. Confirm the wording; the seed pack is `demo` with its 89 unknown pages.
+15. **The reference library** (SC-014, J-029, landed on your ask; extended 2026-11-21): `library/sources/` holds source documents, not packs, each with its licence quoted and a hash. OSHA regulations from eCFR (17 U.S.C. 105 and the GPO notice): 29 CFR 1910 Subparts S, D (walking-working surfaces) and I (PPE), 1910.269, 1910.147, 1910.179 and 1910.180 (one folder), 1926 Subparts K and M, 1926.1407 to 1926.1411 and 1926.1417. NIOSH 2009-113 (92 pages; its own "public domain" line) and Solar Victoria's PV audit checklist (CC BY 4.0). **Eight OSHA web pages you pasted by hand** (the seven solar pages and Lithium-ion Hazards; osha.gov refuses automated clients): no original is kept, `text.txt` is your paste without its two header lines, `sha256` is of that text, and each `note` says so; the licence evidence is 17 U.S.C. 105. **Originals dropped, text and sha256 kept:** the NIOSH PDF (its credits mark five photo sources with (c)) and the Solar Victoria HTML (flag images; the site's licence excludes images). The eCFR licence statement is the GPO's (ecfr.gov's own pages sit behind a bot check). **California FACE solar fatality reports: not added, not checked.** The FACE page (cdph.ca.gov/Programs/CCDPHP/DEODC/OHB/FACE/Pages/Solar.aspx) could not be fetched from this environment (a TLS certificate error through the proxy, and a 503 from the fetch tool), so neither its report list nor its terms of use or copyright statement was read. California state works are not automatically public domain: please open the page, and add a report only if the site allows copying or the report states it was funded by a NIOSH cooperative agreement. The safety rules' sources now carry library ids in their titles (SR-03, SR-05, SR-06, SR-11, and the 1910.333 and 1926.1408 links).
+16. **The plan aligned with your vision of 2026-11-21** (J-031; saved on `agent/roadmap-vision`, not landed; nothing
+   in it is in force). Proposed: **SC-015** warn and help by default (a rule answers with a warn, a helpful stop or an
+   emergency; every rule starts at a stop, SR-08 and SR-09 at an emergency; only the engineer relaxes one; it amends
+   HAD-03, HAD-04 and J-030's "every rule stays a stop", and implies the leaf's `ReplyKind.WARN` and
+   `SafetyRule.response`); **SC-016** each safety rule keeps a change log `{date, by, role, why, evidence}`, a record
+   of a judgement and not an approval; facts **F-16** (an electrical engineer QAs the bot) and **F-17** (the
+   field-manual vision). Plan: 1.8 shows each step's sources by title and page ("page not yet found" where unknown)
+   and answers free text with "I do not know"; 1.9 gains "I do not know", warn and must-not-stop classes and moves to
+   Phase W behind 1.11 (the change log), 1.12 (response types), 1.13 (SR-03's and SR-02's over-firing) and 1.14
+   (the engineer's review); roadmap 2.7 (rules on the worker's words, SR-14's "don't know"), 2.8 (a site-safety pack
+   from the library; HAD-06 needs only a clarifying sentence) and 3.4's safety thresholds set by the engineer. The
+   safety audit J-030 rests on is now `docs/audits/2026-11-21-safety-rules.md`. Proposed, not applied: the pack status
+   `library` renamed `field`, so "library" means only `library/sources/`, your own use of it in the email. Before
+   anything lands, answer: (a) SC-015's cautious start, or SR-03, SR-02's meter and crimp triggers and SR-05 at a warn
+   now on your word; (b) who the electrical engineer is, and whether you may confirm precision fixes (step-12's SR-03
+   stop) before one is named; (c) SC-016 as its own decision; (d) the leaf change (a new reply kind and a rule field,
+   Core C-012); (e) 1.9 to Phase W and the new items' order; (f) the `library` rename.
 
 Audit advisories (tune-up step 2): the python gate runs no audit step, so none are listed. An audit tool
 (`pip-audit` or the like) would be a new dependency, Ghost's to approve; until then the review's layers 1, 2 and 4
