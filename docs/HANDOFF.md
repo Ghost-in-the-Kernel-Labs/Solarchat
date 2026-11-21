@@ -104,8 +104,9 @@ which passage to show.
    not safety judgements, before an engineer is named, logged as "maintainer"); **SC-016** each safety rule's change log;
    facts **F-16** (an electrical engineer QAs the bot) and **F-17** (your field-manual vision); **SC-017** the pack status
    `library` renamed `field`, so "library" means only `library/sources/`. The leaf change (`ReplyKind.WARN`,
-   `SafetyRule.response`) is approved. Built after this entry: the code for
-   SC-015 and SC-016, then the `field` rename. **Ghost's further word, the same day (J-033): the engineer comes in at the
+   `SafetyRule.response`) is approved. Built: the code for
+   SC-015 and SC-016 (J-034: `ReplyKind.WARN`, each rule's `response` and change log, the fingerprint check), then the
+   `field` rename. **Ghost's further word, the same day (J-033): the engineer comes in at the
    end; nothing waits on them before then.** The electrical engineer is unknown and reviews the bot once, at the end of
    the project (F-16, P-20, TODO 6.4); what is decided now on Ghost's word is logged under SC-016 with the role
    "maintainer", pending engineer, and the engineer confirms or reverses each at that review. 1.9 is back in

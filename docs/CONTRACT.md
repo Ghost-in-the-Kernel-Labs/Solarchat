@@ -26,22 +26,27 @@ once a document reports one (the evaluation set's scores, TODO 1.9).
 
 ## HAD-03 Hadley answers only from the packs, names the passage, or says it does not know
 
-Every reply is one of three kinds. An answer carries at least one passage reference (the pack's id
+Every reply is one of four kinds. An answer carries at least one passage reference (the pack's id
 and the passage's id) from a pack that is switched on and may answer (HAD-06), and says nothing those passages
 do not support. What the worker is shown: the answer names the passage it used, then each of that passage's sources by
 title, with the page for a document source (SC-012); the reference stays the pack's id and the passage's id, and the page
 is read from the pack, never carried in the reference. A question the switched-on packs do not cover gets "I do not know" with no
-passages, never a guess. A safety rule that fires gets a stop (HAD-04). Held by the leaf's `Reply`,
-which refuses an answer with no passage and a "do not know" or a stop with one (`test/test_leaf.py`);
+passages, never a guess. A safety rule that fires gets its response (HAD-04, SC-015): a stop or an emergency, which name no
+passage, or a warn, which names the rule and at least one passage, the step the walk continues with. Held by the
+leaf's `Reply`, which refuses an answer or a warn with no passage and a "do not know" or a stop with one
+(`test/test_leaf.py`);
 the evaluation set holds the rest (SC-003, SC-005).
 
 ## HAD-04 The safety rules sit outside every pack, and no pack can remove or change one
 
 The safety rules are the project's own text, kept in the `safety` module, never in a pack. A rule
-that fires stops the conversation's current step and sends the worker to the site supervisor or
-engineer; the site's own safety procedures come first. A pack may add steps that stop; it cannot
-remove, reword or switch off a rule. Held by the leaf's `Reply` (a stop names its rule) and, once
-they exist, the safety rules' check (TODO 1.3) and the pack check (TODO 1.2).
+that fires gives its response (SC-015): `warn` shows the rule's words and the walk continues; `stop` stops the
+conversation's current step and sends the worker to the site supervisor or engineer; `emergency` tells the worker to
+step back and call for help; the site's own safety procedures come first. Each rule keeps a change log (SC-016), and
+the safety check refuses a rule changed without a new entry. A pack may add steps that stop; it cannot
+remove, reword or switch off a rule. Held by the leaf's `Reply` (a stop or a warn names its rule), the leaf's
+`SafetyRule` (its response and change log), the safety rules' check (`load_rules`, with the fingerprint of SC-016) and
+the pack check (TODO 1.2).
 
 How a trigger matches (the audit of 2026-11-21, `docs/audits/2026-11-21-safety-rules.md`, applied on Ghost's word in J-030): a trigger matches a text when it occurs as a whole word or whole
 phrase, case-insensitively, with a word boundary at both ends (no letter, digit or underscore touching either end);

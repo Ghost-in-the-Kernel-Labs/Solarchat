@@ -60,12 +60,13 @@ model's reading ever approves anything (Core C-005, SC-005, SC-013).
 
 ### 3. Every answer names its source, or says "I do not know" (HAD-03)
 
-A reply is one of exactly three things: an **answer**, which carries at least one reference to a passage
-and says nothing that passage does not support; **"I do not know"**, which carries none; or a **stop** (section 5).
+A reply is one of exactly four things: an **answer**, which carries at least one reference to a passage
+and says nothing that passage does not support; **"I do not know"**, which carries none; a **stop** (section 5), which
+carries none; or a **warn** (section 5), which names its rule and the passage the walk continues with.
 A question the switched-on packs do not cover gets "I do not know", never a guess. This removes dangers 1, 2 and 6.
 
 - **Enforced today:** `solarchat/leaf/contract.py`'s `Reply` cannot be created as an answer without a passage
-  reference, nor as "I do not know" or a stop with one; `test/test_leaf.py` shows each refused.
+  reference, nor as a warn without one, nor as "I do not know" or a stop with one; `test/test_leaf.py` shows each refused.
 - **Designed:** the frozen evaluation set (1.9) of in-scope questions, each with the passage that answers it, and
   out-of-scope questions that must get "I do not know".
 
@@ -81,8 +82,8 @@ is shown or quoted as text, never obeyed. This removes danger 4.
 ### 5. The safety rules sit outside every pack and override it (HAD-04, P-17)
 
 The safety rules are Solarchat's own fixed text, kept in the `safety` module and never in a pack. They fire in every
-mode. When one applies, Hadley stops the current step and sends the worker to the site supervisor or engineer with
-the rule's words; the site's own safety procedures always come first. A pack may add more places to stop; it can
+mode. When one applies, Hadley gives the rule's response (SC-015): a warn shows the rule's words and the walk continues; a
+stop or an emergency stops the current step and sends the worker to the site supervisor or engineer with the rule's words; the site's own safety procedures always come first. A pack may add more places to stop; it can
 never remove, reword or switch off a rule. They are written for the least experienced person on a site (F-01). This
 removes dangers 3 and 5: no "what's next?" carries a worker past a stop.
 
@@ -96,13 +97,15 @@ removes dangers 3 and 5: no "what's next?" carries a worker past a stop.
   of phrases telling the reader to ignore, skip, bypass, override or disregard a rule, a stop or the supervisor
   (`test/test_packs.py`, planted breaks under `test/fixtures/broken/packs/`); a paraphrase outside that list passes
   it and stays with the person who loads the library.
-- **Designed:** the maintainer's read of the rules (1.3 stays open until then; the points marked "Ghost to confirm"
+- **Designed:** the maintainer's read of the rules (1.3 stays open until then; the points marked "Engineer to confirm"
   in `docs/SAFETY-RULES.md` are the agent's draft, and under F-16 they wait for an electrical engineer's
   final review at the end of the project); every walk stopping at a rule whatever the pack says, using each rule's triggers (1.7).
-- **Decided 2026-11-21, built in the next commit:** each rule answers with a warn, a helpful stop or an emergency,
+- **Enforced today (J-034):** each rule answers with a warn, a helpful stop or an emergency,
   starting cautious (SR-03 at a warn on Ghost's word) and relaxed on Ghost's word, logged as maintainer and confirmed or
   reversed by an electrical engineer at the final review (SC-015); each rule keeps a change log of who changed it, in
-  what role, why and on what evidence (SC-016); **designed:** the engineer's final review at the end of the project
+  what role, why and on what evidence (SC-016); `solarchat/safety/rules.py` refuses a rule with no entry, an entry
+  missing a field, a response that is not warn, stop or emergency, and a rule changed since its latest entry (its
+  fingerprint), shown by `test/test_safety.py`; the walker's use of the response is 1.12's; **designed:** the engineer's final review at the end of the project
   (TODO 6.4), from a generated review packet (TODO 1.14); nothing before it waits on the engineer.
 
 ### 6. When a model is added, it gets no tools and no freedom (SC-002)

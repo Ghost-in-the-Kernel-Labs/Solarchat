@@ -29,6 +29,31 @@ class TheReply(unittest.TestCase):
             Reply(ReplyKind.ANSWER, "Join plus to plus.", (STEP,), safety_rule_id="live-dc")
 
 
+class TheWarn(unittest.TestCase):
+    """A warn (SC-015) names its rule and at least one passage; nothing else does both."""
+
+    def test_a_warn_with_a_passage_and_a_rule_stands(self) -> None:
+        warn = Reply(ReplyKind.WARN, "Never pull connectors apart under load.", (STEP,), "SR-03")
+        self.assertEqual((warn.kind, warn.passage_refs, warn.safety_rule_id), (ReplyKind.WARN, (STEP,), "SR-03"))
+
+    def test_a_warn_with_no_passage_is_refused(self) -> None:
+        with self.assertRaisesRegex(ValueError, "HAD-03"):
+            Reply(ReplyKind.WARN, "Never pull connectors apart under load.", (), "SR-03")
+
+    def test_a_warn_with_no_rule_is_refused(self) -> None:
+        with self.assertRaisesRegex(ValueError, "HAD-04"):
+            Reply(ReplyKind.WARN, "Never pull connectors apart under load.", (STEP,))
+
+    def test_a_stop_still_names_no_passage_and_a_do_not_know_still_names_no_rule(self) -> None:
+        with self.assertRaisesRegex(ValueError, "HAD-03"):
+            Reply(ReplyKind.STOP, "Stop.", (STEP,), "SR-03")
+        with self.assertRaisesRegex(ValueError, "HAD-04"):
+            Reply(ReplyKind.DO_NOT_KNOW, "I do not know.", (), "SR-03")
+
+    def test_there_are_four_kinds(self) -> None:
+        self.assertEqual({kind.value for kind in ReplyKind}, {"answer", "do not know", "stop", "warn"})
+
+
 class PackStatus(unittest.TestCase):
     def test_a_library_pack_answers_in_either_mode(self) -> None:
         for demo_mode in (False, True):

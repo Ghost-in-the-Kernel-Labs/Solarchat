@@ -6,7 +6,7 @@ Written by `scripts/safety_rules_doc.py` from `solarchat/safety/rules.json`; do 
 
 **The rules sit outside every pack.** They are Solarchat's own text, kept in the `safety` module, never in a knowledge pack. They apply in every mode. A pack may add more places to stop; it cannot name, remove, reword or switch off a rule, and the pack check refuses a pack that tries (`docs/CONTRACT.md` HAD-04, `docs/ROADMAP.md` P-17).
 
-They are written for the newest contractor on a site (F-01): short, plain words for a phone and a tired person (P-18). When one applies, Hadley stops the current step, shows the words below, and sends the worker to the site supervisor or engineer. Each rule's triggers are the words that, found in a step's text, make it apply; the walker uses them from TODO 1.7. A point marked **Ghost to confirm** is the agent's draft reading, not yet Ghost's.
+They are written for the newest contractor on a site (F-01): short, plain words for a phone and a tired person (P-18). When one applies, Hadley gives the rule's response (SC-015): a **warn** shows the words below and the walk continues, a **stop** shows them with why, the safe next action and what to bring the supervisor, an **emergency** tells the worker to step back and call for help. Each rule's triggers are the words that, found in a step's text, make it apply; the walker uses them from TODO 1.7. Each rule's latest change is shown (SC-016); a point marked **Engineer to confirm** waits for the engineer's final review (F-16), and an entry whose role is not an electrical engineer is Ghost's or the agent's judgement, pending that review.
 
 Status: a draft for Ghost to read (TODO 1.3 stays open until Ghost has read it). The sources are public guidance the rules rest on; no rule claims more than its sources say, and none is a substitute for training.
 
@@ -35,7 +35,11 @@ Status: a draft for Ghost to read (TODO 1.3 stays open until Ghost has read it).
 
 > Your site's own safety rules and your supervisor's instructions come first. If anything here is different from them, follow the site, not this. Stop now. Go to your site supervisor or engineer.
 
+**Response:** stop
+
 **Triggers:** `ignore the site rules`, `ignore the site procedures`, `ignore your supervisor`
+
+**Latest change:** 2026-11-21, Ghost (maintainer): Triggers match whole words and phrases, and the rule's triggers and wording follow the audit, applied on Ghost's word; engineer to confirm. Evidence: docs/audits/2026-11-21-safety-rules.md; J-030. Pending engineer.
 
 **Sources:**
 
@@ -50,7 +54,11 @@ Status: a draft for Ghost to read (TODO 1.3 stays open until Ghost has read it).
 
 > Stop. Treat every panel and its wiring as live in daylight. Switching off the inverter or the mains does not make it safe. Do not touch, cut or test it yourself. Go to your site supervisor or engineer.
 
+**Response:** stop
+
 **Triggers:** `energised`, `energized`, `bare wire`, `bare copper`, `exposed conductor`, `cut the cable`, `cut the wire`, `strip the cable`, `strip the wire`, `measure the voltage`, `test the voltage`, `multimeter`, `voltmeter`, `probe`, `test leads`, `clamp meter`, `insulation tester`, `crimp`
+
+**Latest change:** 2026-11-21, Ghost (maintainer): Triggers match whole words and phrases, and the rule's triggers and wording follow the audit, applied on Ghost's word; engineer to confirm. Evidence: docs/audits/2026-11-21-safety-rules.md; J-030. Pending engineer.
 
 **Sources:**
 
@@ -59,7 +67,7 @@ Status: a draft for Ghost to read (TODO 1.3 stays open until Ghost has read it).
 - [OSHA: Green Job Hazards, Solar Energy, Lockout/Tagout (cover panels; verify isolation before work)](https://www.osha.gov/green-jobs/solar/lockout-tagout)
 - [HSE: Electrical safety at work, frequently asked questions (prove conductors dead before work)](https://www.hse.gov.uk/electricity/faq.htm)
 
-**Ghost to confirm:** Whether measuring a voltage with a meter is a stop for the newest contractor. The draft says yes (the triggers 'multimeter', 'measure the voltage'), because a meter on a live string is live work; if crews are trained to measure, this trigger will stop many troubleshooting flows.
+**Engineer to confirm:** Whether measuring a voltage with a meter is a stop for the newest contractor. The draft says yes (the triggers 'multimeter', 'measure the voltage'), because a meter on a live string is live work; if crews are trained to measure, this trigger will stop many troubleshooting flows.
 
 ## SR-03 Never pull connectors apart under load
 
@@ -69,7 +77,11 @@ Status: a draft for Ghost to read (TODO 1.3 stays open until Ghost has read it).
 
 > Stop. Never pull connectors apart while current can flow: under load they spark and burn. First make sure no current can flow: turn the isolator off, or cover the whole panel. Then open each pair with the release tool made for it, never by hand. Go to your site supervisor or engineer.
 
+**Response:** warn
+
 **Triggers:** `pull connectors apart`, `pull the connectors apart`, `separate the halves`, `open the pairs`, `open the connectors`, `under load`, `disconnect under load`
+
+**Latest change:** 2026-11-21, Ghost (maintainer): connecting is daily work; parting under load is the hazard; pending engineer review. Evidence: SC-015; J-032. Pending engineer.
 
 **Sources:**
 
@@ -85,7 +97,11 @@ Status: a draft for Ghost to read (TODO 1.3 stays open until Ghost has read it).
 
 > Stop. Do not open this box. Parts inside can stay live and hold a charge even when switched off. Only someone authorised may open it. Go to your site supervisor or engineer.
 
+**Response:** stop
+
 **Triggers:** `open the inverter`, `replace the fuse`, `remove the cover`, `open the enclosure`, `open the cover`, `open the combiner`, `remove the cover of the`
+
+**Latest change:** 2026-11-21, Ghost (maintainer): Triggers match whole words and phrases, and the rule's triggers and wording follow the audit, applied on Ghost's word; engineer to confirm. Evidence: docs/audits/2026-11-21-safety-rules.md; J-030. Pending engineer.
 
 **Sources:**
 
@@ -100,7 +116,11 @@ Status: a draft for Ghost to read (TODO 1.3 stays open until Ghost has read it).
 
 > Stop. Do not go up or near an edge until your supervisor has shown you the fall protection for this job and it is in place. Never climb a ladder carrying a panel. Go to your site supervisor or engineer.
 
+**Response:** stop
+
 **Triggers:** `rooftop`, `ladder`, `scaffold`, `at height`, `skylight`, `roof hatch`, `roof edge`, `go up on the roof`, `climb the ladder`, `work at height`, `on the roof edge`
+
+**Latest change:** 2026-11-21, Ghost (maintainer): Triggers match whole words and phrases, and the rule's triggers and wording follow the audit, applied on Ghost's word; engineer to confirm. Evidence: docs/audits/2026-11-21-safety-rules.md; J-030. Pending engineer.
 
 **Sources:**
 
@@ -117,7 +137,11 @@ Status: a draft for Ghost to read (TODO 1.3 stays open until Ghost has read it).
 
 > Stop. Do not work, lift or raise anything near an overhead power line. It can kill without being touched. Stay at least 10 feet (3 metres) away, and farther for higher voltage, or the site's own distance if it is greater. Go to your site supervisor or engineer.
 
+**Response:** stop
+
 **Triggers:** `overhead line`, `overhead lines`, `power line`, `power lines`, `overhead cable`, `service drop`, `overhead wires`, `pylon`, `utility pole`
+
+**Latest change:** 2026-11-21, Ghost (maintainer): Triggers match whole words and phrases, and the rule's triggers and wording follow the audit, applied on Ghost's word; engineer to confirm. Evidence: docs/audits/2026-11-21-safety-rules.md; J-030. Pending engineer.
 
 **Sources:**
 
@@ -125,7 +149,7 @@ Status: a draft for Ghost to read (TODO 1.3 stays open until Ghost has read it).
 - [OSHA: 29 CFR 1910.333(c)(3)(i), selection and use of work practices (overhead lines: keep a safe distance, at least 10 feet for lines up to 50 kV, more above; library: osha-1910-s)](https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.333)
 - [OSHA: 29 CFR 1926.1408, cranes and derricks in construction, power line safety (up to 350 kV; library: osha-1926-cranes-power-lines)](https://www.osha.gov/laws-regs/regulations/standardnumber/1926/1926.1408)
 
-**Ghost to confirm:** This rule is beyond the brief's list (added because OSHA names overhead lines among solar workers' electrical hazards). The audit of 2026-11-21 found the hazard real on solar sites: perimeter lines and service drops at the site, and OSHA's Fort Riley 2018 citation. The words now give the distance (at least 10 feet, OSHA 1910.333(c)(3)(i) and 1926.1408; the site's own distance if greater). Keep, change or drop.
+**Engineer to confirm:** This rule is beyond the brief's list (added because OSHA names overhead lines among solar workers' electrical hazards). The audit of 2026-11-21 found the hazard real on solar sites: perimeter lines and service drops at the site, and OSHA's Fort Riley 2018 citation. The words now give the distance (at least 10 feet, OSHA 1910.333(c)(3)(i) and 1926.1408; the site's own distance if greater). Keep, change or drop.
 
 ## SR-07 Damaged, burnt, melted, wet or corroded parts
 
@@ -135,7 +159,11 @@ Status: a draft for Ghost to read (TODO 1.3 stays open until Ghost has read it).
 
 > Stop. Do not touch, use or reconnect a damaged, burnt, melted, wet or corroded part. It can be live and can start a fire. Keep others away. Go to your site supervisor or engineer.
 
+**Response:** stop
+
 **Triggers:** `broken glass`, `broken panel`, `cracked panel`, `heat-damaged`, `damaged connector`, `damaged cable`, `burnt connector`, `burnt cable`, `melted connector`, `corroded connector`, `wet inside`, `copper showing`, `frayed`, `chewed`
+
+**Latest change:** 2026-11-21, Ghost (maintainer): Triggers match whole words and phrases, and the rule's triggers and wording follow the audit, applied on Ghost's word; engineer to confirm. Evidence: docs/audits/2026-11-21-safety-rules.md; J-030. Pending engineer.
 
 **Sources:**
 
@@ -150,7 +178,11 @@ Status: a draft for Ghost to read (TODO 1.3 stays open until Ghost has read it).
 
 > Stop. Step back and do not touch it. Keep others away. If there is fire or smoke, follow the site's emergency procedure. Go to your site supervisor or engineer.
 
+**Response:** emergency
+
 **Triggers:** `smoke`, `smoking`, `burning smell`, `smells of burning`, `sparks`, `sparking`, `arcing`, `crackling`, `flame`, `flames`, `on fire`
+
+**Latest change:** 2026-11-21, Ghost (maintainer): Starting response emergency (SC-015): step back, keep others away, call for help; engineer to confirm. Evidence: SC-015; J-032. Pending engineer.
 
 **Sources:**
 
@@ -165,14 +197,18 @@ Status: a draft for Ghost to read (TODO 1.3 stays open until Ghost has read it).
 
 > Stop. Do not touch the frames, panels or boxes. A fault may have made metal live. If someone has had a shock, call for help and first aid at once, switch off the power if you can do it safely, and do not touch them while they may still be touching it. Go to your site supervisor or engineer.
 
+**Response:** emergency
+
 **Triggers:** `earth fault`, `ground fault`, `insulation fault`, `isolation fault`, `insulation resistance`, `earth leakage`, `gfdi`, `tingle`, `electric shock`, `got a shock`, `loose earth`, `missing earth`
+
+**Latest change:** 2026-11-21, Ghost (maintainer): Starting response emergency (SC-015): step back, keep others away, call for help; engineer to confirm. Evidence: SC-015; J-032. Pending engineer.
 
 **Sources:**
 
 - [Fluke: What is a DC ground fault in a PV system?](https://www.fluke.com/en-gb/learn/blog/renewable-energy/what-is-a-dc-ground-fault-in-a-pv-system)
 - [OSHA: Green Job Hazards, Solar Energy, Electrical (shock and burns when connecting panels)](https://www.osha.gov/green-jobs/solar/electrical)
 
-**Ghost to confirm:** The first-aid sentence (call for help, do not touch a person who may still be touching something live) is common first-aid practice but none of the sources above states it; the site's own first-aid arrangements apply. Keep, reword or source it. The same goes for SR-08's line to follow the site's emergency procedure on fire or smoke.
+**Engineer to confirm:** The first-aid sentence (call for help, do not touch a person who may still be touching something live) is common first-aid practice but none of the sources above states it; the site's own first-aid arrangements apply. Keep, reword or source it. The same goes for SR-08's line to follow the site's emergency procedure on fire or smoke.
 
 ## SR-10 A voltage above what a device is rated for
 
@@ -182,7 +218,11 @@ Status: a draft for Ghost to read (TODO 1.3 stays open until Ghost has read it).
 
 > Stop. Do not connect. Too high a voltage can destroy the device and start a fire, and panels give more volts when cold. Go to your site supervisor or engineer.
 
+**Response:** stop
+
 **Triggers:** `above the maximum`, `exceeds the maximum`, `above the rating`, `over the rating`, `higher than the rating`, `higher than the maximum`, `add a panel in series`
+
+**Latest change:** 2026-11-21, Ghost (maintainer): Triggers match whole words and phrases, and the rule's triggers and wording follow the audit, applied on Ghost's word; engineer to confirm. Evidence: docs/audits/2026-11-21-safety-rules.md; J-030. Pending engineer.
 
 **Sources:**
 
@@ -196,7 +236,11 @@ Status: a draft for Ghost to read (TODO 1.3 stays open until Ghost has read it).
 
 > Stop. Do not work on battery terminals or cables, and keep away from a battery that is swollen, hot, leaking, hissing or smells. A battery can burn, explode or give off toxic gas, and it cannot be switched off. Go to your site supervisor or engineer.
 
+**Response:** stop
+
 **Triggers:** `battery terminal`, `battery terminals`, `battery cable`, `battery cables`, `battery bank`, `swollen`, `bulging`, `hissing`, `battery is leaking`, `battery leaking`, `battery is venting`, `battery venting`
+
+**Latest change:** 2026-11-21, Ghost (maintainer): Triggers match whole words and phrases, and the rule's triggers and wording follow the audit, applied on Ghost's word; engineer to confirm. Evidence: docs/audits/2026-11-21-safety-rules.md; J-030. Pending engineer.
 
 **Sources:**
 
@@ -210,14 +254,18 @@ Status: a draft for Ghost to read (TODO 1.3 stays open until Ghost has read it).
 
 > Stop. Never bypass, bridge, tape or hold in a fuse, breaker or other safety device to make something work. Switching off is safe; overriding is not. Go to your site supervisor or engineer.
 
+**Response:** stop
+
 **Triggers:** `bypass the fuse`, `bypass the breaker`, `bypass the isolator`, `bypass the switch`, `link out`, `tape over`, `remove the fuse`, `larger fuse`, `bigger fuse`, `hold the breaker`
+
+**Latest change:** 2026-11-21, Ghost (maintainer): Triggers match whole words and phrases, and the rule's triggers and wording follow the audit, applied on Ghost's word; engineer to confirm. Evidence: docs/audits/2026-11-21-safety-rules.md; J-030. Pending engineer.
 
 **Sources:**
 
 - [HSE: Electrical safety at work, frequently asked questions (follow the maker's instructions and local safety rules)](https://www.hse.gov.uk/electricity/faq.htm)
 - [OSHA: Green Job Hazards, Solar Energy, Lockout/Tagout](https://www.osha.gov/green-jobs/solar/lockout-tagout)
 
-**Ghost to confirm:** This rule is beyond the brief's list (it grows out of 'a step that contradicts the maker's instructions'). Keep, change or drop.
+**Engineer to confirm:** This rule is beyond the brief's list (it grows out of 'a step that contradicts the maker's instructions'). Keep, change or drop.
 
 ## SR-13 A step that disagrees with the maker's instructions or the site's procedures
 
@@ -227,7 +275,11 @@ Status: a draft for Ghost to read (TODO 1.3 stays open until Ghost has read it).
 
 > Stop. If this step is different from the maker's instructions, the label or your site's procedures, do not do it. Go to your site supervisor or engineer.
 
+**Response:** stop
+
 **Triggers:** `does not match the manual`, `different from the manual`, `not in the manual`, `does not match the label`, `different from the label`
+
+**Latest change:** 2026-11-21, Ghost (maintainer): Triggers match whole words and phrases, and the rule's triggers and wording follow the audit, applied on Ghost's word; engineer to confirm. Evidence: docs/audits/2026-11-21-safety-rules.md; J-030. Pending engineer.
 
 **Sources:**
 
@@ -242,7 +294,11 @@ Status: a draft for Ghost to read (TODO 1.3 stays open until Ghost has read it).
 
 > Stop. If you are not sure, do not guess. It is always right to stop and ask. Go to your site supervisor or engineer.
 
+**Response:** stop
+
 **Triggers:** `unsure`, `do not know`, `don't know`, `not trained`, `never done`, `does not look like`, `doesn't look like`, `unexpected`
+
+**Latest change:** 2026-11-21, Ghost (maintainer): Triggers match whole words and phrases, and the rule's triggers and wording follow the audit, applied on Ghost's word; engineer to confirm. Evidence: docs/audits/2026-11-21-safety-rules.md; J-030. Pending engineer.
 
 **Sources:**
 

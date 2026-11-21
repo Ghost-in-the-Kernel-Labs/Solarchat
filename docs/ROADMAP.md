@@ -151,12 +151,12 @@ What a wrong answer is has to be written down before anything can give one (Core
 
 Decided on 2026-11-21 (J-031 proposed them; Ghost answered in J-032, and added in J-033 that the engineer comes in only at the end), to align the plan with Ghost's vision of that day (F-16, F-17). `TODO.md` holds 1.11 to 1.14 in Phase W until Ghost moves them back; nothing in them waits on an engineer. The order they run in, after Monday's demo (1.4 to 1.8): 1.11, 1.12, 1.13, 1.14. The evaluation set (1.9) keeps its place in Phase 1 after 1.8, needing only SC-015's code (1.11 and 1.12's rules and leaf); the engineer's review moved out of Phase 1 to 6.4, the end of the roadmap. The chain's check reads numbers in order, so a number like "1.6a" is invisible to `scripts/checks/todo.py`.
 
-- 1.11 The safety rules' change log (SC-016, in force): each rule's `changes`, `{date, by, role, why, evidence}`,
+- 1.11 The safety rules' change log (SC-016, in force; done, J-034): each rule's `changes`, `{date, by, role, why, evidence}`,
   backfilled for version 1 (J-027) and the audit's changes (J-030); the safety check refuses a rule changed with no
   new entry; `ghost_to_confirm` becomes `engineer_to_confirm` (F-16) and `docs/SAFETY-RULES.md` shows each rule's last
   entry. Comes first, so every later change to a rule is logged.
 - 1.12 Response types (SC-015, in force; the roadmap review's "1.6a"): each rule's `response` in `rules.json`, at
-  its starting value (SR-08 and SR-09 `emergency`, every other rule `stop`); the leaf's `ReplyKind.WARN` and
+  its starting value (SR-03 `warn` on Ghost's word, SR-08 and SR-09 `emergency`, every other rule `stop`; done, J-034); the leaf's `ReplyKind.WARN` and
   `SafetyRule.response` (a leaf change, approved by Ghost under Core C-012 on 2026-11-21); the walker shows a warn and continues, a helpful
   stop (why, the safe next action, what to bring the supervisor), or an emergency; 1.7's test extended to each.
 - 1.13 The over-firing of SR-03 and SR-02: SR-03 fires on step-12's "Never pull connectors apart", a prohibition

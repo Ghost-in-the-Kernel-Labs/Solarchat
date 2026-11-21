@@ -57,19 +57,12 @@ Check: `theGhost.md` holds Ghost's founding decisions for Solarchat, a decision 
 Moved: from Phase 0
 Waits on: Ghost's founding decisions (the questions in `docs/HANDOFF.md`, "For Ghost": the app's stack, the first real pack's make and model, naming the deploying company, SC-007 in `CLAUDE.md`, the trademark search)
 
-### 1.11 The safety rules' change log
+### 1.12 Response types: the walker's use
 
-Check: every rule in `solarchat/safety/rules.json` has `changes`, oldest first, each entry `{date, by, role, why, evidence}` with every field filled, backfilled for version 1 (J-027) and the audit's changes (J-030, `docs/audits/2026-11-21-safety-rules.md`); the safety check refuses a rule changed with no new entry, shown by a planted break; `ghost_to_confirm` renamed `engineer_to_confirm` (F-16); `docs/SAFETY-RULES.md` shows each rule's last entry. Runs first of 1.11 to 1.14, so every later change to a rule is logged.
-
-Moved: from Phase 1
-Waits on: Ghost's go-ahead to run it; SC-016 is in force (Ghost, 2026-11-21)
-
-### 1.12 Response types
-
-Check: each rule in `rules.json` has a `response`, exactly `warn`, `stop` or `emergency`, at SC-015's starting values (SR-08 and SR-09 `emergency`, the rest `stop`), each set logged (1.11); the leaf has `ReplyKind.WARN` (a reply naming its rule and at least one passage) and `SafetyRule.response`; the walker shows a warn and continues, a helpful stop (why, the safe next action, what to bring the supervisor) or an emergency, and a test plants a rule of each response.
+Check: the walker shows a warn (the rule's words, then the walk continues with its passage), a helpful stop (why, the safe next action, what to bring the supervisor) or an emergency, each by the rule's `response`, and a test plants a rule of each response. The rules' `response` field and the leaf's `ReplyKind.WARN` and `SafetyRule.response` are done (J-034, SC-015); the response words (the safe next action, what to bring) are written with the walker.
 
 Moved: from Phase 1
-Waits on: Ghost's go-ahead to run it; SC-015 is in force and the leaf change is approved (Ghost, 2026-11-21)
+Waits on: the walker (1.6 and 1.7, in the chain before it); nothing waits on an engineer
 
 ### 1.13 The over-firing of SR-03 and SR-02
 

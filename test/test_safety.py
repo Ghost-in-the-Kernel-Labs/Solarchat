@@ -1,13 +1,16 @@
 """The safety rules load from the safety module's data, in sequence and complete, and docs/SAFETY-RULES.md is current (TODO 1.3, HAD-04)."""
+import hashlib
 import json
 import unittest
 
 from scripts import safety_rules_doc
-from solarchat.leaf.contract import SafetyRule, SafetyRuleSource
+from solarchat.leaf.contract import SafetyRule, SafetyRuleChange, SafetyRuleSource
 from solarchat.safety import rules
 from test.support import ROOT, scratch
 
 GO_TO_SUPERVISOR = "Go to your site supervisor or engineer."
+EMERGENCY_RULES = ("SR-08", "SR-09")
+CHANGE = ("2026-11-21", "Ghost", "maintainer", "First draft.", "J-027")
 
 
 # What the demo pack's own text fires today, and why each hit stands (the commit's report lists each one):
@@ -70,6 +73,116 @@ class TheRules(unittest.TestCase):
     def test_a_trigger_is_never_shared_by_two_rules(self) -> None:
         all_triggers = [trigger for rule in rules.load_rules() for trigger in rule.triggers]
         self.assertEqual(sorted(set(trigger for trigger in all_triggers if all_triggers.count(trigger) > 1)), [])
+
+
+class TheResponses(unittest.TestCase):
+    """Each rule's response is SC-015's starting value, SR-03 at a warn on Ghost's word."""
+
+    def test_sr_03_is_a_warn_and_sr_08_and_sr_09_are_emergencies_and_the_rest_stop(self) -> None:
+        responses = {rule.rule_id: rule.response for rule in rules.load_rules()}
+        self.assertEqual(responses["SR-03"], "warn")
+        for rule_id, response in responses.items():
+            with self.subTest(rule=rule_id):
+                expected = "warn" if rule_id == "SR-03" else "emergency" if rule_id in EMERGENCY_RULES else "stop"
+                self.assertEqual(response, expected)
+
+    def test_sr_03_logs_ghosts_warn_as_maintainer_and_pending_review(self) -> None:
+        latest = rules.load_rules()[2].changes[-1]
+        self.assertEqual((latest.by, latest.role), ("Ghost", "maintainer"))
+        self.assertEqual(latest.why, "connecting is daily work; parting under load is the hazard; pending engineer review")
+
+    def test_every_rule_logs_version_1_and_the_audits_change_first(self) -> None:
+        for rule in rules.load_rules():
+            with self.subTest(rule=rule.rule_id):
+                self.assertEqual(rule.changes[0].evidence, "J-027; the sources listed on this rule")
+                self.assertEqual(rule.changes[1].evidence, "docs/audits/2026-11-21-safety-rules.md; J-030")
+                self.assertTrue(all(change.role != "electrical engineer" for change in rule.changes))
+
+
+class TheChangeLog(unittest.TestCase):
+    def test_every_rules_latest_fingerprint_is_the_sha256_of_its_triggers_words_and_response(self) -> None:
+        for rule in rules.load_rules():
+            with self.subTest(rule=rule.rule_id):
+                canonical = json.dumps({"triggers": list(rule.triggers), "words_shown": rule.words_shown,
+                                        "response": rule.response}, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+                self.assertEqual(rule.changes[-1].fingerprint, hashlib.sha256(canonical.encode("utf-8")).hexdigest())
+                self.assertEqual(rules.rule_fingerprint(rule), rule.changes[-1].fingerprint)
+
+    def test_only_the_triggers_the_words_and_the_response_move_the_fingerprint(self) -> None:
+        rule = rules.load_rules()[0]
+        retitled = SafetyRule(rule.rule_id, "Another title", rule.applies_when, rule.triggers, rule.words_shown,
+                              rule.sources, rule.response, rule.changes)
+        self.assertEqual(rules.rule_fingerprint(retitled), rules.rule_fingerprint(rule))
+        louder = SafetyRule(rule.rule_id, rule.title, rule.applies_when, rule.triggers, rule.words_shown,
+                            rule.sources, "emergency", rule.changes)
+        self.assertNotEqual(rules.rule_fingerprint(louder), rules.rule_fingerprint(rule))
+
+    def test_a_change_to_a_trigger_with_no_new_entry_is_refused(self) -> None:
+        rule_entries = self.entries()
+        rule_entries[4]["triggers"] = rule_entries[4]["triggers"] + ["a new trigger"]
+        with self.assertRaisesRegex(ValueError, "SR-05: the rule changed since its last change entry"):
+            rules.load_rules(write_rules(rule_entries))
+
+    def test_a_change_to_the_words_or_the_response_with_no_new_entry_is_refused(self) -> None:
+        for field, value in (("words_shown", "Stop. Different words. " + GO_TO_SUPERVISOR), ("response", "emergency")):
+            rule_entries = self.entries()
+            rule_entries[3][field] = value
+            with self.subTest(field=field), self.assertRaisesRegex(ValueError, "SR-04: the rule changed since"):
+                rules.load_rules(write_rules(rule_entries))
+
+    def test_a_latest_entry_with_no_fingerprint_is_refused(self) -> None:
+        rule_entries = self.entries()
+        del rule_entries[0]["changes"][-1]["fingerprint"]
+        with self.assertRaisesRegex(ValueError, "SR-01: the rule changed since its last change entry"):
+            rules.load_rules(write_rules(rule_entries))
+
+    def test_a_rule_with_no_changes_is_refused(self) -> None:
+        rule_entries = self.entries()
+        rule_entries[1]["changes"] = []
+        with self.assertRaisesRegex(ValueError, "SR-02: a rule has at least one change"):
+            rules.load_rules(write_rules(rule_entries))
+        del rule_entries[1]["changes"]
+        with self.assertRaisesRegex(ValueError, "SR-02: a rule has at least one change"):
+            rules.load_rules(write_rules(rule_entries))
+
+    def test_an_entry_missing_a_field_is_refused(self) -> None:
+        for field in ("date", "by", "role", "why", "evidence"):
+            rule_entries = self.entries()
+            del rule_entries[2]["changes"][0][field]
+            with self.subTest(field=field), self.assertRaisesRegex(ValueError, f"SR-03: change 1 is missing '{field}'"):
+                rules.load_rules(write_rules(rule_entries))
+
+    def test_an_entry_with_an_empty_field_or_a_bad_date_is_refused(self) -> None:
+        rule_entries = self.entries()
+        rule_entries[2]["changes"][0]["why"] = "  "
+        with self.assertRaisesRegex(ValueError, "SR-03: change 1 has an empty 'why'"):
+            rules.load_rules(write_rules(rule_entries))
+        rule_entries = self.entries()
+        rule_entries[2]["changes"][0]["date"] = "21 November"
+        with self.assertRaisesRegex(ValueError, "SR-03: change 1 has a date that is not ISO"):
+            rules.load_rules(write_rules(rule_entries))
+
+    def test_a_bad_or_missing_response_is_refused(self) -> None:
+        rule_entries = self.entries()
+        rule_entries[5]["response"] = "halt"
+        with self.assertRaisesRegex(ValueError, "SR-06: response 'halt' is not one of warn, stop, emergency"):
+            rules.load_rules(write_rules(rule_entries))
+        del rule_entries[5]["response"]
+        with self.assertRaisesRegex(ValueError, "SR-06: response '' is not one of"):
+            rules.load_rules(write_rules(rule_entries))
+
+    def test_the_leaf_refuses_a_rule_with_a_bad_response_or_no_changes(self) -> None:
+        source = (SafetyRuleSource("HSE", "https://www.hse.gov.uk/"),)
+        words = "Stop. " + GO_TO_SUPERVISOR
+        with self.assertRaisesRegex(ValueError, "SC-015"):
+            SafetyRule("SR-01", "t", "a", ("roof",), words, source, "halt", (SafetyRuleChange(*CHANGE),))
+        with self.assertRaisesRegex(ValueError, "SC-016"):
+            SafetyRule("SR-01", "t", "a", ("roof",), words, source, "stop", ())
+        self.assertEqual(SafetyRule("SR-01", "t", "a", ("roof",), words, source, "warn", (SafetyRuleChange(*CHANGE),)).response, "warn")
+
+    def entries(self) -> list[dict]:
+        """The real rules.json entries, to be altered into a planted break."""
+        return json.loads(rules.RULES_PATH.read_text())
 
 
 class TheMatching(unittest.TestCase):
@@ -143,13 +256,22 @@ class TheLoader(unittest.TestCase):
 
     def test_the_leaf_refuses_an_uppercase_trigger_and_a_bad_id(self) -> None:
         source = (SafetyRuleSource("HSE", "https://www.hse.gov.uk/"),)
+        logged = (SafetyRuleChange(*CHANGE),)
         with self.assertRaisesRegex(ValueError, "lowercase"):
-            SafetyRule("SR-01", "t", "a", ("Roof",), "Stop. " + GO_TO_SUPERVISOR, source)
+            SafetyRule("SR-01", "t", "a", ("Roof",), "Stop. " + GO_TO_SUPERVISOR, source, "stop", logged)
         with self.assertRaisesRegex(ValueError, "SR- and two digits"):
-            SafetyRule("live-dc", "t", "a", ("roof",), "Stop. " + GO_TO_SUPERVISOR, source)
+            SafetyRule("live-dc", "t", "a", ("roof",), "Stop. " + GO_TO_SUPERVISOR, source, "stop", logged)
 
 
 class TheDocument(unittest.TestCase):
+    def test_it_shows_each_rules_response_and_latest_change(self) -> None:
+        document_text = (ROOT / "docs" / "SAFETY-RULES.md").read_text()
+        for rule in rules.load_rules():
+            with self.subTest(rule=rule.rule_id):
+                section = document_text.split(f"## {rule.rule_id} ", 1)[1].split("\n## ", 1)[0]
+                self.assertIn(f"**Response:** {rule.response}", section)
+                self.assertIn(f"**Latest change:** {rule.changes[-1].date}, {rule.changes[-1].by}", section)
+
     def test_the_document_is_current(self) -> None:
         self.assertEqual(safety_rules_doc.main(["--check"]), 0, "run: python3 -I scripts/safety_rules_doc.py")
 
