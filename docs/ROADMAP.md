@@ -129,7 +129,7 @@ The core's table, copied from Ghost-Core when this project was stamped; add this
 What a wrong answer is has to be written down before anything can give one (Core C-003).
 
 - 1.1 The words: pack, passage, flow, mode, pack status, safety rule, in `docs/GLOSSARY.md`.
-- 1.2 The pack format, as the contract: a manifest (make, model, version, source, licence, its status, `library` or `demo`, SC-013), passages, and flows (symptom, check, fix, and where to stop); a check that refuses a broken pack.
+- 1.2 The pack format, as the contract: a manifest (make, model, version, source, licence, its status, `field` or `demo`, SC-013), passages, and flows (symptom, check, fix, and where to stop); a check that refuses a broken pack.
 - 1.3 The safety rules, version 1, for the newest contractor on a site (F-01): the points at which every mode
   stops and sends the worker to the site supervisor or engineer, and the rule that the site's own safety
   procedures come first; held outside every pack. (Under SC-015, in force, each rule gives its response, a warn, a
@@ -137,7 +137,7 @@ What a wrong answer is has to be written down before anything can give one (Core
 - 1.4 The seed pack: one small pack built from public sources, each named with its licence, in the project's own
   words and its own drawings, covering the simple setup faults of F-02 for one installation type: the correct
   steps, each with a picture, and the common failures (F-14). Ghost asked for a first draft ahead of 1.2 (J-011):
-  it is built to a provisional layout under `packs/`, marked `demo`, and is brought to 1.2's format before the item closes; it joins the library only when a person hands it
+  it is built to a provisional layout under `packs/`, marked `demo`, and is brought to 1.2's format before the item closes; it becomes a `field` pack only when a person hands it
   over as checked documentation (SC-013).
 - 1.5 Demo mode: a labelled switch that lets a `demo` pack run, for a demo only (SC-010, SC-013).
 - 1.6 The walker, moved from 2.3 for the demo of 2026-11-23 (SC-010): one step at a time through a procedure or

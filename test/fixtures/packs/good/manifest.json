@@ -31,6 +31,6 @@
       "shows": "The panel's specification label."
     }
   ],
-  "status": "library",
+  "status": "field",
   "installation_type": "crystalline panel on MC4-type leads"
 }

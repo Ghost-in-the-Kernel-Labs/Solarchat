@@ -2,7 +2,7 @@
 
 Solarchat is an assistant, named **Hadley**, that walks workers on solar sites through installing panels and
 finding faults, one step at a time, on a phone. Hadley answers only from **knowledge packs**: manuals and
-troubleshooting guides that a person has checked and handed to whoever loads the library. It never improvises electrical advice, and it stops
+troubleshooting guides that a person has checked and handed to whoever loads the packs. It never improvises electrical advice, and it stops
 and sends the worker to the site supervisor or engineer wherever a mistake could hurt someone.
 
 This README is for a person reviewing or maintaining the code. How Hadley is kept from giving dangerous advice is

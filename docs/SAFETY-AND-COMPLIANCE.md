@@ -42,17 +42,17 @@ never depends on it to be safe.
   does not name it, and no module names one (`docs/modules.json`, rule MOD-03).
 - **Designed:** the walker that shows the steps (`TODO.md` 1.6) and the offline command-line conversation (1.8).
 
-### 2. Hadley answers only from the packs, and only checked documentation is in the library (HAD-03, HAD-06, SC-005, SC-013)
+### 2. Hadley answers only from the packs, and only checked documentation is in a field pack (HAD-03, HAD-06, SC-005, SC-013)
 
 The only knowledge Hadley may use is a **knowledge pack**: a folder of passages, troubleshooting flows and
-procedures, each citing its sources. Only checked and approved documentation goes into the library, and handing it to
-the person who loads the library data is that check and approval: no approval is recorded in the pack. A pack's manifest
-has a `status`, `library` or `demo`. A `library` pack answers; a `demo` pack answers only in demo mode (section 8). No
+procedures, each citing its sources. Only checked and approved documentation goes into a field pack, and handing it to
+the person who loads the packs is that check and approval: no approval is recorded in the pack. A pack's manifest
+has a `status`, `field` or `demo`. A `field` pack answers; a `demo` pack answers only in demo mode (section 8). No
 model's reading ever approves anything (Core C-005, SC-005, SC-013).
 
 - **Enforced today:** `solarchat/leaf/contract.py`'s `may_answer` says whether a pack may answer: a
-  `library` pack always, a `demo` pack only in demo mode, any other status never; `test/test_leaf.py` shows the seed pack answers only in demo mode.
-  `scripts/checks/packs.py` refuses a pack whose `status` is not `library` or `demo`, a `library` pack with a page
+  `field` pack always, a `demo` pack only in demo mode, any other status never; `test/test_leaf.py` shows the seed pack answers only in demo mode.
+  `scripts/checks/packs.py` refuses a pack whose `status` is not `field` or `demo`, a `field` pack with a page
   marked unknown, a source with no licence written down, and a passage, flow or procedure that cites no source or a source the manifest does
   not list (`test/test_packs.py`, with a deliberately broken pack for each fault under
   `test/fixtures/broken/packs/`).
@@ -96,7 +96,7 @@ removes dangers 3 and 5: no "what's next?" carries a worker past a stop.
   it current (`test/test_safety.py`). The pack check refuses a pack that names a rule by id or uses one of a short list
   of phrases telling the reader to ignore, skip, bypass, override or disregard a rule, a stop or the supervisor
   (`test/test_packs.py`, planted breaks under `test/fixtures/broken/packs/`); a paraphrase outside that list passes
-  it and stays with the person who loads the library.
+  it and stays with the person who loads the packs.
 - **Designed:** the maintainer's read of the rules (1.3 stays open until then; the points marked "Engineer to confirm"
   in `docs/SAFETY-RULES.md` are the agent's draft, and under F-16 they wait for an electrical engineer's
   final review at the end of the project); every walk stopping at a rule whatever the pack says, using each rule's triggers (1.7).
@@ -135,14 +135,14 @@ For a demonstration only, a switch may run a `demo` pack. Every screen shown und
 banner **"DEMO: not reviewed by an engineer, do not use on a site"**, and without the switch such a pack is refused.
 
 - **Designed:** 1.5. The demo pack `packs/seed-mc4-leads/` is a `demo` pack, and `docs/HANDOFF.md` lists five of its
-  claims that could not be sourced; they must be checked by an engineer before it goes into the library.
+  claims that could not be sourced; they must be checked by an engineer before it goes into a field pack.
 
 ## What Solarchat does not claim
 
 - It is not a substitute for training, certification, the equipment maker's instructions or the site's own safety
   procedures, which always come first.
 - A pack is only as good as the documentation handed over. The format and the check prove a pack is complete and
-  traceable; whether its text is true is the judgement of the person who loads the library.
+  traceable; whether its text is true is the judgement of the person who loads the packs.
 - Today nothing in the repository answers a worker. The safeguards marked "designed" above are not yet running.
 
 ## Where each rule lives

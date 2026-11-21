@@ -1,5 +1,5 @@
 {
-  "id": "library-unknown-page",
+  "id": "field-unknown-page",
   "title": "Connecting a panel to a power station",
   "make": "Examplesun",
   "model": "ES-100",
@@ -23,5 +23,5 @@
       "shows": "The panel's specification label."
     }
   ],
-  "status": "library"
+  "status": "field"
 }

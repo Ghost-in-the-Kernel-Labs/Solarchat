@@ -39,9 +39,9 @@ class TheFixtures(unittest.TestCase):
     def test_a_passage_with_no_source_is_refused(self) -> None:
         self.assertEqual(packs.problems(BROKEN / "packs" / "passage-no-source"), ["passage 'voltage': sources must name at least one source"])
 
-    def test_a_library_pack_with_an_unknown_page_is_refused(self) -> None:
-        self.assertEqual(packs.problems(BROKEN / "packs" / "library-unknown-page"),
-                         ["passage 'voltage': source 'S1': page is unknown; a library pack cites every page (SC-013)"])
+    def test_a_field_pack_with_an_unknown_page_is_refused(self) -> None:
+        self.assertEqual(packs.problems(BROKEN / "packs" / "field-unknown-page"),
+                         ["passage 'voltage': source 'S1': page is unknown; a field pack cites every page (SC-013)"])
 
     def test_a_procedure_with_no_steps_is_refused(self) -> None:
         self.assertEqual(packs.problems(BROKEN / "packs" / "procedure-no-steps"), ["procedure 'connect': steps must be a non-empty list"])
@@ -195,29 +195,29 @@ class TheCheck(unittest.TestCase):
 
 
 class ThePackStatus(unittest.TestCase):
-    """SC-013: a pack is `library` or `demo`; no approval is recorded; a library pack holds no unknown page."""
+    """SC-013: a pack is `field` or `demo`; no approval is recorded; a field pack holds no unknown page."""
 
     def test_a_missing_status_is_refused(self) -> None:
         folder = copy_good()
         edit(folder, "manifest", lambda m: m.pop("status"))
-        self.assertEqual(packs.problems(folder), ['manifest.json: status must be "library" or "demo"'])
+        self.assertEqual(packs.problems(folder), ['manifest.json: status must be "field" or "demo"'])
 
     def test_a_status_of_another_word_is_refused(self) -> None:
-        for bad_status in ("draft", "Library", "demo, not admitted", "", None, 1):
+        for bad_status in ("draft", "library", "Library", "demo, not admitted", "", None, 1):
             with self.subTest(bad_status=bad_status):
                 folder = copy_good()
                 edit(folder, "manifest", lambda m: m.update(status=bad_status))
-                self.assertEqual(packs.problems(folder), ['manifest.json: status must be "library" or "demo"'])
+                self.assertEqual(packs.problems(folder), ['manifest.json: status must be "field" or "demo"'])
 
     def test_an_admission_field_is_ignored_as_any_unknown_field_is(self) -> None:
         folder = copy_good()
         edit(folder, "manifest", lambda m: m.update(admitted_by="Ghost", admitted_on="2026-11-21"))
         self.assertEqual(packs.problems(folder), [])
 
-    def test_a_library_pack_with_an_unknown_page_is_refused(self) -> None:
+    def test_a_field_pack_with_an_unknown_page_is_refused(self) -> None:
         folder = copy_good()
         edit(folder, "passages", lambda p: p[0].update(sources=[{"source": "S1", "page": "unknown"}]))
-        self.assertEqual(packs.problems(folder), ["passage 'voltage': source 'S1': page is unknown; a library pack cites every page (SC-013)"])
+        self.assertEqual(packs.problems(folder), ["passage 'voltage': source 'S1': page is unknown; a field pack cites every page (SC-013)"])
 
     def test_a_demo_pack_with_unknown_pages_passes_and_is_counted(self) -> None:
         folder = copy_good()

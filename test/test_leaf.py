@@ -55,16 +55,16 @@ class TheWarn(unittest.TestCase):
 
 
 class PackStatus(unittest.TestCase):
-    def test_a_library_pack_answers_in_either_mode(self) -> None:
+    def test_a_field_pack_answers_in_either_mode(self) -> None:
         for demo_mode in (False, True):
-            self.assertTrue(may_answer({"status": "library"}, demo_mode))
+            self.assertTrue(may_answer({"status": "field"}, demo_mode))
 
     def test_a_demo_pack_answers_only_in_demo_mode(self) -> None:
         self.assertTrue(may_answer({"status": "demo"}, True))
         self.assertFalse(may_answer({"status": "demo"}, False))
 
     def test_a_status_it_does_not_know_never_answers(self) -> None:
-        unknown = [{}, {"status": ""}, {"status": "Library"}, {"status": "admitted"}, {"status": None}, {"status": 1}]
+        unknown = [{}, {"status": ""}, {"status": "library"}, {"status": "Library"}, {"status": "Field"}, {"status": "admitted"}, {"status": None}, {"status": 1}]
         for manifest in unknown:
             for demo_mode in (False, True):
                 self.assertFalse(may_answer(manifest, demo_mode), (manifest, demo_mode))

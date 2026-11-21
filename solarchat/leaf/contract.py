@@ -81,15 +81,15 @@ def reply_problem(reply: Reply) -> str | None:
 
 
 def may_answer(manifest: dict, demo_mode: bool) -> bool:
-    """Whether a pack may answer now: a library pack always, a demo pack only in demo mode, any other status never.
+    """Whether a pack may answer now: a field pack always, a demo pack only in demo mode, any other status never.
 
     Fails closed: a status this function does not know (missing, empty, misspelled, or not a string) never answers.
-    Decision: SC-013 (a pack is a library pack or a demo pack).
+    Decision: SC-013 (a pack is a field pack or a demo pack).
     Invariant: HAD-06 (a demo pack never answers outside demo mode).
-    {"status": "library"} gives True in either mode; {"status": "demo"} gives demo_mode; {"status": "Library"} gives False.
+    {"status": "field"} gives True in either mode; {"status": "demo"} gives demo_mode; {"status": "library"} gives False.
     """
     status = manifest.get("status")
-    if status == "library":
+    if status == "field":
         return True
     if status == "demo":
         return demo_mode

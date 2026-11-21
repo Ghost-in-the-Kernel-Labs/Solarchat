@@ -38,3 +38,4 @@ Written from `docs/journal/` by `scripts/journal_index.py`; do not edit by hand.
 | J-032 | Ghost's answers to J-031's seven questions: SC-015, SC-016, F-16, F-17 in force; SR-03 at warn; the pack status becomes field | decision | `J-000-099.md` |
 | J-033 | Ghost's further word: the engineer comes in only at the end, and the project is built for that one review | decision | `J-000-099.md` |
 | J-034 | SC-015 and SC-016 in code: ReplyKind.WARN, each rule's response and change log, the fingerprint check | feature | `J-000-099.md` |
+| J-035 | SC-017 in code: the pack status `library` becomes `field` | feature | `J-000-099.md` |

@@ -67,10 +67,10 @@ whose text is only ever quoted, and, once it exists, the evaluation set's inject
 A pack gives `make` and `model`, or `installation_type`, or all three; a pack with neither, or with one of `make` and
 `model` alone, is refused.
 
-A pack's `status` is `library` or `demo` (SC-013). A `library` pack answers: handing the documentation to the person who
-loads the library is the approval, and no approval is recorded (SC-013, amending SC-005). A `demo` pack may be read and
+A pack's `status` is `field` or `demo` (SC-013). A `field` pack answers: handing the documentation to the person who
+loads the packs is the approval, and no approval is recorded (SC-013, amending SC-005). A `demo` pack may be read and
 checked, and answers only in demo mode, under the banner "DEMO: not reviewed by an engineer, do not use on a site" (SC-010).
-A pack whose status is not `library` or `demo` never answers, whatever the mode (SC-013; held by `may_answer`).
+A pack whose status is not `field` or `demo` never answers, whatever the mode (SC-013; held by `may_answer`).
 Held by the leaf's `may_answer` (`test/test_leaf.py`) and the pack check's status rule (`test/test_packs.py`).
 
 ## The pack format
@@ -107,23 +107,23 @@ digits joined by hyphens (`no-output`). A pack's text is data (HAD-05): nothing 
 | `version` | the pack's own version, changed whenever its text changes, so a version names what was handed over |
 | `sources` | a non-empty list of sources: where each fact in the pack comes from |
 | `third_party_images` | a list (it may be empty or absent) of the pictures copied from elsewhere (SC-007) |
-| `status` | required, exactly `"library"` or `"demo"`; any other value, or none, is refused (SC-013) |
+| `status` | required, exactly `"field"` or `"demo"`; any other value, or none, is refused (SC-013) |
 
 A pack gives `make` and `model`, or `installation_type`, or all three; a pack with neither, or with one of `make` and
 `model` alone, is refused.
 
-A `library` pack answers; a `demo` pack answers only in demo mode (HAD-06). There is no approval record: handing the
-documentation to the person who loads the library is the approval (SC-013). A manifest field the format does not name, an
-old `admitted_by` included, is ignored. A `library` pack with any page `"unknown"` is refused; a `demo` pack may hold unknown
+A `field` pack answers; a `demo` pack answers only in demo mode (HAD-06). There is no approval record: handing the
+documentation to the person who loads the packs is the approval (SC-013). A manifest field the format does not name, an
+old `admitted_by` included, is ignored. A `field` pack with any page `"unknown"` is refused; a `demo` pack may hold unknown
 pages, and the check still counts them.
 
 A source has: `id` (the id passages and flows cite it by, unique in the pack), `title`, `kind` (required: `document` for a
 manual, datasheet or PDF that has page numbers, `web` for a web page, which has none; a source with no `kind`, or any other
 value, is refused, SC-012), `url` (where it was read; extra: so
 a person can check it), `licence` (the licence as the source states it, or the words `not stated`; never left out, since
-what a source allows is what the person who loads the library must weigh, SC-005) and `retrieved` (the date it was read; extra:
+what a source allows is what the person who loads the packs must weigh, SC-005) and `retrieved` (the date it was read; extra:
 a source changes). The check holds that the licence is written down, not that it allows redistribution; that is the
-person's judgement when the library is loaded, and a licence that forbids redistribution never puts its pack in the repository (Core C-033).
+person's judgement when the packs are loaded, and a licence that forbids redistribution never puts its pack in the repository (Core C-033).
 
 ### A citation (SC-012)
 
@@ -136,7 +136,7 @@ says which:
 | a `document` source | an object with the source id and the page | `{"source": "S3", "page": "15"}` |
 
 `page` is a non-empty string, so a label such as "A-3" or "15-16" works. The string `"unknown"` marks a page
-not yet found; a `demo` pack may hold it, a `library` pack is refused for it (SC-013). A bare id for a `document` source is refused, and so is an object for a `web` source (a page field that
+not yet found; a `demo` pack may hold it, a `field` pack is refused for it (SC-013). A bare id for a `document` source is refused, and so is an object for a `web` source (a page field that
 means nothing is never allowed). The check counts the citations whose page is `"unknown"` and prints the total, so the gap is
 visible. The pages are found by a person, from the manual; the check holds that a page is written down, not that it is the right one.
 
@@ -151,7 +151,7 @@ entry has its file (SC-007).
 | Field | Holds |
 | --- | --- |
 | `id` | the passage's id; with the pack's id it is the reference an answer carries (HAD-03) |
-| `title` | a short heading (extra: so a worker and the person who loads the library can tell passages apart) |
+| `title` | a short heading (extra: so a worker and the person who loads the packs can tell passages apart) |
 | `text` | the text, in plain words, which an answer may quote and may not go beyond |
 | `sources` | a non-empty list of citations of sources from the manifest (see "A citation"); a passage with no source is refused |
 | `image`, `image_alt` | optional: a picture, as a path under `images/` that exists in the pack, and the words that stand in for it for a person who cannot see it; a picture needs its `image_alt` (extra: a worker on a phone in sun may not see a picture) |
@@ -192,4 +192,4 @@ and otherwise ends at the stop; branching waits for a real pack that needs it.
 ### What the check does not hold
 
 Whether a licence allows redistribution, whether a passage is true, and whether a pack's text names or overrides a safety
-rule: the first two are the judgement of the person who loads the library, the third is added to the check with the safety rules (TODO 1.3).
+rule: the first two are the judgement of the person who loads the packs, the third is added to the check with the safety rules (TODO 1.3).
