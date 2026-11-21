@@ -669,3 +669,13 @@ The core decisions above are inherited (Core C-001 to C-041); this project's beg
 - **Reverses if:** the engineer's final review (TODO 6.4) judges that a worker's own word, or the company's setting, is not enough to relax SR-02's meter triggers or any rule, or that a profile cannot be held for a session without a file.
 - **See also:** SC-015, SC-016, SC-019, HAD-03, HAD-04, TODO 1.10
 - **subject:** session profile
+
+### SC-021: The official Anthropic Python SDK (`anthropic`) is a runtime dependency, imported only by the `model` module, and the online model is Claude Sonnet 5.5
+- **Decision:** `anthropic` joins `requirements.in` and, through `requirements.lock`, brings its own packages (its pinned set is the lock's). Only `solarchat/model` may import it (`docs/modules.json`: `outside: ["anthropic"]`; MOD-03 holds every other module to the `forbidden` list), and it is reached through the model door's answerer (SC-019), never directly. The online model is Claude Sonnet 5.5, `claude-sonnet-5-5` (F-07), called through the SDK and never by raw HTTP, with no tools and no connectors. The lock is compiled with the existing cooldown date and changes no pin already held. The package and every package it brings in come in by `docs/DEPENDENCY-REVIEW.md`, whole-package for a new one, and `docs/REVIEWED-VERSIONS.md` holds each row.
+- **Why:** Ghost, 2026-11-21, in chat: "yes, approve the SDK and use Sonnet 5.5". The model door (roadmap 3.1, 3.2) is brought forward and needs a client; the SDK is the supported way to reach the API, with typed responses, retries and timeouts the project would otherwise rewrite. A dependency is an architecture decision with a supply-chain cost (C-034 rule 1), so the one-line reason is this entry and the containment is the module map.
+- **Held by:** `requirements.in`, `requirements.lock` (hashes, cooldown); `docs/REVIEWED-VERSIONS.md` and `scripts/checks/dependency_review.py` (every pin has a row); `docs/modules.json` and `test/test_modules.py` (only `model` imports it); `scripts/checks/imports.py` (an import not in the lock fails).
+- **Source:** Ghost, 2026-11-21, in chat: "yes, approve the SDK and use Sonnet 5.5" (relayed by the coordinator); the wording the agent's (Claude Sonnet 5.5, J-045), for Ghost to confirm.
+- **Status:** in force
+- **Reverses if:** the review of a later version finds the SDK or one of its packages UNSAFE, or the engineer's final review (TODO 6.4) judges that the online model may not answer a worker.
+- **See also:** SC-002, SC-019, C-012, C-034, C-035, F-07, TODO 3.1
+- **subject:** model client

@@ -35,3 +35,18 @@ the Java starter's image, which a stamped project carries with them.
 | 2026-11-20 | setproctitle | — | 1.3.8 | baseline | — | — | unreviewed baseline | J-004 | pinned in requirements.lock before the record; the first review reads from this pin |
 | 2026-11-20 | textual | — | 8.2.8 | baseline | — | — | unreviewed baseline | J-004 | pinned in requirements.lock before the record; the first review reads from this pin |
 | 2026-11-20 | typing-extensions | — | 4.16.0 | baseline | — | — | unreviewed baseline | J-004 | pinned in requirements.lock before the record; the first review reads from this pin |
+| 2026-11-21 | annotated-types | — | 0.8.0 | new | SAFE | CLEAN | Ghost: approved 2026-11-21 in chat | J-045 | new, transitive |
+| 2026-11-21 | anthropic | — | 2.8.0 | new | SAFE | CLEAN | Ghost: approved 2026-11-21 in chat | J-045 | new dependency, direct (SC-021); whole package read; the `exec` is the opt-in agent toolset's bash session, not imported by Solarchat; no PyPI attestation to compare |
+| 2026-11-21 | anyio | — | 4.16.0 | new | SAFE | CLEAN | Ghost: approved 2026-11-21 in chat | J-045 | new, transitive |
+| 2026-11-21 | docstring-parser | — | 0.18.0 | new | SAFE | CLEAN | Ghost: approved 2026-11-21 in chat | J-045 | new, transitive |
+| 2026-11-21 | h11 | — | 0.16.0 | new | SAFE | CLEAN | Ghost: approved 2026-11-21 in chat | J-045 | new, transitive |
+| 2026-11-21 | httpcore2 | — | 2.16.0 | new | SAFE | CLEAN | Ghost: approved 2026-11-21 in chat | J-045 | new, through httpx2; CVE-2026-84381 fixed before 2.16.0; no PyPI attestation to compare |
+| 2026-11-21 | httpx2 | — | 2.16.0 | new | SAFE | CLEAN | Ghost: approved 2026-11-21 in chat | J-045 | new, through anthropic; the pydantic project's fork of httpx; its `_alias.py` import hook runs only if called; CVE-2026-84378, -84379, -84380, -84382 fixed before 2.16.0; no PyPI attestation to compare |
+| 2026-11-21 | idna | — | 3.20 | new | SAFE | CLEAN | Ghost: approved 2026-11-21 in chat | J-045 | new, transitive |
+| 2026-11-21 | jiter | — | 0.19.0 | new | SAFE | CLEAN | Ghost: approved 2026-11-21 in chat | J-045 | new, through anthropic; the compiled .so was not read, the wheel was fetched against the lock's PyPI hash |
+| 2026-11-21 | opentelemetry-api | — | 1.45.2 | new | SAFE | CLEAN | Ghost: approved 2026-11-21 in chat | J-045 | new, transitive |
+| 2026-11-21 | pydantic | — | 2.14.3 | new | SAFE | CLEAN | Ghost: approved 2026-11-21 in chat | J-045 | new, transitive |
+| 2026-11-21 | pydantic-core | — | 2.50.4 | new | SAFE | CLEAN | Ghost: approved 2026-11-21 in chat | J-045 | new, through pydantic; the compiled .so was not read, the wheel was fetched against the lock's PyPI hash |
+| 2026-11-21 | sniffio | — | 1.3.1 | new | SAFE | CLEAN | Ghost: approved 2026-11-21 in chat | J-045 | new, transitive |
+| 2026-11-21 | truststore | — | 0.10.5 | new | SAFE | CLEAN | Ghost: approved 2026-11-21 in chat | J-045 | new, transitive |
+| 2026-11-21 | typing-inspection | — | 0.4.5 | new | SAFE | CLEAN | Ghost: approved 2026-11-21 in chat | J-045 | new, transitive |

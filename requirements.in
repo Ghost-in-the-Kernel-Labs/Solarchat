@@ -5,3 +5,4 @@
 # uv is a session tool, not a dependency. A dependency not yet needed stays commented out until the phase that first imports it.
 pytest   # the test runner
 ruff     # the linter the readability rules lean on
+anthropic   # the official Anthropic SDK: solarchat/model calls Claude Sonnet 5.5 through it, never raw HTTP (SC-021)
