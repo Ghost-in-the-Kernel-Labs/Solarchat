@@ -180,3 +180,8 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Opened**: `theGhost.md` (SC-020), `TODO.md` (1.10), `docs/ROADMAP.md`, `docs/HANDOFF.md`, `docs/designs/answering-door.md`, `docs/journal/J-000-099.md`, `docs/NAVIGATION-LOG.md`.
 - **Complaints**: the direction arrived mid-task, after commit 1 had landed, so a landed decision is edited in place; no rule says whether a day-old decision is rewritten or superseded.
 - **Suggestions**: `theGhost.md`'s header could say when to rewrite an in-force decision on the maintainer's word and when to supersede it.
+### 2026-11-21 · SR-10's applies_when reworded (TODO 1.13 part, J-044) · Claude Opus 5.5
+- **Task**: remove "or a step adds panels in series" from SR-10's `applies_when` on Ghost's word, log it (SC-016), regenerate the safety-rules document, and land it; nothing else changed.
+- **Opened**: `CLAUDE.md`, `solarchat/safety/rules.json`, `solarchat/safety/rules.py`, `scripts/safety_rules_doc.py`, `docs/journal/J-000-099.md`, `docs/NAVIGATION-LOG.md`.
+- **Complaints**: the worktree shell refuses git joined to other steps, so git ran one command per call; `applies_when` is outside the fingerprint, so SC-016's entry carries an unchanged fingerprint, which the task wording left to check.
+- **Suggestions**: a small script that adds a change entry and sets its fingerprint; a routing row for "a safety rule's wording".

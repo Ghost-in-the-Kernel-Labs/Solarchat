@@ -212,7 +212,7 @@ Status: a draft for Ghost to read (TODO 1.3 stays open until Ghost has read it).
 
 ## SR-10 A voltage above what a device is rated for
 
-**When it applies:** The panels' voltage, or the string's, is or could be above the device's highest input voltage, or a step adds panels in series. A panel's voltage rises in the cold, so a string that fits on a warm day may not on a cold morning.
+**When it applies:** The panels' voltage, or the string's, is or could be above the device's highest input voltage. A panel's voltage rises in the cold, so a string that fits on a warm day may not on a cold morning.
 
 **The worker is shown:**
 
@@ -222,7 +222,7 @@ Status: a draft for Ghost to read (TODO 1.3 stays open until Ghost has read it).
 
 **Triggers:** `above the maximum`, `exceeds the maximum`, `above the rating`, `over the rating`, `higher than the rating`, `higher than the maximum`
 
-**Latest change:** 2026-11-21, Ghost (maintainer): Removed the trigger 'add a panel in series': adding a panel in series is allowed when the total Voc stays below the device's limit (step-08), and evaluation case mns-06 is must-not-stop; 'above the maximum' still fires; pending engineer review (F-16). Evidence: J-041; evals/v1.json mns-06. Pending engineer.
+**Latest change:** 2026-11-21, Ghost (maintainer): applies_when no longer names joining panels in series, which J-041 stopped firing on; pending engineer review (F-16). Evidence: J-044. Pending engineer.
 
 **Sources:**
 
