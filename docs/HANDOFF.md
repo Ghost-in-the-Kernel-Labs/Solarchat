@@ -19,10 +19,22 @@ which admitted passage to show.
 
 ## Next, in order
 
-1. **The tune-up with the first human maintainability pass** (SC-011), Ghost's word: right after 1.2.
-2. **The demo of Monday 2026-11-23** (SC-010): 1.3 the safety rules (Ghost reads the list), 1.4 the seed pack in
-   the format, 1.5 demo mode, 1.6 the walker, 1.7 the safety rules in the walker, 1.8 the offline shell.
-3. **1.9 the evaluation set**, frozen before any search or model; 1.10 Tune-up pass 1.
+1. **TODO 1.3 is built and saved, not landed**: branch `agent/safety-rules-1-3` (da684a2), J-026, reviewed by the
+   coordinator. Fourteen rules, SR-01 to SR-14, in `solarchat/safety/rules.json`, read by `solarchat/safety/rules.py`
+   as the leaf's `SafetyRule`; `docs/SAFETY-RULES.md` generated from them (`scripts/safety_rules_doc.py`); the pack
+   check refuses a pack that names a rule or tells the reader to skip one. 423 tests green on the branch. It waits on
+   Ghost: read `docs/SAFETY-RULES.md` on the branch (the item's last clause), answer its five "Ghost to confirm"
+   marks (below, For Ghost 1), then say "land it": squash the branch onto `main`, fast checks, `scripts/commit.sh`,
+   `scripts/ship.sh`, and move 1.3 to `docs/DONE.md` naming Ghost's read.
+3. **The demo of Monday 2026-11-23** (SC-010), after 1.3: 1.4 the seed pack in the format (convert
+   `packs/seed-mc4-leads/` to passages, flows and procedures; still not admitted), 1.5 demo mode, 1.6 the walker
+   (`solarchat/walker`, a module Ghost approved), 1.7 the safety rules in the walker (it must settle whether a
+   rule's triggers match the step's text or the worker's replies, and match whole words: the 1.3 worker's notes),
+   1.8 the offline shell. Each went to a fresh worker of its grade with the brief of `docs/when/hand-out-a-task.md`,
+   saved on its own branch and landed by the coordinator after Ghost's word; 1.3 went to the strong grade.
+4. **1.9 the evaluation set**, frozen before any search or model; 1.10 Tune-up pass 1, with the next human
+   maintainability pass (SC-011: Ghost-Core's toolkit under `scripts/` a few files at a time, each with its proof
+   that nothing changed; then the tests).
 
 ## Settled by Ghost
 
@@ -40,23 +52,30 @@ which admitted passage to show.
 
 ## For Ghost: waiting on you
 
-1. Read the demo pack with an engineer's eye before anyone relies on it. The worker flagged claims it could not
+1. **The safety rules** (TODO 1.3, on `agent/safety-rules-1-3`): read `docs/SAFETY-RULES.md`, and answer its five
+   "Ghost to confirm" marks: SR-02, is measuring a voltage a stop for the newest contractor (the draft: yes); SR-03,
+   is plugging connectors together a stop as well as pulling them apart (the makers say de-energise for both); SR-06,
+   the overhead-lines rule (beyond the brief; it gives no distance, so the site's applies); SR-08 and SR-09, the
+   emergency and first-aid sentences the cited sources do not state; SR-12, the never-bypass rule (beyond the brief).
+   Also: the roof, ladder and climb triggers stop every rooftop step (deliberate); four sources were cited from search
+   results without the page being read (J-026).
+2. Read the demo pack with an engineer's eye before anyone relies on it. The worker flagged claims it could not
    source: fail-04 (reversed leads can damage some devices), step-07's stop (battery not yet wired), step-09 (the
    gentle pull), fail-03 (some shortfall from the label is normal), fail-08's fire wording. Sources S3 and S8 were
    read from third-party mirrors and want official copies.
-2. The demo pack fits a small kit (a charge controller, a power station, covering the panel) better than a large
+3. The demo pack fits a small kit (a charge controller, a power station, covering the panel) better than a large
    site. A second demo pack, stringing modules on a utility site, would be nearer the users of F-01.
-3. `CLAUDE.md`'s three rules still state Core C-033 without SC-007's narrowing, which is why the worker kept to
+4. `CLAUDE.md`'s three rules still state Core C-033 without SC-007's narrowing, which is why the worker kept to
    openly licensed pictures. Say whether `CLAUDE.md` should name SC-007.
-4. Whether the deploying company may be named in the repository (the agent has not written its name).
-5. The app's stack (roadmap 5.1): one web client that is both the website and an installable app, or a native app.
-6. Which make and model the first real pack covers (roadmap 6.2); Ghost named First Solar as the most troublesome.
-7. A trademark search on the name Hadley before it reaches an app store.
-8. Ghost-Core's `docs/GHOST-IN-THE-KERNEL.md` opening is a condensed rewrite of the manifesto (J-023); the fix is
+5. Whether the deploying company may be named in the repository (the agent has not written its name).
+6. The app's stack (roadmap 5.1): one web client that is both the website and an installable app, or a native app.
+7. Which make and model the first real pack covers (roadmap 6.2); Ghost named First Solar as the most troublesome.
+8. A trademark search on the name Hadley before it reaches an app store.
+9. Ghost-Core's `docs/GHOST-IN-THE-KERNEL.md` opening is a condensed rewrite of the manifesto (J-023); the fix is
    Core's, in a session with push access to it.
-9. A stop hook asks for a push whenever a branch is ahead of origin (2026-11-21: it fired on a branch restarted
+10. A stop hook asks for a push whenever a branch is ahead of origin (2026-11-21: it fired on a branch restarted
    from `main`); a hook is outside what an agent may change (`docs/when/coordinate.md`), so it is reported here.
-10. `scripts/ship.sh` is stamped without its executable bit (run it as `bash scripts/ship.sh`); a mode change to a
+11. `scripts/ship.sh` is stamped without its executable bit (run it as `bash scripts/ship.sh`); a mode change to a
    gate file is yours.
 
 Audit advisories (tune-up step 2): the python gate runs no audit step, so none are listed. An audit tool
@@ -73,4 +92,8 @@ stand alone (`docs/DEPENDENCY-REVIEW.md`).
   drawings were looked at once, rendered together; its text was not read in full by the coordinator.
 - The project's ghost and the roadmap are the agent's drafts from Ghost's words, landed for Ghost to correct.
 - A session's venv: `python3.12 -m venv .venv && .venv/bin/pip install --only-binary :all: --require-hashes -r requirements.lock`.
-- Branches left on origin, all merged into `main` by squash and safe to delete: `claude/audience-f01`, `claude/gate-0-2`, `agent/seed-pack`.
+- Branches left on origin, all merged into `main` by squash and safe to delete (this session's proxy refuses a
+  branch deletion, HTTP 403): `agent/words-1-1`, `agent/pack-format-1-2`; `agent/safety-rules-1-3` once 1.3 lands.
+  Earlier ones Ghost deleted on 2026-11-21. The remote's name is `Ghost-in-the-Kernel-Labs/Solarchat`; a fresh clone
+  may still name it in lower case, which works through GitHub's redirect.
+- Branches deleted earlier, kept here for the record: `claude/audience-f01`, `claude/gate-0-2`, `agent/seed-pack`.

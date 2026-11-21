@@ -21,3 +21,10 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Opened**: the files it opened, in order.
 - **Complaints**: what slowed or misled it.
 - **Suggestions**: what it would change.
+
+### 2026-11-21 · Coordinating 0.4 to 1.3, two tune-ups, the demo plan · Claude Opus 5.5
+
+- **Task**: coordinate Solarchat through TODO 0.4, Tune-up pass 0, 1.1 to 1.3 (three workers), SC-009 to SC-011, the manifesto's restoration and the first human maintainability pass; then hand off.
+- **Opened**: `docs/HANDOFF.md`, `TODO.md`, `docs/paths/process.md`, `docs/CONTRACT.md`, `docs/modules.json`, `docs/when/tune-up.md`, `docs/when/hand-out-a-task.md`, `docs/when/coordinate.md`, `scripts/commit.sh`, `docs/GHOST-IN-THE-KERNEL.md`, and each worker's diff.
+- **Complaints**: the session began on the wrong repository, its branch name already used and the repository's default branch a session branch (all fixed with Ghost). This session cannot delete a remote branch (403). A `--docs-only` landing cannot ship until the fast checks run (written into `docs/paths/process.md`, J-019). Three workers shared one checkout, so the coordinator could edit nothing while one ran.
+- **Suggestions**: give each worker its own worktree, so the coordinator can keep landing while a worker builds; `scripts/save.sh` could print the remote's redirect once rather than on every push.
