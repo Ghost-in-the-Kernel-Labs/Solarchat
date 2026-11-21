@@ -64,6 +64,8 @@ which passage to show.
   bot (SC-018, J-037; it amends SC-010's plan).
 - 2026-11-21: tuning the conversational bot by a sampled rule bank read as a trend, harm triage content first, the
   ledger in git; 1.17 absorbed; the live ratchet dropped (SC-023, J-051).
+- 2026-11-21: the demo runs from a local clone on Windows; a developer's own machine may hold a key outside the clone
+  (SC-022 point 6); a command menu and `solarchat --key`; speech out first, speech in later (J-054; TODO 2.5, 2.7).
 - The wording of SC-002 to SC-008 is the agent's, for Ghost to confirm.
 
 ## For Ghost: waiting on you
