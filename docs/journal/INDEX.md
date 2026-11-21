@@ -47,3 +47,4 @@ Written from `docs/journal/` by `scripts/journal_index.py`; do not edit by hand.
 | J-041 | Two over-firing triggers removed on Ghost's word: SR-10 "add a panel in series" and SR-02 "crimp" (TODO 1.13, part) | feature | `J-000-099.md` |
 | J-042 | Ghost answers SC-019's ten questions and adds the meter sign-off (SC-019 in force, SC-020, TODO 1.10) | decision | `J-000-099.md` |
 | J-043 | Ghost widens the meter sign-off into a session profile (SC-020, TODO 1.10) | decision | `J-000-099.md` |
+| J-044 | The Anthropic SDK is approved as a dependency (SC-021); the lock is compiled, two review layers wait | decision | `J-000-099.md` |
