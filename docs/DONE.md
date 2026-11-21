@@ -30,3 +30,7 @@ Done 2026-11-21 (J-019). Check: `docs/when/tune-up.md` followed in full (step 3 
 ### 1.1 The words
 
 Done 2026-11-21 (J-021). Check: `docs/GLOSSARY.md` holds pack, passage, flow, mode, admitted and safety rule, one meaning each; `test/test_glossary.py` green. ✓
+
+### 1.2 The pack format
+
+Done 2026-11-21 (J-022). Check: `docs/CONTRACT.md`'s section `## The pack format` states the manifest's fields (make, model, version, sources and their licence, admitted by, admitted on), a passage and a flow (symptom, checks, fix, stop); `scripts/checks/packs.py` accepts `test/fixtures/packs/good/` and refuses each planted break under `test/fixtures/broken/packs/` (a missing licence, a flow with no stop, a passage with no source, and seven more); procedures, the installation type and linear flows added on Ghost's answers; `test/test_packs.py` green. ✓

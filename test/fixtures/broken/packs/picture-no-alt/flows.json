@@ -1,0 +1,22 @@
+[
+  {
+    "id": "no-output",
+    "title": "No solar power",
+    "symptom": "The device shows no solar power.",
+    "checks": [
+      {
+        "text": "Uncover the panel and face it to the sun."
+      },
+      {
+        "text": "Push each connector pair together until it clicks.",
+        "image": "images/step-1.svg",
+        "image_alt": "A connector pair locked."
+      }
+    ],
+    "fix": "Correct what the checks found, then look at the device again.",
+    "stop": "Stop and go to your site supervisor or engineer if the device still shows nothing.",
+    "sources": [
+      "S1"
+    ]
+  }
+]

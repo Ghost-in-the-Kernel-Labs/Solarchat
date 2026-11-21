@@ -49,9 +49,11 @@ which admitted passage to show.
 5. The app's stack (roadmap 5.1): one web client that is both the website and an installable app, or a native app.
 6. Which make and model the first real pack covers (roadmap 6.2); Ghost named First Solar as the most troublesome.
 7. A trademark search on the name Hadley before it reaches an app store.
-8. A stop hook asks for a push whenever a branch is ahead of origin (2026-11-21: it fired on a branch restarted
+8. Ghost-Core's `docs/GHOST-IN-THE-KERNEL.md` opening is a condensed rewrite of the manifesto (J-023); the fix is
+   Core's, in a session with push access to it.
+9. A stop hook asks for a push whenever a branch is ahead of origin (2026-11-21: it fired on a branch restarted
    from `main`); a hook is outside what an agent may change (`docs/when/coordinate.md`), so it is reported here.
-9. `scripts/ship.sh` is stamped without its executable bit (run it as `bash scripts/ship.sh`); a mode change to a
+10. `scripts/ship.sh` is stamped without its executable bit (run it as `bash scripts/ship.sh`); a mode change to a
    gate file is yours.
 
 Audit advisories (tune-up step 2): the python gate runs no audit step, so none are listed. An audit tool

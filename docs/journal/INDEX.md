@@ -25,3 +25,5 @@ Written from `docs/journal/` by `scripts/journal_index.py`; do not edit by hand.
 | J-019 | Tune-up pass 0 | measurement | `J-000-099.md` |
 | J-020 | The tune-up cadence: every twenty-five commits (SC-009) | decision | `J-000-099.md` |
 | J-021 | The six words of Phase 1 (TODO 1.1) | decision | `J-000-099.md` |
+| J-022 | The pack format and its check (TODO 1.2) | decision | `J-000-099.md` |
+| J-023 | The manifesto restored word for word, and held by a test | failure-caught | `J-000-099.md` |
