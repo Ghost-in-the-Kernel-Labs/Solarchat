@@ -1,6 +1,6 @@
 """The evaluation runner: feeds every case of the frozen set to the answering door and scores each reply (TODO 1.6; SC-019).
 
-    python3 -I scripts/eval.py [--set PATH] [--packs DIR] [--answerer offline|recorded|claude] [--replies PATH]
+    python3 -I scripts/eval.py [--set PATH] [--packs DIR] [--answerer offline|recorded|claude] [--model MODEL] [--replies PATH]
         [--live] [--record-replies PATH] [--demo] [--record PATH] [--check | --write [--accept-fall CASE=ID ...]]
 
 It loads the set, runs `scripts/checks/evals.py`'s `problems` on it (exit 2 on any), calls `answer()` once per case, scores
@@ -14,7 +14,7 @@ case the record shows passing now fails with no `--accept-fall CASE=ID`, or a kn
 passes). `known-failures.json`, beside the set, explains a failure and never excuses one. `--live --answerer claude` is the
 only way a model is called (by hand, SC-002; it needs `ANTHROPIC_API_KEY` in the environment, never printed): it prints each
 failure as a block, the table, the tokens and the estimated cost, and writes every reply to
-`evals/recorded/claude-sonnet-5-5.json` (or `--record-replies PATH`) for `--answerer recorded --replies` to replay
+`evals/recorded/<model>.json` (or `--record-replies PATH`) for `--answerer recorded --replies` to replay
 (`scripts/eval_live.py`).
 """
 import argparse
@@ -27,13 +27,14 @@ if __name__ == "__main__":  # run as a script from the project's root: the root 
     sys.path.insert(0, str(ROOT))
 from scripts.checks import evals as set_check  # noqa: E402
 from scripts.eval_core import SAFETY_CLASSES, CannotRun, Result, Run, display, score_case, sha_of  # noqa: E402
-from scripts.eval_live import REPLIES_PATH, live_answerer, live_report, save_replies  # noqa: E402
+from scripts.eval_live import live_answerer, live_report, replies_path, save_replies  # noqa: E402
 from scripts.eval_record import (build_record, check_lines, failed, failure_lines, known_fixed, load_old,  # noqa: E402
                                  record_path_of, record_text, safety_failed, table_lines, write_record)
 from solarchat.answer.door import answer  # noqa: E402
 from solarchat.answer.recorded import RecordedAnswerer  # noqa: E402
 from solarchat.answer.stub import NoAnswer  # noqa: E402
 from solarchat.leaf.contract import may_answer  # noqa: E402
+from solarchat.model.claude import DEFAULT_MODEL, MODELS  # noqa: E402
 from solarchat.packs.load import load_pack  # noqa: E402
 from solarchat.safety.rules import load_rules  # noqa: E402
 
@@ -48,6 +49,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--answerer", choices=("offline", "recorded", "claude"), default="offline")
     parser.add_argument("--replies")
     parser.add_argument("--live", action="store_true")
+    parser.add_argument("--model", choices=tuple(MODELS), default=DEFAULT_MODEL)
     parser.add_argument("--record-replies")
     parser.add_argument("--demo", action="store_true")
     parser.add_argument("--record")
@@ -125,7 +127,7 @@ def choose_answerer(args: argparse.Namespace, set_sha: str) -> object:
     if args.answerer == "offline":
         return NoAnswer()
     if args.answerer == "claude":
-        return live_answerer()
+        return live_answerer(args.model)
     try:
         recorded = RecordedAnswerer(Path(args.replies))
     except ValueError as error:
@@ -179,7 +181,7 @@ def conclude(args: argparse.Namespace, run: Run) -> int:
         code = 1 if safety_failed(run) else 0
     known_failing = sum(result.case["id"] in run.known for result in failed(run))
     if args.live:
-        body = live_report(run) + extra + [save_replies(run, Path(args.record_replies or REPLIES_PATH))]
+        body = live_report(run) + extra + [save_replies(run, Path(args.record_replies or replies_path(run.answerer_name)))]
     else:
         body = table_lines(run) + failure_lines(run, known_fixed(run, old)) + extra
     print("\n".join(body))

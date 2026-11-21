@@ -13,7 +13,7 @@ from scripts.eval_core import ROOT, CannotRun, Result, Run, display
 from scripts.eval_record import failed, table_lines
 from solarchat.leaf.contract import DEMO_BANNER, Finding, Passage, Turn
 
-REPLIES_PATH = ROOT / "evals" / "recorded" / "claude-sonnet-5-5.json"
+RECORDED = ROOT / "evals" / "recorded"
 
 
 class Recording:
@@ -38,11 +38,11 @@ class Recording:
         return self.inner.usage
 
 
-def live_answerer() -> Recording:
-    """The Claude answerer, recording; no key in the environment raises CannotRun (exit 2) in plain words."""
+def live_answerer(model: str) -> Recording:
+    """The Claude answerer on this model, recording; no key in the environment raises CannotRun (exit 2) in plain words."""
     from solarchat.model.claude import ClaudeAnswerer, ModelError  # only a live run loads the model module
     try:
-        return Recording(ClaudeAnswerer())
+        return Recording(ClaudeAnswerer(model=model))
     except ModelError as problem:
         raise CannotRun(str(problem)) from problem
 
@@ -68,13 +68,13 @@ def failure_block(result: Result, known: dict[str, dict]) -> list[str]:
     return lines + ["  reply:     " + (words[0] if words else "")] + [f"             {line}".rstrip() for line in words[1:]]
 
 
-def usage_lines(usage: object) -> list[str]:
-    """The tokens used and the estimated cost at Sonnet 5.5's rates, two lines: "tokens: 90 calls, input ..." then the
+def usage_lines(usage: object, model: str) -> list[str]:
+    """The tokens used and the estimated cost at the model's rates, two lines: "tokens: 90 calls, input ..." then the
     dollars with the rates they rest on."""
-    from solarchat.model.claude import estimated_cost
+    from solarchat.model.claude import estimated_cost, rates_words
     return [f"tokens: {usage.calls} calls, input {usage.input_tokens}, output {usage.output_tokens}, cache read "
             f"{usage.cache_read_tokens}, cache write {usage.cache_write_tokens}",
-            f"estimated cost: ${estimated_cost(usage):.4f} at $2/M input, $10/M output, $0.10/M cache read, $2.50/M cache write"]
+            f"estimated cost ({model}): ${estimated_cost(usage, model):.4f} at {rates_words(model)}"]
 
 
 def live_report(run: Run) -> list[str]:
@@ -82,7 +82,7 @@ def live_report(run: Run) -> list[str]:
     blocks: list[str] = []
     for result in failed(run):
         blocks += failure_block(result, run.known) + [""]
-    return blocks + table_lines(run) + usage_lines(run.answerer.usage)
+    return blocks + table_lines(run) + usage_lines(run.answerer.usage, run.answerer_name)
 
 
 def finding_entry(finding: Finding) -> dict:
@@ -110,3 +110,8 @@ def save_replies(run: Run, path: Path) -> str:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(replies_text(run), encoding="utf-8")
     return f"replies written to {display(path)} ({len(run.results)} cases, by question and by case id)"
+
+
+def replies_path(model: str) -> Path:
+    """Where a model's replies are written: replies_path("claude-haiku-5-5") is evals/recorded/claude-haiku-5-5.json."""
+    return RECORDED / f"{model}.json"

@@ -88,6 +88,13 @@ class TheStubChat(unittest.TestCase):
         self.assertEqual((code, out), (2, ""))
         self.assertIn("ANTHROPIC_API_KEY is not set", err)
 
+    def test_model_is_an_option_haiku_is_allowed_and_another_model_exits_2(self) -> None:
+        with mock.patch.dict(os.environ, {"ANTHROPIC_API_KEY": ""}):
+            code, _, err = chat("", ["--pack", str(SEED), "--demo", "--model", "claude-haiku-5-5"])
+        self.assertEqual(code, 2)
+        self.assertIn("ANTHROPIC_API_KEY is not set", err)
+        self.assertEqual(chat("", ["--pack", str(SEED), "--demo", "--model", "gpt-9"])[0], 2)
+
     def test_an_unknown_answerer_exits_2(self) -> None:
         self.assertEqual(chat("", ["--pack", str(SEED), "--demo", "--answerer", "gpt"])[0], 2)
 

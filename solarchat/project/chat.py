@@ -10,12 +10,13 @@ from typing import TextIO
 from solarchat.answer.door import answer
 from solarchat.answer.stub import NoAnswer
 from solarchat.leaf.contract import DEMO_BANNER, Answerer, Reply, ReplyKind, Turn, may_answer
-from solarchat.model.claude import ClaudeAnswerer, ModelError
+from solarchat.model.claude import DEFAULT_MODEL, MODELS, ClaudeAnswerer, ModelError
 from solarchat.packs.load import Pack, load_pack
 from solarchat.safety.rules import load_rules
 
 PROMPT = "> "
 QUIT_WORDS = ("quit",)
+MODEL_CHOICES = tuple(MODELS)
 SOURCES_MARK = "\n\nFrom: "
 
 
@@ -42,10 +43,10 @@ def render(reply: Reply) -> str:
     return f"{words}\n\n{reply.text}" if words and words not in reply.text else reply.text
 
 
-def choose_answerer(name: str) -> Answerer:
+def choose_answerer(name: str, model: str = DEFAULT_MODEL) -> Answerer:
     """The answerer a name stands for: "stub" is the one that says "I do not know" to everything; "claude" is Claude
     Sonnet 5.5 (a missing key raises ModelError)."""
-    return NoAnswer() if name == "stub" else ClaudeAnswerer()
+    return NoAnswer() if name == "stub" else ClaudeAnswerer(model=model)
 
 
 def load_chat_pack(folder: str, demo: bool) -> Pack:
@@ -82,12 +83,13 @@ def converse(pack: Pack, demo: bool, answerer: Answerer, stdin: TextIO, stdout: 
         history += [Turn("user", question), Turn("assistant", spoken(reply))]
 
 
-def start_chat(pack_folder: str, demo: bool, answerer_name: str, stdin: TextIO, stdout: TextIO, stderr: TextIO) -> int:
+def start_chat(pack_folder: str, demo: bool, answerer_name: str, stdin: TextIO, stdout: TextIO, stderr: TextIO,
+               model: str = DEFAULT_MODEL) -> int:
     """Run a whole chat and return its exit code: 0 when it ended, 2 when it cannot run (a pack that is missing or may not
     answer, or no key for the Claude answerer), with one plain line on stderr. The demo banner is shown at the start."""
     try:
         pack = load_chat_pack(pack_folder, demo)
-        answerer = choose_answerer(answerer_name)
+        answerer = choose_answerer(answerer_name, model)
     except (ValueError, ModelError) as problem:
         stderr.write(f"solarchat: cannot run: {problem}\n")
         return 2

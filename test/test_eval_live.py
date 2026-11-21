@@ -10,7 +10,7 @@ from unittest import mock
 
 from scripts import eval as runner
 from scripts.eval_core import Result
-from scripts.eval_live import Recording, cited_ids, failure_block, usage_lines
+from scripts.eval_live import Recording, cited_ids, failure_block, replies_path, usage_lines
 from solarchat.leaf.contract import DEMO_BANNER, Finding, PassageRef, Reply, ReplyKind
 from solarchat.model.claude import Usage
 from test.support import ROOT, scratch
@@ -26,10 +26,9 @@ class FakeModel:
     """An answerer standing in for the live one: it cites the voltage passage for the one question it knows and gives "I do not
     know" for the rest, and counts one fixed call of tokens each time: FakeModel().usage.calls is 0 at first."""
 
-    name = "claude-fake"
-
-    def __init__(self) -> None:
-        """Start with no tokens used."""
+    def __init__(self, model: str = "claude-sonnet-5-5") -> None:
+        """Start with no tokens used; the model is the answerer's name."""
+        self.name = model
         self.usage = Usage()
 
     def find(self, question: str, passages: tuple, history: tuple = ()) -> Finding:
@@ -47,7 +46,7 @@ def live(options: list[str], record: Path | None = None, replies: Path | None = 
     arguments = ["--set", str(TINY), "--packs", str(PACKS), "--record", str(record or folder / "record.json"),
                  "--live", "--answerer", "claude", "--record-replies", str(replies or folder / "replies.json")] + options
     out, err = io.StringIO(), io.StringIO()
-    with mock.patch("scripts.eval.live_answerer", lambda: Recording(FakeModel())):
+    with mock.patch("scripts.eval.live_answerer", lambda model: Recording(FakeModel(model))):
         with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
             code = runner.main(arguments)
     return code, out.getvalue(), err.getvalue()
@@ -79,9 +78,9 @@ class TheFailureBlock(unittest.TestCase):
         self.assertEqual(cited_ids(result), "none")
 
     def test_the_usage_lines_give_the_tokens_and_the_cost_at_the_rates(self) -> None:
-        lines = usage_lines(Usage(90, 1_000_000, 100_000, 2_000_000, 400_000))
+        lines = usage_lines(Usage(90, 1_000_000, 100_000, 2_000_000, 400_000), "claude-sonnet-5-5")
         self.assertEqual(lines[0], "tokens: 90 calls, input 1000000, output 100000, cache read 2000000, cache write 400000")
-        self.assertEqual(lines[1], "estimated cost: $4.2000 at $2/M input, $10/M output, $0.10/M cache read, $2.50/M cache write")
+        self.assertEqual(lines[1], "estimated cost (claude-sonnet-5-5): $4.2000 at $2/M input, $10/M output, $0.10/M cache read, $2.50/M cache write")
 
 
 class TheLiveRun(unittest.TestCase):
@@ -90,9 +89,9 @@ class TheLiveRun(unittest.TestCase):
         self.assertEqual(code, 1)
         self.assertLess(out.index("FAIL safe-01 [stop]"), out.index("class"))
         self.assertLess(out.index("class"), out.index("tokens: "))
-        self.assertLess(out.index("tokens: "), out.index("estimated cost: $"))
+        self.assertLess(out.index("tokens: "), out.index("estimated cost ("))
         self.assertIn("  got kind:  do not know (DO_NOT_KNOW)", out)
-        self.assertIn("answerer claude-fake", out)
+        self.assertIn("answerer claude-sonnet-5-5", out)
         self.assertNotIn("FAIL in-01", out)
 
     def test_it_writes_every_reply_by_question_and_by_case_and_a_replay_gives_the_same_score(self) -> None:
@@ -110,8 +109,20 @@ class TheLiveRun(unittest.TestCase):
         with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
             code = runner.main(options)
         self.assertEqual((code, err.getvalue()), (1, ""))
-        self.assertIn("answerer claude-fake", out.getvalue())
+        self.assertIn("answerer claude-sonnet-5-5", out.getvalue())
         self.assertIn("passed", out.getvalue())
+
+    def test_the_model_option_names_the_answerer_the_cost_line_and_the_default_replies_file(self) -> None:
+        code, out, _ = live(["--model", "claude-haiku-5-5"])
+        self.assertEqual(code, 1)
+        self.assertIn("answerer claude-haiku-5-5", out)
+        self.assertIn("estimated cost (claude-haiku-5-5): $", out)
+        self.assertIn("$0.1/M input, $0.5/M output", out)
+        self.assertEqual(replies_path("claude-haiku-5-5"), ROOT / "evals" / "recorded" / "claude-haiku-5-5.json")
+        self.assertEqual(replies_path("claude-sonnet-5-5").name, "claude-sonnet-5-5.json")
+
+    def test_a_model_not_listed_exits_2(self) -> None:
+        self.assertEqual(live(["--model", "gpt-9"])[0], 2)
 
     def test_the_replies_file_may_not_be_the_set_itself(self) -> None:
         code, _, err = live([], replies=TINY)

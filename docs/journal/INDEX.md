@@ -52,3 +52,4 @@ Written from `docs/journal/` by `scripts/journal_index.py`; do not edit by hand.
 | J-046 | API-key management is decided: no model credential on a device (SC-022) | decision | `J-000-099.md` |
 | J-047 | The answering door and the evaluation runner are built (TODO 1.6) | feature | `J-000-099.md` |
 | J-048 | The Claude answerer, the chat command and the live evaluation run are built (TODO 1.16) | feature | `J-000-099.md` |
+| J-049 | The model is a parameter: Haiku 5.5 may be used for testing (TODO 1.16, follow-up) | feature | `J-000-099.md` |

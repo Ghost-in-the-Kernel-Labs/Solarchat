@@ -12,13 +12,32 @@ from typing import Any
 
 from solarchat.leaf.contract import Finding, Passage, PassageRef, Turn
 
-MODEL = "claude-sonnet-5-5"
+DEFAULT_MODEL = "claude-sonnet-5-5"
 BETA = "server-side-fallback-2026-07-01"
 MAX_TOKENS = 4000
 KEY_VARIABLE = "ANTHROPIC_API_KEY"
-# Sonnet 5.5's rates in dollars per million tokens (Ghost, 2026-11-21): cache writes cost 1.25 times the input rate.
-INPUT_RATE, OUTPUT_RATE, CACHE_READ_RATE = 2.0, 10.0, 0.10
-CACHE_WRITE_RATE = INPUT_RATE * 1.25
+CACHE_WRITE_FACTOR = 1.25
+
+
+@dataclass(frozen=True)
+class Model:
+    """A model that may answer: its id, its rates in dollars per million tokens and whether it has the server-side refusal
+    fallback (only a model that has it is sent the beta and `fallbacks`)."""
+
+    model_id: str
+    input_rate: float
+    output_rate: float
+    cache_read_rate: float
+    fallback: bool
+
+
+# Decision: SC-021 (Sonnet 5.5, F-07, is the default; Ghost, 2026-11-21, allowed Haiku 5.5 for testing, roadmap 3.7).
+# Sonnet 5.5: $2 input, $10 output, $0.10 cache read. Haiku 5.5: $0.10 input and $0.50 output for prompts up to 100K tokens;
+# its cache-read rate, a tenth of input, and the cache-write factor of 1.25 are ASSUMED, not read from a price list.
+MODELS = {
+    "claude-sonnet-5-5": Model("claude-sonnet-5-5", 2.0, 10.0, 0.10, True),
+    "claude-haiku-5-5": Model("claude-haiku-5-5", 0.10, 0.50, 0.01, False),
+}
 
 SCHEMA = {
     "type": "object",
@@ -69,12 +88,22 @@ class Usage:
         self.cache_write_tokens += cache_write
 
 
-def estimated_cost(usage: Usage) -> float:
-    """The cost in dollars at Sonnet 5.5's rates: a million input tokens alone cost 2.0; a million of each of input, output,
-    cache reads and cache writes cost 2.0 + 10.0 + 0.10 + 2.5 = 14.6."""
-    per_million = (usage.input_tokens * INPUT_RATE + usage.output_tokens * OUTPUT_RATE
-                   + usage.cache_read_tokens * CACHE_READ_RATE + usage.cache_write_tokens * CACHE_WRITE_RATE)
+def estimated_cost(usage: Usage, model: str = DEFAULT_MODEL) -> float:
+    """The cost in dollars at the model's rates: a million input tokens alone cost 2.0 on Sonnet 5.5 and 0.10 on Haiku 5.5;
+    a million of each of input, output, cache reads and cache writes cost 2.0 + 10.0 + 0.10 + 2.5 = 14.6 on Sonnet 5.5."""
+    rates = MODELS[model]
+    per_million = (usage.input_tokens * rates.input_rate + usage.output_tokens * rates.output_rate
+                   + usage.cache_read_tokens * rates.cache_read_rate
+                   + usage.cache_write_tokens * rates.input_rate * CACHE_WRITE_FACTOR)
     return per_million / 1_000_000
+
+
+def rates_words(model: str) -> str:
+    """The rates as printed: rates_words("claude-sonnet-5-5") gives "$2/M input, $10/M output, $0.10/M cache read,
+    $2.50/M cache write"."""
+    rates = MODELS[model]
+    return (f"${rates.input_rate:g}/M input, ${rates.output_rate:g}/M output, ${rates.cache_read_rate:.2f}/M cache read, "
+            f"${rates.input_rate * CACHE_WRITE_FACTOR:.2f}/M cache write")
 
 
 def passage_id(passage: Passage) -> str:
@@ -178,19 +207,23 @@ class ClaudeAnswerer:
     Decision: SC-019 (an answerer of the door), SC-021 (the model and the SDK), SC-022 (the key is the environment's).
     """
 
-    name = MODEL
-
-    def __init__(self, client: Any = None, errors: Any = None) -> None:
-        """Hold the client (the SDK's unless given) and the module of error classes (the SDK's unless given)."""
+    def __init__(self, client: Any = None, errors: Any = None, model: str = DEFAULT_MODEL) -> None:
+        """Hold the client (the SDK's unless given), the module of error classes (the SDK's unless given) and the model,
+        which is also the answerer's `name`; a model not in MODELS raises ValueError."""
+        if model not in MODELS:
+            raise ValueError(f"model {model!r} is not one of {', '.join(MODELS)}")
+        self.model = self.name = model
         self.client = client if client is not None else default_client()
         self.errors = errors
         self.usage = Usage()
 
     def call(self, question: str, passages: tuple[Passage, ...], history: tuple[Turn, ...]) -> Any:
         """One request to the model: effort low, the schema as the output format, the passages as one cached system block,
-        and no thinking, temperature, top_p or top_k."""
+        and no thinking, temperature, top_p or top_k. Only a model with the server-side refusal fallback is sent the beta and
+        `fallbacks`; on one without it (Haiku 5.5) a refusal is simply an empty finding."""
+        extra = {"betas": [BETA], "fallbacks": "default"} if MODELS[self.model].fallback else {}
         return self.client.beta.messages.create(
-            model=MODEL, max_tokens=MAX_TOKENS, betas=[BETA], fallbacks="default",
+            model=self.model, max_tokens=MAX_TOKENS, **extra,
             output_config={"effort": "low", "format": {"type": "json_schema", "schema": SCHEMA}},
             system=[{"type": "text", "text": system_text(passages), "cache_control": {"type": "ephemeral"}}],
             messages=messages_for(question, history))

@@ -3,7 +3,7 @@ import argparse
 import sys
 from typing import TextIO
 
-from solarchat.project.chat import start_chat
+from solarchat.project.chat import DEFAULT_MODEL, MODEL_CHOICES, start_chat
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -12,6 +12,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--pack", required=True, help="the pack's folder, e.g. packs/seed-mc4-leads")
     parser.add_argument("--demo", action="store_true", help="let a demo pack answer, with the demo banner on every reply")
     parser.add_argument("--answerer", choices=("claude", "stub"), default="claude")
+    parser.add_argument("--model", choices=MODEL_CHOICES, default=DEFAULT_MODEL, help="the Claude model (claude-sonnet-5-5 unless testing)")
     return parser
 
 
@@ -22,4 +23,5 @@ def main(argv: list[str], stdin: TextIO | None = None, stdout: TextIO | None = N
         args = build_parser().parse_args(argv)
     except SystemExit as stop:
         return 0 if stop.code in (0, None) else 2
-    return start_chat(args.pack, args.demo, args.answerer, stdin or sys.stdin, stdout or sys.stdout, stderr or sys.stderr)
+    return start_chat(args.pack, args.demo, args.answerer, stdin or sys.stdin, stdout or sys.stdout, stderr or sys.stderr,
+                      args.model)

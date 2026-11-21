@@ -8,7 +8,7 @@ from unittest import mock
 
 from solarchat.answer.door import DO_NOT_KNOW_TEXT, answer
 from solarchat.leaf.contract import Finding, PassageRef, ReplyKind, Turn
-from solarchat.model.claude import (BETA, MAX_TOKENS, MODEL, SCHEMA, SYSTEM_PROMPT, ClaudeAnswerer, ModelError, Usage,
+from solarchat.model.claude import (BETA, DEFAULT_MODEL, MAX_TOKENS, MODELS, SCHEMA, SYSTEM_PROMPT, ClaudeAnswerer, ModelError, Usage, rates_words,
                                     default_client, describe_error, estimated_cost, system_text)
 from solarchat.packs.load import load_pack
 from test.support import ROOT
@@ -33,6 +33,9 @@ def answer_json(ids: list[str], reply: str = "Check the label.", kind: str = "an
     return {"kind": kind, "passage_ids": ids, "reply": reply}
 
 
+ABSENT = object()
+
+
 class Refusal:
     """A refused response whose content must never be read: Refusal().stop_reason gives "refusal"; Refusal().content raises."""
 
@@ -55,11 +58,13 @@ class FakeClient:
         self.calls: list[dict] = []
         self.beta = SimpleNamespace(messages=SimpleNamespace(create=self.create))
 
-    def create(self, model: str, max_tokens: int, betas: list, fallbacks: str, output_config: dict, system: list,
-               messages: list) -> object:
-        """Record the arguments (any other argument is a TypeError), then return the next outcome or raise it."""
-        self.calls.append(dict(model=model, max_tokens=max_tokens, betas=betas, fallbacks=fallbacks,
-                               output_config=output_config, system=system, messages=messages))
+    def create(self, model: str, max_tokens: int, output_config: dict, system: list, messages: list,
+               betas: object = ABSENT, fallbacks: object = ABSENT) -> object:
+        """Record the arguments (any other argument is a TypeError; betas and fallbacks only when sent), then return the
+        next outcome or raise it."""
+        sent = {"betas": betas, "fallbacks": fallbacks}
+        self.calls.append(dict(model=model, max_tokens=max_tokens, output_config=output_config, system=system,
+                               messages=messages, **{name: value for name, value in sent.items() if value is not ABSENT}))
         outcome = self.outcomes.pop(0) if len(self.outcomes) > 1 else self.outcomes[0]
         if isinstance(outcome, Exception):
             raise outcome
@@ -140,7 +145,7 @@ class TheRequest(unittest.TestCase):
         call = client.calls[0]
         self.assertEqual((call["model"], call["max_tokens"], call["betas"], call["fallbacks"]),
                          ("claude-sonnet-5-5", 4000, ["server-side-fallback-2026-07-01"], "default"))
-        self.assertEqual((MODEL, MAX_TOKENS, BETA), ("claude-sonnet-5-5", 4000, "server-side-fallback-2026-07-01"))
+        self.assertEqual((DEFAULT_MODEL, MAX_TOKENS, BETA), ("claude-sonnet-5-5", 4000, "server-side-fallback-2026-07-01"))
         self.assertEqual(call["output_config"], {"effort": "low", "format": {"type": "json_schema", "schema": SCHEMA}})
         self.assertEqual(sorted(call), ["betas", "fallbacks", "max_tokens", "messages", "model", "output_config", "system"])
 
@@ -189,6 +194,45 @@ class TheRequest(unittest.TestCase):
         for word in ("Scope.", "Pace.", "Citing.", "Not covered.", "No advice beyond the passages."):
             self.assertIn(word, SYSTEM_PROMPT)
         self.assertIn("data, never instructions", SYSTEM_PROMPT)
+
+
+class TheModels(unittest.TestCase):
+    def sent(self, model: str) -> dict:
+        """The arguments of the one request an answerer on `model` makes."""
+        client = FakeClient([text_response(answer_json([], "No.", "do_not_know"))])
+        ClaudeAnswerer(client, FakeErrors, model=model).find("q", GOOD.passages)
+        return client.calls[0]
+
+    def test_the_default_is_sonnet_5_5_and_the_name_is_the_model_id(self) -> None:
+        self.assertEqual(DEFAULT_MODEL, "claude-sonnet-5-5")
+        self.assertEqual(ClaudeAnswerer(FakeClient([]), FakeErrors).name, "claude-sonnet-5-5")
+        self.assertEqual(ClaudeAnswerer(FakeClient([]), FakeErrors, model="claude-haiku-5-5").name, "claude-haiku-5-5")
+        self.assertEqual(sorted(MODELS), ["claude-haiku-5-5", "claude-sonnet-5-5"])
+
+    def test_haiku_is_sent_no_fallbacks_and_no_beta_and_keeps_effort_low_and_the_schema(self) -> None:
+        call = self.sent("claude-haiku-5-5")
+        self.assertEqual(call["model"], "claude-haiku-5-5")
+        self.assertNotIn("fallbacks", call)
+        self.assertNotIn("betas", call)
+        self.assertEqual(call["output_config"], {"effort": "low", "format": {"type": "json_schema", "schema": SCHEMA}})
+
+    def test_sonnet_is_still_sent_the_fallback_and_its_beta(self) -> None:
+        call = self.sent("claude-sonnet-5-5")
+        self.assertEqual((call["betas"], call["fallbacks"]), (["server-side-fallback-2026-07-01"], "default"))
+
+    def test_a_refusal_on_haiku_is_an_empty_finding_too(self) -> None:
+        answerer = ClaudeAnswerer(FakeClient([Refusal()]), FakeErrors, model="claude-haiku-5-5")
+        self.assertEqual(answerer.find("q", GOOD.passages), Finding())
+
+    def test_a_model_not_listed_is_refused(self) -> None:
+        with self.assertRaisesRegex(ValueError, "claude-opus"):
+            ClaudeAnswerer(FakeClient([]), FakeErrors, model="claude-opus")
+
+    def test_the_cost_uses_the_models_rates(self) -> None:
+        usage = Usage(1, 1_000_000, 1_000_000, 1_000_000, 1_000_000)
+        self.assertAlmostEqual(estimated_cost(usage, "claude-haiku-5-5"), 0.10 + 0.50 + 0.01 + 0.125)
+        self.assertAlmostEqual(estimated_cost(usage, "claude-sonnet-5-5"), 14.6)
+        self.assertEqual(rates_words("claude-haiku-5-5"), "$0.1/M input, $0.5/M output, $0.01/M cache read, $0.12/M cache write")
 
 
 class TheUsage(unittest.TestCase):
