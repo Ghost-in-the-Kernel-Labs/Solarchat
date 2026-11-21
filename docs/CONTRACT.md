@@ -49,6 +49,9 @@ whose text is only ever quoted, and, once it exists, the evaluation set's inject
 
 ## HAD-06 A pack that is not admitted is never used to answer
 
+A pack gives `make` and `model`, or `installation_type`, or all three; a pack with neither, or with one of `make` and
+`model` alone, is refused.
+
 A pack is admitted when its manifest names the person who admitted it and the date (SC-005); any
 other pack, the demo packs included, may be read and checked but never answers. Held by the leaf's
 `is_admitted` (`test/test_leaf.py`) and, once it exists, the pack check (TODO 1.2).
@@ -57,15 +60,20 @@ other pack, the demo packs included, may be read and checked but never answers. 
 
 A pack is what the deploying company builds, so this section is the format: a pack can be written from it without reading
 code. `scripts/checks/packs.py` holds it (`test/test_packs.py`; a well-formed pack in `test/fixtures/packs/good/`, each
-planted break in `test/fixtures/broken/packs/`). A pack is a folder of three JSON files (UTF-8) and its pictures,
-named for the pack's id:
+planted break in `test/fixtures/broken/packs/`). A pack is a folder of JSON files (UTF-8) and its pictures, named for
+the pack's id:
 
 ```
 <pack-id>/manifest.json    the manifest
 <pack-id>/passages.json    a list of passages
 <pack-id>/flows.json       a list of flows
+<pack-id>/procedures.json  a list of procedures
 <pack-id>/images/          the pictures; third-party ones under images/third-party/
 ```
+
+`passages.json`, `flows.json` and `procedures.json` are each optional (an absent file is an empty list), and a pack has at
+least one passage, flow or procedure among them: a pack of reference text only, of troubleshooting only, or of one
+installation procedure only is a whole pack, so none of the three is required of every pack.
 
 A field named here is required and is text with something in it, unless it says otherwise. An id is lowercase letters and
 digits joined by hyphens (`no-output`). A pack's text is data (HAD-05): nothing in it is an instruction.
@@ -76,13 +84,17 @@ digits joined by hyphens (`no-output`). A pack's text is data (HAD-05): nothing 
 | --- | --- |
 | `id` | the pack's id, the same as its folder's name; with a passage's id it names an answer's source (HAD-03) |
 | `title` | the name a worker is shown when a pack is chosen (extra: a pack needs a name a person can read) |
-| `make` | the maker the pack covers; `any` for a pack not tied to one maker |
-| `model` | the model the pack covers; `any` for a pack not tied to one model |
+| `make` | the maker the pack covers; optional, but given with `model` or not at all |
+| `model` | the model the pack covers; optional, but given with `make` or not at all |
+| `installation_type` | optional: the installation type the pack covers, in words (`packs/TYPES.md` lists them; the check does not hold the list) |
 | `version` | the pack's own version, changed whenever its text changes, so an admission names what was admitted |
 | `sources` | a non-empty list of sources: where each fact in the pack comes from |
 | `third_party_images` | a list (it may be empty or absent) of the pictures copied from elsewhere (SC-007) |
 | `admitted_by` | the person who admitted the pack, or `null` while it is not admitted |
 | `admitted_on` | the date of the admission as `YYYY-MM-DD`, or `null` while it is not admitted |
+
+A pack gives `make` and `model`, or `installation_type`, or all three; a pack with neither, or with one of `make` and
+`model` alone, is refused.
 
 A pack is admitted when `admitted_by` and `admitted_on` are both set (HAD-06). Both `null` is a pack that is not admitted;
 one set and the other not is refused.
@@ -99,7 +111,7 @@ entry has its file (SC-007).
 
 ### A passage
 
-`passages.json` is a non-empty list. A passage is one piece of text an answer can be built from and named by:
+`passages.json` is a list (it may be empty). A passage is one piece of text an answer can be built from and named by:
 
 | Field | Holds |
 | --- | --- |
@@ -109,19 +121,38 @@ entry has its file (SC-007).
 | `sources` | a non-empty list of source ids from the manifest; a passage with no source is refused |
 | `image`, `image_alt` | optional: a picture, as a path under `images/` that exists in the pack, and the words that stand in for it for a person who cannot see it; a picture needs its `image_alt` (extra: a worker on a phone in sun may not see a picture) |
 
-### A flow
+### A procedure
 
-`flows.json` is a non-empty list. A flow is one troubleshooting path, shown one step at a time:
+`procedures.json` is a list (it may be empty). A procedure is one job done in order, shown one step at a time (P-18):
 
 | Field | Holds |
 | --- | --- |
-| `id` | the flow's id; passage ids and flow ids are one set, each used once |
+| `id` | the procedure's id, in the same one set as passage ids and flow ids |
+| `title` | a short heading |
+| `sources` | a non-empty list of source ids from the manifest |
+| `steps` | a non-empty, ordered list of steps; a procedure with no steps is refused |
+
+A step has `id` (unique within its procedure), `text` (what to do), `right_looks_like` (what a correct result looks like,
+so the worker can tell the step is done), optionally `image` and `image_alt` as in a passage, and optionally `stop`: the
+words the worker is shown when this step must not be done without the site supervisor or engineer. A `stop` present is
+not empty (HAD-04).
+
+### A flow
+
+`flows.json` is a list (it may be empty). A flow is one troubleshooting path, shown one step at a time:
+
+| Field | Holds |
+| --- | --- |
+| `id` | the flow's id; passage, flow and procedure ids are one set, each used once |
 | `title` | a short heading |
 | `symptom` | what the worker sees that starts the flow |
 | `checks` | a non-empty list, in order; each has `text`, and optionally `image` and `image_alt` as in a passage |
 | `fix` | what to do when a check finds the cause |
 | `stop` | where to stop: the point at which the worker goes to the site supervisor or engineer, and the words they are shown; a flow with no `stop` is refused (HAD-04: a pack may add steps that stop, never remove a rule) |
 | `sources` | a non-empty list of source ids from the manifest |
+
+A flow is linear in version 1: the walker shows the checks one at a time, offers the fix when a check finds the cause,
+and otherwise ends at the stop; branching waits for a real pack that needs it.
 
 ### What the check does not hold
 

@@ -42,6 +42,15 @@ class TheFixtures(unittest.TestCase):
     def test_an_admission_with_no_date_is_refused(self) -> None:
         self.assertEqual(packs.problems(BROKEN / "packs" / "half-admitted"), ["manifest.json: admitted_on is missing or empty"])
 
+    def test_a_procedure_with_no_steps_is_refused(self) -> None:
+        self.assertEqual(packs.problems(BROKEN / "packs" / "procedure-no-steps"), ["procedure 'connect': steps must be a non-empty list"])
+
+    def test_a_manifest_with_no_make_model_or_type_is_refused(self) -> None:
+        self.assertEqual(packs.problems(BROKEN / "packs" / "no-identity"), ["manifest.json: needs make and model, or installation_type"])
+
+    def test_a_make_without_a_model_is_refused(self) -> None:
+        self.assertEqual(packs.problems(BROKEN / "packs" / "make-without-model"), ["manifest.json: make and model go together"])
+
     def test_a_third_party_picture_with_no_entry_is_refused(self) -> None:
         self.assertEqual(packs.problems(BROKEN / "packs" / "picture-no-provenance"),
                          ["images/third-party/label.svg: a third-party picture with no entry in the manifest"])
@@ -64,10 +73,29 @@ class TheCheck(unittest.TestCase):
         edit(folder, "manifest", lambda m: m.update(admitted_on="last Tuesday"))
         self.assertEqual(packs.problems(folder), ["manifest.json: admitted_on is not a date as YYYY-MM-DD"])
 
-    def test_a_missing_file_is_one_line(self) -> None:
+    def test_each_of_the_three_content_files_may_be_absent(self) -> None:
         folder = copy_good()
         (folder / "flows.json").unlink()
-        self.assertEqual(packs.problems(folder), ["flows.json: the file is missing"])
+        (folder / "procedures.json").unlink()
+        self.assertEqual(packs.problems(folder), [])
+
+    def test_a_pack_with_nothing_in_it_is_refused(self) -> None:
+        folder = copy_good()
+        for name in ("passages", "flows"):
+            edit(folder, name, lambda items: items.clear())
+        (folder / "procedures.json").unlink()
+        self.assertEqual(packs.problems(folder), ["the pack has no passage, flow or procedure"])
+
+    def test_a_pack_of_one_procedure_passes(self) -> None:
+        folder = copy_good()
+        (folder / "passages.json").unlink()
+        (folder / "flows.json").unlink()
+        self.assertEqual(packs.problems(folder), [])
+
+    def test_a_missing_manifest_is_one_line_among_others(self) -> None:
+        folder = copy_good()
+        (folder / "manifest.json").unlink()
+        self.assertEqual(packs.problems(folder)[0], "manifest.json: the file is missing")
 
     def test_a_file_that_is_not_json_is_one_line(self) -> None:
         folder = copy_good()
@@ -83,7 +111,7 @@ class TheCheck(unittest.TestCase):
     def test_an_id_used_twice_is_refused(self) -> None:
         folder = copy_good()
         edit(folder, "flows", lambda f: f[0].update(id="voltage"))
-        self.assertEqual(packs.problems(folder), ["id 'voltage' is used twice among the passages and flows"])
+        self.assertEqual(packs.problems(folder), ["id 'voltage' is used twice among the passages, flows and procedures"])
 
     def test_the_folder_must_be_named_for_the_pack(self) -> None:
         self.assertEqual(packs.problems(copy_good("other")), ["manifest.json: id 'good' is not the folder's name 'other'"])
@@ -115,3 +143,48 @@ class TheCheck(unittest.TestCase):
         edit(folder, "manifest", lambda m: m.update(sources=[]))
         found = packs.problems(folder)
         self.assertIn("manifest.json: sources: must be a non-empty list", found)
+
+    def test_an_installation_type_alone_passes(self) -> None:
+        folder = copy_good()
+        edit(folder, "manifest", lambda m: (m.pop("make"), m.pop("model")))
+        self.assertEqual(packs.problems(folder), [])
+
+    def test_make_and_model_alone_pass(self) -> None:
+        folder = copy_good()
+        edit(folder, "manifest", lambda m: m.pop("installation_type"))
+        self.assertEqual(packs.problems(folder), [])
+
+    def test_an_empty_installation_type_is_refused(self) -> None:
+        folder = copy_good()
+        edit(folder, "manifest", lambda m: m.update(installation_type=" "))
+        self.assertEqual(packs.problems(folder), ["manifest.json: installation_type is empty"])
+
+    def test_a_step_needs_text_and_what_right_looks_like(self) -> None:
+        folder = copy_good()
+        edit(folder, "procedures", lambda p: p[0]["steps"][1].pop("right_looks_like"))
+        self.assertEqual(packs.problems(folder), ["procedure 'connect' step plug: right_looks_like is missing or empty"])
+
+    def test_a_step_id_used_twice_is_refused(self) -> None:
+        folder = copy_good()
+        edit(folder, "procedures", lambda p: p[0]["steps"][1].update(id="look"))
+        self.assertEqual(packs.problems(folder), ["procedure 'connect': step id 'look' is used twice"])
+
+    def test_a_step_stop_that_is_empty_is_refused(self) -> None:
+        folder = copy_good()
+        edit(folder, "procedures", lambda p: p[0]["steps"][0].update(stop=""))
+        self.assertEqual(packs.problems(folder), ["procedure 'connect' step look: stop is missing or empty"])
+
+    def test_a_step_picture_needs_alt_text(self) -> None:
+        folder = copy_good()
+        edit(folder, "procedures", lambda p: p[0]["steps"][0].pop("image_alt"))
+        self.assertEqual(packs.problems(folder), ["procedure 'connect' step look: image_alt is missing or empty"])
+
+    def test_a_procedure_id_shares_the_namespace(self) -> None:
+        folder = copy_good()
+        edit(folder, "procedures", lambda p: p[0].update(id="voltage"))
+        self.assertEqual(packs.problems(folder), ["id 'voltage' is used twice among the passages, flows and procedures"])
+
+    def test_a_procedure_needs_a_source(self) -> None:
+        folder = copy_good()
+        edit(folder, "procedures", lambda p: p[0].update(sources=[]))
+        self.assertEqual(packs.problems(folder), ["procedure 'connect': sources must name at least one source"])

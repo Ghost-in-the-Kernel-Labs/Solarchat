@@ -1,6 +1,6 @@
 """A knowledge pack is well formed, as docs/CONTRACT.md's "The pack format" states it (SC-005, SC-007, HAD-03 to HAD-06).
 
-`problems(folder)` reads one pack folder (manifest.json, passages.json, flows.json, images/) and returns one line per
+`problems(folder)` reads one pack folder (manifest.json, then passages.json, flows.json, procedures.json, images/) and returns one line per
 fault, `[]` for a well-formed pack. It reads the folder's files through scripts/checks/common.py, not the disk's walk
 of a clone (C-001). It is not run over `packs/` yet: the demo pack is brought to the format in TODO 1.4. What it cannot
 judge stays with the person who admits a pack: whether a licence allows redistribution, whether a passage is true.
@@ -13,11 +13,13 @@ from pathlib import Path
 from scripts.checks.common import tracked_files
 
 ID = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
-MANIFEST_TEXT = ("id", "title", "make", "model", "version")
+MANIFEST_TEXT = ("id", "title", "version")
 SOURCE_TEXT = ("id", "title", "url", "licence", "retrieved")
 PICTURE_TEXT = ("file", "source_url", "owner", "licence", "shows")
 PASSAGE_TEXT = ("id", "title", "text")
 FLOW_TEXT = ("id", "title", "symptom", "fix", "stop")
+PROCEDURE_TEXT = ("id", "title")
+STEP_TEXT = ("text", "right_looks_like")
 THIRD_PARTY = "images/third-party/"
 
 
@@ -47,9 +49,17 @@ def load(folder: Path, name: str, found: list[str]) -> object:
         return None
 
 
-def objects(value: object, where: str, found: list[str]) -> list[dict]:
-    """The value as a non-empty list of objects, or [] with a line added when it is not one."""
-    if not isinstance(value, list) or not value:
+def optional(folder: Path, name: str, found: list[str]) -> list[dict]:
+    """The objects in folder/name, a file that may be absent (then []) or hold an empty list; faults add lines."""
+    if not (folder / name).is_file():
+        return []
+    loaded = load(folder, name, found)
+    return [] if loaded is None else objects(loaded, name, found, empty_ok=True)
+
+
+def objects(value: object, where: str, found: list[str], empty_ok: bool = False) -> list[dict]:
+    """The value as a list of objects, non-empty unless empty_ok, or [] with a line added when it is not one."""
+    if not isinstance(value, list) or (not value and not empty_ok):
         found.append(f"{where}: must be a non-empty list")
         return []
     if not all(isinstance(item, dict) for item in value):
@@ -69,6 +79,18 @@ def admission_problems(manifest: dict) -> list[str]:
             date.fromisoformat(on)
         except ValueError:
             found.append("manifest.json: admitted_on is not a date as YYYY-MM-DD")
+    return found
+
+
+def identity_problems(manifest: dict) -> list[str]:
+    """What the pack covers: make and model together, or installation_type, or all three; never make alone or neither."""
+    make, model = blank(manifest.get("make")), blank(manifest.get("model"))
+    kind = manifest.get("installation_type")
+    found = ["manifest.json: installation_type is empty"] if kind is not None and blank(kind) else []
+    if make != model:
+        return found + ["manifest.json: make and model go together"]
+    if make and blank(kind):
+        found.append("manifest.json: needs make and model, or installation_type")
     return found
 
 
@@ -101,7 +123,7 @@ def manifest_problems(manifest: object) -> tuple[list[str], set[str], set[str]]:
     """The manifest's lines, its source ids and its listed third-party picture files."""
     if not isinstance(manifest, dict):
         return ["manifest.json: is not an object"], set(), set()
-    found = missing(manifest, MANIFEST_TEXT, "manifest.json") + admission_problems(manifest)
+    found = missing(manifest, MANIFEST_TEXT, "manifest.json") + identity_problems(manifest) + admission_problems(manifest)
     if not blank(manifest.get("id")) and not ID.match(manifest["id"]):
         found.append("manifest.json: id must be lowercase words joined by hyphens")
     more, ids = source_problems(manifest)
@@ -161,11 +183,38 @@ def flow_problems(flows: list[dict], ids: set[str], folder: Path) -> list[str]:
     return found
 
 
+def step_problems(procedure: dict, where: str, folder: Path) -> list[str]:
+    """A procedure's steps: a non-empty list; each has an id unique in the procedure, text, right_looks_like, a sound
+    picture if it has one, and, if it has a stop, words in it."""
+    steps = procedure.get("steps")
+    if not isinstance(steps, list) or not steps:
+        return [f"{where}: steps must be a non-empty list"]
+    found: list[str] = []
+    names = [str(s.get("id")) for s in steps if isinstance(s, dict)]
+    for number, step in enumerate(steps, start=1):
+        label = f"{where} step {step.get('id') if isinstance(step, dict) and step.get('id') else number}"
+        found += missing(step, ("id",) + STEP_TEXT, label)
+        if isinstance(step, dict):
+            found += picture_problems(step, label, folder)
+            found += missing(step, ("stop",), label) if "stop" in step else []
+    return found + [f"{where}: step id {n!r} is used twice" for n in sorted(set(names)) if names.count(n) > 1]
+
+
+def procedure_problems(procedures: list[dict], ids: set[str], folder: Path) -> list[str]:
+    """Each procedure has an id, a title, a source from the manifest and sound steps."""
+    found: list[str] = []
+    for procedure in procedures:
+        where = f"procedure {procedure.get('id')!r}"
+        found += missing(procedure, PROCEDURE_TEXT, where) + reference_problems(procedure, where, ids)
+        found += step_problems(procedure, where, folder)
+    return found
+
+
 def id_problems(entries: list[dict]) -> list[str]:
-    """Passage and flow ids share one namespace: each is lowercase words with hyphens, and none is used twice."""
+    """Passage, flow and procedure ids share one namespace: each is lowercase words with hyphens, and none is used twice."""
     names = [str(entry.get("id")) for entry in entries if not blank(entry.get("id"))]
     found = [f"id {n!r} must be lowercase words joined by hyphens" for n in names if not ID.match(n)]
-    return found + [f"id {n!r} is used twice among the passages and flows" for n in sorted(set(names)) if names.count(n) > 1]
+    return found + [f"id {n!r} is used twice among the passages, flows and procedures" for n in sorted(set(names)) if names.count(n) > 1]
 
 
 def unlisted_pictures(folder: Path, listed: set[str]) -> list[str]:
@@ -180,12 +229,14 @@ def problems(folder: Path) -> list[str]:
     """Every fault in the pack folder, in a stable order; [] when it is well formed."""
     found: list[str] = []
     manifest = load(folder, "manifest.json", found)
-    passages, flows = load(folder, "passages.json", found), load(folder, "flows.json", found)
     more, ids, listed = manifest_problems(manifest) if manifest is not None else ([], set(), set())
     found += more
     if isinstance(manifest, dict) and manifest.get("id") not in (None, folder.name):
         found.append(f"manifest.json: id {manifest.get('id')!r} is not the folder's name {folder.name!r}")
-    passage_list = objects(passages, "passages.json", found) if passages is not None else []
-    flow_list = objects(flows, "flows.json", found) if flows is not None else []
-    found += passage_problems(passage_list, ids, folder) + flow_problems(flow_list, ids, folder)
-    return found + id_problems(passage_list + flow_list) + unlisted_pictures(folder, listed)
+    passages, flows = optional(folder, "passages.json", found), optional(folder, "flows.json", found)
+    procedures = optional(folder, "procedures.json", found)
+    if not (passages or flows or procedures):
+        found.append("the pack has no passage, flow or procedure")
+    found += passage_problems(passages, ids, folder) + flow_problems(flows, ids, folder)
+    found += procedure_problems(procedures, ids, folder)
+    return found + id_problems(passages + flows + procedures) + unlisted_pictures(folder, listed)
