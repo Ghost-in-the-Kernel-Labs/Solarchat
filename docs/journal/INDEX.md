@@ -27,3 +27,4 @@ Written from `docs/journal/` by `scripts/journal_index.py`; do not edit by hand.
 | J-021 | The six words of Phase 1 (TODO 1.1) | decision | `J-000-099.md` |
 | J-022 | The pack format and its check (TODO 1.2) | decision | `J-000-099.md` |
 | J-023 | The manifesto restored word for word, and held by a test | failure-caught | `J-000-099.md` |
+| J-024 | Monday's demo and the human maintainability standard: SC-010, SC-011, the walker module, Phase 1 reordered | decision | `J-000-099.md` |

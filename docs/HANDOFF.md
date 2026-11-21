@@ -19,9 +19,10 @@ which admitted passage to show.
 
 ## Next, in order
 
-1. **Phase 1**, 1.1 to 1.6: the words, the pack format and its check (the real deliverable: the deploying company
-   builds its libraries to it, F-15), the safety rules for the newest contractor on a site, then bringing the demo
-   pack to that format (1.4 stays open until then), then the frozen evaluation set.
+1. **The tune-up with the first human maintainability pass** (SC-011), Ghost's word: right after 1.2.
+2. **The demo of Monday 2026-11-23** (SC-010): 1.3 the safety rules (Ghost reads the list), 1.4 the seed pack in
+   the format, 1.5 demo mode, 1.6 the walker, 1.7 the safety rules in the walker, 1.8 the offline shell.
+3. **1.9 the evaluation set**, frozen before any search or model; 1.10 Tune-up pass 1.
 
 ## Settled by Ghost
 
@@ -32,7 +33,9 @@ which admitted passage to show.
 - 2026-11-21: the users are workers on sites, not homeowners (J-013); no mutation run (J-015, SC-008); the package
   `solarchat`, the five modules, the prefix HAD and the contract keeping its name (J-018); the repository's default
   branch set to `main` and the old branches deleted (J-019); run Tune-up pass 0 (J-019);
-  a tune-up commit every twenty-five commits, not eight (SC-009, J-020).
+  a tune-up commit every twenty-five commits, not eight (SC-009, J-020); the pack format's procedures, linear
+  flows and installation_type (J-022); Monday's demo as an offline walk-through with a labelled demo mode, and the
+  walker module (SC-010, J-024); the human maintainability standard (SC-011, J-024).
 - The wording of SC-002 to SC-008 is the agent's, for Ghost to confirm.
 
 ## For Ghost: waiting on you

@@ -560,3 +560,22 @@ The core decisions above are inherited (Core C-001 to C-041); this project's beg
 - **Reverses if:** the navigation log fills with misses that a tune-up commit would have fixed before the phase's pass.
 - **See also:** Core C-024, Core C-025
 - **subject:** tune-up
+
+### SC-010: A labelled demo mode may run a pack that is not admitted; for Monday's demo the walker comes before the evaluation set
+- **Decision:** HAD-06 stands everywhere but one place: a demo switch lets a pack that is not admitted run, and every screen shown under it carries the banner "DEMO: not reviewed by an engineer, do not use on a site". Without the switch an unadmitted pack is refused, as before. For the demo of 2026-11-23, the offline walk-through comes first: the walker (from roadmap 2.3), the safety rules in the walker (from 2.4) and the command-line conversation (from 2.6) move into Phase 1 after the seed pack, ahead of the evaluation set. Free-text search (2.1, 2.2) and every model stay behind the frozen evaluation set (Core C-003): the walker answers no question; it shows a pack's admitted-or-demo steps in their order and stops where the pack and the safety rules stop.
+- **Why:** Ghost, 2026-11-21, in chat: a version that can be demoed on Monday; the offline walk-through and the labelled demo mode, each his pick among options the agent set out. What HAD-06 protected, said once by the agent: no worker acts on text no person has checked; the banner and the switch keep that true of everything but a demo, and the demo pack's five unsourced claims stay flagged in `docs/HANDOFF.md`.
+- **Held by:** the demo switch and its tests once TODO 1.5 builds them; `TODO.md` (Phase 1's order); `docs/ROADMAP.md` §6.
+- **Source:** Ghost, 2026-11-21, in chat; the wording the agent's, for Ghost to confirm.
+- **Status:** in force
+- **Reverses if:** the demo switch is ever reachable from a build meant for a site.
+- **See also:** HAD-06, Core C-003; SC-005
+- **subject:** model roles
+
+### SC-011: The code is written for human reviewers: named variables, commented functions, two READMEs, and the decisions mapped to the functions that hold them
+- **Decision:** Every variable is named for what it holds, so the code documents itself; every function has a comment saying what it is for; a README for humans explains what each part of the repository does; a safety-and-compliance README explains exactly how Solarchat strips out a language model's unchecked helpfulness, the kind that could get a person killed if they followed wrong directions, and replaces it with validated and verified instruction sets; and every decision (Core C-nnn, SC-nnn) and invariant (HAD-nn) is mapped to the functions that hold it, in a generated map a check keeps current. Tune-ups carry this as a human maintainability pass, beginning with the tune-up after 1.2; the inherited Ghost-Core toolkit under `scripts/` is brought to it a few files at a time, each refactor with its proof that nothing changed.
+- **Why:** Ghost, 2026-11-21, in chat: "This codebase is going to be reviewed by humans. Every single variable must be a well named variable. Variables are self documenting. ... Functions should be commented as to their purpose. The ghost directives should be mapped to functions. (we should have been doing this already)".
+- **Held by:** `scripts/checks/readability.py` (a docstring on every function), the directive map and its check once the first maintainability pass writes them, `README.md`, the safety-and-compliance README.
+- **Source:** Ghost, 2026-11-21, in chat; the staging (product code first, Core's toolkit in parts) the agent's, for Ghost to confirm.
+- **Status:** in force
+- **See also:** Core C-024, Core C-025, Core C-012; SC-009
+- **subject:** tune-up

@@ -132,18 +132,25 @@ What a wrong answer is has to be written down before anything can give one (Core
   steps, each with a picture, and the common failures (F-14). Ghost asked for a first draft ahead of 1.2 (J-011):
   it is built to a provisional layout under `packs/`, marked not admitted, and is brought to 1.2's format and
   admitted by a person before the item closes.
-- 1.5 The evaluation set, version 1, frozen: in-scope questions with the passage that answers each,
-  out-of-scope questions that must be refused, and safety cases that must stop.
-- 1.6 Tune-up pass 1
+- 1.5 Demo mode: a labelled switch that lets a pack that is not admitted run, for a demo only (SC-010).
+- 1.6 The walker, moved from 2.3 for the demo of 2026-11-23 (SC-010): one step at a time through a procedure or
+  a flow, to a fix or a stop.
+- 1.7 The safety rules enforced in the walker, moved from 2.4's walker half (SC-010).
+- 1.8 The offline shell, moved from 2.6 (SC-010): a command-line conversation that runs end to end with the
+  network off.
+- 1.9 The evaluation set, version 1, frozen: in-scope questions with the passage that answers each,
+  out-of-scope questions that must be refused, and safety cases that must stop. It still comes before any
+  search or model (Core C-003): the walker answers no question.
+- 1.10 Tune-up pass 1, with the human maintainability pass (SC-011)
 
 ### Phase 2: the offline mode (the floor)
 
 - 2.1 Ingestion: a pack on disk becomes an index, the same bytes every time (goldens, SC-003).
-- 2.2 Search: keyword ranking in the standard library, scored against 1.5's in-scope questions.
-- 2.3 The flow walker: one step at a time, from a symptom to a fix or a stop.
-- 2.4 The safety rules enforced in the walker and the search.
+- 2.2 Search: keyword ranking in the standard library, scored against 1.9's in-scope questions.
+- 2.3 (moved to 1.6, SC-010)
+- 2.4 The safety rules enforced in the search (the walker's half moved to 1.7, SC-010).
 - 2.5 Switching packs on and off, and two packs for different models side by side.
-- 2.6 The offline shell: a command-line conversation that runs end to end with the network off.
+- 2.6 (moved to 1.8, SC-010)
 - 2.7 Tune-up pass 2
 
 ### Phase 3: the local mode (a model on top)

@@ -26,13 +26,29 @@ Check: a document outside every pack lists the stop points for the newest contra
 
 Check: one pack in the repository passes 1.2's check; its manifest names a source whose licence allows redistribution, and the licence text or its link is recorded; it covers connecting a panel, polarity, and a panel that shows no output.
 
-### 1.5 The evaluation set, version 1
+### 1.5 Demo mode
+
+Check: a demo switch lets a pack that is not admitted run, and every screen shown under it carries the banner "DEMO: not reviewed by an engineer, do not use on a site"; without the switch such a pack is refused (HAD-06, SC-010); a test holds both.
+
+### 1.6 The walker
+
+Check: `solarchat/walker` steps through a pack's procedure (its steps in order, each step's stop shown) and a flow (its checks in order, ending at its fix or its stop), one step at a time, on the good fixture pack and the seed pack; tests hold both and that a walk always ends.
+
+### 1.7 The safety rules in the walker
+
+Check: every walk stops at a safety rule of 1.3 that applies, whatever the pack says, with the rule's words shown; a test plants a pack step that would walk past one.
+
+### 1.8 The offline shell
+
+Check: `solarchat/cli` runs a conversation end to end with the network off: choose a pack, a procedure or a flow, walk it step by step, and see the demo banner when the pack is not admitted; a test drives it through stdin.
+
+### 1.9 The evaluation set, version 1
 
 Check: at least thirty in-scope questions each naming the passage that answers it, fifteen out-of-scope questions marked refuse, and ten safety cases marked stop; a check holds the file's shape and that every named passage exists; the set's hash is recorded and a later change without a decision is refused.
 
-### 1.6 Tune-up pass 1
+### 1.10 Tune-up pass 1
 
-Check: `docs/when/tune-up.md` followed in full; the metrics table written; the navigation log reviewed.
+Check: `docs/when/tune-up.md` followed in full; the metrics table written; the navigation log reviewed; the human maintainability pass for the code written since the last one (SC-011).
 
 ## Phase W: waiting on Ghost
 
