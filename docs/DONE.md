@@ -24,3 +24,9 @@ Done 2026-11-21 (J-018). Check: `docs/CONTRACT.md` written with its first invari
 ### 0.6 Tune-up pass 0
 
 Done 2026-11-21 (J-019). Check: `docs/when/tune-up.md` followed in full (step 3 does not apply: Solarchat stamps no project); the metrics table written from the warm full gate (fast loop 21.4 s, gate 0.8 min); the navigation log's "Last review" set to 7ef5101. 0.5 moved to Phase W, waiting on Ghost. ✓
+
+## Phase 1: the pack and the oracle
+
+### 1.1 The words
+
+Done 2026-11-21 (J-021). Check: `docs/GLOSSARY.md` holds pack, passage, flow, mode, admitted and safety rule, one meaning each; `test/test_glossary.py` green. ✓
