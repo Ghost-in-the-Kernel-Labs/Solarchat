@@ -25,6 +25,14 @@ CLAUDE.md sends the coordinator here before its first item. The rule, in the ord
    `../Solarchat-<task>`, point its `origin` at GitHub, check out the item's branch; or the Agent tool's
    `isolation: "worktree"`), never in the coordinator's checkout: the coordinator's tree stays clean while it works,
    a stop hook has nothing to ask about, and two workers never edit one tree (Ghost, 2026-11-21).
+   Two practical notes for the worktree. The Agent tool puts its worktree at `.claude/worktrees/` inside the checkout:
+   add `/.claude/worktrees/` once per checkout to `.git/info/exclude` (a local file, never committed), so the
+   coordinator's `git status` and the stop hook stay clean; the coordinator removes a worker's worktree, and its
+   `worktree-agent-*` branch, after reading its report. The gate needs `.venv`: the coordinator builds one shared
+   `.venv` in the main checkout from `requirements.lock` (supply-chain rule 2: `python3.12 -m venv .venv &&
+   .venv/bin/pip install --only-binary :all: --require-hashes -r requirements.lock`), and a worker makes a real
+   `.venv/` directory of symlinks to that venv's entries. A worker never symlinks `.venv` itself: the gitignore rule
+   `/.venv/` does not match a symlink, so the gate records it and `scripts/commit.sh` refuses.
 5. **The ladder.** A worker makes one attempt at a change the checks reject for a reason it cannot explain, then
    goes one grade up (`docs/when/escalation.md`). The coordinator answers a mid worker's escalation with what it
    needs; it does not take the item back.
