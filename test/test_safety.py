@@ -59,8 +59,9 @@ class TheRules(unittest.TestCase):
     def test_every_rule_has_words_triggers_and_a_source(self) -> None:
         for rule in rules.load_rules():
             with self.subTest(rule=rule.rule_id):
-                self.assertTrue(rule.words_shown.startswith("Stop") or rule.rule_id == "SR-01")
-                self.assertTrue(rule.words_shown.endswith(GO_TO_SUPERVISOR))
+                # SR-03 is a warn: its words let the walk continue, so they neither say Stop nor send the worker away (J-036)
+                self.assertTrue(rule.words_shown.startswith("Stop") or rule.rule_id in ("SR-01", "SR-03"))
+                self.assertTrue(rule.words_shown.endswith(GO_TO_SUPERVISOR) or rule.rule_id == "SR-03")
                 self.assertTrue(rule.triggers)
                 self.assertTrue(rule.sources)
 
@@ -87,9 +88,11 @@ class TheResponses(unittest.TestCase):
                 self.assertEqual(response, expected)
 
     def test_sr_03_logs_ghosts_warn_as_maintainer_and_pending_review(self) -> None:
-        latest = rules.load_rules()[2].changes[-1]
-        self.assertEqual((latest.by, latest.role), ("Ghost", "maintainer"))
-        self.assertEqual(latest.why, "connecting is daily work; parting under load is the hazard; pending engineer review")
+        warn_entry, words_entry = rules.load_rules()[2].changes[-2:]
+        self.assertEqual((warn_entry.by, warn_entry.role), ("Ghost", "maintainer"))
+        self.assertEqual(warn_entry.why, "connecting is daily work; parting under load is the hazard; pending engineer review")
+        self.assertEqual((words_entry.by, words_entry.role, words_entry.evidence), ("Ghost", "maintainer", "J-036"))
+        self.assertIn("pending engineer review", words_entry.why)
 
     def test_every_rule_logs_version_1_and_the_audits_change_first(self) -> None:
         for rule in rules.load_rules():

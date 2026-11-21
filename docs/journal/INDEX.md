@@ -39,3 +39,4 @@ Written from `docs/journal/` by `scripts/journal_index.py`; do not edit by hand.
 | J-033 | Ghost's further word: the engineer comes in only at the end, and the project is built for that one review | decision | `J-000-099.md` |
 | J-034 | SC-015 and SC-016 in code: ReplyKind.WARN, each rule's response and change log, the fingerprint check | feature | `J-000-099.md` |
 | J-035 | SC-017 in code: the pack status `library` becomes `field` | feature | `J-000-099.md` |
+| J-036 | Ghost approves SR-03's words as a warning: the Stop and the send-away come out | decision | `J-000-099.md` |

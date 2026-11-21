@@ -39,7 +39,7 @@
     "title": "Never pull connectors apart under load",
     "applies_when": "A step has you pull a panel's connectors, a string or a DC lead apart while current can flow. Pulling a connector apart under load can draw an arc that burns. Joining and plugging in connectors is daily work and is not a stop (Ghost, 2026-11-21).",
     "triggers": ["pull connectors apart", "pull the connectors apart", "separate the halves", "open the pairs", "open the connectors", "under load", "disconnect under load"],
-    "words_shown": "Stop. Never pull connectors apart while current can flow: under load they spark and burn. First make sure no current can flow: turn the isolator off, or cover the whole panel. Then open each pair with the release tool made for it, never by hand. Go to your site supervisor or engineer.",
+    "words_shown": "Before you part connectors, make sure no current can flow: turn the isolator off, or cover the whole panel. Then open each pair with the release tool made for it, never by hand. Never pull connectors apart under load: they can spark and burn.",
     "response": "warn",
     "sources": [
       {"title": "Staubli: MC4 branch connector assembly instructions MA250 (12.2025, e: always de-energise the PV system before mating and disconnecting; never disconnect the connectors under load; a tool is required to open)", "url": "https://www.staubli.com/content/dam/spot/PV_MA250-en.pdf"},
@@ -49,7 +49,8 @@
     "changes": [
       {"date": "2026-11-21", "by": "Claude Opus 5.5", "role": "agent, drafting", "why": "Version 1: drafted from public guidance for the newest contractor on a site; engineer to confirm.", "evidence": "J-027; the sources listed on this rule"},
       {"date": "2026-11-21", "by": "Ghost", "role": "maintainer", "why": "Rewritten as never pulling connectors apart under load, with the isolator off or the panel covered and the release tool: connecting is daily work; applied on Ghost's word; engineer to confirm.", "evidence": "docs/audits/2026-11-21-safety-rules.md; J-030"},
-      {"date": "2026-11-21", "by": "Ghost", "role": "maintainer", "why": "connecting is daily work; parting under load is the hazard; pending engineer review", "evidence": "SC-015; J-032", "fingerprint": "607a6f08600a99e1a651637f317233c7692d7eb9e0314217be43286e613d8647"}
+      {"date": "2026-11-21", "by": "Ghost", "role": "maintainer", "why": "connecting is daily work; parting under load is the hazard; pending engineer review", "evidence": "SC-015; J-032", "fingerprint": "607a6f08600a99e1a651637f317233c7692d7eb9e0314217be43286e613d8647"},
+      {"date": "2026-11-21", "by": "Ghost", "role": "maintainer", "why": "A warning lets the walk continue, so the words no longer say Stop or send the worker away; pending engineer review (F-16)", "evidence": "J-036", "fingerprint": "5291e877ba5c273db9138b3e232ba7c4ebf3fa5acc9080d4a7e49f14b6ba30a2"}
     ]
   },
   {

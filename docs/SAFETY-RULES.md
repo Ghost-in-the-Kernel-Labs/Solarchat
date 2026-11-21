@@ -75,13 +75,13 @@ Status: a draft for Ghost to read (TODO 1.3 stays open until Ghost has read it).
 
 **The worker is shown:**
 
-> Stop. Never pull connectors apart while current can flow: under load they spark and burn. First make sure no current can flow: turn the isolator off, or cover the whole panel. Then open each pair with the release tool made for it, never by hand. Go to your site supervisor or engineer.
+> Before you part connectors, make sure no current can flow: turn the isolator off, or cover the whole panel. Then open each pair with the release tool made for it, never by hand. Never pull connectors apart under load: they can spark and burn.
 
 **Response:** warn
 
 **Triggers:** `pull connectors apart`, `pull the connectors apart`, `separate the halves`, `open the pairs`, `open the connectors`, `under load`, `disconnect under load`
 
-**Latest change:** 2026-11-21, Ghost (maintainer): connecting is daily work; parting under load is the hazard; pending engineer review. Evidence: SC-015; J-032. Pending engineer.
+**Latest change:** 2026-11-21, Ghost (maintainer): A warning lets the walk continue, so the words no longer say Stop or send the worker away; pending engineer review (F-16). Evidence: J-036. Pending engineer.
 
 **Sources:**
 
