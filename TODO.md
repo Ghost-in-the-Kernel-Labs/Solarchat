@@ -40,6 +40,8 @@ Written only: not built until Ghost asks (the item and its check are this entry;
 
 Check: `evals/v2.json`, frozen with its hash as version 1 is (`scripts/checks/evals.py` extended, a decision for any later change), holds scripted multi-turn dialogues over the seed pack: the worker's turns are fixed, and each turn carries what the reply must do, scored by `scripts/eval.py` against the door (`answer()` with the `history` of SC-019's amendment) on the offline answerers, on recorded replies and live. Four things are checked, each by cases built for it: (1) one step per turn: a reply gives a single step or a single question, never a list of later steps, no passage beyond the step reached is cited, and it is short enough to read on a phone in a few seconds (a length ceiling Ghost sets); (2) waiting: after a step is given the reply to "done" or "ok" is the next step only, and a worker who says nothing new gets no new content; (3) asking rather than assuming: where the worker has not said which device, panel or reading (the make and model, what the label says), the reply is one question and cites the passage it leads toward, and gives no step yet; (4) keeping track of the conversation: a fact the worker already gave is not asked again, and a reply that depends on an earlier answer uses it (the worker said it is an inverter; the next step is the inverter's). A dialogue's replies are scored turn by turn, and a dialogue passes only when every turn does; the per-class table and the per-case record work as for version 1 (SC-019); a safety rule fires in a conversation exactly as in one question (HAD-04). The frozen v1 is unchanged.
 
+SC-023 (proposed, awaiting Ghost; `docs/designs/rule-bank-and-triage.md`, section 8) would absorb this item: its four behaviours become the rule bank's families `pace`, `ask` and `track`, and the frozen per-turn set is not built. If Ghost takes SC-023, this item is closed as absorbed into 1.19 to 1.24; until then it stands as written.
+
 ### 1.18 Tune-up pass 1
 
 Check: `docs/when/tune-up.md` followed in full; the metrics table written; the navigation log reviewed; the human maintainability pass for the code written since the last one (SC-011).
@@ -101,6 +103,48 @@ Check: `scripts/engineer_review_doc.py` writes `docs/ENGINEER-REVIEW.md` from th
 
 Moved: from Phase 1
 Waits on: Ghost's go-ahead to run it; it needs 1.11's change log and 1.12's responses; nothing waits on an engineer
+
+### 1.19 The rule bank's format and check
+
+Check: built to `docs/designs/rule-bank-and-triage.md` section 3, SC-023 in force: `evals/bank/<family>.json` files in the shape of 3.2, seeded by hand with about twenty rules (1.17's four behaviours as `pace`, `ask` and `track` rules, and five safety cases of `evals/v1.json` as `safety` rules whose source names the case); `scripts/checks/bank.py` in the fast loop refuses a missing field, a reused or out-of-order id, no turns or more than three, a `graded_reply` beyond the turns, a question that does not end in "?", a source that does not resolve (pack passage, safety rule, library id, frozen case) and a rule quoting the bot's system prompt, each shown by a planted break under `test/fixtures/broken/bank/`; `test/test_bank.py` holds them. No model is called.
+
+Moved: from Phase 1
+Waits on: Ghost's answer to SC-023 (proposed; `docs/HANDOFF.md`, For Ghost 18)
+
+### 1.20 The bank run's deterministic half
+
+Check: section 4.1, 4.4 and 5 of the design: the sample is a function of the bank, the ledger and the seed (the weights, the safety quarter, never-sampled rules doubled; a test holds the same three inputs giving the same rule ids); one ledger line per run appended to `evals/bank/ledger.jsonl` in the shape of 5.1, the window of 60 runs kept; the door-fault cross-check replays each worker turn through the door with `NoAnswer` and exits 1 on a mismatch, shown by a planted fake reply; `scripts/bank_trend.py` writes `docs/BANK-TREND.md` (families over the last ten runs with the changes named, the watch list by 5.3's signal rule, the grader's agreement, the cost) and `--check` in the fast loop fails on a stale page; and `scripts/eval.py --live --write` exits 2, "a live run is a trend, not a record (SC-023)". All tested with fake bot, interrogator and grader; no model is called.
+
+Moved: from Phase 1
+Waits on: Ghost's answer to SC-023 (proposed; `docs/HANDOFF.md`, For Ghost 18)
+
+### 1.21 The model roles and the live bank run
+
+Check: `solarchat/model/roles.py`, a new file in the module `model` (the only importer of the SDK, SC-021), holds the interrogator, the grader and the explainer of the design's 4.2 and 7(a), each with an injectable client and a JSON schema; `test/test_roles.py` with a fake client holds that the grader's request carries the rule, the transcript and the cited passages and never `SYSTEM_PROMPT` or a guard, that the interrogator's request never carries the rule's question, and each schema's refusal and malformed reply; `scripts/bank_run.py --live` runs a sample through the door with `ClaudeAnswerer` (`--model`, Haiku 5.5 by default), grades it, grades the canaries in `evals/bank/canaries.json`, re-grades the spot-check sample on `--check-model`, prints the watch list, the tokens and the cost of each model, writes transcripts under `build/bank/` and one ledger line; `--replay` re-grades stored transcripts with no bot call; `--live` is named by no gate script. The first live run is Ghost's, by hand.
+
+Moved: from Phase 1
+Waits on: Ghost's answer to SC-023 (proposed; `docs/HANDOFF.md`, For Ghost 18)
+
+### 1.22 Drafting the bank with Opus
+
+Check: `scripts/bank_draft.py --live --family F --count N` asks Claude Opus 5.5 (the drafter role in `solarchat/model/roles.py`) for rules in the shape of 3.2 from the pack, `solarchat/safety/rules.json` and the library's index, given the family's existing behaviours, and writes them to `build/bank/drafts/`; `--accept D-nnn [--skip id ...]` runs the bank's check on each, numbers the accepted rules and appends them, never editing an accepted rule (tested with a fake client); the first batches (`scope`, `allows`, `ask`, `pace`, then `safety`) are reviewed and accepted, the review recorded in the journal.
+
+Moved: from Phase 1
+Waits on: Ghost's answer to SC-023 (proposed; `docs/HANDOFF.md`, For Ghost 18)
+
+### 1.23 Harm triage
+
+Check: `scripts/triage.py <run> <rule>` writes `evals/triage/TR-nnn.json` in the shape of the design's section 7: three explain calls with the bot's own context, the suspects ranked and widened by the cited passages and the passage sharing the most five-word phrases with the harmful reply, a baseline arm and an ablated arm of eight re-runs for each of the top three (the passage removed in memory, the pack on disk untouched, a test holds its bytes), and the outcome by 7(b) to 7(d) (`pack-change`, `pack-finding`, `safety-trigger`, `guard`, `rare`, `unresolved`), with `engineer_to_confirm` set on a pack change; tested with fakes for every outcome, no model called in the fast loop.
+
+Moved: from Phase 1
+Waits on: Ghost's answer to SC-023 (proposed; `docs/HANDOFF.md`, For Ghost 18)
+
+### 1.24 Guards
+
+Check: `solarchat/model/guards.json` in the shape of the design's section 6, appended to the system block in id order by `system_text` (the cache-stable bytes test still holds); `ClaudeAnswerer` takes `guards`; a check in the fast loop refuses a guard that names no triage record whose outcome is `guard`, and a total over the budget Ghost sets; a run with a guard's served rules in its sample also runs them with the guard removed and records both verdicts; the retirement rule of section 7 is printed on the trend page when a guard meets it; 1.14's check is extended in its text to list triage pack changes and findings, the guards in force with their triage records, and the watch list's safety rules.
+
+Moved: from Phase 1
+Waits on: Ghost's answer to SC-023 (proposed; `docs/HANDOFF.md`, For Ghost 18)
 
 ### 6.4 The engineer's final review
 

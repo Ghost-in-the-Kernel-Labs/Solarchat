@@ -219,3 +219,10 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Opened**: `solarchat/model/claude.py`, `solarchat/project/chat.py`, `solarchat/cli/main.py`, `scripts/eval.py`, `scripts/eval_live.py`, `docs/modules.json`, `test/test_claude.py`, `test/test_cli.py`, `test/test_eval_live.py`, `theGhost.md` (SC-021).
 - **Complaints**: the message arrived after the first commit had shipped, so it is a follow-up commit and J-048 is not edited; the worktree shell refused several compound commands, so edits went one at a time; Haiku's cache-read rate was not given, so it is assumed.
 - **Suggestions**: a table of models and rates in one document that the cost line reads, so a price change is one edit.
+
+### 2026-11-21 · Design and proposed decision for tuning the conversational bot (SC-023, J-050) · Claude Opus 5.5
+
+- **Task**: from Ghost's direction of 2026-11-21, design the rule bank, the sampled Haiku run, the trend, harm triage content first and guards; write SC-023 as proposed, the TODO items, and land docs only.
+- **Opened**: `docs/paths/process.md`, `docs/designs/answering-door.md`, `theGhost.md` (SC-015, SC-016, SC-019 to SC-022), `docs/ROADMAP.md`, `TODO.md`, `solarchat/model/claude.py`, `scripts/eval_live.py`, `docs/DONE.md`, `docs/when/handoff.md`, `docs/journal/J-000-099.md`, `docs/HANDOFF.md`, `scripts/checks/todo.py`, `scripts/checks/pointers.py`, `docs/GLOSSARY.md`.
+- **Complaints**: P-20 and F-16 are not in `theGhost.md` but in `docs/ROADMAP.md` (principles and facts), which a search of the decisions does not find; the waiting phase's rules (where a proposed item's build items go) are in `scripts/checks/todo.py`'s docstring rather than in the process row; CLAUDE.md's "nothing a run produced" reads stricter than C-033, which allows the project's own run records.
+- **Suggestions**: a row in `docs/paths/process.md` for "a design" (`docs/designs/`, the shape the two designs share: Ghost's words, the shape in a paragraph, the items, the questions ranked); name in CLAUDE.md's three rules that the project's own run records may be committed (C-033).
