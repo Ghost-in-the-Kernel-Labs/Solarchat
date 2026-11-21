@@ -1,8 +1,8 @@
-# Design: tuning the conversational bot by a rule bank, and harm triage content first (SC-023, proposed)
+# Design: tuning the conversational bot by a rule bank, and harm triage content first (SC-023, in force)
 
 Written by a strong-grade agent on 2026-11-21 from Ghost's direction of that day (quoted in section 1), before anything
-is built (SC-018). **Proposed, awaiting Ghost**: SC-023 is this page's summary, and nothing here is built until Ghost
-answers section 10. A mid-grade worker builds each item of section 9 from this page alone; where it is not precise
+is built (SC-018). **In force** (Ghost, 2026-11-21, J-051: every recommendation of section 10, the ledger in git): SC-023 is this page's
+summary, and TODO 1.19 to 1.24 are built to it. A mid-grade worker builds each item of section 9 from this page alone; where it is not precise
 enough, the fix is to this page, not a guess (Core C-003).
 
 Read with it: `docs/designs/answering-door.md` (the door, the frozen set and its ratchet), SC-015, SC-016, SC-019 (and

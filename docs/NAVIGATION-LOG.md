@@ -28,3 +28,10 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Opened**: `docs/when/tune-up.md`, `docs/NAVIGATION-LOG.md`, `docs/when/handoff.md`, `docs/paths/process.md`, `docs/when/coordinate.md`, `docs/HANDOFF.md`, `scripts/checks/claude_md.py`, `scripts/next_id.py`, `docs/journal/J-000-099.md`.
 - **Complaints**: the brief said to symlink the main checkout's `.venv`, while `docs/when/coordinate.md` says a worker never symlinks `.venv` itself (the gate would record it); the document was followed. The worktree shell refuses git joined to other steps. The brief's journal id (J-052) and the id `scripts/next_id.py` gives (J-051) differ by design, which is the collision the debriefs named.
 - **Suggestions**: the brief's template could say "a real `.venv/` directory of symlinks", as `docs/when/coordinate.md` does.
+
+### 2026-11-21 · SC-023 recorded in force on Ghost's word (J-051) · Claude Opus 5.5
+
+- **Task**: record Ghost's answer to SC-023, close 1.17, move 1.19 to 1.24 into Phase 1, and land docs only.
+- **Opened**: `docs/when/coordinate.md`, `docs/when/grades.md`, `theGhost.md` (SC-019, SC-023), `docs/HANDOFF.md`, `TODO.md`, `docs/DONE.md`, `scripts/checks/todo.py`, `test/test_todo.py`, `docs/when/tune-up.md`, `docs/designs/rule-bank-and-triage.md`, `docs/ROADMAP.md`, `docs/journal/J-000-099.md`.
+- **Complaints**: how to close an item absorbed rather than done is not written anywhere (it went to `docs/DONE.md` with "Closed, not built"); the order rule that forces a phase's tune-up pass to be renumbered whenever items are added is only in `scripts/checks/todo.py`; `scripts/eval.py --live` writes its recordings under `evals/recorded/`, inside the tree, so every live run trips the stop hook.
+- **Suggestions**: a line in `docs/paths/process.md` for closing an absorbed item; send live recordings to `build/` (1.20 is the natural place).

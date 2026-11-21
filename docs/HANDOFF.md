@@ -41,7 +41,7 @@ which passage to show.
    (`solarchat/walker`, a module Ghost approved), 2.3 the safety rules in the walker (whole-word matching on the
    step's text is settled, HAD-04), 2.4 the offline shell; 2.8 is Tune-up pass 2 (2.6 left for Phase 1 as 1.10). The evaluation set is frozen before
    any search or model (J-033: back in Phase 1, after SC-015's code; the engineer reviews the frozen set at the end,
-   TODO 6.4; For Ghost 16). 1.18 Tune-up pass 1 (was 1.15) carries the next human maintainability pass (SC-011: Ghost-Core's
+   TODO 6.4; For Ghost 16). 1.25 Tune-up pass 1 (was 1.15, then 1.18) carries the next human maintainability pass (SC-011: Ghost-Core's
    toolkit under `scripts/` a few files at a time, each with its proof that nothing changed; then the tests).
 
 ## Settled by Ghost
@@ -62,6 +62,8 @@ which passage to show.
   the seed pack, the evaluation set, the answering door and its runner, the index, keyword search and the safety rules in
   the answers; the walker, demo mode and offline shell open Phase 2; Monday's demo shows the runner scoring the offline
   bot (SC-018, J-037; it amends SC-010's plan).
+- 2026-11-21: tuning the conversational bot by a sampled rule bank read as a trend, harm triage content first, the
+  ledger in git; 1.17 absorbed; the live ratchet dropped (SC-023, J-051).
 - The wording of SC-002 to SC-008 is the agent's, for Ghost to confirm.
 
 ## For Ghost: waiting on you
@@ -132,28 +134,12 @@ which passage to show.
    (7) the search threshold tuned on the frozen set, for version 1, a held-out set a later item; (8) the most severe
    response, then the lowest id; (9) the known failures mns-03, mns-06 and mns-09 in `evals/known-failures.json`;
    (10) `docs/designs/` as the home of designs. The meters, your addition, widened the same day to a session profile: SC-020, three or four short questions at the start of a session (role; signed off for meter tests, connector work, work at height), a rule alone may lower its response for a profile and never an emergency, the profile may change how much is explained and never which steps or stops, self-declared with the company's override, recorded per session for the engineer; its design is 1.10's first step and still open (how the profile is held, how rules name their lowerings, the side file's shape, whether the meter triggers split from SR-02). Answered; nothing waits on you here.
-18. **Tuning the conversational bot: SC-023, proposed, awaiting you** (J-050; the design is
-   `docs/designs/rule-bank-and-triage.md`, from your direction of 2026-11-21: "a light that a plant grows towards", and
-   content pruned before guards are added). A bank of hundreds of single-judgement rules drafted by Opus; a run samples
-   about 40 by a recorded seed, leaning to safety and recent failures; Haiku 5.5 is the bot, the interrogator and the
-   grader, with canaries and a Sonnet 5.5 spot-check; about $0.08 a run (about $0.44 with Sonnet as the bot). TODO 1.19
-   to 1.24 wait on your answer. The questions, ranked (the design's section 10):
-   1. SC-023 as a whole, and **1.17 absorbed** into the bank (its four behaviours become rule families) and closed, not built.
-   2. **No bank rule fails a run**; the only red is a door fault (the fixed rules fire on the worker's words and the live
-      reply does not carry them), which is deterministic. Recommended: none else.
-   3. **The live ratchet dropped** (amends SC-019): a live run of the frozen set prints and records replies, writes no
-      record; the per-case ratchet stays for offline and recorded replies. Recommended: yes.
-   4. **Who changes the bot**: a guard on your word, logged as maintainer; a demo pack corrected on your word; a field
-      pack only sent a finding; the engineer confirms each at the end. Recommended: as written.
-   5. **The guard budget** (400 tokens proposed), and whether the founding system prompt's paragraphs are measured with
-      an off arm too (recommended: measured, removed only on your word).
-   6. **Run size and cadence**: 40 rules, by hand; or a scheduled daily run (under $5 a month).
-   7. **The thresholds**: a signal at three failures in five samplings (two for safety); grader agreement floor 0.85;
-      ablation arms of eight, confirmed at four of eight against none.
-   8. **What enters git**: the ledger (60 runs), triage records with their transcripts, the trend page; run transcripts
-      stay under `build/`. CLAUDE.md says "nothing a run produced" while C-033 allows the project's own run records:
-      confirm C-033's reading.
-   9. **The spot-check model**: Sonnet 5.5 every run (recommended), Opus 5.5 by hand.
+18. **Tuning the conversational bot: SC-023, in force, answered by you on 2026-11-21 in chat** (J-050 proposed it,
+   J-051 records your answer; the design is `docs/designs/rule-bank-and-triage.md`). "I'll go with the other agent's
+   recommendations": all nine went as section 10 recommends, 1.17 is closed as absorbed, and SC-019's live ratchet is
+   dropped. On the coordinator's question, the ledger (60 runs), the triage records and the trend page enter git, and
+   transcripts stay under `build/`. TODO 1.19 to 1.24 are in Phase 1, before its tune-up pass, now 1.25. Answered;
+   nothing waits on you here.
 
 19. **Tune-up commit 1, questions that need a file or a decision outside a tune-up's list** (J-052): (a) `scripts/next_id.py`
     takes a journal id that an unmerged `origin/agent/*` branch already holds (three debriefs: J-026, J-027, J-051);

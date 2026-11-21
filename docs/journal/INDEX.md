@@ -54,3 +54,5 @@ Written from `docs/journal/` by `scripts/journal_index.py`; do not edit by hand.
 | J-048 | The Claude answerer, the chat command and the live evaluation run are built (TODO 1.16) | feature | `J-000-099.md` |
 | J-049 | The model is a parameter: Haiku 5.5 may be used for testing (TODO 1.16, follow-up) | feature | `J-000-099.md` |
 | J-050 | Tuning the conversational bot, proposed: a sampled rule bank read as a trend, and harm triage content first (SC-023) | direction | `J-000-099.md` |
+| J-051 | Tuning the conversational bot is decided: SC-023 in force, 1.17 absorbed | decision | `J-000-099.md` |
+| J-052 | Tune-up commit 1: routing rows from the debriefs, the renumbering and worktree notes | measurement | `J-000-099.md` |
