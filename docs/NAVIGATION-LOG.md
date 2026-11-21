@@ -192,3 +192,10 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Opened**: `CLAUDE.md`, `docs/SUPPLY-CHAIN.md` ("The rules, verbatim"), `docs/when/dependency-update.md`, `docs/DEPENDENCY-REVIEW.md`, `requirements.in`, `requirements.lock`, `docs/REVIEWED-VERSIONS.md`, `stacks/python/README.md`, `docs/modules.json`, `scripts/review_scan.py`, `scripts/checks/dependency_review.py`, `scripts/next_id.py`, `theGhost.md` (SC-019, SC-020), `docs/journal/J-000-099.md`, `docs/when/handoff.md`.
 - **Complaints**: `docs/DEPENDENCY-REVIEW.md` has no step for a new package's scan (the scan wants an old and a new archive; an empty wheel stood in for the old side); the record's table allows only SAFE, UNSAFE or UNSURE and CLEAN or CONCERN, so a layer that has not run has no honest cell; the worker had no tool to start the patch reviewer or the reputation checker; the worktree shell refuses a command that mixes git with other steps and heredocs that write scripts.
 - **Suggestions**: say in `docs/DEPENDENCY-REVIEW.md` how to scan a new package (an empty wheel as the old side, or a `--new-only` flag on `scripts/review_scan.py`); let the record carry `NOT RUN` for a layer, refused by the fast loop only when the row is meant to be final; name in `docs/when/dependency-update.md` who runs the two agents when a worker cannot.
+
+### 2026-11-21 · API-key management decision (SC-022, J-046) · Claude Sonnet 5.5
+
+- **Task**: record Ghost's key-management decision as SC-022, point roadmap Phases 4 and 5 at it, journal it, regenerate the generated files, and land it as one docs-only commit.
+- **Opened**: `CLAUDE.md`, `docs/paths/process.md`, `docs/SUPPLY-CHAIN.md` (the credential bullets), `theGhost.md` (header, SC-019 to SC-021), `docs/ROADMAP.md` (Phases 4 and 5), `docs/journal/J-000-099.md`, `docs/NAVIGATION-LOG.md`, `scripts/next_id.py`.
+- **Complaints**: the worktree shell refuses git joined to other steps; `.venv` has to be rebuilt as symlinks by hand in each worktree.
+- **Suggestions**: a script that sets up a worktree's `.venv`; a routing row for "a decision that points a roadmap phase at it".

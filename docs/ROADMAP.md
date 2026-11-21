@@ -236,6 +236,8 @@ runner of Phase 1 (SC-018): the walker, the safety rules in it, and the shell ar
 - 4.5 The website: a page that holds the conversation against the API, photos included (F-11).
 - 4.6 Tune-up pass 4
 
+Key management (SC-022): no model credential on a device; the service alone holds one, from a secrets manager, and workers sign in to it. Every item here meets that check.
+
 ### Phase 5: the phone
 
 The customer of F-03 is on a phone outside. This phase decides how the offline mode reaches that phone; the
@@ -250,6 +252,8 @@ stack and so Ghost's decision before any of it is built.
 - 5.4 Speech in and out, by the phone's own recognition and voice (F-08), in the assistant's manner (F-12); a
   richer voice from a speech service is a dependency proposed to Ghost, online only, from a licensed stock voice.
 - 5.5 Tune-up pass 5
+
+Key management (SC-022): the app holds no model credential; it signs in to the hosted service. Every item here meets that check.
 
 ### Phase 6: real packs and the engineer
 
