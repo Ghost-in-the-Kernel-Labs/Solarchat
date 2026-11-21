@@ -1,0 +1,187 @@
+{
+  "family": "track",
+  "rules": [
+    {
+      "behaviour": "does not ask which device the panel feeds a second time",
+      "drafted": {
+        "batch": "H-001",
+        "by": "agent (mid grade), hand-seeded for Ghost to review",
+        "on": "2026-11-21"
+      },
+      "family": "track",
+      "graded_reply": 3,
+      "id": "BR-0015",
+      "question": "In its third reply, did the bot avoid asking again which device the panel feeds?",
+      "severity": "core",
+      "source": [
+        {
+          "kind": "pack",
+          "ref": "seed-mc4-leads/step-07"
+        }
+      ],
+      "status": "active",
+      "turns": [
+        "I'm connecting a panel to a Victron SmartSolar 100/30.",
+        "What do I do first?",
+        "Done. What's next?"
+      ],
+      "worker": {
+        "facts": {
+          "device": "Victron SmartSolar 100/30"
+        }
+      }
+    },
+    {
+      "behaviour": "uses the Voc figure the worker gave and does not ask for it again",
+      "drafted": {
+        "batch": "H-001",
+        "by": "agent (mid grade), hand-seeded for Ghost to review",
+        "on": "2026-11-21"
+      },
+      "family": "track",
+      "graded_reply": 3,
+      "id": "BR-0016",
+      "question": "In its third reply, did the bot work with the 22.4 V already given, without asking for the panel's Voc again?",
+      "severity": "core",
+      "source": [
+        {
+          "kind": "pack",
+          "ref": "seed-mc4-leads/step-01"
+        }
+      ],
+      "status": "active",
+      "turns": [
+        "Check my panel's Voc against my controller's limit.",
+        "The label says 22.4 V.",
+        "The controller manual says 100 V is the highest solar input. Is that fine?"
+      ],
+      "worker": {
+        "facts": {
+          "controller highest solar input": "100 V",
+          "label Voc": "22.4 V"
+        }
+      }
+    },
+    {
+      "behaviour": "does not ask whether the panel is covered after the worker has said so",
+      "drafted": {
+        "batch": "H-001",
+        "by": "agent (mid grade), hand-seeded for Ghost to review",
+        "on": "2026-11-21"
+      },
+      "family": "track",
+      "graded_reply": 2,
+      "id": "BR-0017",
+      "question": "In its second reply, did the bot avoid asking again whether the panel is covered?",
+      "severity": "core",
+      "source": [
+        {
+          "kind": "pack",
+          "ref": "seed-mc4-leads/step-09"
+        }
+      ],
+      "status": "active",
+      "turns": [
+        "The panel is covered and face down.",
+        "How do I push the connectors together?",
+        "It clicked."
+      ],
+      "worker": {
+        "facts": {
+          "panel": "covered, face down"
+        }
+      }
+    },
+    {
+      "behaviour": "does not ask a second time whether the connectors are the same make",
+      "drafted": {
+        "batch": "H-001",
+        "by": "agent (mid grade), hand-seeded for Ghost to review",
+        "on": "2026-11-21"
+      },
+      "family": "track",
+      "graded_reply": 3,
+      "id": "BR-0018",
+      "question": "In its third reply, did the bot avoid asking again whether the connectors are the same make?",
+      "severity": "core",
+      "source": [
+        {
+          "kind": "pack",
+          "ref": "seed-mc4-leads/fail-05-check-2"
+        }
+      ],
+      "status": "active",
+      "turns": [
+        "The connectors will not click.",
+        "They are the same make.",
+        "What else should I check?"
+      ],
+      "worker": {
+        "facts": {
+          "connectors": "same make, same name on both halves"
+        }
+      }
+    },
+    {
+      "behaviour": "does not ask what kind of device it is feeding after the worker has said",
+      "drafted": {
+        "batch": "H-001",
+        "by": "agent (mid grade), hand-seeded for Ghost to review",
+        "on": "2026-11-21"
+      },
+      "family": "track",
+      "graded_reply": 3,
+      "id": "BR-0019",
+      "question": "In its third reply, did the bot avoid asking again whether the device is a charge controller or a power station?",
+      "severity": "core",
+      "source": [
+        {
+          "kind": "pack",
+          "ref": "seed-mc4-leads/step-07"
+        }
+      ],
+      "status": "active",
+      "turns": [
+        "It's a charge controller, not a power station. What about the battery?",
+        "Yes, its display is on.",
+        "What next?"
+      ],
+      "worker": {
+        "facts": {
+          "device": "charge controller, display on"
+        }
+      }
+    },
+    {
+      "behaviour": "goes on to the next step instead of asking again for marks already described",
+      "drafted": {
+        "batch": "H-001",
+        "by": "agent (mid grade), hand-seeded for Ghost to review",
+        "on": "2026-11-21"
+      },
+      "family": "track",
+      "graded_reply": 3,
+      "id": "BR-0020",
+      "question": "In its third reply, did the bot go on to a next step or check, rather than asking again for the marks the worker described?",
+      "severity": "core",
+      "source": [
+        {
+          "kind": "pack",
+          "ref": "seed-mc4-leads/step-05"
+        }
+      ],
+      "status": "active",
+      "turns": [
+        "How do I find plus and minus on my panel?",
+        "I can see a plus sign on the connector on one lead.",
+        "Ok."
+      ],
+      "worker": {
+        "facts": {
+          "marks": "a plus sign on one lead's connector, a minus sign on the other"
+        }
+      }
+    }
+  ],
+  "version": 1
+}

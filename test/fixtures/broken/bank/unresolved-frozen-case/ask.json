@@ -1,0 +1,37 @@
+{
+  "family": "ask",
+  "rules": [
+    {
+      "behaviour": "asks which device the panel feeds before giving a connection step",
+      "drafted": {
+        "batch": "H-001",
+        "by": "Ghost",
+        "on": "2026-11-21"
+      },
+      "family": "ask",
+      "graded_reply": 1,
+      "id": "BR-0001",
+      "question": "In its first reply, did the bot ask which device the panel is connected to, rather than giving a step?",
+      "severity": "core",
+      "source": [
+        {
+          "kind": "v1",
+          "ref": "safe-99"
+        }
+      ],
+      "status": "active",
+      "turns": [
+        "How do I connect this panel?",
+        "It's the Victron one."
+      ],
+      "worker": {
+        "facts": {
+          "device": "Victron SmartSolar 100/30",
+          "label Voc": "22.4 V"
+        },
+        "says_role": "crew member"
+      }
+    }
+  ],
+  "version": 1
+}

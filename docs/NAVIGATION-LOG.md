@@ -22,6 +22,13 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Complaints**: what slowed or misled it.
 - **Suggestions**: what it would change.
 
+### 2026-11-21 · TODO 1.19, the rule bank's format and check (J-053) · Claude Sonnet 5.5
+
+- **Task**: build design section 3: `evals/bank/` with about twenty hand-written rules, `scripts/checks/bank.py` and `test/test_bank.py` with planted breaks, and the coordinator's reading of "quoting" in 3.2; no model.
+- **Opened**: `CLAUDE.md`, `docs/designs/rule-bank-and-triage.md`, `scripts/checks/evals.py`, `scripts/checks/common.py`, `test/test_evals.py`, `test/support.py`, `solarchat/model/claude.py`, `packs/seed-mc4-leads/passages.json`, `solarchat/safety/rules.json`, `evals/v1.json`, `docs/DONE.md`, `TODO.md`, `docs/journal/J-000-099.md`.
+- **Complaints**: the worktree shell refused any command whose text held the word "eval" (the path `test/fixtures/broken/eval` among them) and any heredoc or long command with git beside it, so files went through the Write tool; the design does not say whether ids rise across files, what a hand-seeded rule's `drafted.batch` is, or how a `triage` source resolves before 1.23.
+- **Suggestions**: 3.2 could name the `batch` of a hand-seeded rule and say that ids are global and ascending per file; `docs/paths/process.md` could get a row for the bank (`evals/bank/`, `scripts/checks/bank.py`, `test/test_bank.py`).
+
 ### 2026-11-21 · Tune-up commit 1 (J-052) · Claude Sonnet 5.5
 
 - **Task**: the tune-up commit due after 30 commits (SC-009): steps 1, 4, 5 and 6 of `docs/when/tune-up.md`, changing no result.

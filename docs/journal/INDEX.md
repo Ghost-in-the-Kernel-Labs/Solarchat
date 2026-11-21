@@ -56,3 +56,4 @@ Written from `docs/journal/` by `scripts/journal_index.py`; do not edit by hand.
 | J-050 | Tuning the conversational bot, proposed: a sampled rule bank read as a trend, and harm triage content first (SC-023) | direction | `J-000-099.md` |
 | J-051 | Tuning the conversational bot is decided: SC-023 in force, 1.17 absorbed | decision | `J-000-099.md` |
 | J-052 | Tune-up commit 1: routing rows from the debriefs, the renumbering and worktree notes | measurement | `J-000-099.md` |
+| J-053 | The rule bank's format and check: twenty hand-written rules, and what "quoting" means (TODO 1.19) | feature | `J-000-099.md` |
