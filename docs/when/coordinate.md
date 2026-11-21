@@ -21,6 +21,10 @@ CLAUDE.md sends the coordinator here before its first item. The rule, in the ord
 4. **Start the worker.** A fresh agent per task, with the Agent tool's `model` set to the grade's model from
    `docs/when/grades.md`, briefed as `docs/when/hand-out-a-task.md` says: a one-page brief, a one-page report.
    Resume a worker only within one unfinished task.
+   The worker works in its own clone beside the main checkout (`git clone` the checkout to
+   `../Solarchat-<task>`, point its `origin` at GitHub, check out the item's branch; or the Agent tool's
+   `isolation: "worktree"`), never in the coordinator's checkout: the coordinator's tree stays clean while it works,
+   a stop hook has nothing to ask about, and two workers never edit one tree (Ghost, 2026-11-21).
 5. **The ladder.** A worker makes one attempt at a change the checks reject for a reason it cannot explain, then
    goes one grade up (`docs/when/escalation.md`). The coordinator answers a mid worker's escalation with what it
    needs; it does not take the item back.

@@ -41,3 +41,11 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Suggestions**: a line in each project's CLAUDE.md: when more than one Ghost project is open and the brief names
   none, ask which before reading. `scripts/score.py` calls five of 1.3 to 1.9 `unplaced`: their items name no
   file, so the score cannot place them and a coordinator is tempted to keep them; items that name their files.
+
+### 2026-11-21 · Workers out of the checkout · Claude Opus 5.5
+
+- **Task**: Ghost: run every worker in its own clone beside the main checkout, and record it in CLAUDE.md.
+- **Opened**: `CLAUDE.md`, `docs/when/coordinate.md`.
+- **Complaints**: a worker editing in the coordinator's checkout set off the stop hook's "uncommitted changes"
+  while it ran; the coordinator could not commit without saving the worker's half-done tree.
+- **Suggestions**: none beyond the rule itself, which answers the earlier debrief's worktree suggestion.

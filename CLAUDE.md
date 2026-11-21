@@ -8,6 +8,7 @@ You are the coordinator if Ghost started you, or you start other agents; a worke
 and skips this section. Before your first item, read `docs/when/coordinate.md`, "Who does each item" (the
 assignment rule, C-036), and `docs/when/grades.md`. The score places every item; you build only what it places at
 the strong grade, and every other item goes to a fresh worker of its grade, never into your own turns.
+Every worker runs in its own clone beside this checkout, never in it, so your tree stays clean while it works.
 
 ## Where to start: find the task's row
 
