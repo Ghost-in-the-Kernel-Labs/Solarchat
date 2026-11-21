@@ -30,9 +30,11 @@ CLAUDE.md sends the coordinator here before its first item. The rule, in the ord
    coordinator's `git status` and the stop hook stay clean; the coordinator removes a worker's worktree, and its
    `worktree-agent-*` branch, after reading its report. The gate needs `.venv`: the coordinator builds one shared
    `.venv` in the main checkout from `requirements.lock` (supply-chain rule 2: `python3.12 -m venv .venv &&
-   .venv/bin/pip install --only-binary :all: --require-hashes -r requirements.lock`), and a worker makes a real
-   `.venv/` directory of symlinks to that venv's entries. A worker never symlinks `.venv` itself: the gitignore rule
-   `/.venv/` does not match a symlink, so the gate records it and `scripts/commit.sh` refuses.
+   .venv/bin/pip install --only-binary :all: --require-hashes -r requirements.lock`), and a worker's clone gets its
+   `.venv` with `python3 -I scripts/worker_venv.py <clone>` run from the main checkout (a real `.venv/` directory of
+   symlinks to that venv's entries; it refuses a clone that is the main checkout, a missing source venv, or a `.venv`
+   already there that is not the same links). Never symlink `.venv` itself: the gitignore rule `/.venv/` does not
+   match a symlink, so the gate records it and `scripts/commit.sh` refuses.
    A worktree agent's shell refuses a call that names git beside another step (`&&`, a loop, a heredoc), so a worker
    runs each git command alone and writes a multi-step edit with the file tool or a script in the scratchpad; the
    brief says so, and says that downloads may sit in the scratchpad too.

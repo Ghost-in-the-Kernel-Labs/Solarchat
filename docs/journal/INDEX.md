@@ -62,3 +62,5 @@ Written from `docs/journal/` by `scripts/journal_index.py`; do not edit by hand.
 | J-056 | The bot reads its replies aloud: speech out for the Windows demo (TODO 2.7) | feature | `J-000-099.md` |
 | J-057 | Documentation brought current | contradiction | `J-000-099.md` |
 | J-058 | The tune-up's four questions answered; the roadmap's 2.5 and 2.7 renumbered 2.9 and 2.10 | decision | `J-000-099.md` |
+| J-059 | Fix-forward: `ruff check .` fails on main (nine places left for a choice) | measurement | `J-000-099.md` |
+| J-060 | `scripts/worker_venv.py`: a worker's `.venv` of symlinks, by a command (HANDOFF "For Ghost" 19(b)) | feature | `J-000-099.md` |

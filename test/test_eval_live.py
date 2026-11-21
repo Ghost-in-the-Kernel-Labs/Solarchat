@@ -3,7 +3,6 @@ the exits; no network and no key (TODO 1.16; SC-019, SC-021, SC-022)."""
 import contextlib
 import io
 import json
-import os
 import unittest
 from pathlib import Path
 from unittest import mock

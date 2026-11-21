@@ -2,6 +2,7 @@
 import contextlib
 import os
 import tempfile
+from collections.abc import Iterator
 from unittest import mock
 from pathlib import Path
 
@@ -17,7 +18,7 @@ def scratch() -> Path:
 
 
 @contextlib.contextmanager
-def no_key():
+def no_key() -> Iterator[str]:
     """No key anywhere: ANTHROPIC_API_KEY empty and the config folder an empty temporary one, so a developer's stored key
     never changes a result (SC-022 6): `with no_key(): ...` yields the folder."""
     with tempfile.TemporaryDirectory() as folder, mock.patch.dict(os.environ, {"ANTHROPIC_API_KEY": "", "SOLARCHAT_CONFIG_DIR": folder}):

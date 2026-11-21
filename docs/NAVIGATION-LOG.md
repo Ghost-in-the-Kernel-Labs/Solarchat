@@ -77,3 +77,10 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Opened**: `docs/HANDOFF.md`, `scripts/next_id.py`, `docs/when/coordinate.md`, `docs/ROADMAP.md`, `TODO.md`, `theGhost.md` (header).
 - **Complaints**: free numbers live in three files (`TODO.md`, `docs/DONE.md`, `docs/ROADMAP.md`) and nothing checks all three; the fast checks run no `ruff`, so lint reached `main`.
 - **Suggestions**: a check that a TODO number is not used for a different roadmap item; `ruff` in the fast checks (Ghost's, For Ghost 21).
+
+### 2026-11-21 · Tooling follow-ups: the lint and `worker_venv.py` (J-059, J-060) · Claude Sonnet 5.5
+
+- **Task**: fix `ruff check .` on main (J-059) and build `scripts/worker_venv.py` with its test and the coordinate.md change (J-060).
+- **Opened**: `CLAUDE.md`, `docs/when/grades.md`, `scripts/checks/bank.py`, `scripts/eval.py`, `solarchat/model/claude.py`, `test/support.py`, `test/test_cli.py`, `test/test_packs.py`, `test/test_speech.py`, `solarchat/project/speech.py`, `scripts/next_id.py`, `scripts/checks/readability.py`, `docs/when/coordinate.md`, `docs/paths/process.md`, `docs/journal/J-000-099.md`, `docs/NAVIGATION-LOG.md`.
+- **Complaints**: the brief's pass line for the lint cannot be met without a choice for nine `Any` annotations in `claude.py`; the repository does not say whether `Any` is meant to stay there. The readability check wants a docstring on test helper methods too, which `test_speech.py` does not need for its test methods.
+- **Suggestions**: decide the types for `claude.py` (a `Protocol` for the client and `ModuleType` for `errors` is the obvious candidate); add `ruff check .` to the fast loop, so a lint failure is found when it is made, not at the gate.
