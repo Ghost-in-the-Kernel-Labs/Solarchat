@@ -56,13 +56,15 @@ which passage to show.
 ## For Ghost: waiting on you
 
 1. **The safety rules** (TODO 1.3, landed 2026-11-21 on Ghost's word with the draft's answers; Ghost has not yet read
-   `docs/SAFETY-RULES.md`; the five points stay open): read `docs/SAFETY-RULES.md`, and answer its five
-   "Ghost to confirm" marks: SR-02, is measuring a voltage a stop for the newest contractor (the draft: yes); SR-03,
-   is plugging connectors together a stop as well as pulling them apart (the makers say de-energise for both); SR-06,
-   the overhead-lines rule (beyond the brief; it gives no distance, so the site's applies); SR-08 and SR-09, the
-   emergency and first-aid sentences the cited sources do not state; SR-12, the never-bypass rule (beyond the brief).
-   Also: the roof, ladder and climb triggers stop every rooftop step (deliberate); four sources were cited from search
-   results without the page being read (J-027).
+   `docs/SAFETY-RULES.md`): SR-03 is resolved (Ghost, 2026-11-21: connecting is daily work, not a stop; the rule is now
+   "never pull connectors apart under load", J-030). Four points stay open, the "Ghost to confirm" marks in
+   `docs/SAFETY-RULES.md`: SR-02, is measuring a voltage a stop for the newest contractor (the draft: yes); SR-06, the
+   overhead-lines rule (beyond the brief; it now gives the 10 ft distance and carries the audit's finding, perimeter
+   lines, service drops and OSHA's Fort Riley 2018 citation); SR-08 and SR-09, the emergency and first-aid sentences
+   the cited sources do not state; SR-12, the never-bypass rule (beyond the brief). Triggers now match whole words and
+   phrases only (HAD-04, `rules_fired`); step 2 of the fix (response types, matching on the worker's words) is a later
+   design decision. Also: four sources were cited from search results without the page being read (J-027), and the two
+   new OSHA regulation addresses (1910.333, 1926.1408) were not opened (osha.gov refuses this environment).
 2. **Page citations** (SC-012, on `agent/page-citations`): the seed pack's citations of its document sources carry a
    page, and 89 of them are `"unknown"`: S3 Trina installation manual 35, S7 PVEL/HelioVolta safety guide 22, S5 Victron
    troubleshooting chapter 19, S4 Victron installation chapter 10, S6 BRE fire report 3 (S8's 15 citations use page 15,

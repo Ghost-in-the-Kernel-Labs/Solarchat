@@ -4,6 +4,7 @@ The file is the rules' one source of truth (HAD-04); `scripts/safety_rules_doc.p
 from what this loader returns, so the document and the data cannot disagree. Standard library and the leaf only.
 """
 import json
+import re
 from pathlib import Path
 
 from solarchat.leaf.contract import SafetyRule, SafetyRuleSource
@@ -44,3 +45,21 @@ def load_rules(rules_path: Path = RULES_PATH) -> tuple[SafetyRule, ...]:
     if "come first" not in loaded_rules[0].title:
         raise ValueError(f"{rules_path}: {PROCEDURES_FIRST_RULE_ID} is the rule that the site's own safety procedures come first")
     return loaded_rules
+
+
+# Invariant: HAD-04 (a trigger matches a text only as a whole word or whole phrase, never inside a longer word)
+def trigger_pattern(trigger: str) -> re.Pattern:
+    """The pattern for one trigger: case-insensitive, with no letter, digit or underscore touching either end, and any
+    run of spaces or line breaks inside a phrase counting as one space. "live" matches "Live view" and "go live" but not
+    "deliver" or "alive"; "open the pairs" matches "open the\npairs"."""
+    words = r"\s+".join(re.escape(word) for word in trigger.split())
+    return re.compile(r"(?<!\w)" + words + r"(?!\w)", re.IGNORECASE)
+
+
+# Invariant: HAD-04 (a rule fires on a whole-word trigger match, so the walker stops on it)
+def rules_fired(text: str, loaded_rules: tuple[SafetyRule, ...] | None = None) -> list[str]:
+    """The ids, in rule order, of the rules with a trigger that occurs in text as a whole word or phrase, e.g.
+    rules_fired("Open the inverter cover") gives ["SR-04"]; "undamaged" fires nothing. Rules default to load_rules()."""
+    for_rules = load_rules() if loaded_rules is None else loaded_rules
+    return [rule.rule_id for rule in for_rules
+            if any(trigger_pattern(trigger).search(text) for trigger in rule.triggers)]

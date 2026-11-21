@@ -98,3 +98,10 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Opened**: `docs/paths/process.md`, `theGhost.md` (SC-012, SC-013), `scripts/checks/packs.py`, `scripts/checks/common.py`, `test/test_packs.py`, `test/support.py`, `scripts/fast.sh`, `docs/NAVIGATION-LOG.md`, `docs/HANDOFF.md`, `docs/journal/J-000-099.md`.
 - **Complaints**: no routing row for a new check's wiring; "wire it into the fast loop" turned out to mean a unittest file, which is only learned by reading `fast.sh`. A new file must be `git add -N`ed before the fast loop sees it, which is easy to miss. The worktree shell refuses compound git commands and heredocs that `cd` elsewhere.
 - **Suggestions**: a routing row for the library (added to `docs/paths/process.md`); a one-line note in `docs/when/coordinate.md` that downloads may sit in the scratchpad.
+
+### 2026-11-21 · The safety rules' triggers and wording (J-030) · Claude Opus 5.5
+
+- **Task**: apply the audit's per-rule trigger and wording proposals to SR-01 to SR-14, define whole-word matching under HAD-04 with `rules_fired`, pin what the demo pack fires, resolve SR-03's mark.
+- **Opened**: `CLAUDE.md`, `docs/paths/process.md`, the audit, `solarchat/safety/rules.json`, `solarchat/safety/rules.py`, `docs/CONTRACT.md` (HAD-04), `docs/modules.json`, `TODO.md` (1.7), `test/test_safety.py`, `scripts/safety_rules_doc.py`, `solarchat/leaf/contract.py`, the seed pack's `steps.json` and `failures.json`, `docs/HANDOFF.md`, `docs/journal/J-000-099.md`.
+- **Complaints**: no routing row for the safety rules; the leaf's "a rule has triggers" conflicts with the audit's "drop SR-01's triggers"; the worktree shell refuses heredocs and chained git commands, and `docs/` has no place for a decision of Ghost's that is not a numbered decision.
+- **Suggestions**: a routing row "the safety rules: a trigger or a rule's words" (`solarchat/safety/rules.json`, `docs/CONTRACT.md` HAD-04, `test/test_safety.py`); decide whether a rule may have no triggers (SR-01 always applies).

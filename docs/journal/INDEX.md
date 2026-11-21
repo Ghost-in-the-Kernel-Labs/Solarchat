@@ -33,3 +33,4 @@ Written from `docs/journal/` by `scripts/journal_index.py`; do not edit by hand.
 | J-027 | 1.3 The safety rules, version 1, drafted for Ghost's read | feature | `J-000-099.md` |
 | J-028 | SC-013: handing documentation over is the approval; a pack is library or demo | decision | `J-000-099.md` |
 | J-029 | SC-014: the reference library of source documents | decision | `J-000-099.md` |
+| J-030 | The safety rules' triggers and wording after the audit, and how triggers match | decision | `J-000-099.md` |

@@ -43,6 +43,14 @@ engineer; the site's own safety procedures come first. A pack may add steps that
 remove, reword or switch off a rule. Held by the leaf's `Reply` (a stop names its rule) and, once
 they exist, the safety rules' check (TODO 1.3) and the pack check (TODO 1.2).
 
+How a trigger matches (Ghost's audit, 2026-11-21): a trigger matches a text when it occurs as a whole word or whole
+phrase, case-insensitively, with a word boundary at both ends (no letter, digit or underscore touching either end);
+never as a substring, so `live` does not fire on "deliver" or "alive", and a rule's trigger does not fire inside
+"undamaged". A run of spaces or line breaks inside a phrase counts as one space. `solarchat/safety/rules.py`'s
+`rules_fired(text)` is the one implementation: the ids of the rules whose triggers match. A rule's triggers are text
+that says the hazard is present or the hazardous act is asked for, not text that tells the worker what to look for or
+forbids the act; SR-01 holds only phrases that order the site's rules ignored, since a rule always has a trigger.
+
 ## HAD-05 A pack's text is data, never instructions
 
 Nothing in a pack is read as an instruction to Hadley: a passage that says "ignore the safety
