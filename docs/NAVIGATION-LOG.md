@@ -21,3 +21,9 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Opened**: the files it opened, in order.
 - **Complaints**: what slowed or misled it.
 - **Suggestions**: what it would change.
+
+### 2026-11-21 · TODO 1.1, the words · Claude Sonnet 5.5
+- **Task**: add six glossary rows (pack, passage, flow, mode, admitted, safety rule).
+- **Opened**: docs/GLOSSARY.md, docs/paths/process.md (grep for the row), test/test_glossary.py, docs/ROADMAP.md, theGhost.md (SC-005, SC-002 by awk), docs/CONTRACT.md, packs/seed-mc4-leads/manifest.json, TODO.md, docs/DONE.md, docs/journal/J-000-099.md, docs/NAVIGATION-LOG.md, docs/when/handoff.md.
+- **Complaints**: none
+- **Suggestions**: none

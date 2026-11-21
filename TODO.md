@@ -18,10 +18,6 @@ question a later item depends on is copied into that item's text, so the item re
 
 ## Phase 1: the pack and the oracle
 
-### 1.1 The words
-
-Check: `docs/GLOSSARY.md` holds pack, passage, flow, mode, admitted and safety rule, one meaning each; `test/test_glossary.py` green.
-
 ### 1.2 The pack format
 
 Check: the contract document states the manifest's fields (make, model, version, source, licence, admitted by, admitted on), a passage and a flow (symptom, check, fix, stop); a check under `scripts/checks/` accepts a well-formed pack and refuses each planted break (a missing licence, a flow with no end, a passage with no source).

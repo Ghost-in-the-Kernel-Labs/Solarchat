@@ -24,3 +24,4 @@ Written from `docs/journal/` by `scripts/journal_index.py`; do not edit by hand.
 | J-018 | The contract and the module map: the package solarchat, invariants HAD-01 to HAD-06, the leaf | decision | `J-000-099.md` |
 | J-019 | Tune-up pass 0 | measurement | `J-000-099.md` |
 | J-020 | The tune-up cadence: every twenty-five commits (SC-009) | decision | `J-000-099.md` |
+| J-021 | The six words of Phase 1 (TODO 1.1) | decision | `J-000-099.md` |
