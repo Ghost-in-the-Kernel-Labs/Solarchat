@@ -6,8 +6,9 @@ read from the environment by the SDK itself and is never printed, logged or stor
 answerer, decides which ids may be cited, the reply's kind and the safety rules (HAD-03, HAD-04).
 """
 import json
+from collections.abc import Sequence
 from dataclasses import dataclass
-from typing import Any
+from typing import Protocol
 
 from solarchat.leaf.contract import Finding, Passage, PassageRef, Turn
 from solarchat.model.key import KEY_VARIABLE, resolve_key
@@ -28,6 +29,61 @@ class Model:
     output_rate: float
     cache_read_rate: float
     fallback: bool
+
+
+# Decision: SC-021 (the SDK is not imported at module level, so what the code uses of it is named here and a fake that has it fits)
+class ErrorClasses(Protocol):
+    """The four error classes `describe_error` tests against: the SDK module has them, and so does SimpleNamespace(AuthenticationError=...)."""
+
+    AuthenticationError: type[Exception]
+    RateLimitError: type[Exception]
+    APIStatusError: type[Exception]
+    APIConnectionError: type[Exception]
+
+
+class TokenCounts(Protocol):
+    """The token counts of a response: input_tokens 10 and output_tokens 2; a count may be None, and the cache counts may be absent."""
+
+    input_tokens: int | None
+    output_tokens: int | None
+    cache_read_input_tokens: int | None
+    cache_creation_input_tokens: int | None
+
+
+class TextBlock(Protocol):
+    """One block of a response's content: type "text" and the text, such as the reply's JSON."""
+
+    type: str
+    text: str
+
+
+class Response(Protocol):
+    """What the model sent back: a stop_reason ("refusal" or None), the content blocks and the usage."""
+
+    stop_reason: str | None
+    content: Sequence[TextBlock]
+    usage: TokenCounts
+
+
+class Messages(Protocol):
+    """The SDK's `messages` with the one call made of it: create(model=..., max_tokens=..., ...) gives a Response."""
+
+    def create(self, *, model: str, max_tokens: int, output_config: dict[str, object], system: list[dict[str, object]],
+               messages: list[dict[str, str]], betas: list[str] | None = None, fallbacks: str | None = None) -> Response:
+        """Ask the model once: the keyword arguments `call` sends, and the response."""
+        ...
+
+
+class Beta(Protocol):
+    """The SDK's `beta` namespace: client.beta.messages is the Messages above."""
+
+    messages: Messages
+
+
+class Client(Protocol):
+    """What the answerer needs of the model client: client.beta.messages.create(...), so a test's fake fits as the SDK does."""
+
+    beta: Beta
 
 
 # Decision: SC-021 (Sonnet 5.5, F-07, is the default; Ghost, 2026-11-21, allowed Haiku 5.5 for testing, roadmap 3.7).
@@ -126,7 +182,7 @@ def messages_for(question: str, history: tuple[Turn, ...]) -> list[dict[str, str
     return turns + [{"role": "user", "content": question}]
 
 
-def default_client() -> Any:
+def default_client() -> Client:
     """A client given the key (the environment's, else the stored one, SC-022 6); a missing key raises ModelError naming the variable,
     never a value."""
     key = resolve_key()
@@ -137,7 +193,7 @@ def default_client() -> Any:
     return anthropic.Anthropic(api_key=key)
 
 
-def sdk_errors() -> Any | None:
+def sdk_errors() -> ErrorClasses | None:
     """The SDK's module for its error classes, or None when it is not installed."""
     try:
         import anthropic
@@ -147,7 +203,7 @@ def sdk_errors() -> Any | None:
 
 
 # Decision: SC-021 (the typed errors, most specific first, each in plain words that carry no request and no key)
-def describe_error(error: Exception, errors: Any) -> str | None:
+def describe_error(error: Exception, errors: ErrorClasses) -> str | None:
     """Plain words for an SDK error, or None when it is not one: the authentication error first, then the rate limit,
     then any other status, then a connection failure; ordinary exceptions give None and keep their own traceback."""
     if isinstance(error, errors.AuthenticationError):
@@ -161,7 +217,7 @@ def describe_error(error: Exception, errors: Any) -> str | None:
     return None
 
 
-def parse_reply(content: Any) -> dict | None:
+def parse_reply(content: str | None) -> dict | None:
     """The reply's JSON object, or None when it is not one of the schema's shape: '{"kind": "do_not_know",
     "passage_ids": [], "reply": "No."}' gives that dict; "not json", a list or a missing field gives None."""
     try:
@@ -208,7 +264,7 @@ class ClaudeAnswerer:
     Decision: SC-019 (an answerer of the door), SC-021 (the model and the SDK), SC-022 (the key is the environment's).
     """
 
-    def __init__(self, client: Any = None, errors: Any = None, model: str = DEFAULT_MODEL) -> None:
+    def __init__(self, client: Client | None = None, errors: ErrorClasses | None = None, model: str = DEFAULT_MODEL) -> None:
         """Hold the client (the SDK's unless given), the module of error classes (the SDK's unless given) and the model,
         which is also the answerer's `name`; a model not in MODELS raises ValueError."""
         if model not in MODELS:
@@ -218,7 +274,7 @@ class ClaudeAnswerer:
         self.errors = errors
         self.usage = Usage()
 
-    def call(self, question: str, passages: tuple[Passage, ...], history: tuple[Turn, ...]) -> Any:
+    def call(self, question: str, passages: tuple[Passage, ...], history: tuple[Turn, ...]) -> Response:
         """One request to the model: effort low, the schema as the output format, the passages as one cached system block,
         and no thinking, temperature, top_p or top_k. Only a model with the server-side refusal fallback is sent the beta and
         `fallbacks`; on one without it (Haiku 5.5) a refusal is simply an empty finding."""
@@ -229,13 +285,13 @@ class ClaudeAnswerer:
             system=[{"type": "text", "text": system_text(passages), "cache_control": {"type": "ephemeral"}}],
             messages=messages_for(question, history))
 
-    def count(self, response: Any) -> None:
+    def count(self, response: Response) -> None:
         """Add the response's token counts to `usage`; a count the response lacks is zero."""
         used = response.usage
         self.usage.add(used.input_tokens or 0, used.output_tokens or 0,
                        getattr(used, "cache_read_input_tokens", 0) or 0, getattr(used, "cache_creation_input_tokens", 0) or 0)
 
-    def ask(self, question: str, passages: tuple[Passage, ...], history: tuple[Turn, ...]) -> Any:
+    def ask(self, question: str, passages: tuple[Passage, ...], history: tuple[Turn, ...]) -> Response:
         """The response, or ModelError in plain words when the SDK raised one of its typed errors."""
         try:
             return self.call(question, passages, history)
