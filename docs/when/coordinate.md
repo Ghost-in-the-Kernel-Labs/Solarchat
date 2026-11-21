@@ -5,15 +5,32 @@ Read this when you coordinate other agents rather than build. The coordinator is
 not read (Ghost, 2026-11-05). Its own long session, re-reading itself every turn, is the cost this
 file exists to keep small.
 
+## Who does each item (C-036, C-026, C-027)
+
+CLAUDE.md sends the coordinator here before its first item. The rule, in the order you apply it:
+
+1. **Score first.** `python3 -I scripts/score.py` prints one line per open item: its grade and the facts
+   that placed it, at the lowest grade whose points it is within, raised to the floor (`docs/when/grades.md`;
+   Solarchat's floor is mid). Put the item's line in its brief.
+2. **The score decides; you do not raise it.** An item goes above its score only when it waits on Ghost (strong
+   whatever its points) or Ghost names its grade in chat (J-011). Write the reason in the
+   item's journal entry. "It is small, I can do it faster" is the item a mid worker exists for.
+3. **Unplaced is not strong.** An item the score calls `unplaced` names no file: a fresh mid-grade worker places
+   it, writes the facts it used, and builds it if it lands at mid or below; the coordinator does not place it by
+   its own judgement.
+4. **Start the worker.** A fresh agent per task, with the Agent tool's `model` set to the grade's model from
+   `docs/when/grades.md`, briefed as `docs/when/hand-out-a-task.md` says: a one-page brief, a one-page report.
+   Resume a worker only within one unfinished task.
+5. **The ladder.** A worker makes one attempt at a change the checks reject for a reason it cannot explain, then
+   goes one grade up (`docs/when/escalation.md`). The coordinator answers a mid worker's escalation with what it
+   needs; it does not take the item back.
+6. **What stays with the coordinator:** items scored strong, design, Ghost's questions, security, failures whose
+   cause is unknown, reviewing a worker's diff, landing. Nothing else.
+7. **The record.** Each Cost line names the grade that did the work (`docs/JOURNAL.md`); a strong Cost line on an
+   item the score placed lower says why, so a tune-up can count how often the rule was bent.
+
 ## Placing the work
 
-- Score every item before choosing a grade or a model: the score places it, from facts, at the
-  lowest grade whose points it is within, raised to the project's floor (`docs/when/grades.md`).
-  `python3 -I scripts/score.py` prints one line per open item, its grade and the facts that placed it;
-  an item it calls `unplaced` names no file, and a mid-grade worker places it and writes the facts it
-  used. Put the item's line in its brief.
-- Hand each item out as `docs/when/hand-out-a-task.md` says: a fresh worker of its grade, a one-page
-  brief, a one-page report.
 - Workers do the reading. A question that needs many files goes to a worker that answers in a
   paragraph; the coordinator re-reads nothing a worker read, and works from the report and the diff.
 - Mechanical gate-fix loops (a check that names its fix, a regenerated file, a reworded line) go to
