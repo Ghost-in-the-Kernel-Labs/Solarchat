@@ -188,3 +188,50 @@ class TheCheck(unittest.TestCase):
         folder = copy_good()
         edit(folder, "procedures", lambda p: p[0].update(sources=[]))
         self.assertEqual(packs.problems(folder), ["procedure 'connect': sources must name at least one source"])
+
+
+class ThePageCitations(unittest.TestCase):
+    """SC-012: a source has a kind, a document is cited with a page, a web page without; an unknown page is allowed and counted."""
+
+    def test_a_source_with_no_kind_is_refused(self) -> None:
+        folder = copy_good()
+        edit(folder, "manifest", lambda m: m["sources"][0].pop("kind"))
+        self.assertEqual(packs.problems(folder), ["manifest.json source 'S1': kind must be \"document\" or \"web\""])
+
+    def test_a_source_of_another_kind_is_refused(self) -> None:
+        folder = copy_good()
+        edit(folder, "manifest", lambda m: m["sources"][0].update(kind="pdf"))
+        self.assertEqual(packs.problems(folder), ["manifest.json source 'S1': kind must be \"document\" or \"web\""])
+
+    def test_a_bare_id_for_a_document_is_refused(self) -> None:
+        folder = copy_good()
+        edit(folder, "passages", lambda p: p[0].update(sources=["S1"]))
+        self.assertEqual(packs.problems(folder), ["passage 'voltage': source 'S1' is a document: cite it as {\"source\": 'S1', \"page\": ...}"])
+
+    def test_an_object_for_a_web_source_is_refused(self) -> None:
+        folder = copy_good()
+        edit(folder, "passages", lambda p: p[1].update(sources=[{"source": "S2", "page": "4"}]))
+        self.assertEqual(packs.problems(folder), ["passage 'label': source 'S2' is a web page: cite it by its id alone, with no page"])
+
+    def test_an_empty_page_is_refused(self) -> None:
+        folder = copy_good()
+        edit(folder, "passages", lambda p: p[0].update(sources=[{"source": "S1", "page": ""}]))
+        self.assertEqual(packs.problems(folder), ["passage 'voltage': source 'S1': page is missing or empty"])
+
+    def test_a_missing_page_is_refused(self) -> None:
+        folder = copy_good()
+        edit(folder, "flows", lambda f: f[0].update(sources=[{"source": "S1"}]))
+        self.assertEqual(packs.problems(folder), ["flow 'no-output': source 'S1': page is missing or empty"])
+
+    def test_unknown_pages_are_allowed_and_counted(self) -> None:
+        folder = copy_good()
+        edit(folder, "passages", lambda p: p[0].update(sources=[{"source": "S1", "page": "unknown"}]))
+        edit(folder, "flows", lambda f: f[0].update(sources=[{"source": "S1", "page": "unknown"}]))
+        self.assertEqual(packs.problems(folder), [])
+        self.assertEqual(packs.unknown_page_count(folder), 2)
+
+    def test_a_page_label_such_as_a_dash_range_or_a_letter_passes(self) -> None:
+        folder = copy_good()
+        edit(folder, "passages", lambda p: p[0].update(sources=[{"source": "S1", "page": "A-3"}, {"source": "S1", "page": "15-16"}]))
+        self.assertEqual(packs.problems(folder), [])
+        self.assertEqual(packs.unknown_page_count(folder), 0)

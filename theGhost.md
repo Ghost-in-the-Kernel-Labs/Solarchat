@@ -579,3 +579,13 @@ The core decisions above are inherited (Core C-001 to C-041); this project's beg
 - **Status:** in force
 - **See also:** Core C-024, Core C-025, Core C-012; SC-009
 - **subject:** tune-up
+
+### SC-012: An answer cites the page of the manual it used: each source has a kind, a document's citation carries a page, and unknown pages are counted
+- **Decision:** Each source in a pack's manifest has a required `kind`: `"document"` (a manual, datasheet or PDF that has page numbers) or `"web"` (a web page, which has none); a source with no `kind`, or any other value, is refused. A passage's `sources` entry is a bare source id for a `web` source, and an object `{"source": "S3", "page": "15"}` for a `document` source; `page` is a non-empty string (so "A-3" and "15-16" work), and `"unknown"` marks a page not yet found. An object that cites a `web` source is refused, and so is a bare id for a `document` source. The pack check counts the citations whose page is `"unknown"` and prints the total, so the gap is visible. What the worker is shown: an answer names the passage it used, then each of that passage's sources by title, with the page for a document source. `PassageRef(pack_id, passage_id)` and the leaf module do not change: the page is resolved from the pack.
+- **Why:** Ghost, 2026-11-21, in chat: the assistant cites the page of the manual it used. A worker who is told which page to read can check the claim against the maker's own text before acting on it (HAD-03); a page marked unknown is a gap the check keeps in view until a person fills it.
+- **Held by:** `scripts/checks/packs.py` and `test/test_packs.py` (the pack check and its tests), `docs/CONTRACT.md` ("The pack format", HAD-03), the seed pack's manifest and its citations.
+- **Source:** Ghost, 2026-11-21, in chat; the wording the agent's, for Ghost to confirm.
+- **Status:** in force
+- **Reverses if:** the leaf's `PassageRef` is ever changed to carry a page, since the page would then have two homes.
+- **See also:** HAD-03
+- **subject:** pack format

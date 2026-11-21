@@ -10,7 +10,16 @@
       "title": "Examplesun ES-100 installation manual",
       "url": "https://example.com/es-100.pdf",
       "licence": "CC BY 4.0, per the manual's copyright page",
-      "retrieved": "2026-11-20"
+      "retrieved": "2026-11-20",
+      "kind": "document"
+    },
+    {
+      "id": "S2",
+      "title": "Reading a panel's label (web page)",
+      "url": "https://example.com/label",
+      "licence": "not stated",
+      "retrieved": "2026-11-20",
+      "kind": "web"
     }
   ],
   "third_party_images": [

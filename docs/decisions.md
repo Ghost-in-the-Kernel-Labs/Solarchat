@@ -56,3 +56,4 @@ Written by `scripts/decisions_index.py` from `theGhost.md`; do not edit here. Se
 | SC-009 | Core C-024's tune-up commit comes every twenty-five commits, not every eight | in force | tune-up |
 | SC-010 | A labelled demo mode may run a pack that is not admitted; for Monday's demo the walker comes before the evaluation set | in force | model roles |
 | SC-011 | The code is written for human reviewers: named variables, commented functions, two READMEs, and the decisions mapped to the functions that hold them | in force | tune-up |
+| SC-012 | An answer cites the page of the manual it used: each source has a kind, a document's citation carries a page, and unknown pages are counted | in force | pack format |

@@ -1,5 +1,6 @@
 """A knowledge pack is well formed, as docs/CONTRACT.md's "The pack format" states it (SC-005, SC-007, HAD-03 to HAD-06).
 
+`python3 -I scripts/checks/packs.py <pack folder>` prints the faults and, how many pages are still unknown (SC-012).
 `problems(folder)` reads one pack folder (manifest.json, then passages.json, flows.json, procedures.json, images/) and returns one line per
 fault, `[]` for a well-formed pack. It reads the folder's files through scripts/checks/common.py, not the disk's walk
 of a clone (C-001). It is not run over `packs/` yet: the demo pack is brought to the format in TODO 1.4. What it cannot
@@ -7,14 +8,19 @@ judge stays with the person who admits a pack: whether a licence allows redistri
 """
 import json
 import re
+import sys
 from datetime import date
 from pathlib import Path
 
-from scripts.checks.common import tracked_files
+if __name__ == "__main__":  # run as a script from the project's root: the root holds the scripts package
+    sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from scripts.checks.common import tracked_files  # noqa: E402
 
 ID_PATTERN = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
 MANIFEST_TEXT_FIELDS = ("id", "title", "version")
 SOURCE_TEXT_FIELDS = ("id", "title", "url", "licence", "retrieved")
+SOURCE_KINDS = ("document", "web")
+UNKNOWN_PAGE = "unknown"
 THIRD_PARTY_PICTURE_TEXT_FIELDS = ("file", "source_url", "owner", "licence", "shows")
 PASSAGE_TEXT_FIELDS = ("id", "title", "text")
 FLOW_TEXT_FIELDS = ("id", "title", "symptom", "fix", "stop")
@@ -96,17 +102,27 @@ def identity_problems(manifest: dict) -> list[str]:
     return faults
 
 
+# Decision: SC-012 (a source says whether it is a document with pages or a web page without)
+def kind_problems(source: dict) -> list[str]:
+    """A source's `kind` must be "document" or "web": a source with no kind gives
+    ["manifest.json source 'S1': kind must be \"document\" or \"web\""]."""
+    if source.get("kind") in SOURCE_KINDS:
+        return []
+    return [f"manifest.json source {source.get('id')!r}: kind must be \"document\" or \"web\""]
+
+
 # Decision: SC-005 (every source carries its licence, weighed at admission)
-def source_problems(manifest: dict) -> tuple[list[str], set[str]]:
-    """The lines for the manifest's sources and the set of their ids: a source with no licence gives
-    "manifest.json source 'S1': licence is missing or empty"."""
+# Decision: SC-012 (every source carries its kind, which says how it is cited)
+def source_problems(manifest: dict) -> tuple[list[str], dict[str, object]]:
+    """The lines for the manifest's sources and a map from each source's id to its kind: a source with no licence gives
+    "manifest.json source 'S1': licence is missing or empty"; ids {"S1": "document", "S2": "web"} come back as that map."""
     faults: list[str] = []
     sources = list_of_objects(manifest.get("sources"), "manifest.json: sources", faults)
     source_ids = [str(source.get("id")) for source in sources]
     for source in sources:
-        faults += missing_fields(source, SOURCE_TEXT_FIELDS, f"manifest.json source {source.get('id')!r}")
+        faults += missing_fields(source, SOURCE_TEXT_FIELDS, f"manifest.json source {source.get('id')!r}") + kind_problems(source)
     faults += [f"manifest.json: source id {source_id!r} is used twice" for source_id in sorted(set(source_ids)) if source_ids.count(source_id) > 1]
-    return faults, set(source_ids)
+    return faults, {str(source.get("id")): source.get("kind") for source in sources}
 
 
 # Decision: SC-007 (a picture from the web is listed with its provenance)
@@ -123,17 +139,17 @@ def picture_entries(manifest: dict, faults: list[str]) -> set[str]:
     return {str(picture_entry.get("file")) for picture_entry in listed_picture_files}
 
 
-def manifest_problems(manifest: object) -> tuple[list[str], set[str], set[str]]:
-    """The manifest's lines, its source ids and its listed third-party picture files."""
+def manifest_problems(manifest: object) -> tuple[list[str], dict[str, object], set[str]]:
+    """The manifest's lines, its sources' kinds by id and its listed third-party picture files."""
     if not isinstance(manifest, dict):
-        return ["manifest.json: is not an object"], set(), set()
+        return ["manifest.json: is not an object"], {}, set()
     faults = missing_fields(manifest, MANIFEST_TEXT_FIELDS, "manifest.json") + identity_problems(manifest) + admission_problems(manifest)
     if not is_blank(manifest.get("id")) and not ID_PATTERN.match(manifest["id"]):
         faults.append("manifest.json: id must be lowercase words joined by hyphens")
-    manifest_faults, source_ids = source_problems(manifest)
+    manifest_faults, source_kinds = source_problems(manifest)
     faults += manifest_faults
     listed_picture_files = picture_entries(manifest, faults)
-    return faults, source_ids, listed_picture_files
+    return faults, source_kinds, listed_picture_files
 
 
 def picture_problems(entry: dict, location: str, folder: Path) -> list[str]:
@@ -147,21 +163,52 @@ def picture_problems(entry: dict, location: str, folder: Path) -> list[str]:
     return faults + missing_fields(entry, ("image_alt",), location)
 
 
+def citation_problems(cited: object, location: str, source_kinds: dict[str, object]) -> list[str]:
+    """One citation: a bare id for a web source, or {"source", "page"} for a document source; the break for a bare id of a
+    document is "passage 'p': source 'S3' is a document: cite it as {"source": "S3", "page": ...}"."""
+    cited_id = cited.get("source") if isinstance(cited, dict) else cited
+    if not isinstance(cited_id, str):
+        return [f"{location}: each source must be an id, or an object with source and page"]
+    if cited_id not in source_kinds:
+        return [f"{location}: source {cited_id!r} is not in the manifest"]
+    kind = source_kinds[cited_id]
+    if kind == "document" and not isinstance(cited, dict):
+        return [f"{location}: source {cited_id!r} is a document: cite it as {{\"source\": {cited_id!r}, \"page\": ...}}"]
+    if kind == "web" and isinstance(cited, dict):
+        return [f"{location}: source {cited_id!r} is a web page: cite it by its id alone, with no page"]
+    if isinstance(cited, dict) and kind == "document" and is_blank(cited.get("page")):
+        return [f"{location}: source {cited_id!r}: page is missing or empty"]
+    return []
+
+
 # Invariant: HAD-03 (an answer names the passage it came from, and a passage its source)
-def reference_problems(entry: dict, location: str, source_ids: set[str]) -> list[str]:
-    """The entry's `sources`: a non-empty list of ids the manifest has ("passage 'p' names no source" is the break)."""
-    cited_source_ids = entry.get("sources")
-    if not isinstance(cited_source_ids, list) or not cited_source_ids or not all(isinstance(cited_id, str) for cited_id in cited_source_ids):
+# Decision: SC-012 (a document source is cited with its page, a web source without)
+def reference_problems(entry: dict, location: str, source_kinds: dict[str, object]) -> list[str]:
+    """The entry's `sources`: a non-empty list of citations the manifest's sources allow ("passage 'p' names no source" is the break)."""
+    citations = entry.get("sources")
+    if not isinstance(citations, list) or not citations:
         return [f"{location}: sources must name at least one source"]
-    return [f"{location}: source {cited_id!r} is not in the manifest" for cited_id in cited_source_ids if cited_id not in source_ids]
+    return [fault for cited in citations for fault in citation_problems(cited, location, source_kinds)]
 
 
-def passage_problems(passages: list[dict], source_ids: set[str], folder: Path) -> list[str]:
+# Decision: SC-012 (a page marked unknown is counted, so the gap is visible)
+def unknown_pages(passages: list[dict], flows: list[dict], procedures: list[dict]) -> list[str]:
+    """One line per citation whose page is "unknown": ["passage 'p': source 'S3'"] for a passage citing S3 so."""
+    lines: list[str] = []
+    for kind_name, entries in (("passage", passages), ("flow", flows), ("procedure", procedures)):
+        for entry in entries:
+            citations = entry.get("sources") if isinstance(entry.get("sources"), list) else []
+            lines += [f"{kind_name} {entry.get('id')!r}: source {cited.get('source')!r}" for cited in citations
+                      if isinstance(cited, dict) and cited.get("page") == UNKNOWN_PAGE]
+    return lines
+
+
+def passage_problems(passages: list[dict], source_kinds: dict[str, object], folder: Path) -> list[str]:
     """Each passage has an id, title, text, a source from the manifest, and a sound picture if it has one."""
     faults: list[str] = []
     for passage in passages:
         location = f"passage {passage.get('id')!r}"
-        faults += missing_fields(passage, PASSAGE_TEXT_FIELDS, location) + reference_problems(passage, location, source_ids)
+        faults += missing_fields(passage, PASSAGE_TEXT_FIELDS, location) + reference_problems(passage, location, source_kinds)
         faults += picture_problems(passage, location, folder)
     return faults
 
@@ -179,12 +226,12 @@ def check_problems(flow: dict, location: str, folder: Path) -> list[str]:
 
 
 # Invariant: HAD-04 (a flow ends at a stop that sends the worker to the supervisor)
-def flow_problems(flows: list[dict], source_ids: set[str], folder: Path) -> list[str]:
+def flow_problems(flows: list[dict], source_kinds: dict[str, object], folder: Path) -> list[str]:
     """Each flow has a symptom, checks, a fix, a stop (where to send the worker), and a source from the manifest."""
     faults: list[str] = []
     for flow in flows:
         location = f"flow {flow.get('id')!r}"
-        faults += missing_fields(flow, FLOW_TEXT_FIELDS, location) + reference_problems(flow, location, source_ids)
+        faults += missing_fields(flow, FLOW_TEXT_FIELDS, location) + reference_problems(flow, location, source_kinds)
         faults += check_problems(flow, location, folder)
     return faults
 
@@ -206,12 +253,12 @@ def step_problems(procedure: dict, location: str, folder: Path) -> list[str]:
     return faults + [f"{location}: step id {step_id!r} is used twice" for step_id in sorted(set(step_ids)) if step_ids.count(step_id) > 1]
 
 
-def procedure_problems(procedures: list[dict], source_ids: set[str], folder: Path) -> list[str]:
+def procedure_problems(procedures: list[dict], source_kinds: dict[str, object], folder: Path) -> list[str]:
     """Each procedure has an id, a title, a source from the manifest and sound steps."""
     faults: list[str] = []
     for procedure in procedures:
         location = f"procedure {procedure.get('id')!r}"
-        faults += missing_fields(procedure, PROCEDURE_TEXT_FIELDS, location) + reference_problems(procedure, location, source_ids)
+        faults += missing_fields(procedure, PROCEDURE_TEXT_FIELDS, location) + reference_problems(procedure, location, source_kinds)
         faults += step_problems(procedure, location, folder)
     return faults
 
@@ -236,7 +283,7 @@ def problems(folder: Path) -> list[str]:
     """Every fault in the pack folder, in a stable order; [] when it is well formed."""
     faults: list[str] = []
     manifest = load_json(folder, "manifest.json", faults)
-    manifest_faults, source_ids, listed_picture_files = manifest_problems(manifest) if manifest is not None else ([], set(), set())
+    manifest_faults, source_kinds, listed_picture_files = manifest_problems(manifest) if manifest is not None else ([], {}, set())
     faults += manifest_faults
     if isinstance(manifest, dict) and manifest.get("id") not in (None, folder.name):
         faults.append(f"manifest.json: id {manifest.get('id')!r} is not the folder's name {folder.name!r}")
@@ -244,6 +291,32 @@ def problems(folder: Path) -> list[str]:
     procedures = load_optional_list(folder, "procedures.json", faults)
     if not (passages or flows or procedures):
         faults.append("the pack has no passage, flow or procedure")
-    faults += passage_problems(passages, source_ids, folder) + flow_problems(flows, source_ids, folder)
-    faults += procedure_problems(procedures, source_ids, folder)
+    faults += passage_problems(passages, source_kinds, folder) + flow_problems(flows, source_kinds, folder)
+    faults += procedure_problems(procedures, source_kinds, folder)
     return faults + id_problems(passages + flows + procedures) + unlisted_pictures(folder, listed_picture_files)
+
+
+# Decision: SC-012 (the count of unknown pages is shown, so the gap in a draft pack is visible)
+def unknown_page_count(folder: Path) -> int:
+    """How many citations in the pack's passages, flows and procedures have the page "unknown"; 0 for a pack with none."""
+    ignored_faults: list[str] = []
+    contents = [load_optional_list(folder, name, ignored_faults) for name in ("passages.json", "flows.json", "procedures.json")]
+    return len(unknown_pages(*contents))
+
+
+def main(arguments: list[str]) -> int:
+    """Print the pack's faults, then its unknown-page count; exit 1 on a fault: `packs.py packs/x` prints "ok" for a clean pack."""
+    if len(arguments) != 1:
+        print("usage: python3 -I scripts/checks/packs.py <pack folder>")
+        return 2
+    folder = Path(arguments[0])
+    faults = problems(folder)
+    print("\n".join(faults) if faults else "ok: the pack is well formed")
+    unknown_count = unknown_page_count(folder)
+    if unknown_count:
+        print(f"{unknown_count} page(s) unknown: fill them before relying on the citations (SC-012)")
+    return 1 if faults else 0
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv[1:]))
