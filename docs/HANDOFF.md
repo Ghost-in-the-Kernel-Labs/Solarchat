@@ -152,20 +152,21 @@ which passage to show.
    transcripts stay under `build/`. TODO 1.19 to 1.24 are in Phase 1, before its tune-up pass, now 1.25. Answered;
    nothing waits on you here.
 
-19. **Tune-up commit 1, questions that need a file or a decision outside a tune-up's list** (J-052): (a) `scripts/next_id.py`
-    takes a journal id that an unmerged `origin/agent/*` branch already holds (three debriefs: J-026, J-027, J-051);
-    have it read those branches too. (b) A script that builds a worktree's `.venv` of symlinks (three debriefs; the
-    steps are in `docs/when/coordinate.md`), and one that adds a safety rule's change entry and sets its fingerprint
-    (two debriefs). Each is a new script, which a tune-up does not write. (c) `scripts/checks/todo.py` could accept a
-    `Waits on: none outside` kind so a chain item that only follows another need not sit in the waiting phase (one
-    debrief). (d) `theGhost.md`'s header could say when an in-force decision is rewritten on Ghost's word and when it is
-    superseded (one debrief); a decision of Ghost's, and `theGhost.md` is not a tune-up's to edit.
-
-20. **Two items hold the same numbers** (found in a documentation pass, J-057): `docs/ROADMAP.md` Phase 2 lists 2.5
-    "Switching packs on and off, and two packs for different models side by side" and 2.7 "A site-safety pack built
-    from the library", while `TODO.md` and `docs/DONE.md` use 2.5 for the command menu and the local key and 2.7 for
-    speech out (J-054), and `TODO.md`'s note under 2.8 still says those two roadmap items join the chain. Which
-    renumbering is wanted (the old items to 2.9 and 2.10, or others) is a plan change, so no document was edited for it.
+19. **Tune-up commit 1's four questions: answered** (J-052 asked; J-058 records Ghost's answer of 2026-11-21, "go with
+    your recommendations on all four"): (a) `scripts/next_id.py` reading agent branches is **not built**: the journal
+    check refuses a gap, so a worker given an id past main's would fail its own fast loop; the coordinator renumbers at
+    landing instead, and Ghost chooses between that and a renumbering script (For Ghost 21). (b) The worker `.venv`
+    script is being built; the safety-rule change-entry script waits until a rule next changes. (c) Declined: no
+    `Waits on: none outside` kind. (d) Recorded in `theGhost.md`'s header: a wording fix or added point in place on
+    Ghost's word, a change of substance a new superseding decision.
+20. **Two items held the same numbers: settled by the coordinator** (J-057 found it, J-058): the roadmap's 2.5 and 2.7
+    are now 2.9 and 2.10, and the roadmap lists the demo's 2.5 and 2.7, which took those numbers by the coordinator's
+    mistake (only `TODO.md` and `docs/DONE.md` were searched). No plan text changed; say if you want other numbers.
+21. **Journal ids across branches** (J-058): keep renumbering by hand at landing (the coordinator's recommendation:
+    a minute each time, and only the coordinator pays it), or a `scripts/renumber_journal.py` that renumbers an entry,
+    its index row and its mentions in the navigation log and the handoff. Also: the fast checks run no `ruff`, so lint
+    reached `main` today and the full gate fails until the clean-up lands; adding `ruff` to `scripts/gate.sh --fast` is
+    a gate change for you to decide.
 
 Audit advisories (tune-up step 2): the python gate runs no audit step, so none are listed. An audit tool
 (`pip-audit` or the like) would be a new dependency, Ghost's to approve; until then the review's layers 1, 2 and 4

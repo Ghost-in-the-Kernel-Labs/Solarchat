@@ -84,7 +84,7 @@ Check: `solarchat/cli` runs a conversation end to end with the network off: choo
 
 Check: `docs/when/tune-up.md` followed in full; the metrics table written; the navigation log reviewed; the human maintainability pass for the code written since the last one (SC-011).
 
-Items 2.5 and 2.7 of `docs/ROADMAP.md` join this chain, before this pass, when Phase 2 is reached.
+Items 2.9 and 2.10 of `docs/ROADMAP.md` (renumbered from 2.5 and 2.7, J-058) join this chain, before this pass, when Phase 2 is reached; this pass is then renumbered after them.
 
 ## Phase W: waiting on Ghost
 

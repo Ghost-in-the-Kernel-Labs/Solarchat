@@ -200,8 +200,10 @@ runner of Phase 1 (SC-018): the walker, the safety rules in it, and the shell ar
   to end with the network off. Every step it shows lists its passage's sources by title, with the page for a document
   source or "page not yet found" where the page is `"unknown"` (SC-012); free text it cannot place gets "I do not
   know", with no passage (HAD-03).
-- 2.5 Switching packs on and off, and two packs for different models side by side. (Not built. `TODO.md` and `docs/DONE.md` use the number 2.5 for the command menu and the local key, done, J-055, and 2.7 for speech out, J-054; see `docs/HANDOFF.md`, For Ghost 20.)
-- 2.7 A site-safety pack built from the library (J-031; renumbered from 2.8, SC-018): passages that quote `library/sources/` (OSHA,
+- 2.5 The command menu and the local key, for the demo from a local clone (Ghost, 2026-11-21, J-054; done, J-055): `bin/solarchat`, `solarchat --key`, SC-022 point 6.
+- 2.7 Speech out for the demo (Ghost, 2026-11-21, J-054; done, J-056): `--voice`, the system's own voice, no dependency. Speech in is later, a dependency proposed to Ghost.
+- 2.9 Switching packs on and off, and two packs for different models side by side (renumbered from 2.5, J-058: the demo's items took 2.5 and 2.7).
+- 2.10 A site-safety pack built from the library (J-031; renumbered from 2.8, SC-018, then from 2.7, J-058): passages that quote `library/sources/` (OSHA,
   NIOSH, Solar Victoria) with each source's id and page, so a worker's general safety question ("how far from an
   overhead line?") gets a cited answer instead of "I do not know". A `demo` pack until it is handed over (SC-013). It
   never names a safety rule (the pack check refuses that) and does not replace one: the rules stay the fixed layer
@@ -209,7 +211,7 @@ runner of Phase 1 (SC-018): the walker, the safety rules in it, and the shell ar
   or `installation_type`, and the check does not hold the list of types, so `installation_type` "every installation
   type (site safety)" passes today; what is proposed is that line in `packs/TYPES.md` and one sentence in HAD-06
   saying a pack may cover every installation type, so the reading is deliberate rather than a gap.
-- 2.8 Tune-up pass 2 (renumbered from 2.9, SC-018)
+- 2.8 Tune-up pass 2 (renumbered from 2.9, SC-018; it is renumbered after 2.10 when 2.9 and 2.10 enter `TODO.md`, so it stays Phase 2's last item)
 
 ### Phase 3: the local mode (a model on top)
 

@@ -70,3 +70,10 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Opened**: `CLAUDE.md`, `docs/when/handoff.md`, `docs/when/hand-out-a-task.md`, `docs/DONE.md`, `TODO.md`, `docs/modules.json`, `docs/journal/J-000-099.md` (J-045 to J-055), `README.md`, `docs/ROADMAP.md`, `docs/HANDOFF.md`, `docs/SAFETY-AND-COMPLIANCE.md`, `docs/GLOSSARY.md`, `docs/paths/process.md`, `docs/CONTRACT.md`, `docs/REVIEWED-VERSIONS.md`, `docs/DEPENDENCY-REVIEW.md`, `docs/FINDINGS.md`, `docs/ESCALATIONS.md`, `solarchat/answer/door.py`, `solarchat/cli/main.py`, `theGhost.md` (SC-022, SC-023).
 - **Complaints**: no document says which documents carry "what is built" (the README, HANDOFF, the safety document, the roadmap's status words and CONTRACT's pointers all do), so each feature item leaves some of them stale; the journal's classes have no `docs`, so the brief's class was refused; `scripts/next_id.py` gave J-057 while the brief named J-057 for a reserved J-057.
 - **Suggestions**: a line in `docs/when/handoff.md`'s "Finishing a task" naming the five documents a built item must update (the debriefs of J-053 and J-055 each asked for one row or note after the fact); a `docs` journal class, or a sentence saying which class a currency pass takes.
+
+### 2026-11-21 · The tune-up's four answers and the number clash (J-058) · Claude Opus 5.5
+
+- **Task**: record Ghost's four answers, fix the roadmap numbers the demo items reused, land docs only.
+- **Opened**: `docs/HANDOFF.md`, `scripts/next_id.py`, `docs/when/coordinate.md`, `docs/ROADMAP.md`, `TODO.md`, `theGhost.md` (header).
+- **Complaints**: free numbers live in three files (`TODO.md`, `docs/DONE.md`, `docs/ROADMAP.md`) and nothing checks all three; the fast checks run no `ruff`, so lint reached `main`.
+- **Suggestions**: a check that a TODO number is not used for a different roadmap item; `ruff` in the fast checks (Ghost's, For Ghost 21).

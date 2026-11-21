@@ -18,6 +18,9 @@ correct cross-references (`See also`, `Held by`) on any entry without asking, si
 what a decision points at, not what it says. A change to an entry's `Decision`, `Why` or `Status`
 text is Ghost's alone, or an agent's with Ghost's explicit word in the same session. A `proposed`
 entry is a recommendation waiting on Ghost; nothing is built on it until it is `in force`.
+Amend or supersede (Ghost, 2026-11-21, J-058): a wording fix or an added point is made in place on Ghost's word, the
+entry's `Source` naming the date and the journal id; a change to what the decision decides is a new decision whose
+`Supersedes:` line names the old one, which is marked `superseded by` in the same commit.
 
 ## The Core line
 
