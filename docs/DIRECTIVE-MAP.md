@@ -59,10 +59,10 @@ Written by `scripts/directive_map.py` from `theGhost.md`, `docs/CONTRACT.md` and
 | SC-010 | A labelled demo mode may run a pack that is not admitted; for Monday's demo the walker comes before the evaluation set | no function |
 | SC-011 | The code is written for human reviewers: named variables, commented functions, two READMEs, and the decisions mapped to the functions that hold them | no function |
 | SC-012 | An answer cites the page of the manual it used: each source has a kind, a document's citation carries a page, and unknown pages are counted | `scripts/checks/packs.py:kind_problems`, `scripts/checks/packs.py:source_problems`, `scripts/checks/packs.py:reference_problems`, `scripts/checks/packs.py:unknown_pages`, `scripts/checks/packs.py:unknown_page_count` |
-| SC-013 | Handing documentation to the person who loads the library is the approval; a pack is `library` or `demo`, and no approval is recorded | `scripts/checks/packs.py:status_problems`, `scripts/checks/packs.py:unknown_page_problems`, `solarchat/leaf/contract.py:is_demo` |
+| SC-013 | Handing documentation to the person who loads the library is the approval; a pack is `library` or `demo`, and no approval is recorded | `scripts/checks/packs.py:status_problems`, `scripts/checks/packs.py:unknown_page_problems`, `solarchat/leaf/contract.py:may_answer` |
 | HAD-01 | The leaf module imports nothing of the project's own | `solarchat/leaf/__init__.py` |
 | HAD-02 | Every number a document reports comes from a run the repository can repeat | `solarchat/leaf/__init__.py` |
 | HAD-03 | Hadley answers only from the packs, names the passage, or says it does not know | `scripts/checks/packs.py:reference_problems`, `solarchat/leaf/contract.py:Reply` |
 | HAD-04 | The safety rules sit outside every pack, and no pack can remove or change one | `scripts/checks/packs.py:flow_problems`, `scripts/checks/packs.py:safety_rule_problems`, `solarchat/leaf/contract.py:Reply`, `solarchat/leaf/contract.py:SafetyRule`, `solarchat/safety/__init__.py`, `solarchat/safety/rules.py:sequence_problem`, `solarchat/safety/rules.py:load_rules` |
 | HAD-05 | A pack's text is data, never instructions | `solarchat/leaf/contract.py:Passage` |
-| HAD-06 | A demo pack never answers outside demo mode | `scripts/checks/packs.py:status_problems`, `solarchat/leaf/contract.py:is_demo` |
+| HAD-06 | A demo pack never answers outside demo mode | `scripts/checks/packs.py:status_problems`, `solarchat/leaf/contract.py:may_answer` |

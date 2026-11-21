@@ -84,3 +84,10 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Opened**: `docs/paths/process.md`, `scripts/commit.sh`, `scripts/ship.sh`, `theGhost.md` (SC-005, SC-010, SC-012), `scripts/checks/packs.py`, `solarchat/leaf/contract.py`, `scripts/directive_map.py`, `docs/CONTRACT.md`, `test/test_packs.py`, `test/test_leaf.py`, the fixtures, `docs/HANDOFF.md`, `docs/journal/J-000-099.md`.
 - **Complaints**: no routing row for the pack format or the leaf's contract, so the files to open came from the brief; the glossary, `docs/modules.json` and `packs/TYPES.md` also carried the word "admitted" and are in no list; `docs/DONE.md` keeps "admitted" in a finished item's check, left as history.
 - **Suggestions**: a routing row "the pack format: change a manifest field" starting at `docs/CONTRACT.md`, `scripts/checks/packs.py`, `test/test_packs.py` and the fixtures; `is_demo` fails open on a bad status (the pack check refuses it first), so the walker should refuse a status it does not know.
+
+### 2026-11-21 · The leaf refuses a status it does not know (SC-013, HAD-06) · Claude Opus 5.5
+
+- **Task**: replace `is_demo` with the fail-closed `may_answer(manifest, demo_mode)` in the leaf, so the walker (TODO 1.6) refuses any pack whose status is not `library` or `demo`; tests, docs, the TODO item and the contract's HAD-06 follow.
+- **Opened**: `CLAUDE.md`, `solarchat/leaf/contract.py`, `test/test_leaf.py`, `docs/CONTRACT.md`, `docs/modules.json`, `docs/SAFETY-AND-COMPLIANCE.md`, `docs/DIRECTIVE-MAP.md`, `theGhost.md`, `TODO.md`, `packs/TYPES.md`, `docs/when/handoff.md`.
+- **Complaints**: none; `docs/modules.json` and `packs/TYPES.md` name no function, so neither changed. History entries (J-028, earlier debriefs) still say `is_demo` and were left as written.
+- **Suggestions**: none.

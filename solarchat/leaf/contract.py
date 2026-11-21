@@ -69,14 +69,20 @@ def reply_problem(reply: Reply) -> str | None:
     return None
 
 
-def is_demo(manifest: dict) -> bool:
-    """Whether a pack is a demo pack, which answers only in demo mode; a library pack answers always.
+def may_answer(manifest: dict, demo_mode: bool) -> bool:
+    """Whether a pack may answer now: a library pack always, a demo pack only in demo mode, any other status never.
 
+    Fails closed: a status this function does not know (missing, empty, misspelled, or not a string) never answers.
     Decision: SC-013 (a pack is a library pack or a demo pack).
     Invariant: HAD-06 (a demo pack never answers outside demo mode).
-    {"status": "demo"} gives True; {"status": "library"} gives False. The pack check refuses any other status.
+    {"status": "library"} gives True in either mode; {"status": "demo"} gives demo_mode; {"status": "Library"} gives False.
     """
-    return manifest.get("status") == "demo"
+    status = manifest.get("status")
+    if status == "library":
+        return True
+    if status == "demo":
+        return demo_mode
+    return False
 
 
 @dataclass(frozen=True)

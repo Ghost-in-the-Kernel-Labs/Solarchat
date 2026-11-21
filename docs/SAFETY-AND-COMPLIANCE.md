@@ -50,8 +50,8 @@ the person who loads the library data is that check and approval: no approval is
 has a `status`, `library` or `demo`. A `library` pack answers; a `demo` pack answers only in demo mode (section 8). No
 model's reading ever approves anything (Core C-005, SC-005, SC-013).
 
-- **Enforced today:** `solarchat/leaf/contract.py`'s `is_demo` says whether a pack is a demo
-  pack, which answers only in demo mode; `test/test_leaf.py` shows the seed pack is one.
+- **Enforced today:** `solarchat/leaf/contract.py`'s `may_answer` says whether a pack may answer: a
+  `library` pack always, a `demo` pack only in demo mode, any other status never; `test/test_leaf.py` shows the seed pack answers only in demo mode.
   `scripts/checks/packs.py` refuses a pack whose `status` is not `library` or `demo`, a `library` pack with a page
   marked unknown, a source with no licence written down, and a passage, flow or procedure that cites no source or a source the manifest does
   not list (`test/test_packs.py`, with a deliberately broken pack for each fault under

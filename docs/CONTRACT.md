@@ -57,7 +57,8 @@ A pack gives `make` and `model`, or `installation_type`, or all three; a pack wi
 A pack's `status` is `library` or `demo` (SC-013). A `library` pack answers: handing the documentation to the person who
 loads the library is the approval, and no approval is recorded (SC-013, amending SC-005). A `demo` pack may be read and
 checked, and answers only in demo mode, under the banner "DEMO: not reviewed by an engineer, do not use on a site" (SC-010).
-Held by the leaf's `is_demo` (`test/test_leaf.py`) and the pack check's status rule (`test/test_packs.py`).
+A pack whose status is not `library` or `demo` never answers, whatever the mode (SC-013; held by `may_answer`).
+Held by the leaf's `may_answer` (`test/test_leaf.py`) and the pack check's status rule (`test/test_packs.py`).
 
 ## The pack format
 
