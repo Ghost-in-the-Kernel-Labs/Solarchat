@@ -31,3 +31,19 @@ not public domain is left out; the text around it stays.
 3. Make `text.txt` (`pdftotext -layout` for a PDF; a short standard-library script for HTML or XML). No new dependency.
 4. Write `library/sources/<id>/source.json`; copy the original in if it may be kept.
 5. `git add -N library`, then `scripts/fast.sh test_library` and `python3 -I scripts/checks/library.py`.
+
+## Pasted pages (no original)
+
+osha.gov refuses automated clients, so eight of its pages were copied by hand from a browser by Ghost on 2026-11-21 and pasted:
+`osha-solar-overview`, `osha-solar-falls`, `osha-solar-electrical`, `osha-solar-lockout-tagout`, `osha-solar-crane-hoist`,
+`osha-solar-heat-cold-stress`, `osha-solar-ppe` and `osha-lithium-ion-hazards`. Each has no `original.*`: its `text.txt` is the paste
+without the two header lines (the "Source:" line and the "Pasted by Ghost" line), its `sha256` is of that `text.txt`, and its `note`
+says so. The licence evidence is 17 U.S.C. 105 (an OSHA page is a work of the United States Government). The check needs no change for
+this: `note` is already an optional field, and a source with no original is already allowed.
+
+## Sources held
+
+OSHA regulations (eCFR, as downloaded): `osha-1910-s`, `osha-1910-269`, `osha-1910-147`, `osha-1910-d`, `osha-1910-i`,
+`osha-1910-179-180` (two sections joined end to end), `osha-1926-k`, `osha-1926-m`, `osha-1926-cranes-power-lines`, `osha-1926-1417`.
+OSHA pages: the eight pasted pages above. Others: `niosh-2009-113`, `solar-vic-pv-audit`.
+The safety rules (`solarchat/safety/rules.json`) name a library id as "(library: <id>)" in a source's title.

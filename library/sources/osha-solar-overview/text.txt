@@ -1,0 +1,18 @@
+Solar is a growing sector for green energy and green jobs. Various worker health and safety hazards exist in the manufacture, installation, and maintenance of solar energy. Employers working in the solar energy business need to protect their workers from workplace hazards and workers need to understand how to protect themselves from hazards.
+Two commercially viable solar energy sectors are solar electric and solar thermal or solar water heating.
+Solar Electric
+Solar energy can be converted into electricity using photovoltaics (PV), or concentrating solar power (CSP). PV systems are the most common and use semi-conductors and sunlight to make electricity. The more solar modules a PV system or array has, the more electricity will be generated. Materials presently used for photovoltaics include monocrystalline silicon, polycrystalline silicon, microcrystalline silicon, cadmium telluride, and copper indium selenide/sulfide.
+Solar Thermal or Solar Water Heaters
+Types of solar water heating systems include direct and indirect (Glycol) systems and are chosen largely by climate; freezing temperatures can damage some types.
+Hazards and Controls
+Workers in the solar energy industry are potentially exposed to a variety of serious hazards, such as arc flashes (which include arc flash burn and blast hazards), electric shock, falls, and thermal burn hazards that can cause injury and death. Solar energy employers (connecting to grid) are covered by the Electric power generation, transmission, and distribution standards (https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.269) and therefore may be required to implement the safe work practices and worker training requirements of OSHA's Electric Power Generation, Transmission and Distribution Standard, 29 CFR 1910.269. While solar energy is a growing industry, the hazards are not unique and OSHA has many standards that cover them. This page provides information about some hazards that workers in the solar industry may face.
+
+* Falls (https://www.osha.gov/green-jobs/solar/falls)
+* Lockout/Tagout (https://www.osha.gov/green-jobs/solar/lockout-tagout)
+* Crane and Hoist Safety (https://www.osha.gov/green-jobs/solar/crane-hoist)
+* Electrical (https://www.osha.gov/green-jobs/solar/electrical)
+* Heat/Cold Stress (https://www.osha.gov/green-jobs/solar/heat-cold-stress)
+* Personal Protective Equipment (https://www.osha.gov/green-jobs/solar/personal-protective-equipment)
+
+Fatalities/Incidents
+There have been fatalities and incidents (https://www.cdph.ca.gov/Programs/CCDPHP/DEODC/OHB/FACE/Pages/Solar.aspx) in the solar energy industry.

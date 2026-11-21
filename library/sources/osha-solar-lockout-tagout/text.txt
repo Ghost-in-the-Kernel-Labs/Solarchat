@@ -1,0 +1,23 @@
+Solar Energy: Lockout/Tagout
+"Lockout/Tagout (LOTO)" refers to specific practices and procedures to safeguard employees from the unexpected energization or startup of machinery and equipment, or the release of hazardous energy during service or maintenance activities.
+Approximately 3 million workers service equipment and face the greatest risk of injury if lockout/tagout is not properly implemented. Compliance with the lockout/tagout standard prevents an estimated 120 fatalities and 50,000 injuries each year. Workers injured on the job from exposure to hazardous energy lose an average of 24 workdays for recuperation. In a study conducted by the United Auto Workers (UAW), 20% of the fatalities (83 of 414) that occurred among their members between 1973 and 1995 were attributed to inadequate hazardous energy control procedures specifically, lockout/tagout procedures.
+Solar energy equipment can generate electrical energy and may be connected to electrical circuits. Workers may be exposed to electrical hazards from solar panels and from electrical circuits. While installing or servicing solar panels, employers should assure that workers cover the solar panels, in addition to protecting workers from electrical circuits. Workers performing servicing or maintenance of solar panels may be exposed to injuries from the unexpected energization or release of stored energy in the equipment. Solar energy employers may be required to implement lockout/tagout procedures outlined in OSHA standards at 29 CFR 1910.269(d) (https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.269#1910.269(d)) or at 29 CFR 1910.147 (https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.147).
+The following are some of the significant requirements of a Lockout/Tagout procedure required under a Lockout/Tagout program.
+
+* Only authorized employees may lockout or tagout machines or equipment in order to perform servicing or maintenance.
+* Lockout devices (locks) and tagout devices (tags) shall not be used for any other purposes and must be used only for controlling energy.
+* Lockout and Tagout devices (locks and tags) must identify the name of the worker applying the device.
+* All energy sources to equipment must be identified and isolated.
+* After the energy is isolated from the machine or equipment, the isolating device(s) must be locked out or tagged out in safe or off position only by the authorized employees.
+* Following the application of the lockout or tagout devices to the energy isolating devices, the stored or residual energy must be safely discharged or relieved.
+* Prior to starting work on the equipment, the authourized employee shall verify that the equipment is isolated from the energy source, for example, by operating the on/off switch on the machine or equipment.
+* Lock and tag must remain on the machine until the work is completed.
+* Only the authorized employee who placed the lock and tag must remove his/her lock or tag, unless the employer has a specific procedure as outlined in OSHA's Lockout/Tagout standard.
+
+Some additional general resources on Lockout/Tagout are provided below:
+
+* Lockout/Tagout Program (https://www.osha.gov/control-hazardous-energy)
+* Lockout/Tagout eTool (https://www.osha.gov/etools/lockout-tagout)
+* OSHA Fact Sheet (https://www.osha.gov/sites/default/files/publications/factsheet-lockout-tagout.pdf)
+* OSHA's Enforcement Policy (https://www.osha.gov/sites/default/files/enforcement/directives/CPL_02-00-147.pdf)
+* NIOSH Alert: Preventing Worker Deaths from Uncontrolled Release of Electrical, Mechanical, and Other Types of Hazardous Energy (https://www.cdc.gov/niosh/docs/99-110/)

@@ -75,6 +75,7 @@ Status: a draft for Ghost to read (TODO 1.3 stays open until Ghost has read it).
 
 - [Staubli: MC4 branch connector assembly instructions MA250 (12.2025, e: always de-energise the PV system before mating and disconnecting; never disconnect the connectors under load; a tool is required to open)](https://www.staubli.com/content/dam/spot/PV_MA250-en.pdf)
 - [Staubli: assembly instructions MA263 (de-energise before mating or unmating)](https://staubli.com/content/dam/spot/PV_MA263-en.pdf)
+- [OSHA: Green Job Hazards, Solar Energy, Lockout/Tagout (cover the solar panels; library: osha-solar-lockout-tagout)](https://www.osha.gov/green-jobs/solar/lockout-tagout)
 
 ## SR-04 Do not open an inverter, combiner, battery or other electrical enclosure
 
@@ -103,7 +104,9 @@ Status: a draft for Ghost to read (TODO 1.3 stays open until Ghost has read it).
 
 **Sources:**
 
-- [OSHA: Green Job Hazards, Solar Energy, Falls](https://www.osha.gov/green-jobs/solar/falls)
+- [OSHA: Green Job Hazards, Solar Energy, Falls (library: osha-solar-falls)](https://www.osha.gov/green-jobs/solar/falls)
+- [OSHA: 29 CFR 1910 Subpart D, walking-working surfaces (1910.23 skylights; 4 feet or more in maintenance work; library: osha-1910-d)](https://www.ecfr.gov/current/title-29/part-1910/subpart-D)
+- [OSHA: 29 CFR 1926 Subpart M, fall protection in construction (6 feet or more; library: osha-1926-m)](https://www.ecfr.gov/current/title-29/part-1926/subpart-M)
 - [HSE: Work at height](https://www.hse.gov.uk/work-at-height/)
 
 ## SR-06 Keep well away from overhead power lines
@@ -118,9 +121,9 @@ Status: a draft for Ghost to read (TODO 1.3 stays open until Ghost has read it).
 
 **Sources:**
 
-- [OSHA: Green Job Hazards, Solar Energy, Electrical (keep at least 10 feet from overhead lines)](https://www.osha.gov/green-jobs/solar/electrical)
-- [OSHA: 29 CFR 1910.333(c)(3)(i), selection and use of work practices (overhead lines: keep a safe distance, at least 10 feet for lines up to 50 kV, more above)](https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.333)
-- [OSHA: 29 CFR 1926.1408, cranes and derricks in construction, power line safety (up to 350 kV)](https://www.osha.gov/laws-regs/regulations/standardnumber/1926/1926.1408)
+- [OSHA: Green Job Hazards, Solar Energy, Electrical (keep at least 10 feet from overhead lines; library: osha-solar-electrical)](https://www.osha.gov/green-jobs/solar/electrical)
+- [OSHA: 29 CFR 1910.333(c)(3)(i), selection and use of work practices (overhead lines: keep a safe distance, at least 10 feet for lines up to 50 kV, more above; library: osha-1910-s)](https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.333)
+- [OSHA: 29 CFR 1926.1408, cranes and derricks in construction, power line safety (up to 350 kV; library: osha-1926-cranes-power-lines)](https://www.osha.gov/laws-regs/regulations/standardnumber/1926/1926.1408)
 
 **Ghost to confirm:** This rule is beyond the brief's list (added because OSHA names overhead lines among solar workers' electrical hazards). The audit of 2026-11-21 found the hazard real on solar sites: perimeter lines and service drops at the site, and OSHA's Fort Riley 2018 citation. The words now give the distance (at least 10 feet, OSHA 1910.333(c)(3)(i) and 1926.1408; the site's own distance if greater). Keep, change or drop.
 
@@ -197,7 +200,7 @@ Status: a draft for Ghost to read (TODO 1.3 stays open until Ghost has read it).
 
 **Sources:**
 
-- [OSHA: Lithium-ion Battery Safety, Hazards (heat, venting gas or smoke; toxic gases)](https://www.osha.gov/lithium-ion-battery-safety/hazards)
+- [OSHA: Lithium-ion Battery Safety, Hazards (heat, venting gas or smoke; toxic gases; library: osha-lithium-ion-hazards)](https://www.osha.gov/lithium-ion-battery-safety/hazards)
 
 ## SR-12 Never bypass or switch off a protective device
 

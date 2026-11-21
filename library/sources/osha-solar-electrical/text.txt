@@ -1,0 +1,12 @@
+Solar Energy: Electrical
+Solar energy workers are exposed to potential electrical hazards present in their work environment, which makes them more vulnerable to the danger of electrocution and arc flash hazards. Workers may be exposed to electric shocks and burns when hooking up the solar panels to an electric circuit. Since solar panels generate electricity, employers in the solar energy sector may be covered by the Electric power generation, transmission, and distribution (https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.269) standards and, therefore, may be required to implement the safe work practices and worker training requirements of OSHA's Electric Power Generation, Transmission and Distribution standard, 29 CFR 1910.269.
+Typically, solar panels installations are covered by OSHA Subpart S standards in part 1910 (https://www.osha.gov/laws-regs/regulations/standardnumber/1910#1910_Subpart_S), if they are not connected to distribution systems (i.e., a system that is supplying power to two or more buildings) or if they are only emergency or standby in nature. If solar panels supply power to a distribution system, then the provisions contained in 29 CFR 1910.269, Electric Power Generation, Transmission, and Distribution, will apply.
+Workers must (https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.333#1910.333(c)(3)) pay attention to overhead power lines and stay at least 10 feet away from them because they carry extremely high voltage. Fatal electrocution is the main hazard, but burns and falls from elevations can occur while installing solar panels. Another hazard is from using tools and equipment that can contact power lines.
+Some resources on electrical hazards and information on the standards and practices that address electrical hazards are provided below:
+
+* Work Hazards and Safety Practices in the Electric Power Industry (https://www.osha.gov/etools/electric-power)
+* OSHA Assistance for the Electric Power Generation, Transmission, and Distribution Industry (https://www.osha.gov/power-generation)
+* OSHA's Safety and Health Topics Page on Electrical Hazards (https://www.osha.gov/electrical)
+* Fact Sheet on Working Safely with Electricity (https://www.osha.gov/sites/default/files/publications/OSHA3942.pdf)
+* OSHA's Safety and Health Topics Page on Hand and Power Tools (https://www.osha.gov/hand-power-tools)
+* NIOSH's Electrical Safety Workplace Safety & Health Topics (https://www.cdc.gov/niosh/topics/electrical/)

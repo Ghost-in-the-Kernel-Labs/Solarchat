@@ -1,0 +1,22 @@
+Solar Energy: Crane and Hoist Safety
+Cranes can be used during the installation and maintenance of solar panels. Fatalities and serious injuries can occur if cranes are not inspected and used properly. Many fatalities can occur when the crane boom, load line or load contacts power lines and shorts electricity to ground. Other incidents happen when workers are struck by the load, are caught inside the swing radius or fail to assemble/disassemble the crane properly. There are significant safety issues to be considered, both for the operators of the diverse "lifting" devices, and for workers who work near them. See OSHA's General Industry standards at 29 CFR 1910.179 (https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.179) and 29 CFR 1910.180 (https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.180), and Construction standard at 29 CFR 1926.1417 (https://www.osha.gov/laws-regs/regulations/standardnumber/1926/1926.1417) for specific crane requirements.
+
+* Cranes are to be operated only by qualified and trained personnel.
+* A designated competent person must inspect the crane and all crane controls before use.
+* Be sure that the crane is on a firm/stable surface and level.
+* During assembly/disassembly do not unlock or remove pins unless sections are blocked and secure (stable).
+* Fully extend outriggers and barricade accessible areas inside the crane's swing radius.
+* Watch for overhead electric power lines and maintain at least a 10-foot safe working clearance from the lines.
+* Inspect all rigging prior to use; do not wrap hoist lines around the load.
+* Be sure to use the correct load chart for the crane's current configuration and setup, the load weight and lift path.
+* Do not exceed the load chart capacity while making lifts.
+* Raise load a few inches, hold, verify capacity/balance, and test brake system before delivering load.
+* Do not move loads over workers.
+* Be sure to follow signals and manufacturer instructions while operating cranes.
+
+Workers should watch for overhead electric power lines and maintain at least a 10-foot safe working clearance from the lines and must not move loads over workers.
+A QuickCard provides some basic tips on crane safety. Additional information on the standards and practices that address forklifts, cranes, and hoists can be found at:
+
+* OSHA's Safety and Health Topics Page on Cranes, Derricks, and Hoists (https://www.osha.gov/cranes-derricks)
+* OSHA's Safety and Health Topics Page on Powered Industrial Trucks (https://www.osha.gov/powered-industrial-trucks)
+* OSHA's Powered Industrial Trucks eTool (https://www.osha.gov/etools/powered-industrial-trucks)

@@ -1,0 +1,17 @@
+Workers who install and/or maintain solar panels often work on roofs, use ladders and scaffolding, are in proximity of ledges and sunroofs, and are exposed to fall hazards. As more solar panels are installed on the surface of a roof, the walking area which may once have been available, may no longer be available to workers. This may force workers to squeeze by or walk very close to skylights and/or roof hatches. To protect workers from these potential fall hazards through skylights, roof edges and roof hatches, employers must (https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.23#1910.23(a)(4)) make sure that skylights are guarded or that workers near skylights use personal fall protection.
+OSHA has different fall protection requirements for construction (installation of solar panels) and general industry (maintenance).
+Construction workers involved in the installation of solar panels exposed to fall distances of 6 feet or more must (https://www.osha.gov/laws-regs/regulations/standardnumber/1926/1926.501#1926.501(b)(2)) be protected from falls by using one of the following methods:
+
+* Guardrail Systems (https://www.osha.gov/etools/construction/falls/guard-rail)
+* Safety Net Systems (https://www.osha.gov/etools/construction/falls/safety-net)
+* Personal fall arrest systems (https://www.osha.gov/etools/construction/falls/arrest-systems)
+
+Solar panels should be lifted safely to the rooftops. Workers should never be allowed to climb ladders while carrying solar panels. Lifting equipment, such as ladder hoists, swing hoists, or truck-mounted cranes/conveyors, should be used wherever possible.
+Maintenance work on solar panels is generally considered to fall under OSHA's general industry standards. Such workers when exposed to fall hazards of 4 feet or more must (https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.23#1910.23(c)(1)) be protected by a standard railing. If such a railing is not possible then the workers must (https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.132#1910.132(a)) be protected by a fall protection device such as a personal fall arrest system or a safety net.
+Further information on the standards and practices that address fall hazards can be found at:
+
+* OSHA's Safety and Health Topics Page on Fall Protection (https://www.osha.gov/fall-protection)
+* OSHA's Safety and Health Topics Page on Fall Protection (Construction) (https://www.osha.gov/fall-protection/construction)
+* OSHA's Safety and Health Topics Page on Scaffolding (https://www.osha.gov/scaffolding)
+* Fact Sheet on Using Aerial Lifts (https://www.osha.gov/sites/default/files/publications/aerial_lifts.pdf)
+* Fact Sheet on Fall Protection in General Industry (https://www.osha.gov/sites/default/files/publications/OSHA3903.pdf)

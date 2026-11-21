@@ -1,0 +1,13 @@
+{
+  "id": "osha-solar-electrical",
+  "title": "OSHA: Green Job Hazards, Solar Energy, Electrical",
+  "publisher": "Occupational Safety and Health Administration (OSHA), U.S. Department of Labor",
+  "url": "https://www.osha.gov/green-jobs/solar/electrical",
+  "retrieved": "2026-11-21",
+  "kind": "web",
+  "licence": "public domain (US federal work)",
+  "licence_evidence": "17 U.S.C. 105: a work of the United States Government (OSHA)",
+  "licence_url": "https://www.copyright.gov/title17/92chap1.html#105",
+  "sha256": "40ac167673b068eea2385da96e76d860eb23f9607a4298d740122783a649c6d4",
+  "note": "No original is kept: osha.gov refuses automated clients, so Ghost copied the page text by hand from a browser on 2026-11-21 and pasted it. text.txt is that paste without its two header lines (the Source line and the Pasted-by line); links appear as the paste showed them. sha256 is of text.txt. The page was written by OSHA, a US federal agency (17 U.S.C. 105)."
+}

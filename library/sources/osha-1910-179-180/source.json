@@ -1,0 +1,13 @@
+{
+  "id": "osha-1910-179-180",
+  "title": "29 CFR 1910.179 and 1910.180, Overhead and gantry cranes; crawler, locomotive and truck cranes",
+  "publisher": "Office of the Federal Register, National Archives and Records Administration, with the U.S. Government Publishing Office (eCFR)",
+  "url": "https://www.ecfr.gov/current/title-29/section-1910.179",
+  "retrieved": "2026-11-21",
+  "kind": "web",
+  "licence": "public domain (US federal work)",
+  "licence_evidence": "U.S. Government Publishing Office, \"Public Domain & Copyright Notice\": \"Title 17, Section 105, United States Code, provides that: Copyright protection under this title is not available for any work of the United States Government, but the United States Government is not precluded from receiving and holding copyrights transferred to it by assignment, bequest, or otherwise.\" and \"The intent of the section is to place in the public domain all work of the United States Government, which is defined in 17 U.S.C. § 101 as work prepared by an officer or employee of the United States Government as part of the person's official duties.\"",
+  "licence_url": "https://www.govinfo.gov/about/policies",
+  "sha256": "aa0e8286b487beb5099bb48b66b60d10df648a1c2c90c42f5711d186a2a99f9c",
+  "note": "Text of the regulation as the eCFR API returned it (XML, decompressed) for data as of 2026-11-10; the eCFR site's own notice pages were behind a bot check, so the licence statement is the Government Publishing Office's; the regulation was written by OSHA, a US federal agency (17 U.S.C. 105). The original is the two sections' eCFR downloads (1910.179, then 1910.180) joined end to end, unchanged; as a file it holds two XML documents, so it is not one well-formed document."
+}

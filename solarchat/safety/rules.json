@@ -32,7 +32,8 @@
     "words_shown": "Stop. Never pull connectors apart while current can flow: under load they spark and burn. First make sure no current can flow: turn the isolator off, or cover the whole panel. Then open each pair with the release tool made for it, never by hand. Go to your site supervisor or engineer.",
     "sources": [
       {"title": "Staubli: MC4 branch connector assembly instructions MA250 (12.2025, e: always de-energise the PV system before mating and disconnecting; never disconnect the connectors under load; a tool is required to open)", "url": "https://www.staubli.com/content/dam/spot/PV_MA250-en.pdf"},
-      {"title": "Staubli: assembly instructions MA263 (de-energise before mating or unmating)", "url": "https://staubli.com/content/dam/spot/PV_MA263-en.pdf"}
+      {"title": "Staubli: assembly instructions MA263 (de-energise before mating or unmating)", "url": "https://staubli.com/content/dam/spot/PV_MA263-en.pdf"},
+      {"title": "OSHA: Green Job Hazards, Solar Energy, Lockout/Tagout (cover the solar panels; library: osha-solar-lockout-tagout)", "url": "https://www.osha.gov/green-jobs/solar/lockout-tagout"}
     ]
   },
   {
@@ -53,7 +54,9 @@
     "triggers": ["rooftop", "ladder", "scaffold", "at height", "skylight", "roof hatch", "roof edge", "go up on the roof", "climb the ladder", "work at height", "on the roof edge"],
     "words_shown": "Stop. Do not go up or near an edge until your supervisor has shown you the fall protection for this job and it is in place. Never climb a ladder carrying a panel. Go to your site supervisor or engineer.",
     "sources": [
-      {"title": "OSHA: Green Job Hazards, Solar Energy, Falls", "url": "https://www.osha.gov/green-jobs/solar/falls"},
+      {"title": "OSHA: Green Job Hazards, Solar Energy, Falls (library: osha-solar-falls)", "url": "https://www.osha.gov/green-jobs/solar/falls"},
+      {"title": "OSHA: 29 CFR 1910 Subpart D, walking-working surfaces (1910.23 skylights; 4 feet or more in maintenance work; library: osha-1910-d)", "url": "https://www.ecfr.gov/current/title-29/part-1910/subpart-D"},
+      {"title": "OSHA: 29 CFR 1926 Subpart M, fall protection in construction (6 feet or more; library: osha-1926-m)", "url": "https://www.ecfr.gov/current/title-29/part-1926/subpart-M"},
       {"title": "HSE: Work at height", "url": "https://www.hse.gov.uk/work-at-height/"}
     ]
   },
@@ -64,9 +67,9 @@
     "triggers": ["overhead line", "overhead lines", "power line", "power lines", "overhead cable", "service drop", "overhead wires", "pylon", "utility pole"],
     "words_shown": "Stop. Do not work, lift or raise anything near an overhead power line. It can kill without being touched. Stay at least 10 feet (3 metres) away, and farther for higher voltage, or the site's own distance if it is greater. Go to your site supervisor or engineer.",
     "sources": [
-      {"title": "OSHA: Green Job Hazards, Solar Energy, Electrical (keep at least 10 feet from overhead lines)", "url": "https://www.osha.gov/green-jobs/solar/electrical"},
-      {"title": "OSHA: 29 CFR 1910.333(c)(3)(i), selection and use of work practices (overhead lines: keep a safe distance, at least 10 feet for lines up to 50 kV, more above)", "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.333"},
-      {"title": "OSHA: 29 CFR 1926.1408, cranes and derricks in construction, power line safety (up to 350 kV)", "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1926/1926.1408"}
+      {"title": "OSHA: Green Job Hazards, Solar Energy, Electrical (keep at least 10 feet from overhead lines; library: osha-solar-electrical)", "url": "https://www.osha.gov/green-jobs/solar/electrical"},
+      {"title": "OSHA: 29 CFR 1910.333(c)(3)(i), selection and use of work practices (overhead lines: keep a safe distance, at least 10 feet for lines up to 50 kV, more above; library: osha-1910-s)", "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.333"},
+      {"title": "OSHA: 29 CFR 1926.1408, cranes and derricks in construction, power line safety (up to 350 kV; library: osha-1926-cranes-power-lines)", "url": "https://www.osha.gov/laws-regs/regulations/standardnumber/1926/1926.1408"}
     ],
     "ghost_to_confirm": "This rule is beyond the brief's list (added because OSHA names overhead lines among solar workers' electrical hazards). The audit of 2026-11-21 found the hazard real on solar sites: perimeter lines and service drops at the site, and OSHA's Fort Riley 2018 citation. The words now give the distance (at least 10 feet, OSHA 1910.333(c)(3)(i) and 1926.1408; the site's own distance if greater). Keep, change or drop."
   },
@@ -121,7 +124,7 @@
     "triggers": ["battery terminal", "battery terminals", "battery cable", "battery cables", "battery bank", "swollen", "bulging", "hissing", "battery is leaking", "battery leaking", "battery is venting", "battery venting"],
     "words_shown": "Stop. Do not work on battery terminals or cables, and keep away from a battery that is swollen, hot, leaking, hissing or smells. A battery can burn, explode or give off toxic gas, and it cannot be switched off. Go to your site supervisor or engineer.",
     "sources": [
-      {"title": "OSHA: Lithium-ion Battery Safety, Hazards (heat, venting gas or smoke; toxic gases)", "url": "https://www.osha.gov/lithium-ion-battery-safety/hazards"}
+      {"title": "OSHA: Lithium-ion Battery Safety, Hazards (heat, venting gas or smoke; toxic gases; library: osha-lithium-ion-hazards)", "url": "https://www.osha.gov/lithium-ion-battery-safety/hazards"}
     ]
   },
   {
