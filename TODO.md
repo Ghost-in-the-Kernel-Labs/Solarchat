@@ -80,10 +80,6 @@ The walker finds the rules that apply to a step's text with `rules_fired(text)` 
 
 Check: `solarchat/cli` runs a conversation end to end with the network off: choose a pack, a procedure or a flow, walk it step by step, and see the demo banner when the pack is a `demo` pack; every step shown lists its passage's sources by title, with the page for a document source or "page not yet found" where the page is `"unknown"` (SC-012); free text the shell cannot place gets "I do not know", with no passage (HAD-03); a test drives it through stdin.
 
-### 2.7 The bot reads its replies aloud (speech out, the demo's)
-
-Check: Ghost, 2026-11-21: voice for the Windows demo, speech out first (speech in is a later item, a dependency proposed to Ghost). `solarchat --pack <pack> --voice` speaks each reply's words, and a rule's words for a warn or a stop, through the system's own voice with no new Python dependency: Windows by PowerShell's `System.Speech.Synthesis.SpeechSynthesizer`, macOS by `say`, Linux by `espeak` when present; the citations ("From: ...") are shown and not spoken; the demo banner stays on screen on every reply (HAD-06) and is spoken once, at the start. The text reaches the speech engine on its standard input, never inside a command line or a script string, so nothing the model writes can run as a command. No engine found: one plain line says so and the chat continues in text. Tests with a fake process runner: the command line carries no reply text, the input carries it, the citations are not in it, and a missing engine leaves the chat working. F-08's speech on the phone (roadmap 5.4) is unchanged; this is the desktop demo's.
-
 ### 2.8 Tune-up pass 2
 
 Check: `docs/when/tune-up.md` followed in full; the metrics table written; the navigation log reviewed; the human maintainability pass for the code written since the last one (SC-011).

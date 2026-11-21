@@ -12,6 +12,7 @@ from solarchat.answer.stub import NoAnswer
 from solarchat.leaf.contract import DEMO_BANNER, Answerer, Reply, ReplyKind, Turn, may_answer
 from solarchat.model.claude import DEFAULT_MODEL, MODELS, ClaudeAnswerer, ModelError
 from solarchat.packs.load import Pack, load_pack
+from solarchat.project.speech import Speaker
 from solarchat.safety.rules import load_rules
 
 PROMPT = "> "
@@ -43,6 +44,14 @@ def render(reply: Reply) -> str:
     return f"{words}\n\n{reply.text}" if words and words not in reply.text else reply.text
 
 
+def spoken_aloud(reply: Reply) -> str:
+    """What --voice reads aloud for a reply: the rule's words first when a warn or a stop has them, then the reply's words,
+    never the banner or the "From:" lines (the banner is spoken once, at the start)."""
+    words = rule_words(reply)
+    text = spoken(reply)
+    return f"{words}\n\n{text}" if words and words not in text else text
+
+
 def choose_answerer(name: str, model: str = DEFAULT_MODEL) -> Answerer:
     """The answerer a name stands for: "stub" is the one that says "I do not know" to everything; "claude" is Claude
     Sonnet 5.5 (a missing key raises ModelError)."""
@@ -60,9 +69,11 @@ def load_chat_pack(folder: str, demo: bool) -> Pack:
     return pack
 
 
-def converse(pack: Pack, demo: bool, answerer: Answerer, stdin: TextIO, stdout: TextIO, stderr: TextIO) -> None:
+def converse(pack: Pack, demo: bool, answerer: Answerer, stdin: TextIO, stdout: TextIO, stderr: TextIO,
+             speaker: Speaker | None = None) -> None:
     """The loop: read a line, answer it with the history so far, print the reply, keep both turns. A line of "quit", or the
-    end of input, ends it; a blank line is skipped; a model that cannot be used is told in words and the turn is not kept."""
+    end of input, ends it; a blank line is skipped; a model that cannot be used is told in words and the turn is not kept.
+    With a speaker each reply is shown, then spoken before the next prompt."""
     history: list[Turn] = []
     while True:
         stdout.write(PROMPT)
@@ -80,13 +91,17 @@ def converse(pack: Pack, demo: bool, answerer: Answerer, stdin: TextIO, stdout: 
             stderr.write(f"Sorry: {problem}\n")
             continue
         stdout.write(render(reply) + "\n\n")
+        if speaker:
+            stdout.flush()
+            speaker.say(spoken_aloud(reply))
         history += [Turn("user", question), Turn("assistant", spoken(reply))]
 
 
 def start_chat(pack_folder: str, demo: bool, answerer_name: str, stdin: TextIO, stdout: TextIO, stderr: TextIO,
-               model: str = DEFAULT_MODEL) -> int:
+               model: str = DEFAULT_MODEL, voice: bool = False) -> int:
     """Run a whole chat and return its exit code: 0 when it ended, 2 when it cannot run (a pack that is missing or may not
-    answer, or no key for the Claude answerer), with one plain line on stderr. The demo banner is shown at the start."""
+    answer, or no key for the Claude answerer), with one plain line on stderr. The demo banner is shown at the start; with
+    `voice` the chat is also spoken (a missing engine is one line on stderr and the chat goes on in text)."""
     try:
         pack = load_chat_pack(pack_folder, demo)
         answerer = choose_answerer(answerer_name, model)
@@ -94,5 +109,9 @@ def start_chat(pack_folder: str, demo: bool, answerer_name: str, stdin: TextIO, 
         stderr.write(f"solarchat: cannot run: {problem}\n")
         return 2
     stdout.write((DEMO_BANNER + "\n\n" if demo else "") + f"{pack.manifest['title']}. Ask a question; type quit to end.\n\n")
-    converse(pack, demo, answerer, stdin, stdout, stderr)
+    speaker = Speaker(stderr) if voice else None
+    if speaker and demo:
+        stdout.flush()
+        speaker.say(DEMO_BANNER)  # spoken once, here; every reply still shows it on screen (HAD-06)
+    converse(pack, demo, answerer, stdin, stdout, stderr, speaker)
     return 0

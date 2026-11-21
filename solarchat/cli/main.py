@@ -18,6 +18,7 @@ Commands:
 
 Chat options (with --pack):
   --demo                    let a demo pack answer, with the demo banner on every reply: solarchat --pack packs/seed-mc4-leads --demo
+  --voice                   speak each reply aloud through the system's own voice (the citations are shown, not spoken): solarchat --pack P --demo --voice
   --answerer claude|stub    who answers: claude (the default) or stub, which says "I do not know": solarchat --pack P --answerer stub
   --model <model>           the Claude model, claude-sonnet-5-5 (the default) or claude-haiku-5-5: solarchat --pack P --model claude-haiku-5-5
 
@@ -34,6 +35,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--forget-key", action="store_true", help="delete the stored key")
     parser.add_argument("--pack", help="the pack's folder, e.g. packs/seed-mc4-leads")
     parser.add_argument("--demo", action="store_true", help="let a demo pack answer, with the demo banner on every reply")
+    parser.add_argument("--voice", action="store_true", help="speak each reply aloud through the system's own voice")
     parser.add_argument("--answerer", choices=("claude", "stub"), default="claude")
     parser.add_argument("--model", choices=MODEL_CHOICES, default=DEFAULT_MODEL, help="the Claude model (claude-sonnet-5-5 unless testing)")
     return parser
@@ -57,4 +59,4 @@ def main(argv: list[str], stdin: TextIO | None = None, stdout: TextIO | None = N
     if not args.pack:
         err.write("solarchat: the chat needs --pack <pack>; `solarchat help` shows every command\n")
         return 2
-    return start_chat(args.pack, args.demo, args.answerer, stdin or sys.stdin, out, err, args.model)
+    return start_chat(args.pack, args.demo, args.answerer, stdin or sys.stdin, out, err, args.model, args.voice)

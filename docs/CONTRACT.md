@@ -73,6 +73,9 @@ checked, and answers only in demo mode, under the banner "DEMO: not reviewed by 
 A pack whose status is not `field` or `demo` never answers, whatever the mode (SC-013; held by `may_answer`).
 Held by the leaf's `may_answer` (`test/test_leaf.py`) and the pack check's status rule (`test/test_packs.py`).
 
+With `--voice` (TODO 2.7) the banner is still shown on every reply and is spoken once, at the start; the speech engine gets
+the reply's words on its standard input, never the citations, and never in a command line (`test/test_speech.py`).
+
 ## The pack format
 
 A pack is what the deploying company builds, so this section is the format: a pack can be written from it without reading

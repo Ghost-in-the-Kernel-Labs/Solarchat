@@ -56,3 +56,10 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Opened**: `CLAUDE.md`, `solarchat/cli/main.py`, `solarchat/cli/__main__.py`, `solarchat/project/chat.py`, `solarchat/model/claude.py`, `docs/modules.json`, `test/test_cli.py`, `scripts/checks/secrets.py`, `theGhost.md` (SC-022), `TODO.md`, `docs/journal/J-000-099.md`.
 - **Complaints**: the Check and the brief named a root file `solarchat` that the package folder of the same name makes impossible; the item's contract was not tried against the file tree when it was written. `python3 -I -m unittest test.x` cannot import `test` (use no `-I`).
 - **Suggestions**: a check that a launcher name in a TODO Check does not clash with a path in the tree; `test/test_eval.py` line 154 also expects no key and should use `no_key()` (outside this brief's files).
+
+### 2026-11-21 · TODO 2.7, speech out (J-056) · Claude Sonnet 5.5
+
+- **Task**: TODO 2.7: `--voice` speaks each reply through the system's own voice for the Windows demo, no new dependency.
+- **Opened**: `CLAUDE.md`, `docs/when/grades.md`, `TODO.md`, `solarchat/cli/main.py`, `solarchat/project/chat.py`, `docs/modules.json`, `test/support.py`, `test/test_cli.py`, `scripts/score.py`, `docs/CONTRACT.md`, `README.md`, `docs/journal/J-000-099.md`, `docs/NAVIGATION-LOG.md`.
+- **Complaints**: `scripts/score.py` cannot place an item that names no file, and the placing has to be simulated by hand (I called its functions with the files added to a copy of the text); a one-line way to ask "what would this item score if it named these files" would help.
+- **Suggestions**: that; and `docs/modules.json` has nothing to change for a new file in a module with no entry points, which the brief listed as in the working set.
