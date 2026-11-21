@@ -49,3 +49,10 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Complaints**: a worker editing in the coordinator's checkout set off the stop hook's "uncommitted changes"
   while it ran; the coordinator could not commit without saving the worker's half-done tree.
 - **Suggestions**: none beyond the rule itself, which answers the earlier debrief's worktree suggestion.
+
+### 2026-11-21 · Page citations in the pack format (SC-012) · Claude Sonnet 5.5
+
+- **Task**: add a source `kind` and page citations to the pack format: decision, contract, pack check, tests, demo pack; save on `agent/page-citations`.
+- **Opened**: `docs/paths/process.md`, `scripts/save.sh`, `theGhost.md` (SC-010, SC-011), `docs/CONTRACT.md`, `scripts/checks/packs.py`, `test/test_packs.py`, the seed pack's manifest, steps and failures, `docs/HANDOFF.md`, `docs/JOURNAL.md`.
+- **Complaints**: the pack check reads passages, flows and procedures, while the demo pack is steps and failures, so the demo pack's citations are not held by any check until TODO 1.4; the brief's "steps, failures" and the contract's passage types differ. No row in the process path says which of the decision, journal, index and directive-map commands run in which order for a new decision. The next journal id (J-026) is already taken on an unmerged branch.
+- **Suggestions**: a routing row for the pack format naming `scripts/checks/packs.py`, its test and the fixtures; have `next_id.py` look at the `origin/agent/*` branches too.

@@ -2,7 +2,7 @@
 
 Written by `scripts/directive_map.py` from `theGhost.md`, `docs/CONTRACT.md` and the code's citations; do not edit here. A function holds a directive when it cites it: `# Decision: SC-005 (why)` or `# Invariant: HAD-06 (why)` directly above its `def`, or an `Invariant:` line in its docstring (SC-011). "No function" means the directive is held by a document, a test or a review: its Held by line in `theGhost.md` or `docs/CONTRACT.md` says which.
 
-21 of 58 directives are cited by a function.
+22 of 59 directives are cited by a function.
 
 | Directive | Title | Held in code by |
 | --- | --- | --- |
@@ -58,6 +58,7 @@ Written by `scripts/directive_map.py` from `theGhost.md`, `docs/CONTRACT.md` and
 | SC-009 | Core C-024's tune-up commit comes every twenty-five commits, not every eight | `scripts/commit.sh` |
 | SC-010 | A labelled demo mode may run a pack that is not admitted; for Monday's demo the walker comes before the evaluation set | no function |
 | SC-011 | The code is written for human reviewers: named variables, commented functions, two READMEs, and the decisions mapped to the functions that hold them | no function |
+| SC-012 | An answer cites the page of the manual it used: each source has a kind, a document's citation carries a page, and unknown pages are counted | `scripts/checks/packs.py:kind_problems`, `scripts/checks/packs.py:source_problems`, `scripts/checks/packs.py:reference_problems`, `scripts/checks/packs.py:unknown_pages`, `scripts/checks/packs.py:unknown_page_count` |
 | HAD-01 | The leaf module imports nothing of the project's own | `solarchat/leaf/__init__.py` |
 | HAD-02 | Every number a document reports comes from a run the repository can repeat | `solarchat/leaf/__init__.py` |
 | HAD-03 | Hadley answers only from admitted text, names it, or says it does not know | `scripts/checks/packs.py:reference_problems`, `solarchat/leaf/contract.py:Reply` |

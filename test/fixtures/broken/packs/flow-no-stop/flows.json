@@ -15,7 +15,10 @@
     ],
     "fix": "Correct what the checks found, then look at the device again.",
     "sources": [
-      "S1"
+      {
+        "source": "S1",
+        "page": "1"
+      }
     ]
   }
 ]

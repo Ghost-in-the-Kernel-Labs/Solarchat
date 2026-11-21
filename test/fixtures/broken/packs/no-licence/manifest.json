@@ -9,7 +9,8 @@
       "id": "S1",
       "title": "Examplesun ES-100 installation manual",
       "url": "https://example.com/es-100.pdf",
-      "retrieved": "2026-11-20"
+      "retrieved": "2026-11-20",
+      "kind": "document"
     }
   ],
   "third_party_images": [

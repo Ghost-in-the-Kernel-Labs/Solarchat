@@ -28,7 +28,9 @@ once a document reports one (the evaluation set's scores, TODO 1.9).
 
 Every reply is one of three kinds. An answer carries at least one passage reference (the pack's id
 and the passage's id) from a pack that is admitted and switched on, and says nothing those passages
-do not support. A question the switched-on packs do not cover gets "I do not know" with no
+do not support. What the worker is shown: the answer names the passage it used, then each of that passage's sources by
+title, with the page for a document source (SC-012); the reference stays the pack's id and the passage's id, and the page
+is read from the pack, never carried in the reference. A question the switched-on packs do not cover gets "I do not know" with no
 passages, never a guess. A safety rule that fires gets a stop (HAD-04). Held by the leaf's `Reply`,
 which refuses an answer with no passage and a "do not know" or a stop with one (`test/test_leaf.py`);
 the evaluation set holds the rest (SC-003, SC-005).
@@ -99,11 +101,28 @@ A pack gives `make` and `model`, or `installation_type`, or all three; a pack wi
 A pack is admitted when `admitted_by` and `admitted_on` are both set (HAD-06). Both `null` is a pack that is not admitted;
 one set and the other not is refused.
 
-A source has: `id` (the id passages and flows cite it by, unique in the pack), `title`, `url` (where it was read; extra: so
+A source has: `id` (the id passages and flows cite it by, unique in the pack), `title`, `kind` (required: `document` for a
+manual, datasheet or PDF that has page numbers, `web` for a web page, which has none; a source with no `kind`, or any other
+value, is refused, SC-012), `url` (where it was read; extra: so
 a person can check it), `licence` (the licence as the source states it, or the words `not stated`; never left out, since
 what a source allows is what the person admitting a pack must weigh, SC-005) and `retrieved` (the date it was read; extra:
 a source changes). The check holds that the licence is written down, not that it allows redistribution; that is the
 person's judgement at admission, and a licence that forbids redistribution never puts its pack in the repository (Core C-033).
+
+### A citation (SC-012)
+
+Every `sources` list below (a passage's, a procedure's, a flow's) holds citations of two forms, and the source's `kind`
+says which:
+
+| Cites | Form | Example |
+| --- | --- | --- |
+| a `web` source | a bare source id | `"S2"` |
+| a `document` source | an object with the source id and the page | `{"source": "S3", "page": "15"}` |
+
+`page` is a non-empty string, so a label such as "A-3" or "15-16" works. The string `"unknown"` is allowed and marks a page
+not yet found. A bare id for a `document` source is refused, and so is an object for a `web` source (a page field that
+means nothing is never allowed). The check counts the citations whose page is `"unknown"` and prints the total, so the gap is
+visible. The pages are found by a person, from the manual; the check holds that a page is written down, not that it is the right one.
 
 A third-party picture has: `file` (a path under `images/third-party/`), `source_url`, `owner` (the owner or author),
 `licence` (as stated) and `shows` (what it shows). Every file under `images/third-party/` has exactly one entry, and every
@@ -118,7 +137,7 @@ entry has its file (SC-007).
 | `id` | the passage's id; with the pack's id it is the reference an answer carries (HAD-03) |
 | `title` | a short heading (extra: so a worker and a person admitting the pack can tell passages apart) |
 | `text` | the text, in plain words, which an answer may quote and may not go beyond |
-| `sources` | a non-empty list of source ids from the manifest; a passage with no source is refused |
+| `sources` | a non-empty list of citations of sources from the manifest (see "A citation"); a passage with no source is refused |
 | `image`, `image_alt` | optional: a picture, as a path under `images/` that exists in the pack, and the words that stand in for it for a person who cannot see it; a picture needs its `image_alt` (extra: a worker on a phone in sun may not see a picture) |
 
 ### A procedure
@@ -129,7 +148,7 @@ entry has its file (SC-007).
 | --- | --- |
 | `id` | the procedure's id, in the same one set as passage ids and flow ids |
 | `title` | a short heading |
-| `sources` | a non-empty list of source ids from the manifest |
+| `sources` | a non-empty list of citations of sources from the manifest (see "A citation") |
 | `steps` | a non-empty, ordered list of steps; a procedure with no steps is refused |
 
 A step has `id` (unique within its procedure), `text` (what to do), `right_looks_like` (what a correct result looks like,
@@ -149,7 +168,7 @@ not empty (HAD-04).
 | `checks` | a non-empty list, in order; each has `text`, and optionally `image` and `image_alt` as in a passage |
 | `fix` | what to do when a check finds the cause |
 | `stop` | where to stop: the point at which the worker goes to the site supervisor or engineer, and the words they are shown; a flow with no `stop` is refused (HAD-04: a pack may add steps that stop, never remove a rule) |
-| `sources` | a non-empty list of source ids from the manifest |
+| `sources` | a non-empty list of citations of sources from the manifest (see "A citation") |
 
 A flow is linear in version 1: the walker shows the checks one at a time, offers the fix when a check finds the cause,
 and otherwise ends at the stop; branching waits for a real pack that needs it.

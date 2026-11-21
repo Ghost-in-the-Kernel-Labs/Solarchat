@@ -29,3 +29,4 @@ Written from `docs/journal/` by `scripts/journal_index.py`; do not edit by hand.
 | J-023 | The manifesto restored word for word, and held by a test | failure-caught | `J-000-099.md` |
 | J-024 | Monday's demo and the human maintainability standard: SC-010, SC-011, the walker module, Phase 1 reordered | decision | `J-000-099.md` |
 | J-025 | Tune-up commit: the first human maintainability pass (SC-011) | measurement | `J-000-099.md` |
+| J-026 | Page citations: SC-012, a source's kind, a document's page, and the count of unknown pages | decision | `J-000-099.md` |

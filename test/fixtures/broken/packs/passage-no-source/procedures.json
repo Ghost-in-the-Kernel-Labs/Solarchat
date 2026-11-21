@@ -3,7 +3,10 @@
     "id": "connect",
     "title": "Connecting the panel",
     "sources": [
-      "S1"
+      {
+        "source": "S1",
+        "page": "1"
+      }
     ],
     "steps": [
       {

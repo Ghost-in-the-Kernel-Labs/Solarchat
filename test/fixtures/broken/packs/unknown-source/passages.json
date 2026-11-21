@@ -14,7 +14,10 @@
     "title": "Reading the label",
     "text": "The specification label lists Voc.",
     "sources": [
-      "S1"
+      {
+        "source": "S1",
+        "page": "1"
+      }
     ],
     "image": "images/third-party/label.svg",
     "image_alt": "The specification label."

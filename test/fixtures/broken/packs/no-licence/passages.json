@@ -4,7 +4,10 @@
     "title": "Check the voltages match",
     "text": "The panel's open-circuit voltage must be below the device's highest solar input voltage.",
     "sources": [
-      "S1"
+      {
+        "source": "S1",
+        "page": "1"
+      }
     ],
     "image": "images/step-1.svg",
     "image_alt": "A label with a line marked Voc."
@@ -14,7 +17,10 @@
     "title": "Reading the label",
     "text": "The specification label lists Voc.",
     "sources": [
-      "S1"
+      {
+        "source": "S1",
+        "page": "1"
+      }
     ],
     "image": "images/third-party/label.svg",
     "image_alt": "The specification label."

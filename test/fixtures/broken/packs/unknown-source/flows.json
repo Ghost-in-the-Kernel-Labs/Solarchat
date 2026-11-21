@@ -16,7 +16,10 @@
     "fix": "Correct what the checks found, then look at the device again.",
     "stop": "Stop and go to your site supervisor or engineer if the device still shows nothing.",
     "sources": [
-      "S1"
+      {
+        "source": "S1",
+        "page": "1"
+      }
     ]
   }
 ]

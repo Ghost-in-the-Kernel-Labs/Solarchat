@@ -59,23 +59,29 @@ which admitted passage to show.
    emergency and first-aid sentences the cited sources do not state; SR-12, the never-bypass rule (beyond the brief).
    Also: the roof, ladder and climb triggers stop every rooftop step (deliberate); four sources were cited from search
    results without the page being read (J-026).
-2. Read the demo pack with an engineer's eye before anyone relies on it. The worker flagged claims it could not
+2. **Page citations** (SC-012, on `agent/page-citations`): the seed pack's citations of its document sources carry a
+   page, and 89 of them are `"unknown"`: S3 Trina installation manual 35, S7 PVEL/HelioVolta safety guide 22, S5 Victron
+   troubleshooting chapter 19, S4 Victron installation chapter 10, S6 BRE fire report 3 (S8's 15 citations use page 15,
+   from its title). A person finds each page in the manual; the check counts the unknown pages and prints the total
+   (`python3 -I scripts/checks/packs.py <pack>`), and does not yet run over the seed pack, which TODO 1.4 converts.
+   The branch's journal entry J-026 collides with the J-026 on `agent/safety-rules-1-3`; whichever lands second renumbers.
+3. Read the demo pack with an engineer's eye before anyone relies on it. The worker flagged claims it could not
    source: fail-04 (reversed leads can damage some devices), step-07's stop (battery not yet wired), step-09 (the
    gentle pull), fail-03 (some shortfall from the label is normal), fail-08's fire wording. Sources S3 and S8 were
    read from third-party mirrors and want official copies.
-3. The demo pack fits a small kit (a charge controller, a power station, covering the panel) better than a large
+4. The demo pack fits a small kit (a charge controller, a power station, covering the panel) better than a large
    site. A second demo pack, stringing modules on a utility site, would be nearer the users of F-01.
-4. `CLAUDE.md`'s three rules still state Core C-033 without SC-007's narrowing, which is why the worker kept to
+5. `CLAUDE.md`'s three rules still state Core C-033 without SC-007's narrowing, which is why the worker kept to
    openly licensed pictures. Say whether `CLAUDE.md` should name SC-007.
-5. Whether the deploying company may be named in the repository (the agent has not written its name).
-6. The app's stack (roadmap 5.1): one web client that is both the website and an installable app, or a native app.
-7. Which make and model the first real pack covers (roadmap 6.2); Ghost named First Solar as the most troublesome.
-8. A trademark search on the name Hadley before it reaches an app store.
-9. Ghost-Core's `docs/GHOST-IN-THE-KERNEL.md` opening is a condensed rewrite of the manifesto (J-023); the fix is
+6. Whether the deploying company may be named in the repository (the agent has not written its name).
+7. The app's stack (roadmap 5.1): one web client that is both the website and an installable app, or a native app.
+8. Which make and model the first real pack covers (roadmap 6.2); Ghost named First Solar as the most troublesome.
+9. A trademark search on the name Hadley before it reaches an app store.
+10. Ghost-Core's `docs/GHOST-IN-THE-KERNEL.md` opening is a condensed rewrite of the manifesto (J-023); the fix is
    Core's, in a session with push access to it.
-10. A stop hook asks for a push whenever a branch is ahead of origin (2026-11-21: it fired on a branch restarted
+11. A stop hook asks for a push whenever a branch is ahead of origin (2026-11-21: it fired on a branch restarted
    from `main`); a hook is outside what an agent may change (`docs/when/coordinate.md`), so it is reported here.
-11. `scripts/ship.sh` is stamped without its executable bit (run it as `bash scripts/ship.sh`); a mode change to a
+12. `scripts/ship.sh` is stamped without its executable bit (run it as `bash scripts/ship.sh`); a mode change to a
    gate file is yours.
 12. **The coordinator's conditional** (2026-11-21, Ghost's ask): `CLAUDE.md` gains "If you are the coordinator",
    sending it to `docs/when/coordinate.md`, "Who does each item", the assignment rule of C-026, C-027 and C-036 in

@@ -11,6 +11,7 @@
     {
       "id": "S1",
       "title": "Solar PV audit checklist (print all)",
+      "kind": "web",
       "publisher": "Solar Victoria, State Government of Victoria (Australia)",
       "url": "https://www.solar.vic.gov.au/solar-pv-audit-checklist/print-all",
       "licence": "Creative Commons Attribution 4.0 International (CC BY 4.0), per the site's copyright page; images, logos and third-party content excluded. Attribution asked for: © Copyright State of Victoria (Department of Energy, Environment and Climate Action)",
@@ -21,6 +22,7 @@
     {
       "id": "S2",
       "title": "MC4 connector",
+      "kind": "web",
       "publisher": "Wikipedia (Wikimedia Foundation)",
       "url": "https://en.wikipedia.org/wiki/MC4_connector",
       "licence": "Creative Commons Attribution-ShareAlike 4.0 (CC BY-SA 4.0), as stated on the page",
@@ -31,6 +33,7 @@
     {
       "id": "S3",
       "title": "Installation Manual, IEC & UL version (crystalline modules), Doc PS-M-0434 Ver. C, 2017",
+      "kind": "document",
       "publisher": "Trina Solar (copy hosted by a reseller's file store)",
       "url": "https://cdn.shopify.com/s/files/1/0079/6003/5417/files/Trina-Solar-Panel-Installation-Manual-IEC-UL-July-2017-EN.pdf",
       "licence": "not stated (cited as a source of fact only; no text or picture copied)",
@@ -41,6 +44,7 @@
     {
       "id": "S4",
       "title": "Manual SmartSolar MPPT 75/10 up to 100/20, chapter 4: Installation",
+      "kind": "document",
       "publisher": "Victron Energy",
       "url": "https://www.victronenergy.com/media/pg/Manual_SmartSolar_MPPT_75-10_up_to_100-20/en/installation.html",
       "licence": "not stated (page footer: © 2026 Victron Energy; cited as a source of fact only)",
@@ -51,6 +55,7 @@
     {
       "id": "S5",
       "title": "Manual SmartSolar MPPT 75/10 up to 100/20, chapter 8: Troubleshooting",
+      "kind": "document",
       "publisher": "Victron Energy",
       "url": "https://www.victronenergy.com/media/pg/Manual_SmartSolar_MPPT_75-10_up_to_100-20/en/troubleshooting.html",
       "licence": "not stated (cited as a source of fact only)",
@@ -61,6 +66,7 @@
     {
       "id": "S6",
       "title": "Fire and Solar PV Systems: Recommendations for the Photovoltaic Industry, report P100874-1006 issue 2.5, 2017",
+      "kind": "document",
       "publisher": "BRE National Solar Centre, for the UK Department for Business, Energy and Industrial Strategy (published on GOV.UK)",
       "url": "https://assets.publishing.service.gov.uk/media/5a81bf5740f0b62302698f20/fire-solar-pv-systems-industry-recommendations.pdf",
       "licence": "not an open licence: © Building Research Establishment Ltd; the report says it may be distributed only in its entirety, without amendment, with attribution to BRE (cited as a source of fact only)",
@@ -71,6 +77,7 @@
     {
       "id": "S7",
       "title": "The Ultimate Safety Guide for Solar PV Connectors, February 2022",
+      "kind": "document",
       "publisher": "PVEL and HelioVolta",
       "url": "https://www.pvel.com/wp-content/uploads/PVEL-HelioVolta-Ultimate-Safety-Guide-for-Solar-PV-Connectors-Feb-2022.pdf",
       "licence": "not an open licence: ©2022 HelioVolta and PVEL, all rights reserved (cited as a source of fact only)",
@@ -81,6 +88,7 @@
     {
       "id": "S8",
       "title": "EcoFlow R600 user manual, page 15: solar panel connection",
+      "kind": "document",
       "publisher": "EcoFlow (copy hosted by ManualsLib)",
       "url": "https://www.manualslib.com/manual/1992101/Ecoflow-R600.html?page=15",
       "licence": "not stated (cited as a source of fact only)",
@@ -91,6 +99,7 @@
     {
       "id": "S9",
       "title": "Troubleshooting Solar Panel Output: Low or No Charge Issues",
+      "kind": "web",
       "publisher": "Starpower Advance Solar Technology (support article)",
       "url": "https://starpoweradvancesolartechnology.freshdesk.com/support/solutions/articles/51000496908-troubleshooting-solar-panel-output-low-or-no-charge-issues",
       "licence": "not stated (cited as a source of fact only)",

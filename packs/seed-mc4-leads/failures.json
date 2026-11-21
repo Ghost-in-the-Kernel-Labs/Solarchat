@@ -15,14 +15,20 @@
         "text": "Make sure the panel is uncovered, facing the sun, and nothing shades any part of it. Try again in full daylight.",
         "image": "images/step-11.svg",
         "sources": [
-          "S5",
+          {
+            "source": "S5",
+            "page": "unknown"
+          },
           "S9"
         ]
       },
       {
         "text": "If there is an off switch between the panel and the device, check that it is on.",
         "sources": [
-          "S3"
+          {
+            "source": "S3",
+            "page": "unknown"
+          }
         ]
       },
       {
@@ -30,29 +36,47 @@
         "image": "images/step-09.svg",
         "sources": [
           "S2",
-          "S3",
-          "S7"
+          {
+            "source": "S3",
+            "page": "unknown"
+          },
+          {
+            "source": "S7",
+            "page": "unknown"
+          }
         ]
       },
       {
         "text": "With the panel still covered, check that plus goes to plus and minus to minus all the way to the device.",
         "image": "images/step-06.svg",
         "sources": [
-          "S5",
-          "S8"
+          {
+            "source": "S5",
+            "page": "unknown"
+          },
+          {
+            "source": "S8",
+            "page": "15"
+          }
         ]
       },
       {
         "text": "If the device is a charge controller, check that its display or light is on. A blank controller is getting no power from its battery.",
         "sources": [
-          "S4",
+          {
+            "source": "S4",
+            "page": "unknown"
+          },
           "S9"
         ]
       },
       {
         "text": "Look up any error code or warning light in the device's manual.",
         "sources": [
-          "S5",
+          {
+            "source": "S5",
+            "page": "unknown"
+          },
           "S9"
         ]
       }
@@ -61,9 +85,18 @@
     "stop_when": "Stop and go to your site supervisor or site engineer if the device still shows nothing after these checks, if a controller's display stays blank, or if anything looks or smells burnt.",
     "sources": [
       "S2",
-      "S3",
-      "S4",
-      "S5",
+      {
+        "source": "S3",
+        "page": "unknown"
+      },
+      {
+        "source": "S4",
+        "page": "unknown"
+      },
+      {
+        "source": "S5",
+        "page": "unknown"
+      },
       "S9"
     ]
   },
@@ -81,39 +114,69 @@
       {
         "text": "Look for any shadow on the panel from trees, posts, cables or buildings, and move the panel or the object if you safely can.",
         "sources": [
-          "S3",
-          "S5",
+          {
+            "source": "S3",
+            "page": "unknown"
+          },
+          {
+            "source": "S5",
+            "page": "unknown"
+          },
           "S9"
         ]
       },
       {
         "text": "If the panel is at ground level, wipe the glass with a soft cloth and clean water. Do not stand or kneel on the panel. Do not climb onto a roof to clean it.",
         "sources": [
-          "S3"
+          {
+            "source": "S3",
+            "page": "unknown"
+          }
         ]
       },
       {
         "text": "Turn the panel to face the sun more directly, and check again around midday.",
         "sources": [
-          "S3",
-          "S5"
+          {
+            "source": "S3",
+            "page": "unknown"
+          },
+          {
+            "source": "S5",
+            "page": "unknown"
+          }
         ]
       },
       {
         "text": "Cover the panel and check that every connector pair is fully locked with no gap.",
         "image": "images/step-09.svg",
         "sources": [
-          "S5",
-          "S7"
+          {
+            "source": "S5",
+            "page": "unknown"
+          },
+          {
+            "source": "S7",
+            "page": "unknown"
+          }
         ]
       }
     ],
     "fix": "Remove the shade, clean the glass, face the panel to the sun, and make sure each connector is locked.",
     "stop_when": "Stop and go to your site supervisor or site engineer if power stays low in clear midday sun with a clean, unshaded panel, or if the panel is on a roof.",
     "sources": [
-      "S3",
-      "S5",
-      "S7",
+      {
+        "source": "S3",
+        "page": "unknown"
+      },
+      {
+        "source": "S5",
+        "page": "unknown"
+      },
+      {
+        "source": "S7",
+        "page": "unknown"
+      },
       "S9"
     ]
   },
@@ -128,16 +191,28 @@
       {
         "text": "Check in clear midday sun, with the panel clean, unshaded and facing the sun.",
         "sources": [
-          "S3",
-          "S5"
+          {
+            "source": "S3",
+            "page": "unknown"
+          },
+          {
+            "source": "S5",
+            "page": "unknown"
+          }
         ]
       }
     ],
     "fix": "Some shortfall from the label figure is normal. Give the panel the best light you can.",
     "stop_when": "Stop and go to your site supervisor or site engineer if the power is close to nothing in full sun, or falls suddenly and stays low.",
     "sources": [
-      "S3",
-      "S5"
+      {
+        "source": "S3",
+        "page": "unknown"
+      },
+      {
+        "source": "S5",
+        "page": "unknown"
+      }
     ]
   },
   {
@@ -151,15 +226,27 @@
         "text": "Cover the panel fully first. Then compare the marks on each joined pair, from the panel to the device.",
         "image": "images/step-05.svg",
         "sources": [
-          "S3",
-          "S5"
+          {
+            "source": "S3",
+            "page": "unknown"
+          },
+          {
+            "source": "S5",
+            "page": "unknown"
+          }
         ]
       },
       {
         "text": "Watch for warning signs: a device that feels hot, a burning smell, smoke, or a melted or darkened connector.",
         "sources": [
-          "S5",
-          "S7"
+          {
+            "source": "S5",
+            "page": "unknown"
+          },
+          {
+            "source": "S7",
+            "page": "unknown"
+          }
         ]
       }
     ],
@@ -167,9 +254,18 @@
     "stop_when": "Stop and go to your site supervisor or site engineer if there is heat, smoke, a burning smell or any melted part, or if the device does not work once the leads are correct. Some devices are damaged by reversed leads.",
     "sources": [
       "S2",
-      "S3",
-      "S5",
-      "S7"
+      {
+        "source": "S3",
+        "page": "unknown"
+      },
+      {
+        "source": "S5",
+        "page": "unknown"
+      },
+      {
+        "source": "S7",
+        "page": "unknown"
+      }
     ]
   },
   {
@@ -186,7 +282,10 @@
         "image": "images/step-06.svg",
         "sources": [
           "S2",
-          "S3"
+          {
+            "source": "S3",
+            "page": "unknown"
+          }
         ]
       },
       {
@@ -195,13 +294,19 @@
         "sources": [
           "S1",
           "S2",
-          "S7"
+          {
+            "source": "S7",
+            "page": "unknown"
+          }
         ]
       },
       {
         "text": "With the panel covered, look into each connector for dirt. Do not poke anything inside.",
         "sources": [
-          "S3"
+          {
+            "source": "S3",
+            "page": "unknown"
+          }
         ]
       }
     ],
@@ -210,8 +315,14 @@
     "sources": [
       "S1",
       "S2",
-      "S3",
-      "S7"
+      {
+        "source": "S3",
+        "page": "unknown"
+      },
+      {
+        "source": "S7",
+        "page": "unknown"
+      }
     ]
   },
   {
@@ -226,7 +337,10 @@
         "image": "images/step-03.svg",
         "sources": [
           "S1",
-          "S7"
+          {
+            "source": "S7",
+            "page": "unknown"
+          }
         ]
       }
     ],
@@ -235,8 +349,14 @@
     "sources": [
       "S1",
       "S2",
-      "S6",
-      "S7"
+      {
+        "source": "S6",
+        "page": "unknown"
+      },
+      {
+        "source": "S7",
+        "page": "unknown"
+      }
     ]
   },
   {
@@ -252,25 +372,49 @@
         "text": "Compare the Voc on the panel's label, added up for every panel in the row, with the highest solar input voltage in the device's manual.",
         "image": "images/step-01.svg",
         "sources": [
-          "S3",
-          "S4",
-          "S8"
+          {
+            "source": "S3",
+            "page": "unknown"
+          },
+          {
+            "source": "S4",
+            "page": "unknown"
+          },
+          {
+            "source": "S8",
+            "page": "15"
+          }
         ]
       },
       {
         "text": "Check whether the device's manual allows panels to be joined in a row at all.",
         "sources": [
-          "S8"
+          {
+            "source": "S8",
+            "page": "15"
+          }
         ]
       }
     ],
     "fix": "Cover the panels, open the connectors with the release tool, and connect fewer panels in a row, as the device's manual allows.",
     "stop_when": "Stop and go to your site supervisor or site engineer if you are not sure how many panels the device can take, or if the error stays after the change. Too high a voltage can damage the device.",
     "sources": [
-      "S3",
-      "S4",
-      "S5",
-      "S8"
+      {
+        "source": "S3",
+        "page": "unknown"
+      },
+      {
+        "source": "S4",
+        "page": "unknown"
+      },
+      {
+        "source": "S5",
+        "page": "unknown"
+      },
+      {
+        "source": "S8",
+        "page": "15"
+      }
     ]
   },
   {
@@ -287,26 +431,50 @@
         "text": "Without touching it, look for plastic that is melted, darkened or out of shape, as in the picture.",
         "image": "images/third-party/mc4-connector-heat-damage.jpg",
         "sources": [
-          "S5",
-          "S7"
+          {
+            "source": "S5",
+            "page": "unknown"
+          },
+          {
+            "source": "S7",
+            "page": "unknown"
+          }
         ]
       },
       {
         "text": "Do not touch the connector. Keep everyone back. If you safely can, cover the panel fully or turn off the off switch, without touching the connector.",
         "image": "images/step-04.svg",
         "sources": [
-          "S3",
-          "S7"
+          {
+            "source": "S3",
+            "page": "unknown"
+          },
+          {
+            "source": "S7",
+            "page": "unknown"
+          }
         ]
       }
     ],
     "fix": "None for you to do. A heat-damaged connector must be replaced. Report it to your site supervisor or site engineer.",
     "stop_when": "Always stop. Do not pull the connector apart and do not use the system. Go to your site supervisor or site engineer. If there is smoke or flame, move away and follow the site's emergency procedure.",
     "sources": [
-      "S3",
-      "S5",
-      "S6",
-      "S7"
+      {
+        "source": "S3",
+        "page": "unknown"
+      },
+      {
+        "source": "S5",
+        "page": "unknown"
+      },
+      {
+        "source": "S6",
+        "page": "unknown"
+      },
+      {
+        "source": "S7",
+        "page": "unknown"
+      }
     ]
   },
   {
@@ -321,16 +489,28 @@
         "text": "Without touching any bare metal, look along each cable and at each connector for cuts or cracks.",
         "image": "images/step-02.svg",
         "sources": [
-          "S3",
-          "S7"
+          {
+            "source": "S3",
+            "page": "unknown"
+          },
+          {
+            "source": "S7",
+            "page": "unknown"
+          }
         ]
       }
     ],
     "fix": "None for you to do. Do not tape, cut, join or repair the cable or connector.",
     "stop_when": "Always stop. Cover the panel and go to your site supervisor or site engineer.",
     "sources": [
-      "S3",
-      "S7"
+      {
+        "source": "S3",
+        "page": "unknown"
+      },
+      {
+        "source": "S7",
+        "page": "unknown"
+      }
     ]
   },
   {
@@ -345,7 +525,10 @@
         "image": "images/step-04.svg",
         "sources": [
           "S2",
-          "S3"
+          {
+            "source": "S3",
+            "page": "unknown"
+          }
         ]
       },
       {
@@ -360,7 +543,10 @@
     "stop_when": "Stop and go to your site supervisor or site engineer if you have no release tool. Do not use pliers or a screwdriver, and do not pull on the cables.",
     "sources": [
       "S2",
-      "S3"
+      {
+        "source": "S3",
+        "page": "unknown"
+      }
     ]
   },
   {
@@ -374,14 +560,23 @@
         "text": "Cover the panel fully before you touch wet connectors or cables.",
         "image": "images/step-04.svg",
         "sources": [
-          "S3"
+          {
+            "source": "S3",
+            "page": "unknown"
+          }
         ]
       },
       {
         "text": "Look for rust, green marks or dirt on the connectors.",
         "sources": [
-          "S3",
-          "S7"
+          {
+            "source": "S3",
+            "page": "unknown"
+          },
+          {
+            "source": "S7",
+            "page": "unknown"
+          }
         ]
       }
     ],
@@ -389,8 +584,14 @@
     "stop_when": "Stop and go to your site supervisor or site engineer if any connector shows rust, green marks or water inside, or if the panel stops working.",
     "sources": [
       "S1",
-      "S3",
-      "S7"
+      {
+        "source": "S3",
+        "page": "unknown"
+      },
+      {
+        "source": "S7",
+        "page": "unknown"
+      }
     ]
   },
   {
@@ -405,7 +606,10 @@
         "text": "When the panel is covered and dry, check that every connector pair is fully locked and held off the ground.",
         "image": "images/step-10.svg",
         "sources": [
-          "S7"
+          {
+            "source": "S7",
+            "page": "unknown"
+          }
         ]
       }
     ],
@@ -413,7 +617,10 @@
     "stop_when": "Stop and go to your site supervisor or site engineer if the cut-outs carry on. Water inside a connector is a fault the site engineer must fix.",
     "sources": [
       "S1",
-      "S7"
+      {
+        "source": "S7",
+        "page": "unknown"
+      }
     ]
   },
   {
@@ -426,14 +633,20 @@
       {
         "text": "Do not touch the panel's surface or frame.",
         "sources": [
-          "S3"
+          {
+            "source": "S3",
+            "page": "unknown"
+          }
         ]
       }
     ],
     "fix": "None for you to do. A broken panel cannot be repaired and must not be used.",
     "stop_when": "Always stop. Keep people away and go to your site supervisor or site engineer.",
     "sources": [
-      "S3"
+      {
+        "source": "S3",
+        "page": "unknown"
+      }
     ]
   },
   {
@@ -449,14 +662,20 @@
         "text": "Check whether the battery was connected to the controller before the panel, as the controller's manual asks.",
         "image": "images/step-07.svg",
         "sources": [
-          "S4"
+          {
+            "source": "S4",
+            "page": "unknown"
+          }
         ]
       }
     ],
     "fix": "None for you to do on the battery side.",
     "stop_when": "Always stop. Do not open the controller, replace a fuse, or work on the battery wiring. Go to your site supervisor or site engineer.",
     "sources": [
-      "S4",
+      {
+        "source": "S4",
+        "page": "unknown"
+      },
       "S9"
     ]
   }
