@@ -42,7 +42,7 @@ import, and `test/test_modules.py` refuses an import it does not allow.
 ### The knowledge: `packs/`
 
 One folder per knowledge pack. `packs/seed-mc4-leads/` is the demo pack (connecting a panel by its MC4 leads),
-written before the format existed and marked `"status": "demo"`: no engineer has reviewed it. `packs/TYPES.md` lists
+in the pack format (passages, flows and a procedure) and marked `"status": "demo"`: no engineer has reviewed it. `packs/TYPES.md` lists
 the installation types a pack can cover. The format a pack must follow is the section "The pack format" in
 `docs/CONTRACT.md`.
 

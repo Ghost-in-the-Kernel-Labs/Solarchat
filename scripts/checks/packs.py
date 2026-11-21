@@ -9,7 +9,7 @@ paraphrase ("carry on anyway", "the stop does not apply here") passes it, and st
 
 `problems(folder)` reads one pack folder (manifest.json, then passages.json, flows.json, procedures.json, images/) and returns one line per
 fault, `[]` for a well-formed pack. It reads the folder's files through scripts/checks/common.py, not the disk's walk
-of a clone (C-001). It is not run over `packs/` yet: the demo pack is brought to the format in TODO 1.4. What it cannot
+of a clone (C-001). `test/test_packs.py` runs it over the seed pack (TODO 1.4). What it cannot
 judge stays with the person who loads the packs: whether a licence allows redistribution, whether a passage is true.
 """
 import json

@@ -1,0 +1,413 @@
+[
+  {
+    "id": "fail-01",
+    "title": "The panel is plugged in but the device shows no solar power at all.",
+    "symptom": "The panel is plugged in but the device shows no solar power at all.",
+    "checks": [
+      {
+        "text": "Make sure the panel is uncovered, facing the sun, and nothing shades any part of it. Try again in full daylight.",
+        "image": "images/step-11.svg",
+        "image_alt": "An uncovered panel in sunshine, connected to a device whose screen shows a sun symbol and a number of watts, with a green tick."
+      },
+      {
+        "text": "If there is an off switch between the panel and the device, check that it is on."
+      },
+      {
+        "text": "Cover the panel fully. Then look at each connector pair: the halves should be locked with no gap. Push any loose pair together until it clicks.",
+        "image": "images/step-09.svg",
+        "image_alt": "Two connector halves pushed fully together, with no gap and a click mark, and a green tick. A small inset marked wrong shows the halves only part way in, with a visible gap and a red cross."
+      },
+      {
+        "text": "With the panel still covered, check that plus goes to plus and minus to minus all the way to the device.",
+        "image": "images/step-06.svg",
+        "image_alt": "The panel's plus lead lined up with the adapter's plus lead, both red, and the panel's minus lead lined up with the adapter's minus lead, both black, with a green tick. A small inset marked wrong shows red crossed to black, with a red cross."
+      },
+      {
+        "text": "If the device is a charge controller, check that its display or light is on. A blank controller is getting no power from its battery."
+      },
+      {
+        "text": "Look up any error code or warning light in the device's manual."
+      }
+    ],
+    "fix": "Correct whatever the checks found, with the panel covered, then uncover it and look at the device again.",
+    "stop": "Stop and go to your site supervisor or site engineer if the device still shows nothing after these checks, if a controller's display stays blank, or if anything looks or smells burnt.",
+    "sources": [
+      "S2",
+      {
+        "source": "S3",
+        "page": "unknown"
+      },
+      {
+        "source": "S4",
+        "page": "unknown"
+      },
+      {
+        "source": "S5",
+        "page": "unknown"
+      },
+      "S9"
+    ]
+  },
+  {
+    "id": "fail-02",
+    "title": "It works, but the device shows much less power than I expected.",
+    "symptom": "It works, but the device shows much less power than I expected.",
+    "checks": [
+      {
+        "text": "Look for any shadow on the panel from trees, posts, cables or buildings, and move the panel or the object if you safely can."
+      },
+      {
+        "text": "If the panel is at ground level, wipe the glass with a soft cloth and clean water. Do not stand or kneel on the panel. Do not climb onto a roof to clean it."
+      },
+      {
+        "text": "Turn the panel to face the sun more directly, and check again around midday."
+      },
+      {
+        "text": "Cover the panel and check that every connector pair is fully locked with no gap.",
+        "image": "images/step-09.svg",
+        "image_alt": "Two connector halves pushed fully together, with no gap and a click mark, and a green tick. A small inset marked wrong shows the halves only part way in, with a visible gap and a red cross."
+      }
+    ],
+    "fix": "Remove the shade, clean the glass, face the panel to the sun, and make sure each connector is locked.",
+    "stop": "Stop and go to your site supervisor or site engineer if power stays low in clear midday sun with a clean, unshaded panel, or if the panel is on a roof.",
+    "sources": [
+      {
+        "source": "S3",
+        "page": "unknown"
+      },
+      {
+        "source": "S5",
+        "page": "unknown"
+      },
+      {
+        "source": "S7",
+        "page": "unknown"
+      },
+      "S9"
+    ]
+  },
+  {
+    "id": "fail-03",
+    "title": "The power is less than the watts printed on the panel's label, even in sun.",
+    "symptom": "The power is less than the watts printed on the panel's label, even in sun.",
+    "checks": [
+      {
+        "text": "Check in clear midday sun, with the panel clean, unshaded and facing the sun."
+      }
+    ],
+    "fix": "Some shortfall from the label figure is normal. Give the panel the best light you can.",
+    "stop": "Stop and go to your site supervisor or site engineer if the power is close to nothing in full sun, or falls suddenly and stays low.",
+    "sources": [
+      {
+        "source": "S3",
+        "page": "unknown"
+      },
+      {
+        "source": "S5",
+        "page": "unknown"
+      }
+    ]
+  },
+  {
+    "id": "fail-04",
+    "title": "I think I connected plus and minus the wrong way round.",
+    "symptom": "I think I connected plus and minus the wrong way round.",
+    "checks": [
+      {
+        "text": "Cover the panel fully first. Then compare the marks on each joined pair, from the panel to the device.",
+        "image": "images/step-05.svg",
+        "image_alt": "Close view of two connectors at the ends of the panel leads. One shows a plus sign and is drawn in red; the other shows a minus sign and is drawn in black. Arrows point to the moulded signs."
+      },
+      {
+        "text": "Watch for warning signs: a device that feels hot, a burning smell, smoke, or a melted or darkened connector."
+      }
+    ],
+    "fix": "With the panel covered, open the pairs with the release tool, then join plus to plus and minus to minus. Uncover the panel and check the device.",
+    "stop": "Stop and go to your site supervisor or site engineer if there is heat, smoke, a burning smell or any melted part, or if the device does not work once the leads are correct. Some devices are damaged by reversed leads.",
+    "sources": [
+      "S2",
+      {
+        "source": "S3",
+        "page": "unknown"
+      },
+      {
+        "source": "S5",
+        "page": "unknown"
+      },
+      {
+        "source": "S7",
+        "page": "unknown"
+      }
+    ]
+  },
+  {
+    "id": "fail-05",
+    "title": "The connectors will not push together, or they will not click.",
+    "symptom": "The connectors will not push together, or they will not click.",
+    "checks": [
+      {
+        "text": "Check that one half is a plug and the other a socket, and that you are joining plus to plus.",
+        "image": "images/step-06.svg",
+        "image_alt": "The panel's plus lead lined up with the adapter's plus lead, both red, and the panel's minus lead lined up with the adapter's minus lead, both black, with a green tick. A small inset marked wrong shows red crossed to black, with a red cross."
+      },
+      {
+        "text": "Check that both halves are the same make and type.",
+        "image": "images/step-03.svg",
+        "image_alt": "Two connector halves with the same shape and the same maker's mark, with a green tick. A small inset marked wrong shows two halves of different shapes and different marks, with a red cross."
+      },
+      {
+        "text": "With the panel covered, look into each connector for dirt. Do not poke anything inside."
+      }
+    ],
+    "fix": "Join a matching plug and socket of the same make, pushed straight together. Never force them.",
+    "stop": "Stop and go to your site supervisor or site engineer if the makes differ, if a connector is dirty or damaged inside, or if a matching pair still will not lock.",
+    "sources": [
+      "S1",
+      "S2",
+      {
+        "source": "S3",
+        "page": "unknown"
+      },
+      {
+        "source": "S7",
+        "page": "unknown"
+      }
+    ]
+  },
+  {
+    "id": "fail-06",
+    "title": "The connector on my panel and the one on my cable are different makes, but they fit.",
+    "symptom": "The connector on my panel and the one on my cable are different makes, but they fit.",
+    "checks": [
+      {
+        "text": "Compare the name or logo, the body shape and the back nut of both halves.",
+        "image": "images/step-03.svg",
+        "image_alt": "Two connector halves with the same shape and the same maker's mark, with a green tick. A small inset marked wrong shows two halves of different shapes and different marks, with a red cross."
+      }
+    ],
+    "fix": "Do not join them, even if they fit. Mixed makes can fail to seal or make poor contact, and that can lead to overheating or fire.",
+    "stop": "Always stop here. Ask your site supervisor or site engineer for a matching part. Do not cut or change a connector yourself.",
+    "sources": [
+      "S1",
+      "S2",
+      {
+        "source": "S6",
+        "page": "unknown"
+      },
+      {
+        "source": "S7",
+        "page": "unknown"
+      }
+    ]
+  },
+  {
+    "id": "fail-07",
+    "title": "The device shows an overvoltage error, or says the solar input is too high.",
+    "symptom": "The device shows an overvoltage error, or says the solar input is too high.",
+    "checks": [
+      {
+        "text": "Compare the Voc on the panel's label, added up for every panel in the row, with the highest solar input voltage in the device's manual.",
+        "image": "images/step-01.svg",
+        "image_alt": "Two labels side by side. On the left, the panel label shows a line marked Voc. On the right, the device label shows a line marked Max solar input. An arrow shows the panel figure is smaller than the device figure, with a green tick."
+      },
+      {
+        "text": "Check whether the device's manual allows panels to be joined in a row at all."
+      }
+    ],
+    "fix": "Cover the panels, open the connectors with the release tool, and connect fewer panels in a row, as the device's manual allows.",
+    "stop": "Stop and go to your site supervisor or site engineer if you are not sure how many panels the device can take, or if the error stays after the change. Too high a voltage can damage the device.",
+    "sources": [
+      {
+        "source": "S3",
+        "page": "unknown"
+      },
+      {
+        "source": "S4",
+        "page": "unknown"
+      },
+      {
+        "source": "S5",
+        "page": "unknown"
+      },
+      {
+        "source": "S8",
+        "page": "15"
+      }
+    ]
+  },
+  {
+    "id": "fail-08",
+    "title": "A connector is hot, melted, darkened, or smells burnt.",
+    "symptom": "A connector is hot, melted, darkened, or smells burnt.",
+    "checks": [
+      {
+        "text": "Without touching it, look for plastic that is melted, darkened or out of shape, as in the picture.",
+        "image": "images/third-party/mc4-connector-heat-damage.jpg",
+        "image_alt": "An MC4 plug damaged by a bad contact: the plastic around the contact is melted and darkened, with a red arrow pointing to the damage. An example of what wrong looks like."
+      },
+      {
+        "text": "Do not touch the connector. Keep everyone back. If you safely can, cover the panel fully or turn off the off switch, without touching the connector.",
+        "image": "images/step-04.svg",
+        "image_alt": "A panel with its whole front covered by a dark blanket, with a green tick. A small inset marked wrong shows the blanket covering only half the panel, with a red cross."
+      }
+    ],
+    "fix": "None for you to do. A heat-damaged connector must be replaced. Report it to your site supervisor or site engineer.",
+    "stop": "Always stop. Do not pull the connector apart and do not use the system. Go to your site supervisor or site engineer. If there is smoke or flame, move away and follow the site's emergency procedure.",
+    "sources": [
+      {
+        "source": "S3",
+        "page": "unknown"
+      },
+      {
+        "source": "S5",
+        "page": "unknown"
+      },
+      {
+        "source": "S6",
+        "page": "unknown"
+      },
+      {
+        "source": "S7",
+        "page": "unknown"
+      }
+    ]
+  },
+  {
+    "id": "fail-09",
+    "title": "A cable or connector is cut, cracked, chewed or crushed.",
+    "symptom": "A cable or connector is cut, cracked, chewed or crushed.",
+    "checks": [
+      {
+        "text": "Without touching any bare metal, look along each cable and at each connector for cuts or cracks.",
+        "image": "images/step-02.svg",
+        "image_alt": "A panel seen from behind with two cables, one red marked plus and one black marked minus, each ending in a clean connector with a green tick. A small inset marked wrong shows a cracked, scorched connector with a red cross."
+      }
+    ],
+    "fix": "None for you to do. Do not tape, cut, join or repair the cable or connector.",
+    "stop": "Always stop. Cover the panel and go to your site supervisor or site engineer.",
+    "sources": [
+      {
+        "source": "S3",
+        "page": "unknown"
+      },
+      {
+        "source": "S7",
+        "page": "unknown"
+      }
+    ]
+  },
+  {
+    "id": "fail-10",
+    "title": "The connectors will not come apart.",
+    "symptom": "The connectors will not come apart.",
+    "checks": [
+      {
+        "text": "Check that the panel is fully covered or the off switch is off before you try.",
+        "image": "images/step-04.svg",
+        "image_alt": "A panel with its whole front covered by a dark blanket, with a green tick. A small inset marked wrong shows the blanket covering only half the panel, with a red cross."
+      },
+      {
+        "text": "Check that you have the release tool made for this make of connector.",
+        "image": "images/step-12.svg",
+        "image_alt": "A covered panel, and a release tool pressed onto the locking tabs of a connector pair to open it, with a green tick. A small inset marked wrong shows arrows pulling a connector pair apart beside an uncovered panel in sunshine, with a red cross."
+      }
+    ],
+    "fix": "With the panel covered, use the right release tool to free the locking tabs, then separate the halves.",
+    "stop": "Stop and go to your site supervisor or site engineer if you have no release tool. Do not use pliers or a screwdriver, and do not pull on the cables.",
+    "sources": [
+      "S2",
+      {
+        "source": "S3",
+        "page": "unknown"
+      }
+    ]
+  },
+  {
+    "id": "fail-11",
+    "title": "The connectors are lying on the ground or in water.",
+    "symptom": "The connectors are lying on the ground or in water.",
+    "checks": [
+      {
+        "text": "Cover the panel fully before you touch wet connectors or cables.",
+        "image": "images/step-04.svg",
+        "image_alt": "A panel with its whole front covered by a dark blanket, with a green tick. A small inset marked wrong shows the blanket covering only half the panel, with a red cross."
+      },
+      {
+        "text": "Look for rust, green marks or dirt on the connectors."
+      }
+    ],
+    "fix": "With the panel covered, lift the cable and fix it so the connectors sit off the ground, away from where water gathers.",
+    "stop": "Stop and go to your site supervisor or site engineer if any connector shows rust, green marks or water inside, or if the panel stops working.",
+    "sources": [
+      "S1",
+      {
+        "source": "S3",
+        "page": "unknown"
+      },
+      {
+        "source": "S7",
+        "page": "unknown"
+      }
+    ]
+  },
+  {
+    "id": "fail-12",
+    "title": "The power cuts out on damp mornings or after rain, then comes back.",
+    "symptom": "The power cuts out on damp mornings or after rain, then comes back.",
+    "checks": [
+      {
+        "text": "When the panel is covered and dry, check that every connector pair is fully locked and held off the ground.",
+        "image": "images/step-10.svg",
+        "image_alt": "A joined connector held up on a post, off the ground with the cable leaving it straight and then curving gently, with a green tick. A small inset marked wrong shows the cable bent sharply at the connector and lying in a puddle, with a red cross."
+      }
+    ],
+    "fix": "Lock any loose pair and lift connectors out of the wet, with the panel covered.",
+    "stop": "Stop and go to your site supervisor or site engineer if the cut-outs carry on. Water inside a connector is a fault the site engineer must fix.",
+    "sources": [
+      "S1",
+      {
+        "source": "S7",
+        "page": "unknown"
+      }
+    ]
+  },
+  {
+    "id": "fail-13",
+    "title": "The panel's glass is broken or cracked.",
+    "symptom": "The panel's glass is broken or cracked.",
+    "checks": [
+      {
+        "text": "Do not touch the panel's surface or frame."
+      }
+    ],
+    "fix": "None for you to do. A broken panel cannot be repaired and must not be used.",
+    "stop": "Always stop. Keep people away and go to your site supervisor or site engineer.",
+    "sources": [
+      {
+        "source": "S3",
+        "page": "unknown"
+      }
+    ]
+  },
+  {
+    "id": "fail-14",
+    "title": "My charge controller's screen and lights are all off.",
+    "symptom": "My charge controller's screen and lights are all off.",
+    "checks": [
+      {
+        "text": "Check whether the battery was connected to the controller before the panel, as the controller's manual asks.",
+        "image": "images/step-07.svg",
+        "image_alt": "A numbered order: 1, a battery wired to a charge controller, whose light is on. 2, the panel leads waiting to be connected to the controller. An arrow shows the panel comes second."
+      }
+    ],
+    "fix": "None for you to do on the battery side.",
+    "stop": "Always stop. Do not open the controller, replace a fuse, or work on the battery wiring. Go to your site supervisor or site engineer.",
+    "sources": [
+      {
+        "source": "S4",
+        "page": "unknown"
+      },
+      "S9"
+    ]
+  }
+]

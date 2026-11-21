@@ -1,6 +1,7 @@
 """The safety rules load from the safety module's data, in sequence and complete, and docs/SAFETY-RULES.md is current (TODO 1.3, HAD-04)."""
 import hashlib
 import json
+import re
 import unittest
 
 from scripts import safety_rules_doc
@@ -26,6 +27,32 @@ DEMO_PACK_FIRINGS = {
     "fail-10": ["SR-03"],
     "fail-13": ["SR-07"],
 }
+# The same firings by piece of the pack in the pack format (TODO 1.4): a passage, a flow, a procedure's header or one of its
+# steps, named `entry@procedure`; each old step or failure is now several, so DEMO_PACK_FIRINGS above is read by origin.
+DEMO_PACK_ENTRY_FIRINGS = {
+    "step-12": ["SR-03"],
+    "step-12@connect-panel": ["SR-03"],
+    "fail-04": ["SR-03", "SR-08"],
+    "fail-04-check-2": ["SR-08"],
+    "fail-04-fix": ["SR-03"],
+    "fail-04-stop": ["SR-08"],
+    "fail-07": ["SR-03"],
+    "fail-07-fix": ["SR-03"],
+    "fail-08": ["SR-07", "SR-08"],
+    "fail-08-fix": ["SR-07"],
+    "fail-08-stop": ["SR-08"],
+    "fail-09": ["SR-07"],
+    "fail-09-causes": ["SR-07"],
+    "fail-09-check-1": ["SR-07"],
+    "fail-09-fix": ["SR-07"],
+    "fail-09-stop": ["SR-07"],
+    "fail-10": ["SR-03"],
+    "fail-10-fix": ["SR-03"],
+    "fail-13": ["SR-07"],
+    "fail-13-fix": ["SR-07"],
+}
+SEED_PACK = ROOT / "packs" / "seed-mc4-leads"
+ORIGIN_ID = re.compile(r"^(step-\d+|fail-\d+)")
 NOT_TEXT_FIELDS = ("id", "image", "photo", "sources", "source", "page")
 
 
@@ -39,6 +66,28 @@ def pack_strings(value: object) -> list[str]:
     if isinstance(value, dict):
         return [text for key, entry in value.items() if key not in NOT_TEXT_FIELDS for text in pack_strings(entry)]
     return []
+
+
+def seed_pack_entries() -> list[tuple[str, dict]]:
+    """Each piece of the seed pack's text with its name: its passages and flows by id, each procedure's header (without its
+    steps) by id, and each step as "step-12@connect-panel"."""
+    entries: list[tuple[str, dict]] = []
+    for file_name in ("passages.json", "flows.json"):
+        entries += [(item["id"], item) for item in json.loads((SEED_PACK / file_name).read_text())]
+    for procedure in json.loads((SEED_PACK / "procedures.json").read_text()):
+        entries.append((procedure["id"], {key: value for key, value in procedure.items() if key != "steps"}))
+        entries += [(f"{step['id']}@{procedure['id']}", step) for step in procedure["steps"]]
+    return entries
+
+
+def rules_fired_by_entry() -> dict[str, list[str]]:
+    """The rules each piece of the seed pack fires, only the pieces that fire one: {"fail-04-fix": ["SR-03"], ...}."""
+    fired = {}
+    for entry_name, entry in seed_pack_entries():
+        entry_rules = sorted({rule_id for text in pack_strings(entry) for rule_id in rules.rules_fired(text)})
+        if entry_rules:
+            fired[entry_name] = entry_rules
+    return fired
 
 
 def write_rules(rule_entries: list[dict]) -> object:
@@ -221,13 +270,14 @@ class TheMatching(unittest.TestCase):
 
 class TheDemoPack(unittest.TestCase):
     def test_which_demo_text_fires_which_rule(self) -> None:
-        fired = {}
-        for file_name in ("steps.json", "failures.json"):
-            for item in json.loads((ROOT / "packs" / "seed-mc4-leads" / file_name).read_text()):
-                item_rules = sorted({rule_id for text in pack_strings(item) for rule_id in rules.rules_fired(text)})
-                if item_rules:
-                    fired[item["id"]] = item_rules
-        self.assertEqual(fired, DEMO_PACK_FIRINGS)
+        self.assertEqual(rules_fired_by_entry(), DEMO_PACK_ENTRY_FIRINGS)
+
+    def test_the_same_text_fires_the_same_rules_as_before_the_pack_format(self) -> None:
+        by_origin: dict[str, set[str]] = {}
+        for entry_name, entry_rules in rules_fired_by_entry().items():
+            origin = ORIGIN_ID.match(entry_name)
+            by_origin.setdefault(origin.group(1) if origin else entry_name, set()).update(entry_rules)
+        self.assertEqual({origin: sorted(origin_rules) for origin, origin_rules in by_origin.items()}, DEMO_PACK_FIRINGS)
 
 
 class TheLoader(unittest.TestCase):

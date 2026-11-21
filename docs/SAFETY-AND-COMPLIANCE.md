@@ -56,7 +56,8 @@ model's reading ever approves anything (Core C-005, SC-005, SC-013).
   marked unknown, a source with no licence written down, and a passage, flow or procedure that cites no source or a source the manifest does
   not list (`test/test_packs.py`, with a deliberately broken pack for each fault under
   `test/fixtures/broken/packs/`).
-- **Designed:** the pack check run over every pack in `packs/` once the demo pack is converted (1.4).
+- **Enforced today:** `test/test_packs.py` runs the pack check over the seed pack, `packs/seed-mc4-leads/` (1.4, J-038).
+- **Designed:** the same check over every pack in `packs/`, once there is a second pack.
 
 ### 3. Every answer names its source, or says "I do not know" (HAD-03)
 

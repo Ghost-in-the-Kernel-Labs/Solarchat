@@ -111,28 +111,28 @@
       "file": "images/third-party/mc4-connector-pair-marks.jpg",
       "source_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/MC4_Connector_Front_and_Top_View.jpg/960px-MC4_Connector_Front_and_Top_View.jpg",
       "page_url": "https://commons.wikimedia.org/wiki/File:MC4_Connector_Front_and_Top_View.jpg",
-      "owner_or_author": "Orion Lawlor",
       "licence": "CC0 (public domain dedication), as stated on the file page",
       "retrieved": "2026-11-20",
-      "shows": "A pair of MC4-type connectors, front and side views: the plus connector with a red sealing ring and locking clips on the left, the minus connector on the right, each with its + or − sign moulded on the body."
+      "shows": "A pair of MC4-type connectors, front and side views: the plus connector with a red sealing ring and locking clips on the left, the minus connector on the right, each with its + or − sign moulded on the body.",
+      "owner": "Orion Lawlor"
     },
     {
       "file": "images/third-party/panel-back-label-and-leads.jpg",
       "source_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/165W_solar_panel%2C_back.jpg/960px-165W_solar_panel%2C_back.jpg",
       "page_url": "https://commons.wikimedia.org/wiki/File:165W_solar_panel,_back.jpg",
-      "owner_or_author": "Veikk0.ma",
       "licence": "CC BY 4.0, as stated on the file page",
       "retrieved": "2026-11-20",
-      "shows": "The back of a 165 W panel: the junction box, the specification label listing the open-circuit voltage (Voc) and maximum system voltage, and two black leads ending in MC4-type connectors."
+      "shows": "The back of a 165 W panel: the junction box, the specification label listing the open-circuit voltage (Voc) and maximum system voltage, and two black leads ending in MC4-type connectors.",
+      "owner": "Veikk0.ma"
     },
     {
       "file": "images/third-party/mc4-connector-heat-damage.jpg",
       "source_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/MC4-plug_damage-11ASD.jpg/500px-MC4-plug_damage-11ASD.jpg",
       "page_url": "https://commons.wikimedia.org/wiki/File:MC4-plug_damage-11ASD.jpg",
-      "owner_or_author": "Asurnipal",
       "licence": "CC BY-SA 4.0, as stated on the file page",
       "retrieved": "2026-11-20",
-      "shows": "An MC4 plug damaged by a bad contact: the plastic around the contact is melted and darkened, with a red arrow pointing to the damage. An example of what wrong looks like."
+      "shows": "An MC4 plug damaged by a bad contact: the plastic around the contact is melted and darkened, with a red arrow pointing to the damage. An example of what wrong looks like.",
+      "owner": "Asurnipal"
     }
   ]
 }

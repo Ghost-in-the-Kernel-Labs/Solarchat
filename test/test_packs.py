@@ -1,4 +1,4 @@
-"""A well-formed pack passes the pack check and each planted break is refused (TODO 1.2, 1.3; SC-005, SC-007, SC-013, HAD-04, HAD-06)."""
+"""A well-formed pack passes the pack check and each planted break is refused (TODO 1.2, 1.3, 1.4; SC-005, SC-007, SC-013, HAD-04, HAD-06)."""
 import json
 import shutil
 import unittest
@@ -299,3 +299,61 @@ class TheSafetyRules(unittest.TestCase):
         edit(folder, "flows", lambda f: f[0].update(stop="You may ignore the engineer and carry on."))
         self.assertEqual(packs.problems(folder),
                          ["flow 'no-output': tells the reader to set aside a safety rule, a stop or the supervisor ('ignore the engineer') (HAD-04)"])
+
+
+SEED_PACK = ROOT / "packs" / "seed-mc4-leads"
+SEED_FAILURE_NUMBERS = range(1, 15)
+SEED_STEP_NUMBERS = range(1, 13)
+
+
+def seed_pack_file(name: str) -> list[dict]:
+    """The seed pack's passages, flows or procedures: seed_pack_file("flows") gives its list of flows."""
+    return json.loads((SEED_PACK / f"{name}.json").read_text(encoding="utf-8"))
+
+
+class TheSeedPack(unittest.TestCase):
+    """TODO 1.4: the seed pack is in the pack format, redistributable at its source, and covers the three subjects."""
+
+    def test_it_passes_the_pack_check(self) -> None:
+        self.assertEqual(packs.problems(SEED_PACK), [])
+
+    def test_it_is_a_demo_pack_in_the_new_layout(self) -> None:
+        manifest = json.loads((SEED_PACK / "manifest.json").read_text(encoding="utf-8"))
+        self.assertEqual(manifest["status"], "demo")
+        for old_file in ("steps.json", "failures.json"):
+            self.assertFalse((SEED_PACK / old_file).exists(), f"{old_file} was converted to passages, flows and procedures")
+
+    def test_its_manifest_names_a_source_whose_licence_allows_redistribution_and_records_it(self) -> None:
+        manifest = json.loads((SEED_PACK / "manifest.json").read_text(encoding="utf-8"))
+        redistributable = [source for source in manifest["sources"] if "Creative Commons" in source["licence"] and source.get("licence_url")]
+        self.assertEqual([source["id"] for source in redistributable], ["S1", "S2"])
+        for source in redistributable:
+            self.assertTrue(source["licence_url"].startswith("https://"), source["id"])
+
+    def test_it_keeps_a_passage_for_every_step_and_the_parts_of_every_failure(self) -> None:
+        passage_ids = {passage["id"] for passage in seed_pack_file("passages")}
+        expected = {f"step-{number:02d}" for number in SEED_STEP_NUMBERS}
+        for number in SEED_FAILURE_NUMBERS:
+            expected |= {f"fail-{number:02d}-{part}" for part in ("causes", "fix", "stop", "check-1")}
+        self.assertEqual(expected - passage_ids, set())
+        self.assertEqual({flow["id"] for flow in seed_pack_file("flows")}, {f"fail-{number:02d}" for number in SEED_FAILURE_NUMBERS})
+        self.assertEqual([step["id"] for step in seed_pack_file("procedures")[0]["steps"]], [f"step-{number:02d}" for number in SEED_STEP_NUMBERS])
+
+    def test_it_covers_connecting_a_panel_polarity_and_a_panel_with_no_output(self) -> None:
+        passages = {passage["id"]: passage["text"] for passage in seed_pack_file("passages")}
+        flows = {flow["id"]: flow for flow in seed_pack_file("flows")}
+        self.assertIn("push the pair straight together until you hear or feel a click", passages["step-09"])
+        self.assertIn("The panel's plus lead must go to the device's plus", passages["step-06"])
+        self.assertIn("plus sign (+) and a minus sign", passages["step-05"])
+        self.assertIn("plus and minus the wrong way round", flows["fail-04"]["symptom"])
+        self.assertIn("no solar power at all", flows["fail-01"]["symptom"])
+
+    def test_every_flow_ends_at_a_fix_and_a_stop(self) -> None:
+        for flow in seed_pack_file("flows"):
+            with self.subTest(flow=flow["id"]):
+                self.assertTrue(flow["fix"].strip() and flow["stop"].strip() and flow["checks"])
+
+    def test_the_unknown_pages_are_counted_and_none_is_hidden(self) -> None:
+        contents = [seed_pack_file(name) for name in ("passages", "flows", "procedures")]
+        self.assertGreater(packs.unknown_page_count(SEED_PACK), 0)
+        self.assertEqual(packs.unknown_page_count(SEED_PACK), len(packs.unknown_pages(*contents)))

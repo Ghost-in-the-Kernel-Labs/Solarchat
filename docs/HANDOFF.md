@@ -29,7 +29,7 @@ which passage to show.
    of an answer is a change to `rules.json`, then `scripts/safety_rules_doc.py`.
 2. **The demo of Monday 2026-11-23** (SC-010, its plan amended by SC-018, Ghost 2026-11-21): the demo now shows
    `scripts/eval.py` scoring the offline bot on the evaluation set, not a walk-through. The chain, after 1.3: 1.4 the
-   seed pack in the format (convert `packs/seed-mc4-leads/` to passages, flows and procedures; still a `demo` pack),
+   seed pack in the format (done, J-038: `packs/seed-mc4-leads/` is passages, flows and a procedure; still a `demo` pack),
    1.5 the evaluation set, frozen, 1.6 the answering door `answer(question, packs, demo_mode)` and the runner (its
    interface designed by a strong-grade agent before it is built), 1.7 the index, 1.8 keyword search behind
    `answer()`, 1.9 the safety rules in the answers, 1.10 Tune-up pass 1. Each goes to a fresh worker of its grade with
@@ -76,10 +76,12 @@ which passage to show.
    design decision. Also: four sources were cited from search results without the page being read (J-027), and the two
    new OSHA regulation addresses (1910.333, 1926.1408) were not opened (osha.gov refuses this environment).
 2. **Page citations** (SC-012, landed on `main` in 3e40d86; the branch `agent/page-citations` is merged and safe to
-   delete): the seed pack's citations of its document sources carry a page, and 89 of them are `"unknown"`: S3 Trina installation manual 35, S7 PVEL/HelioVolta safety guide 22, S5 Victron
+   delete): the seed pack's citations of its document sources carry a page, and 89 of them were `"unknown"`: S3 Trina installation manual 35, S7 PVEL/HelioVolta safety guide 22, S5 Victron
    troubleshooting chapter 19, S4 Victron installation chapter 10, S6 BRE fire report 3 (S8's 15 citations use page 15,
-   from its title). A person finds each page in the manual; the check counts the unknown pages and prints the total
-   (`python3 -I scripts/checks/packs.py <pack>`), and does not yet run over the seed pack, which TODO 1.4 converts.
+   from its title). The pack is now in the pack format (1.4, J-038), where a citation is written on every passage, flow
+   and procedure that holds it, so the same 89 places in the manuals are counted as 187 citations: S3 71, S7 47, S5 38,
+   S4 21, S6 10. A person finds each page in the manual; the check counts the unknown pages and prints the total
+   (`python3 -I scripts/checks/packs.py <pack>`), and `test/test_packs.py` runs it over the seed pack (1.4, J-038).
 3. Read the demo pack with an engineer's eye before anyone relies on it. The worker flagged claims it could not
    source: fail-04 (reversed leads can damage some devices), step-07's stop (battery not yet wired), step-09 (the
    gentle pull), fail-03 (some shortfall from the label is normal), fail-08's fire wording. Sources S3 and S8 were
@@ -104,7 +106,7 @@ which passage to show.
    the score writes its reason in the journal, and a strong Cost line on an item scored lower says why. Ghost-Core's
    template could carry the same section (a Core change, in a session with push access to it). Landed on `main` in
    da53935 (renumbered from a second 12, J-031); confirm the two steps.
-14. SC-013 (landed on your word, 2026-11-21): handing documentation to the person who loads the packs is the approval; a pack's `status` is `field` or `demo` (renamed from `library`, SC-017), no approval record exists, and a `field` pack with an unknown page is refused. Confirm the wording; the seed pack is `demo` with its 89 unknown pages.
+14. SC-013 (landed on your word, 2026-11-21): handing documentation to the person who loads the packs is the approval; a pack's `status` is `field` or `demo` (renamed from `library`, SC-017), no approval record exists, and a `field` pack with an unknown page is refused. Confirm the wording; the seed pack is `demo` with its 187 unknown-page citations (89 places in the manuals, J-038).
 15. **The reference library** (SC-014, J-029, landed on your ask; extended 2026-11-21): `library/sources/` holds source documents, not packs, each with its licence quoted and a hash. OSHA regulations from eCFR (17 U.S.C. 105 and the GPO notice): 29 CFR 1910 Subparts S, D (walking-working surfaces) and I (PPE), 1910.269, 1910.147, 1910.179 and 1910.180 (one folder), 1926 Subparts K and M, 1926.1407 to 1926.1411 and 1926.1417. NIOSH 2009-113 (92 pages; its own "public domain" line) and Solar Victoria's PV audit checklist (CC BY 4.0). **Eight OSHA web pages you pasted by hand** (the seven solar pages and Lithium-ion Hazards; osha.gov refuses automated clients): no original is kept, `text.txt` is your paste without its two header lines, `sha256` is of that text, and each `note` says so; the licence evidence is 17 U.S.C. 105. **Originals dropped, text and sha256 kept:** the NIOSH PDF (its credits mark five photo sources with (c)) and the Solar Victoria HTML (flag images; the site's licence excludes images). The eCFR licence statement is the GPO's (ecfr.gov's own pages sit behind a bot check). **California FACE solar fatality reports: not added, not checked.** The FACE page (cdph.ca.gov/Programs/CCDPHP/DEODC/OHB/FACE/Pages/Solar.aspx) could not be fetched from this environment (a TLS certificate error through the proxy, and a 503 from the fetch tool), so neither its report list nor its terms of use or copyright statement was read. California state works are not automatically public domain: please open the page, and add a report only if the site allows copying or the report states it was funded by a NIOSH cooperative agreement. The safety rules' sources now carry library ids in their titles (SR-03, SR-05, SR-06, SR-11, and the 1910.333 and 1926.1408 links).
 16. **The plan aligned with your vision of 2026-11-21: answered** (J-031 proposed it, J-032 records your answers; "go
    with your recommendations on all seven", 2026-11-21). In force: **SC-015** warn and help by default (SR-03 at `warn`
@@ -130,7 +132,7 @@ stand alone (`docs/DEPENDENCY-REVIEW.md`).
 
 ## What to distrust
 
-- The demo pack is `demo`, not `field` (SC-013, SC-017) and was written to a provisional layout before 1.2 and 1.3 existed. Its
+- The demo pack is `demo`, not `field` (SC-013, SC-017) and was written to a provisional layout before 1.2 and 1.3 existed, then converted to the pack format by 1.4 (J-038). Its
   drawings were looked at once, rendered together; its text was not read in full by the coordinator.
 - The project's ghost and the roadmap are the agent's drafts from Ghost's words, landed for Ghost to correct.
 - A session's venv: `python3.12 -m venv .venv && .venv/bin/pip install --only-binary :all: --require-hashes -r requirements.lock`.
