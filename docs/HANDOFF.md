@@ -7,8 +7,8 @@ Read `CLAUDE.md` first, then this. `TODO.md` is the chain in order; `docs/DONE.m
 Founded, planned, and holding one demo pack and the leaf. `main` carries the stamp, decisions SC-001 to
 SC-008, the project's ghost, the roadmap (Phases 1 to 6), the six-pin lockfile, and the demo pack
 `packs/seed-mc4-leads/` (J-017). The full gate passes (J-016, a tune-up commit; the count restarted there).
-The session branch `claude/sleepy-babbage-k6ojqm` adds TODO 0.4 (J-018): the package `solarchat/`, the contract's
-HAD-01 to HAD-06, the module map (leaf, packs, safety, project, cli) and the leaf's types; 0.2 closed with it.
+TODO 0.4 landed (J-018): the package `solarchat/`, the contract's HAD-01 to HAD-06, the module map (leaf, packs,
+safety, project, cli) and the leaf's types; 0.2 closed with it.
 
 What Solarchat is, in the roadmap's words (`docs/ROADMAP.md` §1 to §3, F-01 to F-15): an assistant named Hadley
 that walks workers on solar sites through installing panels and finding faults, on a phone, answering only from
@@ -18,9 +18,8 @@ which admitted passage to show.
 
 ## Next, in order
 
-1. **Land J-018** on `main` once Ghost says so (fast checks, `scripts/commit.sh`, `scripts/ship.sh`).
-2. **TODO 0.5 and 0.6**: any further founding decision of Ghost's; Tune-up pass 0.
-3. **Phase 1**, 1.1 to 1.6: the words, the pack format and its check (the real deliverable: the deploying company
+1. **TODO 0.5 and 0.6**: any further founding decision of Ghost's; Tune-up pass 0.
+2. **Phase 1**, 1.1 to 1.6: the words, the pack format and its check (the real deliverable: the deploying company
    builds its libraries to it, F-15), the safety rules for the newest contractor on a site, then bringing the demo
    pack to that format (1.4 stays open until then), then the frozen evaluation set.
 
