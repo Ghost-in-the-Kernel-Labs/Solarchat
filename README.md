@@ -77,6 +77,7 @@ Ghost-Core, the template the project was stamped from.
 | `scripts/score.py` | Places each open TODO item at a grade (how strong an agent it needs), from facts. |
 | `scripts/review_scan.py` | Scans a dependency update's diff for warning signs before it is allowed in. |
 | `scripts/checks/packs.py` | Checks a knowledge pack against the format: refuses a missing licence, a flow with no stop, a passage with no source, a picture with no alt text, and more. |
+| `scripts/checks/library.py` | Checks the reference library's sources (`library/sources/`): every field, the licence allow-list, the hash against the original, a non-empty text. |
 | `scripts/checks/contract.py`, `modules.py`, `imports.py` | Hold the code to the contract, the module map and the lockfile. |
 | `scripts/checks/secrets.py`, `supply_chain.py`, `dependency_review.py` | Refuse a committed key, a hook or unpinned workflow, and an unreviewed dependency. |
 | `scripts/checks/readability.py` | Short functions, a docstring on every function, no `*args` or `**kwargs`. |

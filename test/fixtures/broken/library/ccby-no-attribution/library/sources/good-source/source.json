@@ -1,0 +1,12 @@
+{
+  "id": "good-source",
+  "title": "A short public notice",
+  "publisher": "A Fixture Agency",
+  "url": "https://example.org/notice",
+  "retrieved": "2026-11-21",
+  "kind": "web",
+  "licence": "CC BY 4.0",
+  "licence_evidence": "\"This notice is in the public domain.\"",
+  "licence_url": "https://example.org/terms",
+  "sha256": "cae9186a1f78c7e4dae1f613ae71a3d0604520dab2d8929f94860ced75fc9aa0"
+}

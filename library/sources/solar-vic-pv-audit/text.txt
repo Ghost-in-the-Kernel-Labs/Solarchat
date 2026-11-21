@@ -1,0 +1,2029 @@
+Print - ​Solar PV audit checklist | solar.vic.gov.au
+
+Skip to main content
+
+​Solar PV audit checklist
+
+Version 3.5
+
+On this page
+
+Power conversion equipment
+
+Ground DC isolation
+
+PV array
+
+Performance
+
+Roof DC isolation
+
+Disconnection point
+
+Array components
+
+Wiring
+
+Switchboard
+
+Documentation
+
+Inverter power sharing devices (Solar for Apartments)
+
+Date:
+
+20 Mar 2026
+
+About this audit checklist
+
+Independent auditors for the Solar Homes Program use this checklist when inspecting solar PV system installations. For Solar for Apartments installations, auditors apply additional checklist questions that relate to wiring, switchboards and inverter power sharing devices.
+
+This solar PV audit checklist:
+
+Applies only to solar PV systems installed under the Solar Homes and Solar for Apartments programs.
+
+Contains the questions used during audits on rebated systems. Audits are generally performed within six months of the solar PV system installation date, with a focus on safety, quality and compliance with standards.
+
+Is not intended to be used as a general solar PV system audit checklist for systems outside of the program or for other related services.
+
+Is not an installation checklist and should not be used to guide the installation of a solar PV system.
+
+Audit ratings and what they mean
+
+When auditors check a solar PV installation, each issue they assess is given one of the ratings below. These ratings help you understand what needs to be rectified, what improvements need to be made, and what has been done correctly.
+
+Rating	What it means
+
+Unsafe	There is a serious safety hazard that poses an immediate risk to people or property. The system will be shut down until the issue is fixed and the installation is safe.
+
+Needs rectification
+The installation does not comply with important safety or quality requirements in the relevant standards or guidelines.
+
+While it may not be immediately dangerous, it could become unsafe if not addressed. The retailer/installer must fix the issue as a priority.
+
+Improvements identified (for information)
+The installation is not dangerous, but some parts do not fully meet the standards or guidelines.
+
+Improvements are recommended to bring the system up to best practice. Items do not require urgent rectification unless paired with a 'Needs rectification' or 'Unsafe' report.
+
+Adequate	No material non compliance was found. The system meets standards, and the installation is considered satisfactory.
+
+Power conversion equipment
+
+Solar PV audit checklist items
+
+Questions and ratings	Relevant standards and references
+
+PCE 1 ***IMPORTANT***
+Is the solar PV system fully operational at beginning of inspection (for example, capable of producing electricity), if not is this due to installation defects?
+
+Applicable rating: Needs rectification
+AS/NZS 3000:2018 Clause 1.7
+
+PCE 39 ***IMPORTANT***
+Is the solar PV system fully operational at beginning of inspection (for example, capable of producing electricity)?
+
+If not, is this due to external factors and not installation defects?
+
+Applicable rating: No rating is applied
+AS/NZS 3000:2018 Clause 1.7
+
+PCE 2
+Has the inverter been installed in a location that has a safe distance from other services such as gas bottles etc?
+
+Applicable rating: Needs rectification
+AS/NZS 3000:2018 Clause 1.7.2
+
+PCE 33
+Has the inverter been installed in a location that has safe access and adequate working space?
+
+Applicable rating: Improvements identified (For information)
+
+AS/NZS 3000:2018 Clause 1.7.2
+
+AS/NZS 4777.1:2024 Clause 2.4
+
+Label 11
+Has a shutdown procedure that clearly sets out the steps to safely shutdown the system been placed adjacent to, and visible from, the equipment to be operated in the event of a shutdown?
+
+Where the inverter is adjacent to the switchboard it is directly connected to, the shutdown procedure may be placed within that switchboard.
+
+Where PV array disconnectors have been used an additional black on yellow sign stating "WARNING: PV ARRAY DC ISOLATORS DO NOT DE-ENERGIZE THE PV ARRAY AND PV CABLES" must be placed with the shutdown procedure.
+
+Applicable rating: Improvements identified (For information)
+
+AS/NZS 4777.1:2024 Clause 6.2
+
+AS/NZS 5033:2021 Clause 5.7
+
+PCE 5A
+Enter the output reading … Kw(p).
+
+Applicable rating: No rating is applied
+Not applicable
+
+PCE 5B
+Enter the output reading at … am/pm.
+
+Applicable rating: No rating is applied
+Not applicable
+
+PCE 5C
+Enter the output reading with ... weather conditions.
+
+Applicable rating: No rating is applied
+Not applicable
+
+PCE 6
+Number of inverters, inverter(s) make and model.
+
+Applicable rating: No rating is applied
+Not applicable
+
+PCE 7 ***UPDATED***
+Does the installed inverter match Make and Model data provided by Solar Victoria?
+
+Applicable rating: Needs rectification
+Not applicable
+
+PCE 8
+System type – string/optimisers/microinverters
+
+Applicable rating: No rating is applied
+Not applicable
+
+PCE 36
+At the PCE has either an adjacent and physically separate load break disconnection device OR a load break disconnection device that is part of and within the PCE and conforming to AS/NZS 4777.2 been provided, where applicable?
+
+Applicable rating: Needs rectification
+AS/NZS 5033:2021 Clause 4.5.3.1
+
+PCE
+IP Rating
+
+Applicable rating: No rating is applied
+Not applicable
+
+PCE 11
+Number of inverter/s installed.
+
+Applicable rating: No rating is applied
+Not applicable
+
+PCE 12
+Power rating (KW)
+
+Applicable rating: No rating is applied
+Not applicable
+
+PCE 13
+Type - transformer/transformerless
+
+Applicable rating: No rating is applied
+Not applicable
+
+PCE 14
+Inom – circuit breaker in switchboard must be at least this rating.
+
+Applicable rating: No rating is applied
+Not applicable
+
+PCE 17
+VDX max
+
+Applicable rating: No rating is applied
+Not applicable
+
+PCE 18
+IDC max
+
+Applicable rating: No rating is applied
+Not applicable
+
+PCE 19
+Number of MPPTs.
+
+Applicable rating: No rating is applied
+Not applicable
+
+PCE 21
+For string inverter systems, if the inverter is located further than 3 metres from the switchboard, has an AC isolator been provided at the inverter that is suitably rated and securable in the open position?
+
+Applicable rating: Needs rectification
+AS/NZS 4777.1:2024 Clause 3.4.3.2
+
+PCE 22
+Is the inverter installed in an appropriate location and in accordance to manufacturer’s instructions such that it does not pose an imminent safety risk but may be at risk of becoming unsafe in the future? (for example, IP rating, restricted locations)?
+
+Applicable rating: Needs rectification
+
+AS/NZS 3000:2018 Clause 1.7.2
+
+AS/NZS 4777.1:2024 Clause 2.4
+
+PCE 34
+Is the inverter installed in an appropriate location and in accordance with manufacturers’ instructions and, whilst not posing a safety risk, was found to not comply with all standards (for example, direct sunlight, clearance requirements)?
+
+Applicable rating: Improvements identified (For information)
+
+AS/NZS 3000:2018 Clause 1.7.2
+
+AS/NZS 4777.1:2024 Clause 2.4
+
+PCE 24
+Does the AC cable supplying the inverter have suitable strain relief?
+
+Applicable rating: Improvements identified (For information)
+
+AS/NZS 3000:2018 Clause 3.3.2.8
+
+AS/NZS 4777.1:2024 Clauses 4.3.3
+
+PCE 25
+Is there evidence of loose connections in the AC cables and connections with signs of heat?
+
+Applicable rating: Unsafe
+AS/NZS 3000:2018 Clause 3.7.2.3
+
+PCE 35
+Is there evidence of loose connections in the AC cables and connections with no signs of heat?
+
+Applicable rating: Needs rectification
+AS/NZS 3000:2018 Clause 3.7.2.3
+
+PCE 26
+Are the AC cables connecting to the inverter mechanically secured in such a manner that they cannot be inadvertently unplugged from the inverter?
+
+Applicable rating: Needs rectification
+AS/NZS 4777.1:2024 Clause 4.3.3
+
+PCE 37
+If installed have all PCE DC plugs, sockets and connectors been installed to the following requirements:
+
+Installed to minimise strain on the connectors.
+
+Installed to maintain the IP rating.
+
+Installed on PV DC cables conforming to the plug, socket and connector manufacturer's requirements.
+
+Only mated with those from the same manufacturer and designed to be mated together.
+
+Terminated using a tool (where required) designed for the purpose and technique specified by the plug, socket or connector manufacturer's instructions.
+
+Applicable rating: Needs rectification
+AS/NZS 5033:2021 Clause 4.3.9.1
+
+PCE 31
+Is the inverter securely and safely installed in line with the manufacturers’ instructions?
+
+Applicable rating: Needs rectification
+AS/NZS 3000 Clause 1.7.1
+
+PCE 38
+Is the PCE PV input current rated to at least the PV array Isc (x1.25) of the circuit that is connected?
+
+Applicable rating: Improvements identified (For information)
+AS/NZS 5033:2021 Clause 4.5.1.1 and 4.2.2
+
+PCE 42
+For a group of inverters (for example, "AC micro inverter" type systems) with a total capacity not more than 5kVA per phase has at least 1 AC isolation device been placed adjacent to the group of inverters to provide isolation to the group?
+
+Applicable rating: Needs rectification
+AS/NZS 4777.1:2024 Clause 3.5.2
+
+PCE 40
+For groups of inverters (for example, "AC micro inverter" type systems) with groups of inverters more than 3 meters and line of sight from each other, has a separate isolator been installed for each group of inverters?
+
+Applicable rating: Improvements identified
+
+AS/NZS 4777.1:2024 Clause 3.5.2
+
+PCE 41
+Are AC cables supplying inverter that have been installed in an outdoor environment, been fixed with suitable fasteners? (for example, not plastic type cable ties).
+
+Applicable rating: Improvements identified
+AS/NZS 4777.1:2024 Clause 3.3.2
+
+Ground DC isolation
+
+Solar PV audit checklist items
+
+Questions and ratings	Relevant standards and references
+
+G-DCI 1
+Are all components verified as not having been issued with a recall notice from manufacturers or regulators?
+
+Applicable rating: Needs rectification
+CEC and ACCC recall lists
+
+G-DCI 2
+Are installed DC isolator(s) on the Electrical Regulator Authorities Council (ERAC) list?
+
+Applicable rating: Needs rectification
+Refer to Energy Safe Victoria and ERAC lists
+
+G-DCI 3
+Is there evidence of loose connections in the DC cables and connections with signs of heat (sight, smell etc)?
+
+Applicable rating: Unsafe
+
+AS/NZS 3000:2018 Clause 3.7.2.3
+
+AS/NZS 5033:2021 Clause 3
+
+G-DCI 27
+Is there evidence of loose connections in the DC cables and connections with no signs of heat (sight, smell etc)?
+
+Applicable rating: Needs rectification
+
+AS/NZS 3000:2018 Clause 3.7.2.3
+
+AS/NZS 5033:2021 Clause 3
+
+G-DCI 5
+Is the DC isolator (or DC C/B) able to be secured in the open position?
+
+Applicable rating: Needs rectification
+AS/NZS 5033:2021 Clause 4.3.4.2.2 (e)
+
+G-DCI 6b
+Do all PCE adjacent and physically separate load break disconnection devices conform to the following requirements:
+
+Are readily available?
+
+Are adjacent to the PCE?
+
+Are contained in metal enclosures of at least 0.2mm thickness OR are mounted on a non-combustible surface that extends at least 200mm beyond the sides of the disconnector OR are mounted on non-combustible shrouds that are made of metal surface at least 0.2mm thickness?
+
+Have any penetrations through a surface that protects against the spread of fire, with internal diameter greater than 5mm, sealed with a fire-retardant material?
+
+Applicable rating: Improvements identified (For Information)
+AS/NZS 5033:2021 Clause 4.5.4.1
+
+G-DCI 7
+Have all load break disconnection devices been labelled with the following text? "PV ARRAY d.c. ISOLATOR".
+
+Applicable rating: Improvements Identified (For Information)
+AS/NZS 5033:2021 Clause 5.5.1 and 5.5.2.1
+
+G-DCI 8
+Do all DC enclosure(s) at the inverter have the required IP rating (minimum IP55 if outdoors, minimum IP2X if indoors)?
+
+Applicable rating: Improvements identified (For information)
+AS/NZS 5033:2021 Clause 4.4.6
+
+G-DCI 30
+Are all dedicated individual enclosures containing switch disconnection devices protected against the effects of weather and water as per appendix K of AS/NZS 5033:2021?
+
+Applicable rating: Needs rectification
+AS/NZS 5033:2021 Clause 4.4.7.3
+
+G-DCI 31
+Have all enclosures containing d.c. conductor terminations been installed in line with the following conditions:
+
+Enclosure has been mounted onto its mounting bracket or wall using the screw locations and screw types specified by the manufacturer?
+
+Enclosures do not have debris or dust from installation process left inside once mounted?
+
+All return conductors routed through an enclosure containing terminations maintain double insulation?
+
+Applicable rating: Needs rectification
+AS/NZS 5033:2021 Clause 4.4.7.1
+
+G-DCI 32
+Do all entry/exits into enclosures containing DC conductor terminations conform to the following requirements:
+
+Conduit entry/exits and fittings are installed in accordance with manufacturer's instructions, including water ingress requirements such as being glued?
+
+Only manufacturer provided entry/exit points have been used?
+
+Cable glands, conduits and fitting do not enter/exit the top face of the enclosure (excluding entry/exit points between disconnection device/s, and PCE/s mounted indoors)?
+
+Silicone or sealant products are not used for sealing entry/exit points unless specified by the disconnector manufacturer's instructions?
+
+Applicable rating: Needs rectification
+AS/NZS 5033:2021 Clause 4.4.7.2.1
+
+G-DCI 33
+Do all cable glands connected to DC enclosures containing DC conductor termination and used in an outdoor environment conform to the following installation requirements:
+
+Are used to enter/exit enclosures containing conductor terminations?
+
+Are installed so each cable enters/exits through an individual hole?
+
+Are rated to at least IP 56?
+
+Have a hole diameter to maintain IP rating for the cables used?
+
+Have any spare holes sealed with gland manufacturer's approved sealing plug?
+
+Applicable rating: Needs rectification
+AS/NZS 5033:2021 Clause 4.4.7.2.2
+
+G-DCI 34
+Where cable glands enter/exit the side face of an enclosure containing d.c. conductor terminations and installed in an outdoor environment, has an appropriate drip loop been installed, and are all glands located within a protected zone of 30 degree as outlined in figure 4.8 and 4.9 of AS/NZS 5033:2021?
+
+Applicable rating: Needs rectification
+AS/NZS 5033:2021 Clause 4.4.7.2.2
+
+G-DCI 36
+For all continuous conduit systems that have a section installed in an outdoor environment, and that terminate into an enclosure containing a disconnection device, have all conduit ends been sealed with a gland conforming to AS/NZS 5033:2021 Cl 4.4.7.2.2?
+
+Applicable rating: Needs rectification
+AS/NZS 5033:2021 Clause 4.4.7.2.3
+
+G-DCI 35
+For all continuous conduit systems that have a section installed in an outdoor environment, and that terminate into an enclosure containing a disconnection device, has a liquid draining device been installed at the lowest point of the conduit system that is rated to at least IP56?
+
+Applicable rating: Needs rectification
+AS/NZS 5033:2021 Clause 4.4.7.2.3
+
+G-DCI 29
+Is there evidence of water found in ground DC enclosures containing conductor terminations?
+
+Applicable rating: Needs rectification
+
+AS/NZS3000:2018 Clauses 4.1.2 and 4.1.3
+
+AS/NZS 5033:2021 Clause 4.4.6 and 4.4.7
+
+G-DCI 10
+Are there signs of water damage observed at ground DC enclosures containing conductor terminations?
+
+Applicable rating: Unsafe
+
+AS/NZS3000:2018 Clauses 4.1.2 and 4.1.3
+
+AS/NZS 5033:2021 Clause 4.4.6 and 4.4.7
+
+G-DCI 11
+Are the DC isolator(s) at the inverter readily available and do they facilitate safe operation, inspection, testing and maintenance?
+
+Applicable rating: Needs rectification
+
+AS/NZS 3000:2018 Cl 1.4.19, 1.6.1(d) and 2.3.2.2.1
+
+AS/NZS 5033:2021 Clause 4.3.5.3.1 (b)
+
+G-DCI 12
+Do all ground DC isolators conform to these requirements:
+
+Are rated for DC use?
+
+Conform with switch disconnector requirements of AS 60947.3 with utilization category d.c.-PV2?
+
+Interrupt all live conductors simultaneously?
+
+Are capable of being secured in the open position?
+
+Have an independent manual operation?
+
+Are not polarity sensitive?
+
+Applicable rating: Needs rectification
+AS/NZS 5033:2021 Clause 4.3.4.2.2
+
+G-DCI 14
+Is the DC isolator(s) at the inverter correctly wired?
+
+Applicable rating: Needs rectification
+
+AS/NZS 5033:2021 Clause 4.4.3.3
+
+AS/NZS 3000:2018 Clause 4.1.2
+
+G-DCI 15
+Is the load breaking DC isolator(s) located adjacent to the inverter correctly rated for the required DC voltage and current?
+
+Applicable rating: Unsafe
+AS/NZS 5033:2021 Clause 4.3.4.2.3
+
+G-DCI 16
+If multiple DC isolators are installed at the inverter, are they grouped/ganged so that they operate simultaneously, or grouped/ganged in a common location?
+
+Applicable rating: Improvements identified (For information)
+AS/NZS 5033:2021 Clause 4.5.4.2
+
+G-DCI 17
+If multiple DC isolators are installed at the inverter, is there a sign stating "WARNING: MULTIPLE d.c. SOURCES - TURN OFF ALL d.c. ISOLATORS TO ISOLATE EQUIPMENT".
+
+Applicable rating: Needs rectification
+AS/NZS 5033:5.5.2.1
+
+G-DCI 18
+Number of DC isolators installed at the inverter.
+
+Applicable rating: No rating is applied
+Not applicable
+
+G-DCI 20
+Isolator Manufacturer at the inverter.
+
+Applicable rating: No rating is applied
+Not applicable
+
+G-DCI 21
+Isolator Model No. at the inverter.
+
+Applicable rating: No rating is applied
+Not applicable
+
+G-DCI 22
+Voltage rating per leg (V)
+
+Applicable rating: No rating is applied
+Not applicable
+
+G-DCI 23
+Current rating per leg (I)
+
+Applicable rating: No rating is applied
+Not applicable
+
+G-DCI 24
+Number of modules in series.
+
+Applicable rating: No rating is applied
+Not applicable
+
+G-DCI 25
+Number of modules in parallel.
+
+Applicable rating: No rating is applied
+Not applicable
+
+PV array
+
+Solar PV audit checklist items
+
+Questions and ratings	Relevant standards and references
+
+PVA 2
+Number of modules installed.
+
+Applicable rating: No rating is applied
+Not applicable
+
+PVA 3
+PV Module Manufacturer
+
+Applicable rating: No rating is applied
+Not applicable
+
+PVA 4
+PV Module Model No.
+
+Applicable rating: No rating is applied
+Not applicable
+
+PVA 5 ***UPDATED***
+Do the installed solar modules match make and model data provided by Solar Victoria?
+
+Applicable rating: Needs rectification
+Not applicable
+
+PVA 6
+PV Module Power rating(W)
+
+Applicable rating: No rating is applied
+Not applicable
+
+PVA 7
+PV Module VoC(V)
+
+Applicable rating: No rating is applied
+Not applicable
+
+PVA 8
+PV Module Isc (A)
+
+Applicable rating: No rating is applied
+Not applicable
+
+PVA 9
+PV Module VMP(V)
+
+Applicable rating: No rating is applied
+Not applicable
+
+PVA 10
+Are modules in the same series connected string installed in the same orientation +/- 5 degrees?
+
+Applicable rating: Improvements identified
+AS/NZS 5033:2014 Clause 2.1.6
+
+PVA 11
+Number of modules in series.
+
+Applicable rating: No rating is applied
+Not applicable
+
+PVA 12
+Number of strings in parallel.
+
+Applicable rating: No rating is applied
+Not applicable
+
+PVA 13
+PV array tilt
+
+Applicable rating: No rating is applied
+Not applicable
+
+PVA 14
+PV array orientation
+
+Applicable rating: No rating is applied
+Not applicable
+
+PVA 15
+PV array maximum array voltage = VoC at STC x 1.12
+
+Applicable rating: No rating is applied
+Not applicable
+
+PVA 16
+Total array output current = ISC x 1.25 x K1
+
+Applicable rating: No rating is applied
+Not applicable
+
+PVA 17
+Total PV Array system size(kWp)
+
+Applicable rating: No rating is applied
+Not applicable
+
+PVA 18
+Panel serial number(s)
+
+Applicable rating: No rating is applied
+Not applicable
+
+PVA 36
+Do all plug, socket and connectors conform to these requirements:
+
+Conform to AS/NZS 62852?
+
+Are protected from contact with live part in connected and disconnected states?
+
+Are rated for the required DC voltage and current?
+
+Are capable of accepting the cable used for the circuit to which they are fitted?
+
+Require a deliberate force to separate?
+
+Have a temperature rating suitable for their installation location?
+
+Are polarized, where multi-polar?
+
+Are class II for systems above 35Vdc?
+
+Are rated for outdoor use, are UV-resistant type and of an IP rating suitable for the location where exposed to the environment?
+
+Applicable rating: Needs rectification
+AS/NZS 5033:2021 Clause 4.3.8
+
+PVA 19
+Have all array plugs, sockets and connectors been installed to these requirements:
+
+Installed to minimize strain on the connectors?
+
+Installed to maintain the IP rating?
+
+Installed on PV DC cables conforming to the plug, socket and connector manufacturer's requirements?
+
+Only mated with those from the same manufacturer and designed to be mated together?
+
+Terminated using a tool (where required) designed for the purpose and technique specified by the plug, socket or connector manufacturer's instructions?
+
+Applicable rating: Needs rectification
+AS/NZS 5033:2021 Clause 4.3.9.1
+
+PVA 20
+If there are a number of PV array strings, which could result in a potential fault current in any one string greater than the reverse current of an individual module, is appropriate string protection provided? (for example, protected with fuses or non-polarised circuit breakers).
+
+Applicable rating: Needs rectification
+AS/NZS 5033:2021 Clause 3.3.4.1
+
+PVA 22
+If fuses have been used as overcurrent protection, do they conform to these requirements:
+
+ADC rated?
+
+Are rated to interrupt full load current and prospective fault currents from the PV array and any other connected power sources such as batteries, generators and the grid if present?
+
+Are of an overcurrent and short circuit current protective type suitable for PV?
+
+Applicable rating: Needs rectification
+AS/NZS 5033:2021 Clause 4.3.6.3
+
+PVA 37
+Do all fuse holders conform to these requirements:
+
+Have a current rating equal to or greater than the corresponding fuse?
+
+Provide a degree of protection suitable for the location and to at least IPXXb or IP2x, even when the fuse link or carrier is removed?
+
+Conform to the requirements of clause 4.3.9 when incorporated into a plug, socket or connector?
+
+Have specified wattage rating higher than the fuses power dissipation?
+
+Are labelled with a warning to not withdraw fuse under load?
+
+Applicable rating: Needs rectification
+AS/NZS 5033:2021 Clause 4.3.6.4 and 5.8
+
+PVA 38
+If circuit breaker has been used as overcurrent protection, do they conform to these requirements:
+
+Are in accordance with AS/NZS 60898. or AS/NZS IES 60947.2?
+
+Are not polarity sensitive?
+
+Are rated for DC use?
+
+Are rated to interrupt full load current and prospective fault currents from the PV array and any other connected power sources such as batteries, generators and the grid if present?
+
+Have a degree of protection of at least IPXXB or IP 2X?
+
+Applicable rating: Needs rectification
+AS/NZS 5033:2021 Clause 4.3.6.2
+
+PVA 23
+Does the designed array fit on the available roof area and meet all exclusion zones? (for example, solar panels are not positioned over roof edges or gutters).
+
+Applicable rating: Needs rectification
+
+AS/NZS 5033:2021 Clause 4.3.2.2.5
+
+AS/NZS 1170.2:2021 Appendix B6
+
+PVA 25
+Have paralleled PV strings been connected with matched open circuit voltages within 5% per string?
+
+Applicable rating: Needs rectification
+AS/NZS 5033:2014 Clause 2.1.6
+
+PVA 39
+If IBF total of all external sources connected to the PCE (for example, grid, battery etc) is greater than the back feed short circuit current stated for the PCE, then has appropriate overcurrent protection been installed as closed as practice to the external source?
+
+Applicable rating: Needs rectification
+AS/NZS 5033:2021 Clause 3.3.2 and 4.3.7.1 and 4.3.7.3
+
+PVA 40
+Have more than 2 strings been paralleled together?
+
+Applicable rating: No rating is applied
+AS/NZS 5033:2021 Clause 3.3.2 and 4.3.7.1 and 4.3.7.3
+
+PVA 41
+If more than 2 strings have been paralleled at the array has an additional load break disconnector been installed?
+
+Applicable rating: Needs rectification
+AS/NZS 5033:2021 Clause 4.3.5.3.2
+
+PVA 42
+Where there are more than two paralleled strings without string fusing installed on all strings, and load break disconnection device/s have been installed at the connection point, where the strings are paralleled, does the load break disconnector disconnect so that no more than two strings are paralleled when in the “Off” position?
+
+Applicable rating: Improvements identified (For information)
+AS/NZS 5033:2021 Clause 4.3.5.3.3
+
+Performance
+
+Solar PV audit checklist items
+
+Questions and ratings	Relevant standards and references
+
+Performance 1
+If the solar array is installed on a domestic dwelling and connected to a grid inverter, Is the array’s maximum voltage VoC array max (at minimum temperature) less than 1000V DC or 1500V DC for all other electrical installation types (for example, commercial)?
+
+Applicable rating: Needs rectification
+AS/NZS 4777.1:2024 Clause 4.3.2
+
+Performance 2
+Is the PCE PV input voltage rated to at least the PV array max voltage (at minimum temperature) of the circuit that is connected?
+
+Applicable rating: Needs rectification
+AS/NZS 5033:2021 Clause 4.5.1.1
+
+Performance 5
+Calculate system parameters based on configuration – confirm DC isolators on roof and at ground meet minimum requirements and array configuration is suitable for inverter optimal operation.
+
+Applicable rating: No rating is applied
+Not applicable
+
+Performance 7 ***UPDATED***
+Are the estimated AC wiring losses more than 2% between the inverter terminals and the point of supply, taking into account any generation supply limits?
+
+Applicable rating: Improvements identified
+AS/NZS 4777.1:2024 Clause 3.3.3
+
+Roof DC isolation
+
+Solar PV audit checklist items
+
+Questions and ratings	Relevant standards and references
+
+R-DCI 2
+Is there evidence of any pre-existing roof damage?
+
+Please note: Any damage identified may not be attributable to installer.
+
+Applicable rating: No rating is applied
+Not applicable
+
+R-DCI 3
+Is there evidence of loose connections in the DC cables and connection with signs of heat?
+
+Applicable rating: Unsafe
+
+AS/NZS 3000:2018 Clause 3.7.2.3
+
+AS/NZS 5033:2021 Clause 3.4
+
+R-DCI 27
+Is there evidence of loose connections in the DC cables and connections with no signs of heat?
+
+Applicable rating: Needs rectification
+
+AS/NZS 3000:2018 Clause 3.7.2.3
+
+AS/NZS 5033:2021 Clause 3.4
+
+R-DCI 5
+Are the DC isolator(s) at the array readily available and do they facilitate safe operation, inspection, testing and maintenance?
+
+Applicable rating: Needs rectification
+
+AS/NZS 3000:2018 Cl 1.4.19, 1.6.1(d) and 2.3.2.2.1
+
+AS/NZS 5033:2021 Clause 4.3.5.3.1 (b)
+
+R-DCI 6
+If an array load break isolator has been installed, is it located adjacent to the array it controls?
+
+Applicable rating: Improvements identified (For information)
+AS/NZS 5033:2021 Clause 4.3.3.1
+
+R-DCI 8
+Confirm all components have not been issued with a recall notice from manufacturers or regulators?
+
+Applicable rating: Needs rectification
+Clean Energy Council and ACCC recall lists
+
+R-DCI 9
+Are installed d.c. isolator(s) on the Electrical Regulator Authorities Council (ERAC) list?
+
+Applicable rating: Needs rectification
+Refer to Energy Safe Victoria and ERAC lists
+
+R-DCI 12
+Do all array dc isolators conform to these requirements:
+
+Are rated for DC use?
+
+conform with switch disconnector requirements of AS 60947.3 with utilization category d.c.-PV2?
+
+Interrupt all live conductors simultaneously?
+
+Are capable of being secured in the open position?
+
+Have an independent manual operation?
+
+Are not polarity sensitive?
+
+Applicable rating: Needs rectification
+AS/NZS 5033:2021 Clause 4.3.4.2.2
+
+R-DCI 14
+Is the DC isolator at the array(s) correctly wired?
+
+Applicable rating: Needs rectification
+
+AS/NZS 5033:2021 Clause 4.4.3.3
+
+AS/NZS 3000:2018 Clause 4.1.2
+
+R-DCI 15
+Is the load breaking DC isolator located adjacent to the array(s) correctly rated for the required d.c. voltage and current?
+
+Applicable rating: Unsafe
+AS/NZS 5033:2021 Clause 4.3.4.2.3
+
+R-DCI 28
+Do all array load break disconnection devices conform to these requirements:
+
+Are readily available?
+
+Are installed external to the building?
+
+Are contained in metal enclosures of at least 0.2mm thickness OR are mounted on a non-combustible surface that extends at least 200mm beyond the sides of the disconnector OR are mounted on non-combustible shrouds that are made of metal surface at least 0.2mm thickness?
+
+Have any penetrations through a surface that protects against the spread of fire, with internal diameter greater than 5mm, sealed with a fire-retardant material?
+
+Applicable rating: Needs rectification
+AS/NZS 5033:2021 Clause 4.3.5.3.1
+
+R-DCI 16
+Does the DC enclosure(s) at the array have the required IP rating (minimum IP55 if installed outside)?
+
+Applicable rating: Improvements identified (For information)
+AS/NZS 5033:2021 Clause 4.4.6.1
+
+R-DCI 29
+Are all dedicated individual enclosures containing switch disconnection devices protected against the effects of weather and water as per appendix K of AS/NZS 5033:2021?
+
+Applicable rating: Needs rectification
+AS/NZS 5033:2021 clause 4.4.7.3
+
+R-DCI 30
+Have all array enclosures containing DC conductor terminations been installed in line with these conditions:
+
+Enclosure has been mounted onto its mounting bracket or wall using the screw locations and screw types specified by the manufacturer?
+
+Enclosures do not have debris or dust from installation process left inside once mounted?
+
+All return conductors routed through an enclosure containing terminations maintain double insulation?
+
+Applicable rating: Needs rectification
+AS/NZS 5033:2021 clause 4.4.7.1
+
+R-DCI 31
+Do all array entry/exits into enclosures containing DC conductor terminations conform to these requirements:
+
+Conduit entry/exits and fittings are installed in accordance with manufacturer's instructions, including water ingress requirements such as being glued?
+
+Only manufacturer provided entry/exit points have been used?
+
+Cable glands, conduits and fitting do not enter/exit the top face of the enclosure (excluding entry/exit points between disconnection device/s, and PCE/s mounted indoors)?
+
+Silicone or sealant products are not used for sealing entry/exit points unless specified by the disconnector manufacturer's instructions?
+
+Applicable rating: Needs rectification
+AS/NZS 5033:2021 Clause 4.4.7.2.1
+
+R-DCI 32
+Do all array cable glands connected to DC enclosures containing d.c. conductor terminations and used in an outdoor environment conform to these requirements:
+
+Are used to enter/exit enclosures containing conductor terminations?
+
+Are installed so each cable enters/exits through an individual hole?
+
+Are rated to at least IP 56?
+
+Have a hole diameter to maintain IP rating for the cables used?
+
+Have any spare holes sealed with gland manufacturer's approved sealing plug?
+
+Applicable rating: Needs rectification
+AS/NZS 5033:2021 Clause 4.4.7.2.2
+
+R-DCI 33
+Where array cable glands enter/exit the side face of an enclosure containing d.c. conductor termination and installed in an outdoor environment, has an appropriate drip loop been installed, and are all glands located within a protected zone of 30 degree as outlined in figure 4.8 and 4.9 of AS/NZS 5033:2021?
+
+Applicable rating: Needs rectification
+AS/NZS 5033:2021 Clause 4.4.7.2.2
+
+R-DCI 34
+For all continuous conduit systems that have a section installed in an outdoor environment, and that terminate into an enclosure containing a disconnection device, has a liquid draining device been installed at the lowest point of the conduit system that is rated to at least IP56?
+
+Applicable rating: Needs rectification
+AS/NZS 5033:2021 Clause 4.4.7.2.3
+
+R-DCI 35
+Is there evidence of water found in array DC enclosures containing conductor terminations?
+
+Applicable rating: Needs rectification
+
+AS/NZS3000:2018 Clauses 4.1.2 and 4.1.3
+
+AS/NZS 5033:2021 Clause 4.4.6 and 4.4.7
+
+R-DCI 18
+Are there signs of water damage observed at array DC enclosures containing conductor terminations?
+
+Applicable rating: Unsafe
+
+AS/NZS3000:2018 Clauses 4.1.2 and 4.1.3
+
+AS/NZS 5033:2021 Clause 4.4.6 and 4.4.7
+
+R-DCI 36 ***UPDATED***
+Does the installed system contain a String Inverter (DC components) or a Micro-Inverter System (AC components)?
+
+Applicable rating: Information only
+Not applicable
+
+R-DCI 37
+Has a load break disconnection device been installed adjacent to the PV modules of the PV array?
+
+Applicable rating: Improvements identified (For information)
+Not applicable
+
+R-DCI 19
+Number of DC isolators installed at the PV array/s.
+
+Applicable rating: No rating is applied
+Not applicable
+
+R-DCI 21
+Isolator Manufacturer at the PV array/s.
+
+Applicable rating: No rating is applied
+Not applicable
+
+R-DCI 22
+Isolator Model No. at the PV array/s.
+
+Applicable rating: No rating is applied
+Not applicable
+
+R-DCI 23
+Voltage rating per leg (V).
+
+Applicable rating: No rating is applied
+Not applicable
+
+R-DCI 24
+Current rating per leg (I).
+
+Applicable rating: No rating is applied
+Not applicable
+
+R-DCI 25
+Number of modules in series.
+
+Applicable rating: No rating is applied
+Not applicable
+
+R-DCI 26
+Number of modules in parallel.
+
+Applicable rating: No rating is applied
+Not applicable
+
+Disconnection point
+
+Solar PV audit checklist items
+
+Questions and ratings	Relevant standards and references
+
+DP 1
+For systems above 120 VDC, if a load break disconnection device has not been installed adjacent to the array then has a disconnection point been provided to isolate each string at the PV modules?
+
+Applicable rating: Needs rectification
+AS/NZS 5033:2021 Clause 4.3.3.1
+
+DP 2
+If installed, do all disconnection points conform to these requirements:
+
+Are adjacent to the PV modules of the PV array?
+
+Are readily available?
+
+Are protected against weather and water, and no more than 150mm from the edge of the PV modules that they are installed under?
+
+Are adequately supported but able to be disconnected?
+
+Have both positive and negative disconnection device located together?
+
+Applicable rating: Needs rectification
+AS/NZS 5033:2021 Clause 4.3.3.1
+
+DP 4
+Is all PV d.c. wiring located in a ceiling space between a disconnection point and a load break disconnection device, not installed within 0.6m above the ceiling surface if further than 1.5m from the internal surface of an external wall?
+
+Applicable rating: Needs rectification
+AS/NZS 5033:2021 clause 4.4.5.2.3 (a) and figure 4.6
+
+DP 9
+Is any PV DC wiring located in a ceiling space between a disconnection point and a load break disconnection device, installed within 0.6m above the surface and between 1 to 1.5m from the internal surface of an external wall, and not attached to the roof structure?
+
+Applicable rating: Needs rectification
+AS/NZS 5033:2021 clause 4.4.5.2.3 (b) and figure 4.6
+
+DP 5
+If PV DC wiring is located in a ceiling space between a disconnection point and a load break disconnection device using the vertical drop method laid out in figure 4.5 of AS/NZS 5033:2021, is the conduit vertical drop located within 200mm of the vertical edge of the load break disconnector?
+
+Applicable rating: Needs rectification
+AS/NZS 5033:2021 clause 4.5.5.2.3 (c) and figure 4.5
+
+DP 6
+If PV DC wiring systems have been installed between the disconnection point and a load break disconnection device and located in an accessible ceiling space or within and accessible floor, has a warning label stating the below been installed adjacent to the access hatch?
+
+"WARNING: HAZARDOUS DC VOLTAGE"
+
+Solar d.c. cables in conduit have been installed in this ceiling space. The conduit is labelled "SOLAR" and care must be taken while working nearby. The internal solar DC cables may be live and must not be disturbed or damaged.
+
+Applicable rating: Improvements identified (For information)
+AS/NZS 5033:2021 clause 5.3.1.2
+
+DP 7
+Do all PV string disconnection points have a sign with the following information, printed on both the positive and negative cables, within 100mm of the disconnection point?
+
+"WARNING: LOADS MUST BE ISOLATED AND CIRCUIT MUST BE TESTED FOR THE ABSENCE OF CURRENT BEFORE UNPLUGGING"
+
+Applicable rating: Improvements identified (For information)
+AS/NZS 5033:2021 clause 5.5.2.2
+
+DP 8
+Has a sign with the below text, been attached to the PV module or structure within 300mm of the disconnection point to identify the location of the disconnection point?
+
+“WARNING: PV STRING DISCONNECTION POINT"
+
+Applicable rating: Needs rectification
+AS/NZS 5033:2021 clause 5.5.2.2
+
+Array components
+
+Solar PV audit checklist items
+
+Questions and ratings	Relevant standards and references
+
+Roof 1
+Is the PV array mechanically installed to comply with manufacturer’s installation instructions (for example, foot spacing, fixing type, end clamps, etc) and is in compliance with manufacturer’s engineering certification and AS/NZS 1170.2 and may present a hazard to person or property?
+
+Applicable rating: Needs rectification
+
+AS/NZS 5033:2021 Clause 4.3.2.2.5
+
+AS/NZS 1170.2:2021
+
+Roof 20
+Is the PV array securely installed to manufacturer’s installation instructions, (for example, fixing type, clamping zones, mid clamps, etc), and in compliance with manufacturers engineering certification and AS/NZS 1170.2 and does not present a hazard to person or property?
+
+Applicable rating: Improvements identified (For information)
+AS/NZS 5033:2021 Clause 4.3.2.2.6
+
+Roof 2
+Are PV Module mounting frames, and the methods used for attaching PV Modules to frames and frames to buildings made from corrosion resistant materials?
+
+Applicable rating: Improvements identified (For information)
+AS/NZS 5033:2021 Clause 4.3.2.2.8
+
+Roof 3
+Have all roof tiles been installed so they sit flat after the installation of tile mounting brackets to ensure the tiles maintain their original ingress protection?
+
+Note: There may be a requirement to grind the underside of the tile to enable it to sit correctly.
+
+Applicable rating: Needs rectification
+
+SAA requirements V1.2 Clause 5.1.3
+
+AS/NZS 5033:2021 clause 4.3.2.2.1 and 4.4.5.1
+
+Roof 24
+Where the PV array cable and conduit passes through a tile or steel roof, has a fit for purpose collar flashing been installed? (for example, dektite), and has it been installed to last the lifetime of the system?
+
+Applicable rating: Needs rectification
+
+SAA requirements V1.2 Clause 5.3.1
+
+AS/NZS 5033:2021 clause 4.3.2.2.1 and 4.4.5.1
+
+Roof 25
+Have all cables and cable enclosures (including any penetrations) been installed so they do not obstruct natural water drain paths or promote the accumulation of debris?
+
+Applicable rating: Needs rectification
+
+AS/NZS 3000:2018 clause 3.10.3.1
+
+AS/NZS 5033:2021 clauses 4.3.2.3.1 (f) and 4.4.5.1 (b)
+
+Roof 6
+Do all PV DC Array cables conform to these requirements:
+
+Insulated and sheathed UV resistant cables have been used?
+
+Cables have been protected from mechanical damage?
+
+Cables have been clamped to prevent undue strain on connections/terminations?
+
+Cables do not lie on roofs?
+
+Cables do not obstruct the natural flow of water or promote accumulation of debris?
+
+Plastic cable ties shall not be used as the primary method of support?
+
+Cables shall be protected against abrasion, tension, compression and cutting forces that may arise from thermal cycles, wind and other forces?
+
+Cables have been supported so they do not suffer fatigue due to wind/snow effects?
+
+Applicable rating: Improvements identified (For information)
+AS/NZS 5033:2021 Clause 4.3.2.3.1
+
+Roof 7
+Are all conduits exposed to sunlight adequately installed and protected from UV or UV rated?
+
+Applicable rating: Improvements identified (For information)
+AS/NZS 5033:2021 Clause 4.4.4.1
+
+Roof 8
+Is the DC array wiring and wiring to inverter rated for the appropriate voltage and current?
+
+Applicable rating: Needs rectification
+AS/NZS 5033:2021 Clause 4.4.2.1
+
+Roof 9
+Are all joints in cables enclosed in junction boxes comply with the exceptions of AS/NZS3000 Clause 3.7.3?
+
+Applicable rating: Improvements identified (For information)
+AS/NZS 3000 Clause 3.7.3 and 3.7.2.8
+
+Roof 21
+Is all PV DC wiring located in a ceiling space between nonadjacent groups of PV modules, not installed within 0.6m above the ceiling surface if further than 1.5m from the internal surface of an external wall?
+
+Applicable rating: Needs rectification
+AS/NZS 5033:2021 Clause 4.4.5.2.4 (a)
+
+Roof 22
+Is all PV DC wiring located in a ceiling space between nonadjacent groups of PV modules, attached to the roof structure if installed between 1 and 1.5m of an external wall and less than 0.6m above the surface of the ceiling?
+
+Applicable rating: Needs rectification
+AS/NZS 5033:2021 Clause 4.4.5.2.4 (b)
+
+Roof 15
+Do all PV Array DC cables conform to these requirements:
+
+Conforms to IEC 62930 where not installed underground?
+
+Suitable for DC applications?
+
+Has a temperature rating appropriate for the application?
+
+If exposed to the environment, is IV-resistant, or is protected from UV light by appropriate protection?
+
+Cables directly terminated to plugs, socket and connectors are class 5 (flexible) in accordance with IEC 60228?
+
+Applicable rating: Needs rectification
+AS/NZS 5033:2021 Clause 4.4.2.1
+
+Roof 17
+Where the calculated PV DC circuit maximum voltage is greater than 35V, have the following exposed conductive parts earthed with an impedance of less than 0.5 ohms:
+
+All conductive PV module frames?
+
+Array mounting frames that are directly in contact with the PV DC cables?
+
+Conductive cable support systems or conductive wiring enclosures that are directly in contact with PV DC cables?
+
+If above 0.5-ohm impedance is recorded, has a voltage greater than 5Vac been measured between main earth and the conductive material using a low impendence meter?
+
+Applicable rating: Unsafe
+
+AS/NZS 5033:2021 Clause 4.6.2 and 4.6.5
+
+AS/NZS 3000:2018 Clauses 5.6.2.1(e) and 7.3.6
+
+Roof 17.1
+Where the calculated PV DC circuit maximum voltage is greater than 35V, have the following exposed conductive parts earthed with an impedance of less than 0.5 ohms:
+
+All conductive PV module frames?
+
+Array mounting frames that are directly in contact with the PV DC cables?
+
+Conductive cable support systems or conductive wiring enclosures that are directly in contact with PV DC cables?
+
+Applicable rating: Needs rectification
+
+AS/NZS 5033:2021 Clause 4.6.2 and 4.6.5
+
+AS/NZS 3000:2018 Clauses 5.6.2.1(e) and 7.3.6
+
+Roof 18
+All earthing cables for the frame earth connections are of adequate size to comply with standards.
+
+Applicable rating: Improvements identified (For information)
+AS/NZS 5033:2021 Clause 4.6.5
+
+Roof 19
+Do the PV array frame and module earthing connections and methods comply with Australian Standards (AS/NZS3000:2018 and AS/NZS5033:2014)?
+
+Applicable rating: Improvements identified (For information)
+
+AS/NZS 5033:2021 Clause 4.6.3
+
+AS/NZS 3000:2018 Clause 3.7.2.6
+
+Wiring
+
+Solar PV audit checklist items
+
+Questions and ratings	Relevant standards and references
+
+Wiring 1
+If entering the ceiling space, ensure that it is safe to do so. If isolation of electricity is required, notify system owner or representative.
+
+Applicable rating: No rating is applied
+AS/NZS 3000:2018 Clause 1.5
+
+Wiring 2
+Is the array wiring and wiring to the inverter protected from mechanical damage?
+
+Please note: additional requirements in relation to wiring systems fixed in a position within 50mm of a building surface.
+
+Applicable rating: Needs rectification
+
+AS/NZS 3000:2018 Clause 3.3.2.6 and 3.9.4
+
+AS/NZS 5033:2021 Clauses 4.4
+
+Wiring 28
+Is there evidence of mechanical damage to LV cables?
+
+Applicable rating: Needs rectification
+
+AS/NZS 3000:2018 Clause 3.9.4 and 3.3.2.6 and 3.3.2.8
+
+AS/NZS 5033:2021 Clauses 4.4
+
+Wiring 32
+Have all conduit systems containing PV dc conductors been appropriately sealed (by using methods such as glue)?
+
+Applicable rating: Needs rectification
+AS/NZS 5033:2021 Clause 4.4.5.1
+
+Wiring 16
+Is the DC and AC array wiring and wiring to the inverter protected from UV? (This requires a visual inspection of all cables related to the system and may require checking on the roof).
+
+Applicable rating: Needs rectification
+
+AS/NZS 5033:2021 Clause 4.4.2.1
+
+AS/NZS 3000:2018 Clause 3.3.2.11
+
+Wiring 3
+For all PV DC cables that are installed within buildings has the following mechanical protection been provided:
+
+Cables located within ceiling space, wall cavities or under a floor are enclosed in metal or heavy-duty insulating conduit?
+
+Installed in medium duty insulating wiring enclosure in all other internal locations within a building (for example, non concealed surface mount)?
+
+Applicable rating: Needs rectification
+AS/NZS 5033:2021 Clause 4.4.5.2.2
+
+Wiring 29
+Have all DC cables that are installed external to a building and not in a restricted access location been enclosed in a wiring enclosure?
+
+Exception: Within 300mm of a PCE or load break disconnection device.
+
+Applicable rating: Needs rectification
+AS/NZS 5033:2021 Clause 4.4.5.2.2
+
+Wiring 4
+Where PV DC wiring system are not installed directly behind and adjacent to pv modules, have they been identified by distinctive labels with the word "SOLAR" at intervals not exceeding 2m and visible after mounting?
+
+Applicable rating: Needs rectification
+AS/NZS 5033:2021 Clause 5.3.1.1
+
+Label 12
+Have all junction boxes housing PV DC cable terminations been labelled with the following warning?
+
+"WARNING: HAZARDOUS DC VOLTAGE".
+
+Applicable rating: Needs rectification
+AS/NZS 5033:2021 Clause 5.3.2
+
+Wiring 6
+Are all cables/wiring in the installation securely fixed in place to minimise any movement of the cable?
+
+Applicable rating: Improvements identified (For information)
+AS/NZS 3000:2018 Clause 3.3.2.8 and 3.9.3
+
+Wiring 7
+Are LV array and inverter cables not installed within 50mm of a building surface?
+
+Are the AC cables supplying the inverter secure and mechanically protected?
+
+Applicable rating: Needs rectification
+AS/NZS 3000:2018 Clauses 3.3.2.8, 3.9.3.3, 3.9.4, 3.9.4.4(a) and Appendix H, paragraph H5.4
+
+Wiring 17
+Have all cable junction boxes been installed in a manner that will prevent water from entering electrical equipment and enclosures containing conductor terminations?
+
+Applicable rating: Needs rectification
+
+AS/NZS3000:2018 Clauses 4.1.2 and 4.1.3
+
+AS/NZS 5033:2021 Clause 4.4.6 and 4.4.7
+
+Wiring 18
+Is there evidence of water ingress to any junction boxes that are connected to electrical equipment enclosures containing conductor terminations?
+
+Applicable rating: Needs rectification
+
+AS/NZS3000:2018 Clauses 4.1.2 and 4.1.3
+
+AS/NZS 5033:2021 Clause 4.4.6 and 4.4.7
+
+Wiring 19
+Have circuit connections been correctly connected such that a safety hazard is not posed with an immediate risk (for example, transposition of conductors resulting in exposed conductive parts becoming energised)?
+
+Applicable rating: Unsafe
+AS/NZS 3000:2018 Clause 8.3.7.2
+
+Wiring 20
+Have circuit connections been correctly connected such that an immediate safety hazard is not posed, but may be at risk of becoming unsafe in the future (for example, protective earthing conductors carrying current under normal operation)?
+
+Applicable rating: Needs rectification
+AS/NZS 3000:2018 Clause 8.3.7.1
+
+Wiring 21
+Are all AC isolators and other AC electrical equipment installed exposed to the weather rated to at least IP33 and have been installed to uphold their IP ratings?
+
+Applicable rating: Needs rectification
+AS/NZS 3000:2018 Clauses 3.10.2.3 and 4.1.3 and figure 4.1, 4.2
+
+Wiring 22
+Have all flexible AC/DC cabling connections been correctly terminated?
+
+Applicable rating: Improvements identified
+
+AS/NZS 5033:2021 Clause 4.4.3.3
+
+AS/NZS 3000 Clause 3.7.2.2 and 3.7.2.5
+
+Wiring 23
+Has all electrical equipment (not previously covered in this checklist) been installed according to all applicable standards and additional manufacturers requirements? If not, could the applicable defects cause a potential safety concern at some stage now or in the future?
+
+Applicable rating: Needs rectification
+AS/NZS 3000:2018 Clause 1.7.1 (c) 4.1.2
+
+Wiring 30
+Has all electrical equipment (not previously covered in this checklist) been installed according to all applicable standards and additional manufacturers requirements?
+
+If not are applicable defects not likely to cause a safety concern now or any time in the future?
+
+Applicable rating: Improvements identified (For information)
+AS/NZS 3000:2018 Clause 1.7.1 (c) 4.1.2
+
+Wiring 24
+Has sufficient segregation/separation been provided between LV and ELV and AC and DC circuits in the same enclosure?
+
+Applicable rating: Improvements identified
+
+AS/NZS 3000:2018 Clause 3.9.8.3
+
+AS/NZS 5033:2021 Clause 4.4.3.2 and 4.4.3.3
+
+AS/NZS 4777.1:2024 Clause 4.3.4.2
+
+Wiring 25
+Have the ends of flexible conduits been securely anchored to the fixed conduit, structure or electrical equipment where it terminates?
+
+Applicable rating: Improvements identified
+AS/NZS 3000:2018 Clause 3.10.3.6
+
+Wiring 26
+If an RCBO/RCD has been installed, is it not on the Energy Safe Victoria prohibited list?
+
+Applicable rating: Needs rectification
+Electrical Safety Act - Section 63 (1)
+
+Wiring 33
+If an RCBO/RCD has been installed, is it compatible with inverter manufacturer’s instructions and switches all live conductors?
+
+Applicable rating: Improvements identified (For information)
+
+AS/NZS 3000:2018 Clause 1.7.1
+
+AS/NZS 4777:2024 Clause 3.4.4
+
+Wiring 31
+Has all electrical equipment (not previously covered in this checklist) been installed according to all applicable standards and additional manufacturers requirements?
+
+If not are the applicable defects likely to cause an immediate safety concern?
+
+Applicable rating: Unsafe
+AS/NZS 3000:2018 Clause 1.7.1 (c) 4.1.2
+
+Wiring 34
+If an RCBO/RCD has been installed it must not be type AC, must be 30 mA and must be of a type specified by the manufacturer as required?
+
+Applicable rating: Needs rectification
+AS/NZS 3000:2018 Clause 2.6.2.2.2
+
+Wiring 27
+Are there any accessible live parts?
+
+Allowing direct contact with any equipment, component, terminals or connection, tested to be LIVE and accessible by 1 action to be touched.
+
+Applicable rating: Unsafe
+AS/NZS 3000:2018 Clause 3.1.2 (a) and 4.1.2 (d)
+
+Wiring 35
+Are there connectors, couplings, covers or components able to be removed without the use of a tool which provide access to live parts?
+
+Applicable rating: Needs rectification
+AS/NZS 3000:2018 Clause 3.1.2 (a) and 4.1.2 (d)
+
+Wiring 11
+Have all solar installation associated cables entering the switchboard been installed in such a manner as to prevent the spread of fire?
+
+Applicable rating: Improvements identified (For information)
+AS/NZS 3000:2018 Clause 2.10.7
+
+Wiring 13
+Estimated length and size (CSA i.e. 4mm2) of DC cable.
+
+Applicable rating: No rating is applied
+Not applicable
+
+Wiring 14
+Estimated length and size (CSA i.e. 6mm2) of AC cable from inverter to switchboard.
+
+Applicable rating: No rating is applied
+Clean Energy Council Installation Guidelines 7.8.5 and 9.1.5 and 10.5.2, v13
+
+Wiring 15
+Estimated length and size (CSA i.e. 10mm2) of AC cable from switchboard the inverter is connected to the point of supply.
+
+Applicable rating: No rating is applied
+Not applicable
+
+Wiring 40 - Solar for Apartments
+If new or existing wiring associated with an alternative or supplementary supply supplying a single occupancy has been run in the same location as existing wiring that runs through another individual occupiers portion:
+
+Have any accessible sections of wiring passing through the other individual occupier's portion or the service ducts in the other individual occupier's portion been clearly and permanently identified, by means of marking or attached labels, at intervals not exceeding 2 metres to indicate that the wiring is not controlled from the switchboard of the other individual occupier's portion?
+
+Applicable rating: Needs rectification
+
+Electrical Safety (General) Regulations - Regulation 216 (4)
+
+Electrical Safety (General) Regulations - Regulation 216 (2)(a)
+
+Wiring 41 - Solar for Apartments
+If new or existing wiring associated with an alternative or supplementary supply supplying a single occupancy has been run in the same location as existing wiring that runs through another individual occupier’s portion:
+
+Has any accessible switchboard of the other individual occupier's portion through which the consumer's mains or submains or service ducts pass been clearly and permanently marked with the following words: "Warning - not all wiring passing through these premises is controlled from this switchboard"?
+
+Applicable rating: Needs rectification
+
+Electrical Safety (General) Regulations - Regulation 216 (4)
+
+Electrical Safety (General) Regulations - Regulation 216 (2)(a)
+
+Wiring 42 - Solar for Apartments
+If new or existing wiring associated with an alternative or supplementary supply supplying a single occupancy has been run in the same location as existing wiring that runs through another individual occupiers portion:
+
+Has a sign, durable card or other durable material been fixed to any accessible switchboard of the other individual occupier's portion through which the wiring or service ducts pass setting out the location of the wiring or service ducts?
+
+Applicable rating: Needs rectification
+
+Electrical Safety (General) Regulations - Regulation 216 (4)
+
+Electrical Safety (General) Regulations - Regulation 216 (2)(a)
+
+Wiring 43 - Solar for Apartments
+Is all new wiring associated with alternative or supplementary supplies supplying multiple occupancies installed on common property or a common area associated with the subdivision?
+
+Applicable rating: Needs rectification
+Electrical Safety (General) Regulations - Regulation 215 (2)
+
+Wiring 44 - Solar for Apartments
+Is all new wiring associated with alternative or supplementary supplies supplying an individual occupancy installed on that individual occupier's portion or on common property, or a common area associated with the subdivision?
+
+Applicable rating: Needs rectification
+Electrical Safety (General) Regulations - Regulation 215 (3)
+
+Switchboard
+
+Solar PV audit checklist items
+
+Questions and ratings	Relevant standards and references
+
+Label 2
+Has a circular green reflective sign of at least 100mm in diameter and with the letter "PV", been placed on or immediately adjacent to the main metering panel and main switchboard, and readily visible to approaching emergency workers?
+
+Applicable rating: Improvements identified (For information)
+AS/NZS 5033:2021 Section 5 Clause 5.4
+
+Label 21
+On the green PV label at the main switchboard and main meter panel, are there additional letters under the PV to designate the following:
+
+AC For inverter with a calculated PV d.c. circuit maximum voltage less than 120V d.c. and the PV modules are within 1.5m for the inverter?
+
+DP Where a disconnection point is used as the isolation method?
+
+SW Where a load break disconnection device is used as the isolation method?
+
+Applicable rating: Improvements identified (For information)
+AS/NZS 5033:2021 Clause 5.4 (a), (b) and (c)
+
+Label 3
+Is there a Victorian label: "Warning - this premises contains an electricity generation system" installed at the main switchboard, any fire indicator panels and all switchboards that will be energised by that consumer’s electricity generation system?
+
+Applicable rating: Improvements identified
+Electricity Safety (General) Regulations 2019 - Regulation 211
+
+Label 5
+Where the inverter of the solar system is connected to a distribution board, is the following label present on the main switchboard and all intermediate distribution switchboards: “Warning Multiple Supplies Isolate Inverter Supply at Distribution Switchboard at …”?
+
+Applicable rating: Improvements identified
+AS/NZS 4777.1:2024 Clause 6.4
+
+Label 6
+Where the inverter is connected to the main switchboard, is the grid supply main switch labelled “MAIN SWITCH (GRID) or (Mains) or (Normal)”?
+
+Applicable rating: Improvements identified
+AS/NZS 4777.1:2024 Clause 6.3(b)
+
+Label 15
+Where the inverter is connected to a distribution switchboard, is the grid supply main isolator labelled “MAIN ISOLATOR (GRID) or (Mains) or (Normal)”?
+
+Applicable rating: Improvements identified
+AS/NZS 4777.1:2024 Clause 6.3(c)
+
+Label 7
+Does the switchboard which the inverter is directly connected to contain the label "Multiple Supplies Isolate all Supplies before Working on this Switchboard”?
+
+Applicable rating: Improvements identified
+AS/NZS 4777.1:2024 Clause 6.3(g)
+
+Label 8
+Is there an AC circuit breaker in or adjacent to the switchboard for the system labelled “MAIN SWITCH (INVERTER)”?
+
+Applicable rating: Improvements identified
+AS/NZS 4777.1:2024 Clause 6.3(a)
+
+Label 9
+What is the size of the circuit breaker labelled “main switch inverter supply”?
+
+Applicable rating: No rating is applied
+Not applicable
+
+Switchboard 10 ***UPDATED***
+Is the AC cable and circuit breaker rated to at least the output current of the inverter?
+
+Applicable rating: Needs rectification
+AS/NZS 4777.1:2024 Clause 3.4.1
+
+Switchboard 11
+Is the AC circuit breaker suitably sized to protect the cable supplying the inverter (taking into account summation of current from grid supply and supplementary supplies if applicable)?
+
+Applicable rating: Improvements identified
+
+AS/NZS 4777.1:2024 Clause 3.4.2
+
+AS/NZS 3000:2018 Clause 2.5
+
+Label 10
+Where the inverter is not within 3m and in direct line of sight of the main switchboard, is the inverter location information provided (for example on the solar site plan)?
+
+Applicable rating: Improvements identified (For information)
+AS/NZS 4777.1:2024 Clauses 6.2 and 6.5
+
+Switchboard 12
+Where two inverter supplies are connected to a main switchboard or distribution board with other circuits and loads connected, are the inverter main switches grouped together?
+
+Applicable rating: Improvements identified (For information)
+AS/NZS 4777.1:2024 Clause 3.5.3.1
+
+Label 17
+Where multiple IES are installed at one installation, does signage accurately reflect which device controls which item of equipment?
+
+Applicable rating: Improvements identified (For information)
+AS/NZS 4777.1:2024 Clause 6.7
+
+Label 19
+Has solar system layout been provided at the main switchboard and/or meter box, fire panel and does it conform to these requirements:
+
+illegible and sufficiently durable for the location, for example, laminated or protected by solid clear sheet (Perspex etc)?
+
+Is fixed permanently in a manner appropriate for the location?
+
+Is written in English?
+
+Is labelled "PV (solar) site information" in white letters with a red background?
+
+Shows the location address as recorded for the installation?
+
+Contains a plan view of the building showing the location of the PCE, the PV array/s?
+
+Contains a legend for the map or clearly labelled to identify key components and building reference points?
+
+Identity's the location of the site information sign with the words "you are here"?
+
+Is as accurate as practicable when ensuring the various components on the drawing are indicative of the actual location?
+
+Installation date is marked on the plan?
+
+Applicable rating: Improvements identified (For information)
+AS/NZS 5033:2021 Clause 5.6.1
+
+Label 22
+For PV d.c. systems, has the following information been included in the onsite plan:
+
+The path of d.c. cabling?
+
+The location of d.c. disconnection point/s indicated by "DP"?
+
+The location of additional load break disconnector/s?
+
+PV array size?
+
+d.c. Voltage?
+
+Contain a warning where d.c. disconnection type/s can only be operated by suitable qualified personnel?
+
+Applicable rating: Improvements identified (For information)
+AS/NZS 5033:2021 Clause 5.6.1.1
+
+Label 24
+Have all switchboard conductor terminations associated with the solar installation been connected in a compliant manner?
+
+Applicable rating: Improvements identified (For information)
+AS/NZS 3000:2018 Clause 3.7.2.2 and 3.7.2.5
+
+Label 25
+Do all labels and signs conform to these requirements:
+
+Are durable and designed for the service lifetime of the system?
+
+Are constructed of appropriate materials suitable for the location?
+
+Are fixed in a matter appropriate for the location?
+
+Are written in English?
+
+Are legible and the letter sizing is appropriate for the location?
+
+Are indelible (cannot be removed)?
+
+Are visible when applicable?
+
+Applicable rating: Improvements identified (For information)
+AS/NZS 5033:2021 Clause 5.2.1
+
+Switchboard 13
+Are there no more than 2 inverter main switches connected to any 1 switchboard with attached loads?
+
+Applicable rating: Improvements identified
+AS/NZS 4777.1:2024 Clause 3.5.3.1
+
+Switchboard 14 - Solar for Apartments
+If any solar associated cables pass through un-metered portions or behind meter panels, are the cables fully enclosed in conduit, and positioned in the lower corner of the enclosure to separate from other conductors?
+
+Applicable rating: Improvements identified
+Service and Installation Rules: 2014 Amendment 3 Rule 8.4.4.1
+
+Switchboard 15 - Solar for Apartments
+Have all penetrations to switchboards maintained the designed separation "Form" of the switchboard.
+
+Applicable rating: Improvements identified
+AS/NZS 3000:2018 Clause 2.10.3.2
+
+Switchboard 16 ***NEW*** - Solar Homes and Solar for Apartments
+Has the outgoing inverter neutral conductor been provided with its own terminal in the neutral bar?
+
+Applicable rating: Needs rectification
+AS/NZS 3000:2018 Clause 2.10.4.3
+
+Switchboard 17 ***NEW*** - Solar Homes and Solar for Apartments
+Has the outgoing inverter neutral been marked or arranged to identify the corresponding active connection?
+
+Applicable rating: Improvements identified (For information)
+AS/NZS 3000:2018 Clause 2.10.5.4
+
+Documentation
+
+Solar PV audit checklist items
+
+Questions and ratings	Relevant standards and references
+
+Doc 1
+Has basic system information, including system rating and component ratings, and combining date been provided?
+
+Applicable rating: Information only
+AS/NZS 5033:2021 section 6
+
+Doc 2
+Has a list of electrical equipment supplied, with model description and serial numbers been provided?
+
+Applicable rating: Information only
+AS/NZS 5033:2021 section 6
+
+Doc 3
+Has a list of actions to be taken in the event of an earth fault alarm been provided?
+
+Applicable rating: Needs rectification
+AS/NZS 5033:2021 section 6
+
+Doc 4
+Has shutdown and isolation procedure for emergency and maintenance that shall ensure safe de-energisation of the system been provided?
+
+Applicable rating: Information only
+AS/NZS 5033:2021 section 6
+
+Doc 5
+Has a system connection diagram that includes the electrical ratings of the PV array, and the ratings of all overcurrent devices and switches as installed been provided?
+
+Applicable rating: Needs rectification
+AS/NZS 5033:2021 section 6
+
+Doc 6
+Has disconnection device location and cable routing in accordance with Clause 5.6. been provided?
+
+Applicable rating: Information only
+AS/NZS 5033:2021 section 6
+
+Doc 7
+Has a system performance estimate been provided?
+
+Applicable rating: Needs rectification
+AS/NZS 5033:2021 section 6
+
+Doc 8
+Has a maintenance procedure and timetable been provided?
+
+Applicable rating: Needs rectification
+AS/NZS 5033:2021 section 6
+
+Doc 9
+Has a maintenance checklist for the installed equipment been provided.
+
+Applicable rating: Information only
+AS/NZS 5033:2021 section 6
+
+Doc 10
+Have details of wind and mechanical loading been provided?
+
+Applicable rating: Information only
+AS/NZS 5033:2021 section 6
+
+Doc 11
+Have equipment manufacturer's documentation and handbooks for all equipment supplied been provided? As a minimum, the following shall be included:
+
+panels
+
+mounting frame
+
+inverters
+
+cable
+
+monitoring devices
+
+Applicable rating: Information only
+AS/NZS 5033:2021 section 6
+
+Doc 12
+Has warranty information been provided?
+
+Applicable rating: Information only
+AS/NZS 5033:2021 section 6
+
+Inverter power sharing devices (Solar for Apartments)
+
+Solar PV audit checklist items
+
+Questions and ratings	Relevant standards and references
+
+SolShare 1
+Has an Allume SolShare device been installed as part of this installation?
+
+Applicable rating: No rating is applied
+Not applicable
+
+SolShare 2
+Is the SolShare main switch rated higher than the max output of the connected inverter?
+
+Applicable rating: Needs rectification
+AS/NZS 3000:2018 Clause 4.1.2 (e)
+
+SolShare 3
+Are all SolShare input and output cables rated to the total generation capacity of the inverter?
+
+Applicable rating: Improvements identified
+AS/NZS 4777.1:2024 Clause 3.4.1
+
+SolShare 4
+Does the Tenancy switchboard contain a circuit protective device adequately rated to protect the supply cable considering the sum of the Grid supply and Solar supply currents.
+
+Applicable rating: Needs rectification
+AS/NZS 3000:2018 Clause 2.5.3.1
+
+SolShare 5
+Are the "maintenance isolation CB's correctly rated to protect the connected cables?
+
+Applicable rating: Needs rectification
+AS/NZS 3000:2018 Clause 2.5.3.1
+
+SolShare 6
+Are the "Isolation" CB's correctly rated to protect the connected cables?
+
+Applicable rating: Needs rectification
+AS/NZS 4777.1:2024 Clause 3.4.2
+
+SolShare 7
+Has SolShare been installed on a flammable material?
+
+Applicable rating: Needs rectification
+AS/NZS 3000:2018 Clause 2.5.3.1
+
+SolShare 8 ***UPDATED***
+Has SolShare been installed as per manufacturers requirements for installation space? For example, minimum 150mm from either side, 300mm from top and bottom.
+
+Applicable rating: Improvements identified
+AS/NZS 4777.1:2024 Clause 3.6.5.2
+
+SolShare 9
+If installed outside in direct sunlight or in path of debris (for example, under a tree with falling leaves), has a shade cover been installed?
+
+Applicable rating: Improvements identified
+AS/NZS 3000:2018 Clause 2.5.3.1
+
+SolShare 10
+Has the SolShare been installed securely and with locking bolt inserted as per manufacturer’s instructions?
+
+Applicable rating: Needs rectification
+AS/NZS 4777.1:2024 Clause 3.6.5.2
+
+SolShare 11
+If SolShare device has been installed in an outdoor environment, have cable entry membrane glands been replaced with minimum IP56 rated liquid tight cable or conduit glands suitable for the panel hole dimensions?
+
+Applicable rating: Needs rectification
+AS/NZS 3000:2018 Clause 4.1.2 (e)
+
+SolShare 12
+Is the SolShare neutral conductor connected directly to the main neutral bar in the main switchboard (for example, not connected to neutral bar in an individual tenancy switchboard)?
+
+Applicable rating: Needs rectification
+AS/NZS 3000:2018 Clause 4.1.2 (e)
+
+SolShare 13
+Have the solar share supply cables been connected to the LOAD side of the tenancy isolators?
+
+Applicable rating: Needs rectification
+AS/NZS 3000:2018 Clause 4.1.2 (e)
+
+SolShare 14
+Have the terminations to the tenancy isolator been carried out in a compliant manner? For example, differently size conductors adequately secured in terminals or conductors twisted together?
+
+Applicable rating: Needs rectification
+AS/NZS 3000:2018 Clause 4.1.2 (e)
+
+SolShare 15
+Are the SolShare isolation contactors correctly rated, connected, and arranged to provide isolation from the grid as per AS/NZS 4777.2?
+
+Applicable rating: Improvements identified
+AS/NZS 3000:2018 Clause 4.1.2 (e)
+
+SolShare 16
+CT Test - Interrupt the signal from SolShare’s Current Transformer by pulling out the CT block for a phase and verify that the loss of signal results in the isolation of all IPSD ports.
+
+Reconnect the CT block, wait for the system to start up, then repeat for the other contactor blocks.
+
+Applicable rating: Needs rectification
+AS/NZS 4777.1:2024 Clause 3.6.3.2
+
+SolShare 17
+Testing of anti-islanding functionality:
+
+Isolate the Tenancy Main Switch (GRID) or Main Isolator (GRID), located at the group meter panel, verify disconnection to the apartment is less than 2 secs.
+
+Note: repeat this test for each phase of the installation.
+
+Applicable rating: Needs rectification
+AS/NZS 3000:2018 Clauses 3.4.3 and 3.7.2
+
+SolShare 18
+Switch back ON the Tenancy Main Switch (GRID) or Main Isolator (GRID), located at the group meter panel, verify connection time is greater than 60 secs.
+
+Note: repeat this test for each phase of the installation.
+
+Applicable rating: Needs rectification
+AS/NZS 4777.1:2024 Clause 3.6.3.1
+
+IPSD 1
+Have all power sharing devices been installed as per appliable standards and additional manufacturers installation requirements?
+
+If not are applicable defects not likely to cause a safety concern now or any time in the future?
+
+Applicable rating: Improvements identified
+AS/NZS 4777.2 Clause 4.2
+
+IPSD 2
+Have all power sharing devices been installed as per appliable standards and additional manufacturers installation requirements?
+
+If not, could the applicable defects cause a potential safety concern at some stage now or in the future?
+
+Applicable rating: Needs rectification
+
+AS/NZS 3000:2018 Clause 1.7.1 (c) and 4.1.2 (e)
+
+AS/NZS 4777.1:2024 Clause 8.4.2
+
+IPSD 3
+Have all power sharing devices been installed as per appliable standards and additional manufacturers installation requirements?
+
+If not, are the applicable defects likely to cause an immediate safety concern?
+
+Applicable rating: Unsafe
+
+AS/NZS 4777.1:2024 Clause 8.4.1
+
+ESGR:2019 Reg 245 (b)
+
+Back to top

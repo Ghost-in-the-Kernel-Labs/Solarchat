@@ -91,3 +91,10 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Opened**: `CLAUDE.md`, `solarchat/leaf/contract.py`, `test/test_leaf.py`, `docs/CONTRACT.md`, `docs/modules.json`, `docs/SAFETY-AND-COMPLIANCE.md`, `docs/DIRECTIVE-MAP.md`, `theGhost.md`, `TODO.md`, `packs/TYPES.md`, `docs/when/handoff.md`.
 - **Complaints**: none; `docs/modules.json` and `packs/TYPES.md` name no function, so neither changed. History entries (J-028, earlier debriefs) still say `is_demo` and were left as written.
 - **Suggestions**: none.
+
+### 2026-11-21 · The reference library (SC-014) · Claude Sonnet 5.5
+
+- **Task**: pull six public or CC BY source documents into `library/sources/` with licence evidence, text and hashes, add `scripts/checks/library.py` and its tests, record SC-014; the seventh (OSHA solar pages) was refused by its host.
+- **Opened**: `docs/paths/process.md`, `theGhost.md` (SC-012, SC-013), `scripts/checks/packs.py`, `scripts/checks/common.py`, `test/test_packs.py`, `test/support.py`, `scripts/fast.sh`, `docs/NAVIGATION-LOG.md`, `docs/HANDOFF.md`, `docs/journal/J-000-099.md`.
+- **Complaints**: no routing row for a new check's wiring; "wire it into the fast loop" turned out to mean a unittest file, which is only learned by reading `fast.sh`. A new file must be `git add -N`ed before the fast loop sees it, which is easy to miss. The worktree shell refuses compound git commands and heredocs that `cd` elsewhere.
+- **Suggestions**: a routing row for the library (added to `docs/paths/process.md`); a one-line note in `docs/when/coordinate.md` that downloads may sit in the scratchpad.

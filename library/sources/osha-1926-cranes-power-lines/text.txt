@@ -1,0 +1,311 @@
+29 CFR 1926.1407 to 1926.1411, power-line safety for cranes and derricks
+https://www.ecfr.gov/current/title-29/part-1926/subpart-CC
+eCFR, Title 29, data as of 2026-11-10 (the date of the title's latest amendment), retrieved 2026-11-21
+
+§ 1926.1407 Power line safety (up to 350 kV)—assembly and disassembly.
+
+(a) Before assembling or disassembling equipment, the employer must determine if any part of the equipment, load line, or load (including rigging and lifting accessories) could get, in the direction or area of assembly/disassembly, closer than 20 feet to a power line during the assembly/disassembly process. If so, the employer must meet the requirements in Option (1), Option (2), or Option (3) of this section, as follows:
+
+(1) Option (1)—Deenergize and ground. Confirm from the utility owner/operator that the power line has been deenergized and visibly grounded at the worksite.
+
+(2) Option (2)—20 foot clearance. Ensure that no part of the equipment, load line or load (including rigging and lifting accessories), gets closer than 20 feet to the power line by implementing the measures specified in paragraph (b) of this section.
+
+(3) Option (3)—Table A clearance. (i) Determine the line's voltage and the minimum clearance distance permitted under Table A (see § 1926.1408).
+
+(ii) Determine if any part of the equipment, load line, or load (including rigging and lifting accessories), could get closer than the minimum clearance distance to the power line permitted under Table A (see § 1926.1408). If so, then the employer must follow the requirements in paragraph (b) of this section to ensure that no part of the equipment, load line, or load (including rigging and lifting accessories), gets closer to the line than the minimum clearance distance.
+
+(b) Preventing encroachment/electrocution. Where encroachment precautions are required under Option (2), or Option (3) of this section, all of the following requirements must be met:
+
+(1) Conduct a planning meeting with the Assembly/Disassembly director (A/D director), operator, assembly/disassembly crew and the other workers who will be in the assembly/disassembly area to review the location of the power line(s) and the steps that will be implemented to prevent encroachment/electrocution.
+
+(2) If tag lines are used, they must be nonconductive.
+
+(3) At least one of the following additional measures must be in place. The measure selected from this list must be effective in preventing encroachment.
+
+The additional measures are:
+
+(i) Use a dedicated spotter who is in continuous contact with the equipment operator. The dedicated spotter must:
+
+(A) Be equipped with a visual aid to assist in identifying the minimum clearance distance. Examples of a visual aid include, but are not limited to: A clearly visible line painted on the ground; a clearly visible line of stanchions; a set of clearly visible line-of-sight landmarks (such as a fence post behind the dedicated spotter and a building corner ahead of the dedicated spotter).
+
+(B) Be positioned to effectively gauge the clearance distance.
+
+(C) Where necessary, use equipment that enables the dedicated spotter to communicate directly with the operator.
+
+(D) Give timely information to the operator so that the required clearance distance can be maintained.
+
+(ii) A proximity alarm set to give the operator sufficient warning to prevent encroachment.
+
+(iii) A device that automatically warns the operator when to stop movement, such as a range control warning device. Such a device must be set to give the operator sufficient warning to prevent encroachment.
+
+(iv) A device that automatically limits range of movement, set to prevent encroachment.
+
+(v) An elevated warning line, barricade, or line of signs, in view of the operator, equipped with flags or similar high-visibility markings.
+
+(c) Assembly/disassembly below power lines prohibited. No part of a crane/derrick, load line, or load (including rigging and lifting accessories), whether partially or fully assembled, is allowed below a power line unless the employer has confirmed that the utility owner/operator has deenergized and (at the worksite) visibly grounded the power line.
+
+(d) Assembly/disassembly inside Table A clearance prohibited. No part of a crane/derrick, load line, or load (including rigging and lifting accessories), whether partially or fully assembled, is allowed closer than the minimum approach distance under Table A (see § 1926.1408) to a power line unless the employer has confirmed that the utility owner/operator has deenergized and (at the worksite) visibly grounded the power line.
+
+(e) Voltage information. Where Option (3) of this section is used, the utility owner/operator of the power lines must provide the requested voltage information within two working days of the employer's request.
+
+(f) Power lines presumed energized. The employer must assume that all power lines are energized unless the utility owner/operator confirms that the power line has been and continues to be deenergized and visibly grounded at the worksite.
+
+(g) Posting of electrocution warnings. There must be at least one electrocution hazard warning conspicuously posted in the cab so that it is in view of the operator and (except for overhead gantry and tower cranes) at least two on the outside of the equipment.
+
+§ 1926.1408 Power line safety (up to 350 kV)—equipment operations.
+
+(a) Hazard assessments and precautions inside the work zone. Before beginning equipment operations, the employer must:
+
+(1) Identify the work zone by either:
+
+(i) Demarcating boundaries (such as with flags, or a device such as a range limit device or range control warning device) and prohibiting the operator from operating the equipment past those boundaries, or
+
+(ii) Defining the work zone as the area 360 degrees around the equipment, up to the equipment's maximum working radius.
+
+(2) Determine if any part of the equipment, load line or load (including rigging and lifting accessories), if operated up to the equipment's maximum working radius in the work zone, could get closer than 20 feet to a power line. If so, the employer must meet the requirements in Option (1), Option (2), or Option (3) of this section, as follows:
+
+(i) Option (1)—Deenergize and ground. Confirm from the utility owner/operator that the power line has been deenergized and visibly grounded at the worksite.
+
+(ii) Option (2)—20 foot clearance. Ensure that no part of the equipment, load line, or load (including rigging and lifting accessories), gets closer than 20 feet to the power line by implementing the measures specified in paragraph (b) of this section.
+
+(iii) Option (3)—Table A clearance. (A) Determine the line's voltage and the minimum approach distance permitted under Table A (see § 1926.1408).
+
+(B) Determine if any part of the equipment, load line or load (including rigging and lifting accessories), while operating up to the equipment's maximum working radius in the work zone, could get closer than the minimum approach distance of the power line permitted under Table A (see § 1926.1408). If so, then the employer must follow the requirements in paragraph (b) of this section to ensure that no part of the equipment, load line, or load (including rigging and lifting accessories), gets closer to the line than the minimum approach distance.
+
+(b) Preventing encroachment/electrocution. Where encroachment precautions are required under Option (2) or Option (3) of this section, all of the following requirements must be met:
+
+(1) Conduct a planning meeting with the operator and the other workers who will be in the area of the equipment or load to review the location of the power line(s), and the steps that will be implemented to prevent encroachment/electrocution.
+
+(2) If tag lines are used, they must be non-conductive.
+
+(3) Erect and maintain an elevated warning line, barricade, or line of signs, in view of the operator, equipped with flags or similar high-visibility markings, at 20 feet from the power line (if using Option (2) of this section) or at the minimum approach distance under Table A (see § 1926.1408) (if using Option (3) of this section). If the operator is unable to see the elevated warning line, a dedicated spotter must be used as described in § 1926.1408(b)(4)(ii) in addition to implementing one of the measures described in §§ 1926.1408(b)(4)(i), (iii), (iv) and (v).
+
+(4) Implement at least one of the following measures:
+
+(i) A proximity alarm set to give the operator sufficient warning to prevent encroachment.
+
+(ii) A dedicated spotter who is in continuous contact with the operator. Where this measure is selected, the dedicated spotter must:
+
+(A) Be equipped with a visual aid to assist in identifying the minimum clearance distance. Examples of a visual aid include, but are not limited to: A clearly visible line painted on the ground; a clearly visible line of stanchions; a set of clearly visible line-of-sight landmarks (such as a fence post behind the dedicated spotter and a building corner ahead of the dedicated spotter).
+
+(B) Be positioned to effectively gauge the clearance distance.
+
+(C) Where necessary, use equipment that enables the dedicated spotter to communicate directly with the operator.
+
+(D) Give timely information to the operator so that the required clearance distance can be maintained.
+
+(iii) A device that automatically warns the operator when to stop movement, such as a range control warning device. Such a device must be set to give the operator sufficient warning to prevent encroachment.
+
+(iv) A device that automatically limits range of movement, set to prevent encroachment.
+
+(v) An insulating link/device, as defined in § 1926.1401, installed at a point between the end of the load line (or below) and the load.
+
+(5) The requirements of paragraph (b)(4) of this section do not apply to work covered by subpart V of this part.
+
+(c) Voltage information. Where Option (3) of this section is used, the utility owner/operator of the power lines must provide the requested voltage information within two working days of the employer's request.
+
+(d) Operations below power lines. (1) No part of the equipment, load line, or load (including rigging and lifting accessories) is allowed below a power line unless the employer has confirmed that the utility owner/operator has deenergized and (at the worksite) visibly grounded the power line, except where one of the exceptions in paragraph (d)(2) of this section applies.
+
+(2) Exceptions. Paragraph (d)(1) of this section is inapplicable where the employer demonstrates that one of the following applies:
+
+(i) The work is covered by subpart V of this part.
+
+(ii) For equipment with non-extensible booms: The uppermost part of the equipment, with the boom at true vertical, would be more than 20 feet below the plane of the power line or more than the Table A of this section minimum clearance distance below the plane of the power line.
+
+(iii) For equipment with articulating or extensible booms: The uppermost part of the equipment, with the boom in the fully extended position, at true vertical, would be more than 20 feet below the plane of the power line or more than the Table A of this section minimum clearance distance below the plane of the power line.
+
+(iv) The employer demonstrates that compliance with paragraph (d)(1) of this section is infeasible and meets the requirements of § 1926.1410.
+
+(e) Power lines presumed energized. The employer must assume that all power lines are energized unless the utility owner/operator confirms that the power line has been and continues to be deenergized and visibly grounded at the worksite.
+
+(f) When working near transmitter/communication towers where the equipment is close enough for an electrical charge to be induced in the equipment or materials being handled, the transmitter must be deenergized or the following precautions must be taken:
+
+(1) The equipment must be provided with an electrical ground.
+
+(2) If tag lines are used, they must be non-conductive.
+
+(g) Training. (1) The employer must train each operator and crew member assigned to work with the equipment on all of the following:
+
+(i) The procedures to be followed in the event of electrical contact with a power line. Such training must include:
+
+(A) Information regarding the danger of electrocution from the operator simultaneously touching the equipment and the ground.
+
+(B) The importance to the operator's safety of remaining inside the cab except where there is an imminent danger of fire, explosion, or other emergency that necessitates leaving the cab.
+
+(C) The safest means of evacuating from equipment that may be energized.
+
+(D) The danger of the potentially energized zone around the equipment (step potential).
+
+(E) The need for crew in the area to avoid approaching or touching the equipment and the load.
+
+(F) Safe clearance distance from power lines.
+
+(ii) Power lines are presumed to be energized unless the utility owner/operator confirms that the power line has been and continues to be deenergized and visibly grounded at the worksite.
+
+(iii) Power lines are presumed to be uninsulated unless the utility owner/operator or a registered engineer who is a qualified person with respect to electrical power transmission and distribution confirms that a line is insulated.
+
+(iv) The limitations of an insulating link/device, proximity alarm, and range control (and similar) device, if used.
+
+(v) The procedures to be followed to properly ground equipment and the limitations of grounding.
+
+(2) Employees working as dedicated spotters must be trained to enable them to effectively perform their task, including training on the applicable requirements of this section.
+
+(3) Training under this section must be administered in accordance with § 1926.1430(g).
+
+(h) Devices originally designed by the manufacturer for use as: A safety device (see § 1926.1415), operational aid, or a means to prevent power line contact or electrocution, when used to comply with this section, must meet the manufacturer's procedures for use and conditions of use.
+
+Table A—Minimum Clearance Distances
+
+Voltage
+
+(nominal, kV, alternating current) 	Minimum clearance distance
+
+(feet)
+
+up to 50 	10
+
+over 50 to 200 	15
+
+over 200 to 350 	20
+
+over 350 to 500 	25
+
+over 500 to 750 	35
+
+over 750 to 1,000 	45
+
+over 1,000 	(as established by the utility owner/operator or registered professional engineer who is a qualified person with respect to electrical power transmission and distribution).
+
+Note: The value that follows “to” is up to and includes that value. For example, over 50 to 200 means up to and including 200kV.
+
+§ 1926.1409 Power line safety (over 350 kV).
+
+The requirements of §§ 1926.1407 and 1926.1408 apply to power lines over 350 kV except:
+
+(a) For power lines at or below 1000 kV, wherever the distance “20 feet” is specified, the distance “50 feet” must be substituted; and
+
+(b) For power lines over 1000 kV, the minimum clearance distance must be established by the utility owner/operator or registered professional engineer who is a qualified person with respect to electrical power transmission and distribution.
+
+§ 1926.1410 Power line safety (all voltages)—equipment operations closer than the Table A zone.
+
+Equipment operations in which any part of the equipment, load line, or load (including rigging and lifting accessories) is closer than the minimum approach distance under Table A of § 1926.1408 to an energized power line is prohibited, except where the employer demonstrates that all of the following requirements are met:
+
+(a) The employer determines that it is infeasible to do the work without breaching the minimum approach distance under Table A of § 1926.1408.
+
+(b) The employer determines that, after consultation with the utility owner/operator, it is infeasible to deenergize and ground the power line or relocate the power line.
+
+(c) Minimum clearance distance. (1) The power line owner/operator or registered professional engineer who is a qualified person with respect to electrical power transmission and distribution determines the minimum clearance distance that must be maintained to prevent electrical contact in light of the on-site conditions. The factors that must be considered in making this determination include, but are not limited to: Conditions affecting atmospheric conductivity; time necessary to bring the equipment, load line, and load (including rigging and lifting accessories) to a complete stop; wind conditions; degree of sway in the power line; lighting conditions, and other conditions affecting the ability to prevent electrical contact.
+
+(2) Paragraph (c)(1) of this section does not apply to work covered by subpart V of this part; instead, for such work, the minimum approach distances established by the employer under § 1926.960(c)(1)(i) apply.
+
+(d) A planning meeting with the employer and utility owner/operator (or registered professional engineer who is a qualified person with respect to electrical power transmission and distribution) is held to determine the procedures that will be followed to prevent electrical contact and electrocution. At a minimum these procedures must include:
+
+(1) If the power line is equipped with a device that automatically reenergizes the circuit in the event of a power line contact, before the work begins, the automatic reclosing feature of the circuit interrupting device must be made inoperative if the design of the device permits.
+
+(2) A dedicated spotter who is in continuous contact with the operator. The dedicated spotter must:
+
+(i) Be equipped with a visual aid to assist in identifying the minimum clearance distance. Examples of a visual aid include, but are not limited to: A line painted on the ground; a clearly visible line of stanchions; a set of clearly visible line-of-sight landmarks (such as a fence post behind the dedicated spotter and a building corner ahead of the dedicated spotter).
+
+(ii) Be positioned to effectively gauge the clearance distance.
+
+(iii) Where necessary, use equipment that enables the dedicated spotter to communicate directly with the operator.
+
+(iv) Give timely information to the operator so that the required clearance distance can be maintained.
+
+(3) An elevated warning line, or barricade (not attached to the crane), in view of the operator (either directly or through video equipment), equipped with flags or similar high-visibility markings, to prevent electrical contact. However, this provision does not apply to work covered by subpart V of this part.
+
+(4) Insulating link/device. (i) An insulating link/device installed at a point between the end of the load line (or below) and the load.
+
+(ii) Paragraph (d)(4)(i) of this section does not apply to work covered by subpart V of this part.
+
+(iii) [Reserved]
+
+(iv) Until November 8, 2011, the following procedure may be substituted for the requirement in paragraph (d)(4)(i) of this section: All employees, excluding equipment operators located on the equipment, who may come in contact with the equipment, the load line, or the load must be insulated or guarded from the equipment, the load line, and the load. Insulating gloves rated for the voltage involved are adequate insulation for the purposes of this paragraph.
+
+(v) Until November 8, 2013, the following procedure may be substituted for the requirement in (d)(4)(i) of this section:
+
+(A) The employer must use a link/device manufactured on or before November 8, 2011, that meets the definition of an insulating link/device, except that it has not been approved by a Nationally Recognized Testing Laboratory, and that is maintained and used in accordance with manufacturer requirements and recommendations, and is installed at a point between the end of the load line (or below) and the load; and
+
+(B) All employees, excluding equipment operators located on the equipment, who may come in contact with the equipment, the load line, or the load must be insulated or guarded from the equipment, the load line, and the load through an additional means other than the device described in paragraph (d)(4)(v)(A) of this section. Insulating gloves rated for the voltage involved are adequate additional means of protection for the purposes of this paragraph.
+
+(5) Nonconductive rigging if the rigging may be within the Table A of § 1926.1408 distance during the operation.
+
+(6) If the equipment is equipped with a device that automatically limits range of movement, it must be used and set to prevent any part of the equipment, load line, or load (including rigging and lifting accessories) from breaching the minimum approach distance established under paragraph (c) of this section.
+
+(7) If a tag line is used, it must be of the nonconductive type.
+
+(8) Barricades forming a perimeter at least 10 feet away from the equipment to prevent unauthorized personnel from entering the work area. In areas where obstacles prevent the barricade from being at least 10 feet away, the barricade must be as far from the equipment as feasible.
+
+(9) Workers other than the operator must be prohibited from touching the load line above the insulating link/device and crane. Operators remotely operating the equipment from the ground must use either wireless controls that isolate the operator from the equipment or insulating mats that insulate the operator from the ground.
+
+(10) Only personnel essential to the operation are permitted to be in the area of the crane and load.
+
+(11) The equipment must be properly grounded.
+
+(12) Insulating line hose or cover-up must be installed by the utility owner/operator except where such devices are unavailable for the line voltages involved.
+
+(e) The procedures developed to comply with paragraph (d) of this section are documented and immediately available on-site.
+
+(f) The equipment user and utility owner/operator (or registered professional engineer) meet with the equipment operator and the other workers who will be in the area of the equipment or load to review the procedures that will be implemented to prevent breaching the minimum approach distance established in paragraph (c) of this section and prevent electrocution.
+
+(g) The procedures developed to comply with paragraph (d) of this section are implemented.
+
+(h) The utility owner/operator (or registered professional engineer) and all employers of employees involved in the work must identify one person who will direct the implementation of the procedures. The person identified in accordance with this paragraph must direct the implementation of the procedures and must have the authority to stop work at any time to ensure safety.
+
+(i) [Reserved]
+
+(j) If a problem occurs implementing the procedures being used to comply with paragraph (d) of this section, or indicating that those procedures are inadequate to prevent electrocution, the employer must safely stop operations and either develop new procedures to comply with paragraph (d) of this section or have the utility owner/operator deenergize and visibly ground or relocate the power line before resuming work.
+
+(k) Devices originally designed by the manufacturer for use as a safety device (see § 1926.1415), operational aid, or a means to prevent power line contact or electrocution, when used to comply with this section, must comply with the manufacturer's procedures for use and conditions of use.
+
+(l) [Reserved]
+
+(m) The employer must train each operator and crew member assigned to work with the equipment in accordance with § 1926.1408(g).
+
+[75 FR 48135, Aug. 9, 2010, as amended at 79 FR 20743, Apr. 11, 2014]
+
+§ 1926.1411 Power line safety—while traveling under or near power lines with no load.
+
+(a) This section establishes procedures and criteria that must be met for equipment traveling under or near a power line on a construction site with no load. Equipment traveling on a construction site with a load is governed by § 1926.1408, § 1926.1409 or § 1926.1410, whichever is appropriate, and § 1926.1417(u).
+
+(b) The employer must ensure that:
+
+(1) The boom/mast and boom/mast support system are lowered sufficiently to meet the requirements of this paragraph.
+
+(2) The clearances specified in Table T of this section are maintained.
+
+(3) The effects of speed and terrain on equipment movement (including movement of the boom/mast) are considered so that those effects do not cause the minimum clearance distances specified in Table T of this section to be breached.
+
+(4) Dedicated spotter. If any part of the equipment while traveling will get closer than 20 feet to the power line, the employer must ensure that a dedicated spotter who is in continuous contact with the driver/operator is used. The dedicated spotter must:
+
+(i) Be positioned to effectively gauge the clearance distance.
+
+(ii) Where necessary, use equipment that enables the dedicated spotter to communicate directly with the operator.
+
+(iii) Give timely information to the operator so that the required clearance distance can be maintained.
+
+(5) Additional precautions for traveling in poor visibility. When traveling at night, or in conditions of poor visibility, in addition to the measures specified in paragraphs (b)(1) through (4) of this section, the employer must ensure that:
+
+(i) The power lines are illuminated or another means of identifying the location of the lines is used.
+
+(ii) A safe path of travel is identified and used.
+
+Table T—Minimum Clearance Distances While Traveling With No Load
+
+Voltage
+
+(nominal, kV, alternating current) 	While traveling—minimum clearance distance
+
+(feet)
+
+up to 0.75 	4
+
+over .75 to 50 	6
+
+over 50 to 345 	10
+
+over 345 to 750 	16
+
+Over 750 to 1,000 	20
+
+Over 1,000 	(as established by the utility owner/operator or registered professional engineer who is a qualified person with respect to electrical power transmission and distribution).

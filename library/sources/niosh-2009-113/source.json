@@ -1,0 +1,14 @@
+{
+  "id": "niosh-2009-113",
+  "title": "Electrical Safety: Safety and Health for Electrical Trades, Student Manual (revised edition), DHHS (NIOSH) Publication No. 2009-113",
+  "publisher": "National Institute for Occupational Safety and Health (NIOSH), Centers for Disease Control and Prevention, US Department of Health and Human Services",
+  "url": "https://www.cdc.gov/niosh/docs/2009-113/pdfs/2009-113.pdf",
+  "retrieved": "2026-11-21",
+  "kind": "document",
+  "licence": "public domain (US federal work)",
+  "licence_evidence": "\"This document is in the public domain and may be freely copied or reprinted.\" (inside front cover and ordering information of the manual)",
+  "licence_url": "https://www.cdc.gov/niosh/docs/2009-113/pdfs/2009-113.pdf",
+  "sha256": "c5d468367a37d3659aa7ca42689e0559621d9f559fe5a6df5a4c4f73f13ef4de",
+  "pages": 92,
+  "note": "original.pdf is not kept: the manual's own Photo and Graphics Credits (printed page 81) mark photographs from P. Barber/CMSP, Corbis Images, M. English/CMSP, PhotoDisc and PhotoQuest with a copyright sign, and credit others (Fluke Corporation, R.K. Wright, M.D.), so the PDF holds third-party pictures that are not public domain. text.txt is pdftotext -layout output, which carries no pictures; each form feed ends a PDF page, and the sha256 is of the PDF as downloaded."
+}

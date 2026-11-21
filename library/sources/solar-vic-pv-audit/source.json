@@ -1,0 +1,14 @@
+{
+  "id": "solar-vic-pv-audit",
+  "title": "Solar PV audit checklist (print all), version 3.5, 20 Mar 2026",
+  "publisher": "Solar Victoria, State Government of Victoria (Australia)",
+  "url": "https://www.solar.vic.gov.au/solar-pv-audit-checklist/print-all",
+  "retrieved": "2026-11-21",
+  "kind": "web",
+  "licence": "CC BY 4.0",
+  "licence_evidence": "\"All material provided on this website is provided under a Creative Commons Attribution 4.0 International licence, except: any images, photographs or branding, including the Victorian Coat of Arms, the Victorian Government logo, the Solar Victoria logo and the Department of Energy, Environment and Climate Action logo; and content supplied by third parties\"",
+  "licence_url": "https://www.solar.vic.gov.au/copyright",
+  "attribution": "© Copyright State of Victoria (Department of Energy, Environment and Climate Action)",
+  "sha256": "4a9d44649058f7ed54b1d2f0ffdbefa539258cbcd55043c69b33df3a5943928b",
+  "note": "Same source as S1 in packs/seed-mc4-leads/manifest.json. original.html is not kept: the page as downloaded embeds flag images inline and links the Solar Victoria logo, and the site's licence excludes images and branding. text.txt is the page's text only; the sha256 is of the HTML as downloaded."
+}
