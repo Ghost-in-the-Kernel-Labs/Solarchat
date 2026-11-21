@@ -63,3 +63,10 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Opened**: `CLAUDE.md`, `docs/when/grades.md`, `TODO.md`, `solarchat/cli/main.py`, `solarchat/project/chat.py`, `docs/modules.json`, `test/support.py`, `test/test_cli.py`, `scripts/score.py`, `docs/CONTRACT.md`, `README.md`, `docs/journal/J-000-099.md`, `docs/NAVIGATION-LOG.md`.
 - **Complaints**: `scripts/score.py` cannot place an item that names no file, and the placing has to be simulated by hand (I called its functions with the files added to a copy of the text); a one-line way to ask "what would this item score if it named these files" would help.
 - **Suggestions**: that; and `docs/modules.json` has nothing to change for a new file in a module with no entry points, which the brief listed as in the working set.
+
+### 2026-11-21 · Tooling follow-ups: the lint and `worker_venv.py` (J-057, J-058) · Claude Sonnet 5.5
+
+- **Task**: fix `ruff check .` on main (J-057) and build `scripts/worker_venv.py` with its test and the coordinate.md change (J-058).
+- **Opened**: `CLAUDE.md`, `docs/when/grades.md`, `scripts/checks/bank.py`, `scripts/eval.py`, `solarchat/model/claude.py`, `test/support.py`, `test/test_cli.py`, `test/test_packs.py`, `test/test_speech.py`, `solarchat/project/speech.py`, `scripts/next_id.py`, `scripts/checks/readability.py`, `docs/when/coordinate.md`, `docs/paths/process.md`, `docs/journal/J-000-099.md`, `docs/NAVIGATION-LOG.md`.
+- **Complaints**: the brief's pass line for the lint cannot be met without a choice for nine `Any` annotations in `claude.py`; the repository does not say whether `Any` is meant to stay there. The readability check wants a docstring on test helper methods too, which `test_speech.py` does not need for its test methods.
+- **Suggestions**: decide the types for `claude.py` (a `Protocol` for the client and `ModuleType` for `errors` is the obvious candidate); add `ruff check .` to the fast loop, so a lint failure is found when it is made, not at the gate.
