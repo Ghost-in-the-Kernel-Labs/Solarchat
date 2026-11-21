@@ -133,6 +133,8 @@ solarchat --pack packs\seed-mc4-leads --demo
 
 In cmd.exe the PATH line is `set PATH=%CD%\bin;%PATH%`. After it, `solarchat` works from any folder. `solarchat --key` with no value asks for the key hidden, which keeps it out of PowerShell's history; it is stored in `%APPDATA%\solarchat\key`, outside the clone, and never printed or uploaded. On Linux and macOS the launcher is `bin/solarchat`.
 
+Add `--voice` (`solarchat --pack packs\seed-mc4-leads --demo --voice`) to hear each reply read aloud by the system's own voice (PowerShell's speech on Windows, `say` on macOS, `espeak` on Linux); the text is sent to the engine on its standard input, the citations are shown and not spoken, and with no engine the chat goes on in text.
+
 ## How a change is made
 
 A change is saved on a working branch (`scripts/save.sh`), passes the fast checks (`scripts/gate.sh --fast`), is
