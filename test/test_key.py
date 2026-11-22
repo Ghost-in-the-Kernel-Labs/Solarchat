@@ -37,7 +37,7 @@ class TheMenu(unittest.TestCase):
         self.assertIn("hidden", MENU)
 
     def test_the_chat_without_a_pack_exits_2_and_names_pack(self) -> None:
-        code, _, err = run(["--demo"])
+        code, _, err = run(["--voice"])
         self.assertEqual(code, 2)
         self.assertIn("--pack", err)
 

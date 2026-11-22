@@ -75,3 +75,4 @@ Written from `docs/journal/` by `scripts/journal_index.py`; do not edit by hand.
 | J-069 | SC-024 in force: a pack is the first safety authority for its make and model; TODO 1.26 added | decision | `J-000-099.md` |
 | J-070 | SC-024's design: declared coverage in the manifest, substitution in the door, a leaf change (TODO 1.26) | direction | `J-000-099.md` |
 | J-071 | SC-024's design questions answered: all five as recommended, the leaf change approved | decision | `J-000-099.md` |
+| J-072 | `solarchat --demo` alone starts the demo: the seed pack, spoken aloud, `--no-voice` for text | direction | `J-000-099.md` |

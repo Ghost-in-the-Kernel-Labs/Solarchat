@@ -161,3 +161,10 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Opened**: `docs/designs/pack-coverage.md`, `docs/HANDOFF.md`, `TODO.md`.
 - **Complaints**: none.
 - **Suggestions**: none.
+
+### 2026-11-22 · solarchat --demo alone (J-072) · Claude Sonnet 5.5
+
+- **Task**: make `solarchat --demo` start the demo on the seed pack with the voice on, `--no-voice` for text.
+- **Opened**: `CLAUDE.md`, `solarchat/cli/main.py`, `test/test_cli.py`, `test/test_speech.py`, `solarchat/project/chat.py`, `docs/modules.json` (MOD-02), `README.md`, `docs/when/handoff.md`, `docs/journal/J-000-099.md`.
+- **Complaints**: none; the brief named everything. `next_id.py` said J-072 (the reserved id was not visible to it).
+- **Suggestions**: none.
