@@ -147,3 +147,10 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Opened**: `theGhost.md` (SC-020, SC-024), `docs/CONTRACT.md` (HAD-04), `TODO.md`, `docs/ROADMAP.md`, `docs/HANDOFF.md`, `README.md`.
 - **Complaints**: every item added to Phase 1 renumbers its tune-up pass and five documents that cite it (third time: 1.15, 1.18, 1.25).
 - **Suggestions**: cite the phase's pass as "Phase 1's tune-up pass" rather than by number outside `TODO.md`.
+
+### 2026-11-22 · SC-024's design written (TODO 1.26, J-070) · Claude Opus 5.5
+
+- **Task**: design pack coverage of the safety rules before any build.
+- **Opened**: `docs/CONTRACT.md` (the pack format, HAD-03, HAD-04), `solarchat/leaf/contract.py` (`Reply`, `SafetyRule`), `solarchat/safety/rules.json` (the fourteen rules), `solarchat/answer/door.py`, `TODO.md` (1.10, 1.26).
+- **Complaints**: none.
+- **Suggestions**: none.
