@@ -258,6 +258,27 @@ that fails measures the model's words around the fixed layer (talking the worker
 lacks), which is what the bank exists to nudge; made a gate, a sampled, Haiku-graded check that flickers would be
 re-run until green and then ignored (Core C-001, C-023), which is worse than a trend read with care.
 
+### 5.4 Readings settled when 1.20 was built (J-065)
+
+The design was silent on these; the 1.20 worker took the minimal reading of each, and the coordinator (strong grade,
+design precision, Core C-003) settles them here, so 1.21 builds on them:
+
+1. **The sample (4.1).** "Safety rules first" means severity `safety`, not the family; the safety quarter is `size // 4`;
+   a rule's failure share is its "no" answers over all of its last five samplings, an `unclear` counted in the
+   denominator; draws are weighted, sequential and without replacement.
+2. **The ledger line (5.1).** `by_family` and `by_severity` are `{group: {"yes": n, "no": n, "unclear": n}}`;
+   `canaries` is `{"graded": n, "wrong": [ids]}`; `packs` is `[{"id": ..., "version": ...}]`. 1.21 adds `checks`, the
+   check model's verdict per re-graded rule (`{rule id: "yes" | "no" | "unclear"}`), so 5.3's clause "with the check model
+   agreeing" and the grader's per-rule disagreements can be read; until then the watch list is by failure count alone and
+   the page says so.
+3. **Pass share** is yes over yes plus no, with `unclear` shown apart. A family shows its last ten runs that sampled it.
+   The changes named beside a run are the prompt's or the grader's hash changing, the bot's model, and a pack's version;
+   guards join at 1.24. "Month so far" is the latest run's month, since a page its `--check` must reproduce has no clock.
+4. **The family-level signal (5.3)** compares the five runs before a named change with the five runs after it; it is
+   built with 1.21, once runs exist.
+5. **Before 1.10** no rule fires on the worker's words, so the door-fault cross-check finds nothing in a live run; its
+   test `test_before_1_10_no_trigger_of_any_rule_fires_with_no_answer` is the one 1.10 changes.
+
 ## 6. What the bot is told, and what may change it
 
 The bot's instructions are `SYSTEM_PROMPT` in `solarchat/model/claude.py`, then the guards in force, then the passages.

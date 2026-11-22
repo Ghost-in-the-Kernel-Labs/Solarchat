@@ -112,3 +112,10 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Opened**: `CLAUDE.md`, `docs/designs/rule-bank-and-triage.md`, `TODO.md`, `docs/when/handoff.md`, `docs/when/hand-out-a-task.md`, `solarchat/answer/door.py`, `solarchat/answer/stub.py`, `solarchat/safety/rules.py`, `scripts/eval.py`, `scripts/fast.sh`, `scripts/checks/bank.py`, `test/test_bank.py`, `scripts/safety_rules_doc.py`, `test/test_eval.py`, `solarchat/leaf/contract.py` (for `Reply`'s field name), `docs/JOURNAL.md`.
 - **Complaints**: 5.1 names its fields without their shapes (`canaries`, `by_family`, `tokens`, `packs`, `run`), and 5.3's check-model clause needs a per-rule check verdict that 5.1 does not record; 4.1 does not say whether "safety rules" are the severity or the family, how a quarter rounds, or whether an `unclear` counts as a sampling; the page's "month so far" needs a clock the design does not give a page that `--check` must reproduce.
 - **Suggestions**: add the shapes to 5.1 in one example line; add the per-rule check verdict to 5.1's `results`; name the readability rules (a docstring on nested test helpers, no `**kwargs`) in the "Before calling work done" section or the process row.
+
+### 2026-11-22 · The module map confirmed, 1.20's readings settled (J-065) · Claude Opus 5.5
+
+- **Task**: record Ghost's confirmation; write the 1.20 worker's six readings into the design.
+- **Opened**: `docs/designs/rule-bank-and-triage.md` (4.1, 5), `TODO.md` (1.21), `docs/HANDOFF.md`, `docs/modules.json`.
+- **Complaints**: a question asked only in chat (the module map) left no trace in the repository for two days.
+- **Suggestions**: a coordinator writes every question it puts to Ghost into `docs/HANDOFF.md` when it asks, not when it is answered.
