@@ -182,3 +182,9 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Opened**: `theGhost.md` (SC-020), `solarchat/safety/rules.json`, `solarchat/model/claude.py` (the system prompt), `solarchat/project/chat.py`, `docs/designs/answering-door.md`.
 - **Complaints**: SC-020 was in force for a day with nothing built, and the bot answered everyone as the newest contractor meanwhile; nothing flagged that an in-force decision had no item scheduled soon.
 - **Suggestions**: the tune-up could list in-force decisions whose build item is not in the next few.
+
+### 2026-11-22 · TODO 1.10 slice 1, the session profile and three lowerings (J-075) · Claude Sonnet 5.5
+- **Task**: build slice 1 of `docs/designs/session-profile.md`: the leaf's `Profile` and `lowered_for`, the loader, three lowerings, the door and the runner.
+- **Opened**: `docs/designs/session-profile.md`, `solarchat/safety/rules.py`, `solarchat/answer/door.py`, `solarchat/leaf/contract.py`, `solarchat/safety/rules.json`, `scripts/eval.py`, `evals/known-failures.json`, `scripts/eval_core.py`, `scripts/eval_record.py`, `test/test_door.py`, `test/test_safety.py`, `test/test_eval.py`, `test/test_leaf.py`, `docs/modules.json`, `docs/JOURNAL.md`.
+- **Complaints**: the brief named J-075, already taken on main; `scripts/next_id.py` gave J-075. The brief's "mns-09 now passes" cannot be told apart from "mns-09 always passed", since the stub never cites a passage and the door does not match the question yet.
+- **Suggestions**: a brief that names a journal id should say "or the next free one". `scripts/checks` could say which tests pin `known-failures.json` entries (test/test_eval.py pins the set of cases).

@@ -7,7 +7,7 @@ from pathlib import Path
 from solarchat.answer.door import DO_NOT_KNOW_TEXT, NO_PACK_TEXT, answer
 from solarchat.answer.recorded import RecordedAnswerer
 from solarchat.answer.stub import NoAnswer
-from solarchat.leaf.contract import DEMO_BANNER, Finding, Passage, PassageRef, ReplyKind, Turn
+from solarchat.leaf.contract import DEFAULT_PROFILE, DEMO_BANNER, Finding, Passage, PassageRef, Profile, Reply, ReplyKind, Turn
 from solarchat.packs.load import Pack, load_pack
 from solarchat.safety.rules import load_rules
 from test.support import ROOT, scratch
@@ -220,6 +220,80 @@ class Step6TheSafetyRules(unittest.TestCase):
         pack = planted((f"{trigger_of('SR-03')}",))
         plain = answer("q", (pack,), False, Spy(Finding((planted_ref(1),), "x")))
         banner = answer("q", (demo_copy(pack),), True, Spy(Finding((planted_ref(1),), "x")))
+        self.assertEqual(banner.text, DEMO_BANNER + "\n\n" + plain.text)
+
+
+LOWERINGS = (("SR-02", "meter", "stop"), ("SR-11", "battery", "stop"), ("SR-05", "height", "stop"))
+
+
+def signed_off(names: tuple[str, ...] = (), role: str = "crew") -> Profile:
+    """A profile of this role signed off for these: signed_off(("meter",)) is Profile("crew", frozenset({"meter"}))."""
+    return Profile(role, frozenset(names))
+
+
+class Step6TheProfile(unittest.TestCase):
+    """SC-020: a fired rule lowers for the profile's sign-off, only as its own lowered_for says, before the most severe is chosen."""
+
+    def reply(self, rule_id: str, profile: Profile | None = None) -> Reply:
+        """The door's reply to a planted passage that fires the rule, cited by a fake finding, for the profile."""
+        pack = planted((f"Be careful: {trigger_of(rule_id)}.",))
+        spy = Spy(Finding((planted_ref(1),), "Do it slowly."))
+        if profile is None:
+            return answer("How?", (pack,), False, spy)
+        return answer("How?", (pack,), False, spy, profile=profile)
+
+    def test_each_of_the_three_rules_warns_with_the_lowered_words_for_its_sign_off(self) -> None:
+        for rule_id, sign_off, _ in LOWERINGS:
+            with self.subTest(rule=rule_id):
+                reply = self.reply(rule_id, signed_off((sign_off,)))
+                lowering = RULES[rule_id].lowered_for[0]
+                self.assertEqual((reply.kind, reply.safety_rule_id, reply.passage_refs), (ReplyKind.WARN, rule_id, (planted_ref(1),)))
+                self.assertEqual(reply.text, lowering.words + "\n\nDo it slowly.\n\n"
+                                 "From: Planted 1 (Connecting a panel to a power station): Examplesun ES-100 installation manual, page 1")
+                self.assertNotIn(RULES[rule_id].words_shown, reply.text)
+
+    def test_without_the_sign_off_each_still_stops_as_before(self) -> None:
+        others = {"SR-02": ("battery", "height", "connector"), "SR-11": ("meter", "height", "connector"),
+                  "SR-05": ("meter", "battery", "connector")}
+        for rule_id, _, _ in LOWERINGS:
+            for profile in (DEFAULT_PROFILE, signed_off(), signed_off(others[rule_id], role="qualified"), Profile("qualified", frozenset())):
+                with self.subTest(rule=rule_id, profile=profile):
+                    reply = self.reply(rule_id, profile)
+                    self.assertEqual((reply.kind, reply.safety_rule_id, reply.passage_refs), (ReplyKind.STOP, rule_id, ()))
+                    self.assertTrue(reply.text.startswith(RULES[rule_id].words_shown))
+
+    def test_a_rule_not_in_the_table_never_lowers_for_any_profile(self) -> None:
+        everything = Profile("qualified", frozenset({"meter", "connector", "battery", "height"}))
+        for rule in load_rules():
+            if rule.lowered_for:
+                continue
+            with self.subTest(rule=rule.rule_id):
+                self.assertEqual(self.reply(rule.rule_id, everything), self.reply(rule.rule_id))
+                self.assertEqual(self.reply(rule.rule_id, everything).safety_rule_id, rule.rule_id)
+
+    def test_the_default_profile_gives_exactly_the_reply_there_was_with_no_profile(self) -> None:
+        for rule in load_rules():
+            with self.subTest(rule=rule.rule_id):
+                self.assertEqual(self.reply(rule.rule_id, DEFAULT_PROFILE), self.reply(rule.rule_id))
+
+    def test_a_lowered_rule_is_chosen_among_the_others_by_its_lowered_response(self) -> None:
+        pack = planted((trigger_of("SR-02"), trigger_of("SR-03")))
+        both = Finding((planted_ref(1), planted_ref(2)), "x")
+        self.assertEqual(answer("q", (pack,), False, Spy(both), profile=signed_off(("meter",))).safety_rule_id, "SR-02")
+        pack = planted((trigger_of("SR-02"), trigger_of("SR-07")))
+        self.assertEqual(answer("q", (pack,), False, Spy(both), profile=signed_off(("meter",))).safety_rule_id, "SR-07")
+        self.assertEqual(answer("q", (pack,), False, Spy(both)).safety_rule_id, "SR-02")
+
+    def test_a_lowered_rule_does_not_hide_another_that_still_stops(self) -> None:
+        pack = planted((f"{trigger_of('SR-11')} and {trigger_of('SR-08')}",))
+        reply = answer("q", (pack,), False, Spy(Finding((planted_ref(1),), "x")), profile=signed_off(("battery",), role="qualified"))
+        self.assertEqual((reply.kind, reply.safety_rule_id), (ReplyKind.STOP, "SR-08"))
+
+    def test_the_demo_banner_is_still_the_only_change_in_demo_mode_for_a_lowered_warn(self) -> None:
+        pack = planted((trigger_of("SR-02"),))
+        profile = signed_off(("meter",))
+        plain = answer("q", (pack,), False, Spy(Finding((planted_ref(1),), "x")), profile=profile)
+        banner = answer("q", (demo_copy(pack),), True, Spy(Finding((planted_ref(1),), "x")), profile=profile)
         self.assertEqual(banner.text, DEMO_BANNER + "\n\n" + plain.text)
 
 

@@ -155,8 +155,11 @@ class TheChangeLog(unittest.TestCase):
     def test_every_rules_latest_fingerprint_is_the_sha256_of_its_triggers_words_and_response(self) -> None:
         for rule in rules.load_rules():
             with self.subTest(rule=rule.rule_id):
-                canonical = json.dumps({"triggers": list(rule.triggers), "words_shown": rule.words_shown,
-                                        "response": rule.response}, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+                fields = {"triggers": list(rule.triggers), "words_shown": rule.words_shown, "response": rule.response}
+                if rule.lowered_for:  # SC-020: a rule with lowerings has them in its fingerprint; the others keep theirs
+                    fields["lowered_for"] = [{"signed_off": low.signed_off, "role": low.role, "response": low.response,
+                                              "words": low.words} for low in rule.lowered_for]
+                canonical = json.dumps(fields, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
                 self.assertEqual(rule.changes[-1].fingerprint, hashlib.sha256(canonical.encode("utf-8")).hexdigest())
                 self.assertEqual(rules.rule_fingerprint(rule), rule.changes[-1].fingerprint)
 

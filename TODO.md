@@ -32,6 +32,8 @@ Check: a worker's question fires a safety rule on its own words, whatever passag
 
 The session profile, its first step, is designed in `docs/designs/session-profile.md` (J-074; Ghost's answers recorded there); its two slices are built first, then the worker's-words matching.
 
+Slice 1 built (J-075): the leaf's `Profile` and `SafetyRule.lowered_for`, three lowerings (SR-02 meter, SR-11 battery, SR-05 height), the door's `profile` argument, `evals/profiles.json` and the runner; mns-09 left `known-failures.json`. Slice 2 (the questions, the explanation, the lowered warn's first line) and the worker's-words matching are next.
+
 ### 1.21 The model roles and the live bank run
 
 Check: `solarchat/model/roles.py`, a new file in the module `model` (the only importer of the SDK, SC-021), holds the interrogator, the grader and the explainer of the design's 4.2 and 7(a), each with an injectable client and a JSON schema; `test/test_roles.py` with a fake client holds that the grader's request carries the rule, the transcript and the cited passages and never `SYSTEM_PROMPT` or a guard, that the interrogator's request never carries the rule's question, and each schema's refusal and malformed reply; `scripts/bank_run.py --live` runs a sample through the door with `ClaudeAnswerer` (`--model`, Haiku 5.5 by default), grades it, grades the canaries in `evals/bank/canaries.json`, re-grades the spot-check sample on `--check-model`, prints the watch list, the tokens and the cost of each model, writes transcripts under `build/bank/` and one ledger line, with the `checks` field of the design's 5.4 (2); `--replay` re-grades stored transcripts with no bot call; `--live` is named by no gate script. The first live run is Ghost's, by hand.

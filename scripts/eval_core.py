@@ -21,13 +21,15 @@ class CannotRun(Exception):
 @dataclass(frozen=True)
 class Result:
     """One scored case: Result(case, False, "DO_NOT_KNOW", "ANSWER citing step-06") is a fail. `reply` is the door's reply
-    the case was scored on, kept for a live run's failure blocks; it is not part of a result's equality."""
+    the case was scored on, kept for a live run's failure blocks; it is not part of a result's equality. `profile` is the
+    profile the case ran under, {"role": ..., "signed_off": [...]}, or None for the default (SC-020)."""
 
     case: dict
     passed: bool
     expected: str
     got: str
     reply: Reply | None = field(default=None, compare=False)
+    profile: dict | None = None
 
 @dataclass(frozen=True)
 class Run:

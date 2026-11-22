@@ -8,7 +8,7 @@ import json
 import re
 from pathlib import Path
 
-from solarchat.leaf.contract import CHANGE_FIELDS, SafetyRule, SafetyRuleChange, SafetyRuleSource
+from solarchat.leaf.contract import CHANGE_FIELDS, SafetyLowering, SafetyRule, SafetyRuleChange, SafetyRuleSource
 
 RULES_PATH = Path(__file__).resolve().parent / "rules.json"
 PROCEDURES_FIRST_RULE_ID = "SR-01"
@@ -24,6 +24,14 @@ def change_from_entry(rule_id: str, number: int, entry: dict) -> SafetyRuleChang
     return SafetyRuleChange(*(entry[name] for name in CHANGE_FIELDS), fingerprint=entry.get("fingerprint"))
 
 
+# Decision: SC-020 (a rule's lowerings are data in rules.json: {"signed_off" or "role", "response", "words"})
+def lowering_from_entry(entry: dict) -> SafetyLowering:
+    """One lowered_for entry as a SafetyLowering: {"signed_off": "meter", "response": "warn", "words": "..."} stands; a
+    missing "response" or "words" is a KeyError."""
+    return SafetyLowering(response=entry["response"], words=entry["words"], signed_off=entry.get("signed_off"),
+                          role=entry.get("role"))
+
+
 def rule_from_entry(entry: dict) -> SafetyRule:
     """One rules.json entry as a SafetyRule: {"id": "SR-01", "title": ..., "sources": [{"title": ..., "url": ...}]}
     gives SafetyRule("SR-01", ...); a missing field raises KeyError, an incomplete rule ValueError. A missing
@@ -34,16 +42,22 @@ def rule_from_entry(entry: dict) -> SafetyRule:
     return SafetyRule(rule_id=entry["id"], title=entry["title"], applies_when=entry["applies_when"],
                       triggers=tuple(entry["triggers"]), words_shown=entry["words_shown"], sources=rule_sources,
                       response=entry.get("response", ""), changes=rule_changes,
-                      engineer_to_confirm=entry.get("engineer_to_confirm"))
+                      engineer_to_confirm=entry.get("engineer_to_confirm"),
+                      lowered_for=tuple(lowering_from_entry(lowering) for lowering in entry.get("lowered_for", [])))
 
 
 # Decision: SC-016 (the fingerprint is the sha256 of a canonical JSON of the rule's triggers, words_shown and response)
+# Decision: SC-020 (and its lowered_for, when it has any, so a lowering is never added without a change entry)
 def rule_fingerprint(rule: SafetyRule) -> str:
     """The hex sha256 of the UTF-8 of json.dumps({"response": ..., "triggers": [...], "words_shown": ...}) with sorted
-    keys, separators (",", ":") and no \\u escapes: a rule's fingerprint changes when any of the three does, and when
-    nothing else does (its title, sources and change log are not in it)."""
-    canonical = json.dumps({"triggers": list(rule.triggers), "words_shown": rule.words_shown, "response": rule.response},
-                           sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+    keys, separators (",", ":") and no \\u escapes, plus a "lowered_for" list of {"signed_off", "role", "response", "words"}
+    when the rule has lowerings: a rule's fingerprint changes when any of these does, and when nothing else does (its title,
+    sources and change log are not in it); a rule with no lowerings keeps the fingerprint it had before SC-020."""
+    fields: dict = {"triggers": list(rule.triggers), "words_shown": rule.words_shown, "response": rule.response}
+    if rule.lowered_for:
+        fields["lowered_for"] = [{"signed_off": lowering.signed_off, "role": lowering.role,
+                                  "response": lowering.response, "words": lowering.words} for lowering in rule.lowered_for]
+    canonical = json.dumps(fields, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
     return hashlib.sha256(canonical.encode("utf-8")).hexdigest()
 
 

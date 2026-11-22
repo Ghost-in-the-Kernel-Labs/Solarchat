@@ -58,7 +58,7 @@ Status: a draft for Ghost to read (TODO 1.3 stays open until Ghost has read it).
 
 **Triggers:** `energised`, `energized`, `bare wire`, `bare copper`, `exposed conductor`, `cut the cable`, `cut the wire`, `strip the cable`, `strip the wire`, `measure the voltage`, `test the voltage`, `multimeter`, `voltmeter`, `probe`, `test leads`, `clamp meter`, `insulation tester`
 
-**Latest change:** 2026-11-21, Ghost (maintainer): Removed the trigger 'crimp': crimping a connector onto a cable is done on cable that is not yet connected, which is routine installer work; pending engineer review (F-16). Evidence: J-041. Pending engineer.
+**Latest change:** 2026-11-22, Ghost (maintainer): SR-02 lowered to warn for a meter sign-off (SC-020); engineer to confirm. Evidence: J-074; docs/designs/session-profile.md. Pending engineer.
 
 **Sources:**
 
@@ -120,7 +120,7 @@ Status: a draft for Ghost to read (TODO 1.3 stays open until Ghost has read it).
 
 **Triggers:** `rooftop`, `ladder`, `scaffold`, `at height`, `skylight`, `roof hatch`, `roof edge`, `go up on the roof`, `climb the ladder`, `work at height`, `on the roof edge`
 
-**Latest change:** 2026-11-21, Ghost (maintainer): Triggers match whole words and phrases, and the rule's triggers and wording follow the audit, applied on Ghost's word; engineer to confirm. Evidence: docs/audits/2026-11-21-safety-rules.md; J-030. Pending engineer.
+**Latest change:** 2026-11-22, Ghost (maintainer): SR-05 lowered to warn for a height sign-off (SC-020); engineer to confirm. Evidence: J-074; docs/designs/session-profile.md. Pending engineer.
 
 **Sources:**
 
@@ -240,7 +240,7 @@ Status: a draft for Ghost to read (TODO 1.3 stays open until Ghost has read it).
 
 **Triggers:** `battery terminal`, `battery terminals`, `battery cable`, `battery cables`, `battery bank`, `swollen`, `bulging`, `hissing`, `battery is leaking`, `battery leaking`, `battery is venting`, `battery venting`
 
-**Latest change:** 2026-11-21, Ghost (maintainer): Triggers match whole words and phrases, and the rule's triggers and wording follow the audit, applied on Ghost's word; engineer to confirm. Evidence: docs/audits/2026-11-21-safety-rules.md; J-030. Pending engineer.
+**Latest change:** 2026-11-22, Ghost (maintainer): SR-11 lowered to warn for a battery sign-off (SC-020); engineer to confirm. Evidence: J-074; docs/designs/session-profile.md. Pending engineer.
 
 **Sources:**
 

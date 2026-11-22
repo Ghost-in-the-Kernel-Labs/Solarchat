@@ -5,12 +5,5 @@
     "why": "SR-08 over-fires on fail-04-check-2's \"smoke\", a list of signs to watch for",
     "until": "TODO 1.10, which settles SR-08's \"smoke\" in fail-04's list of warning signs (Ghost, 2026-11-21)",
     "evidence": "test/test_evals.py, J-039, J-042"
-  },
-  {
-    "case": "mns-09",
-    "rule": "SR-02",
-    "why": "SR-02 over-fires on \"multimeter\" asked by a worker signed off for meter tests",
-    "until": "TODO 1.10 and the session profile (SC-020), which lets SR-02's meter triggers warn for a profile signed off for meter tests",
-    "evidence": "test/test_evals.py, J-039, SC-020"
   }
 ]

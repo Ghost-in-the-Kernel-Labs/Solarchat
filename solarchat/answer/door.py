@@ -8,8 +8,8 @@ question (TODO 1.10). Standard library, the leaf, the packs module and the safet
 """
 from dataclasses import replace
 
-from solarchat.leaf.contract import (DEMO_BANNER, MAX_CITED_PASSAGES, SAFETY_RESPONSES, Answerer, Finding, Passage,
-                                     PassageRef, Reply, ReplyKind, SafetyRule, Turn, may_answer)
+from solarchat.leaf.contract import (DEFAULT_PROFILE, DEMO_BANNER, MAX_CITED_PASSAGES, SAFETY_RESPONSES, Answerer, Finding,
+                                     Passage, PassageRef, Profile, Reply, ReplyKind, SafetyRule, Turn, may_answer)
 from solarchat.packs.load import Pack, citation_lines
 from solarchat.safety.rules import load_rules, rules_fired
 
@@ -65,13 +65,28 @@ def usable_places(packs: tuple[Pack, ...], demo_mode: bool) -> dict[PassageRef, 
     return places
 
 
+# Decision: SC-020 (a rule lowers, in response and words, for the profile's sign-off or role, only as its own lowered_for says)
+def lowered_for_profile(rule: SafetyRule, profile: Profile) -> SafetyRule:
+    """The rule as the profile meets it: the lowest response of the rule's lowerings that match the profile, with that
+    lowering's words in place of words_shown; the rule itself when none matches (always so for the default profile and for
+    a rule with no lowered_for). The lowered copy keeps the id and carries no lowerings."""
+    matching = [lowering for lowering in rule.lowered_for if lowering.matches(profile)]
+    if not matching:
+        return rule
+    lowest = min(matching, key=lambda lowering: SAFETY_RESPONSES.index(lowering.response))
+    return replace(rule, response=lowest.response, words_shown=lowest.words, lowered_for=())
+
+
 # Decision: SC-015 (the most severe response of the rules fired wins, then the lowest id; the answerer cannot skip it)
 # Invariant: HAD-04 (a rule fires on the cited passages' text, whatever the answerer said)
 def fired_by_citations(finding: Finding, places: dict[PassageRef, tuple[Pack, Passage]],
-                       rules: tuple[SafetyRule, ...]) -> tuple[SafetyRule, Pack, Passage] | None:
-    """The rule to apply and the first cited passage that fires it, or None when no cited passage fires one: of every rule
-    fired by a cited passage's text, the most severe response by its index in SAFETY_RESPONSES, then the lowest id."""
-    by_id = {rule.rule_id: rule for rule in rules}
+                       rules: tuple[SafetyRule, ...], profile: Profile = DEFAULT_PROFILE) -> tuple[SafetyRule, Pack, Passage] | None:
+    """The rule to apply and the first cited passage that fires it, or None when no cited passage fires one: each fired rule
+    is first lowered for the profile (SC-020), then of them the most severe response by its index in SAFETY_RESPONSES, then
+    the lowest id."""
+    # Decision: SC-024 (a pack that covers a rule is applied before a lowering, and a profile never lowers a covered rule;
+    # the door does not apply coverage yet, TODO 1.26 slice 2: when it does, a covered rule skips lowered_for_profile here).
+    by_id = {rule.rule_id: lowered_for_profile(rule, profile) for rule in rules}
     fired = [(by_id[rule_id], *places[ref]) for ref in finding.refs for rule_id in rules_fired(places[ref][1].text, rules)]
     if not fired:
         return None
@@ -96,12 +111,13 @@ def safety_reply(rule: SafetyRule, pack: Pack, passage: Passage, finding: Findin
 # Decision: SC-019 (one door, an answerer passed in; the steps in order, each returning at once when it gives a reply)
 # Invariant: HAD-06 (only may_answer lets a pack's passages reach the answerer)
 def answer(question: str, packs: tuple[Pack, ...], demo_mode: bool, answerer: Answerer,
-           history: tuple[Turn, ...] = ()) -> Reply:
+           history: tuple[Turn, ...] = (), profile: Profile = DEFAULT_PROFILE) -> Reply:
     """The reply to a question: answer("", packs, True, NoAnswer()) is "I do not know" with the banner and the answerer
     is never called; a finding citing one given passage is an ANSWER with its sources. Steps: empty question; packs that
     may answer; find; hold the answerer to the contract; "I do not know"; the safety rules on the cited passages' text (a
     stop, an emergency or a warn, SC-015); the answer; the demo banner. `history` is the turns so far, passed to the answerer unchanged (SC-019, amended
-    2026-11-21); the door's other steps do not read it. What the answerer raises is a bug and reaches the caller."""
+    2026-11-21); the door's other steps do not read it. `profile` is who is asking (SC-020): the default is the newest contractor, which
+    gives the replies there were before it; a rule lowers for a profile only as its own lowered_for says. What the answerer raises is a bug and reaches the caller."""
     if not question.strip():
         return with_banner(do_not_know(DO_NOT_KNOW_TEXT), demo_mode)
     places = usable_places(packs, demo_mode)
@@ -111,7 +127,7 @@ def answer(question: str, packs: tuple[Pack, ...], demo_mode: bool, answerer: An
     finding = answerer.find(question, given, history)
     if breaks_contract(finding, given) or not finding.refs:
         return with_banner(do_not_know(DO_NOT_KNOW_TEXT), demo_mode)
-    hit = fired_by_citations(finding, places, load_rules())
+    hit = fired_by_citations(finding, places, load_rules(), profile)
     if hit:
         rule, pack, passage = hit
         return with_banner(safety_reply(rule, pack, passage, finding, places), demo_mode)
