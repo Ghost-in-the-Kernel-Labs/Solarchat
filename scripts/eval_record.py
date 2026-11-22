@@ -24,11 +24,14 @@ def known_note(run_known: dict[str, dict], case_id: str) -> str:
 
 
 def case_entry(result: Result, known: dict[str, dict]) -> dict:
-    """One case of the record; a failing known case carries "known": "<why>, until <until>"."""
+    """One case of the record; a failing known case carries "known": "<why>, until <until>", and a case that ran under a
+    profile other than the default carries "profile": {"role": ..., "signed_off": [...]} (SC-020)."""
     entry = {"id": result.case["id"], "class": result.case["class"], "question": result.case["question"],
              "result": "pass" if result.passed else "fail", "expected": result.expected, "got": result.got}
     if not result.passed and result.case["id"] in known:
         entry["known"] = known_note(known, result.case["id"])
+    if result.profile:
+        entry["profile"] = result.profile
     return entry
 
 

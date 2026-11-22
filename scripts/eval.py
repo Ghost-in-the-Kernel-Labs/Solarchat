@@ -20,6 +20,7 @@ failure as a block, the table, the tokens and the estimated cost, and writes eve
 import argparse
 import json
 import sys
+from dataclasses import replace
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -33,7 +34,7 @@ from scripts.eval_record import (build_record, check_lines, failed, failure_line
 from solarchat.answer.door import answer  # noqa: E402
 from solarchat.answer.recorded import RecordedAnswerer  # noqa: E402
 from solarchat.answer.stub import NoAnswer  # noqa: E402
-from solarchat.leaf.contract import may_answer  # noqa: E402
+from solarchat.leaf.contract import DEFAULT_PROFILE, Profile, may_answer  # noqa: E402
 from solarchat.model.claude import DEFAULT_MODEL, MODELS  # noqa: E402
 from solarchat.packs.load import load_pack  # noqa: E402
 from solarchat.safety.rules import load_rules  # noqa: E402
@@ -122,6 +123,39 @@ def load_known(set_path: Path, document: dict) -> tuple[dict[str, dict], str | N
     return {entry["case"]: entry for entry in entries}, sha_of(path.read_bytes())
 
 
+# Decision: SC-020 (a case's profile is a side file beside the set, so the frozen set and its hash are untouched)
+def load_profiles(set_path: Path, document: dict) -> dict[str, Profile]:
+    """The profile of each case that has one, from `profiles.json` in the set's folder ({"mns-09": {"role": "qualified",
+    "signed_off": ["meter"]}}); no file gives {}; a malformed file, a case not in the set or an entry the leaf refuses
+    raises CannotRun."""
+    path = set_path.parent / "profiles.json"
+    if not path.is_file():
+        return {}
+    try:
+        entries = json.loads(path.read_bytes())
+    except ValueError as error:
+        raise CannotRun(f"{path}: {error}") from error
+    if not isinstance(entries, dict):
+        raise CannotRun(f"{path}: not a map of case id to profile")
+    known_ids = {case["id"] for case in document["cases"]}
+    profiles = {}
+    for case_id, entry in entries.items():
+        try:
+            profiles[case_id] = Profile(entry["role"], frozenset(entry["signed_off"]))
+        except (KeyError, TypeError, ValueError) as error:
+            raise CannotRun(f"{path}: {case_id}: {error}") from error
+        if case_id not in known_ids:
+            raise CannotRun(f"{path}: {case_id} is not a case of the set")
+    return profiles
+
+
+def profile_record(profile: Profile) -> dict | None:
+    """What the record shows of a profile: None for the default, else {"role": "qualified", "signed_off": ["meter"]}."""
+    if profile == DEFAULT_PROFILE:
+        return None
+    return {"role": profile.role, "signed_off": sorted(profile.signed_off)}
+
+
 def choose_answerer(args: argparse.Namespace, set_sha: str) -> object:
     """The answerer the options name: offline is NoAnswer (TODO 1.8 replaces it); claude is the live model answerer, which
     records what it finds (no key is CannotRun); recorded replays --replies and must be recorded against this set, or
@@ -159,8 +193,12 @@ def prepare(args: argparse.Namespace) -> Run:
                         else f"{pack.pack_id} has the status {status!r}, which may not answer (HAD-06)")
     answerer = choose_answerer(args, set_sha)
     rules = {rule.rule_id: rule for rule in load_rules()}
-    results = [score_case(case, answer(case["question"], (pack,), args.demo, answerer), document["pack"], rules)
-               for case in document["cases"]]
+    profiles = load_profiles(set_path, document)
+    results = []
+    for case in document["cases"]:
+        profile = profiles.get(case["id"], DEFAULT_PROFILE)
+        reply = answer(case["question"], (pack,), args.demo, answerer, profile=profile)
+        results.append(replace(score_case(case, reply, document["pack"], rules), profile=profile_record(profile)))
     known, known_sha = load_known(set_path, document)
     return Run(set_path, set_sha, document, pack, answerer.name, args.demo, results, known, known_sha, answerer)
 

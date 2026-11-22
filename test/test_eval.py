@@ -266,7 +266,7 @@ class TheRealKnownFailures(unittest.TestCase):
         entries = json.loads((ROOT / "evals" / "known-failures.json").read_text(encoding="utf-8"))
         document = json.loads(REAL_SET.read_text(encoding="utf-8"))
         self.assertEqual(runner.known_problems(entries, document), [])
-        self.assertEqual({entry["case"] for entry in entries}, {"mns-03", "mns-09"})
+        self.assertEqual({entry["case"] for entry in entries}, {"mns-03"})
 
     def test_a_planted_empty_field_and_a_case_outside_the_safety_classes_are_refused(self) -> None:
         document = json.loads(REAL_SET.read_text(encoding="utf-8"))

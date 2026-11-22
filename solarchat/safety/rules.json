@@ -22,6 +22,10 @@
     "triggers": ["energised", "energized", "bare wire", "bare copper", "exposed conductor", "cut the cable", "cut the wire", "strip the cable", "strip the wire", "measure the voltage", "test the voltage", "multimeter", "voltmeter", "probe", "test leads", "clamp meter", "insulation tester"],
     "words_shown": "Stop. Treat every panel and its wiring as live in daylight. Switching off the inverter or the mains does not make it safe. Do not touch, cut or test it yourself. Go to your site supervisor or engineer.",
     "response": "stop",
+    "lowered_for": [
+      {"signed_off": "meter", "response": "warn",
+       "words": "You are signed off for meter tests: use a meter and test leads rated for the string's DC voltage, measure at the connectors, never across a loaded circuit."}
+    ],
     "sources": [
       {"title": "Ontario: Firefighter guidance note 6-34, solar photovoltaic systems (panels stay energised while light reaches them)", "url": "https://www.ontario.ca/document/firefighter-guidance-notes/6-34-solar-photovoltaic-systems"},
       {"title": "OSHA: Green Job Hazards, Solar Energy, Electrical", "url": "https://www.osha.gov/green-jobs/solar/electrical"},
@@ -32,7 +36,8 @@
     "changes": [
       {"date": "2026-11-21", "by": "Claude Opus 5.5", "role": "agent, drafting", "why": "Version 1: drafted from public guidance for the newest contractor on a site; engineer to confirm.", "evidence": "J-027; the sources listed on this rule"},
       {"date": "2026-11-21", "by": "Ghost", "role": "maintainer", "why": "Triggers match whole words and phrases, and the rule's triggers and wording follow the audit, applied on Ghost's word; engineer to confirm.", "evidence": "docs/audits/2026-11-21-safety-rules.md; J-030", "fingerprint": "6b8bc896060102b8e3fe543544922a30f89f9e41d3a9a2b21705d21c7f1ee279"},
-      {"date": "2026-11-21", "by": "Ghost", "role": "maintainer", "why": "Removed the trigger 'crimp': crimping a connector onto a cable is done on cable that is not yet connected, which is routine installer work; pending engineer review (F-16)", "evidence": "J-041", "fingerprint": "680c54e5126e8d9cd4f943abb8949b8633ac54686004e6c4fc01f78ae3a37064"}
+      {"date": "2026-11-21", "by": "Ghost", "role": "maintainer", "why": "Removed the trigger 'crimp': crimping a connector onto a cable is done on cable that is not yet connected, which is routine installer work; pending engineer review (F-16)", "evidence": "J-041", "fingerprint": "680c54e5126e8d9cd4f943abb8949b8633ac54686004e6c4fc01f78ae3a37064"},
+      {"date": "2026-11-22", "by": "Ghost", "role": "maintainer", "why": "SR-02 lowered to warn for a meter sign-off (SC-020); engineer to confirm", "evidence": "J-074; docs/designs/session-profile.md", "fingerprint": "f24110a23757c58d83dd508f78a008d0f95488b5f2c41ed94b681e8fc1e2f265"}
     ]
   },
   {
@@ -77,6 +82,10 @@
     "triggers": ["rooftop", "ladder", "scaffold", "at height", "skylight", "roof hatch", "roof edge", "go up on the roof", "climb the ladder", "work at height", "on the roof edge"],
     "words_shown": "Stop. Do not go up or near an edge until your supervisor has shown you the fall protection for this job and it is in place. Never climb a ladder carrying a panel. Go to your site supervisor or engineer.",
     "response": "stop",
+    "lowered_for": [
+      {"signed_off": "height", "response": "warn",
+       "words": "You are signed off for work at height: do not go up or near an edge until the fall protection for this job is in place. Never climb a ladder carrying a panel."}
+    ],
     "sources": [
       {"title": "OSHA: Green Job Hazards, Solar Energy, Falls (library: osha-solar-falls)", "url": "https://www.osha.gov/green-jobs/solar/falls"},
       {"title": "OSHA: 29 CFR 1910 Subpart D, walking-working surfaces (1910.23 skylights; 4 feet or more in maintenance work; library: osha-1910-d)", "url": "https://www.ecfr.gov/current/title-29/part-1910/subpart-D"},
@@ -85,7 +94,8 @@
     ],
     "changes": [
       {"date": "2026-11-21", "by": "Claude Opus 5.5", "role": "agent, drafting", "why": "Version 1: drafted from public guidance for the newest contractor on a site; engineer to confirm.", "evidence": "J-027; the sources listed on this rule"},
-      {"date": "2026-11-21", "by": "Ghost", "role": "maintainer", "why": "Triggers match whole words and phrases, and the rule's triggers and wording follow the audit, applied on Ghost's word; engineer to confirm.", "evidence": "docs/audits/2026-11-21-safety-rules.md; J-030", "fingerprint": "d421664561cee04d1239121a672e26f959e6a4383b8f89d5e4cd99bbf7a7e633"}
+      {"date": "2026-11-21", "by": "Ghost", "role": "maintainer", "why": "Triggers match whole words and phrases, and the rule's triggers and wording follow the audit, applied on Ghost's word; engineer to confirm.", "evidence": "docs/audits/2026-11-21-safety-rules.md; J-030", "fingerprint": "d421664561cee04d1239121a672e26f959e6a4383b8f89d5e4cd99bbf7a7e633"},
+      {"date": "2026-11-22", "by": "Ghost", "role": "maintainer", "why": "SR-05 lowered to warn for a height sign-off (SC-020); engineer to confirm", "evidence": "J-074; docs/designs/session-profile.md", "fingerprint": "47387889d934676bb1f8fbdaf52a82c67888e307511cc529ba54cc8fc5e7bdc2"}
     ]
   },
   {
@@ -181,12 +191,17 @@
     "triggers": ["battery terminal", "battery terminals", "battery cable", "battery cables", "battery bank", "swollen", "bulging", "hissing", "battery is leaking", "battery leaking", "battery is venting", "battery venting"],
     "words_shown": "Stop. Do not work on battery terminals or cables, and keep away from a battery that is swollen, hot, leaking, hissing or smells. A battery can burn, explode or give off toxic gas, and it cannot be switched off. Go to your site supervisor or engineer.",
     "response": "stop",
+    "lowered_for": [
+      {"signed_off": "battery", "response": "warn",
+       "words": "You are signed off for battery and controller wiring: keep away from a battery that is swollen, hot, leaking, hissing or smells. A battery can burn, explode or give off toxic gas, and it cannot be switched off."}
+    ],
     "sources": [
       {"title": "OSHA: Lithium-ion Battery Safety, Hazards (heat, venting gas or smoke; toxic gases; library: osha-lithium-ion-hazards)", "url": "https://www.osha.gov/lithium-ion-battery-safety/hazards"}
     ],
     "changes": [
       {"date": "2026-11-21", "by": "Claude Opus 5.5", "role": "agent, drafting", "why": "Version 1: drafted from public guidance for the newest contractor on a site; engineer to confirm.", "evidence": "J-027; the sources listed on this rule"},
-      {"date": "2026-11-21", "by": "Ghost", "role": "maintainer", "why": "Triggers match whole words and phrases, and the rule's triggers and wording follow the audit, applied on Ghost's word; engineer to confirm.", "evidence": "docs/audits/2026-11-21-safety-rules.md; J-030", "fingerprint": "1c4b37312fd164b422f62b84558bc4d6e816b460a3f1a875297263d3c1ec81ee"}
+      {"date": "2026-11-21", "by": "Ghost", "role": "maintainer", "why": "Triggers match whole words and phrases, and the rule's triggers and wording follow the audit, applied on Ghost's word; engineer to confirm.", "evidence": "docs/audits/2026-11-21-safety-rules.md; J-030", "fingerprint": "1c4b37312fd164b422f62b84558bc4d6e816b460a3f1a875297263d3c1ec81ee"},
+      {"date": "2026-11-22", "by": "Ghost", "role": "maintainer", "why": "SR-11 lowered to warn for a battery sign-off (SC-020); engineer to confirm", "evidence": "J-074; docs/designs/session-profile.md", "fingerprint": "10a044aef87d7306dfa9d869b420a472539bcc90093215e76fd8f53b05303c26"}
     ]
   },
   {

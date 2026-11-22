@@ -2,7 +2,8 @@
 import json
 import unittest
 
-from solarchat.leaf.contract import DEMO_BANNER, MAX_CITED_PASSAGES, Finding, Passage, PassageRef, Reply, ReplyKind, SafetyCoverage, may_answer
+from solarchat.leaf.contract import (DEFAULT_PROFILE, DEMO_BANNER, MAX_CITED_PASSAGES, Finding, Passage, PassageRef, Profile, Reply,
+                                     ReplyKind, SafetyCoverage, SafetyLowering, SafetyRule, SafetyRuleChange, SafetyRuleSource, may_answer)
 from test.support import ROOT
 
 STEP = PassageRef("seed-mc4-leads", "step-06")
@@ -113,3 +114,69 @@ class TheSafetyCoverage(unittest.TestCase):
                           ("SR-02", "warn", ("a",), {"by": "Ghost"}), ("SR-02", "warn", ("a",), {**self.DECLARED, "role": ""})):
             with self.subTest(arguments=arguments), self.assertRaisesRegex(ValueError, "SC-0(24|16)"):
                 SafetyCoverage(*arguments)
+
+
+class TheProfile(unittest.TestCase):
+    """SC-020: a profile is a role and the sign-offs, refused at construction otherwise."""
+
+    def test_each_role_and_each_sign_off_stands(self) -> None:
+        for role in ("new", "crew", "qualified"):
+            self.assertEqual(Profile(role, frozenset()).role, role)
+        everything = frozenset({"meter", "connector", "battery", "height"})
+        self.assertEqual(Profile("qualified", everything).signed_off, everything)
+
+    def test_the_default_is_the_newest_contractor_signed_off_for_nothing(self) -> None:
+        self.assertEqual(DEFAULT_PROFILE, Profile("new", frozenset()))
+
+    def test_an_unknown_role_or_sign_off_or_a_signed_off_that_is_not_a_frozenset_is_refused(self) -> None:
+        for arguments in (("boss", frozenset()), ("", frozenset()), ("new", frozenset({"roof"})),
+                          ("qualified", frozenset({"meter", "welding"})), ("new", ["meter"]), ("new", {"meter"}), ("new", None)):
+            with self.subTest(arguments=arguments), self.assertRaisesRegex(ValueError, "SC-020"):
+                Profile(*arguments)
+
+
+class TheLowerings(unittest.TestCase):
+    """SC-020: a rule's lowered_for is refused at construction when it breaks the decision."""
+
+    def rule(self, response: str = "stop", lowerings: tuple = ()) -> SafetyRule:
+        """A rule of this response holding these lowerings: self.rule("stop", (SafetyLowering("warn", "w", signed_off="meter"),))."""
+        return SafetyRule("SR-02", "t", "a", ("probe",), "Stop. Go to your site supervisor or engineer.",
+                          (SafetyRuleSource("HSE", "https://www.hse.gov.uk/"),), response,
+                          (SafetyRuleChange("2026-11-22", "Ghost", "maintainer", "w.", "J-074"),), lowered_for=lowerings)
+
+    def test_a_rule_has_no_lowerings_by_default(self) -> None:
+        self.assertEqual(self.rule().lowered_for, ())
+
+    def test_a_stop_may_lower_to_warn_for_a_sign_off_or_a_role(self) -> None:
+        by_sign_off = SafetyLowering("warn", "You are signed off.", signed_off="meter")
+        by_role = SafetyLowering("warn", "You are qualified.", role="qualified")
+        self.assertEqual(self.rule("stop", (by_sign_off, by_role)).lowered_for, (by_sign_off, by_role))
+
+    def test_an_emergency_never_carries_a_lowering(self) -> None:
+        with self.assertRaisesRegex(ValueError, "an emergency never carries lowered_for"):
+            self.rule("emergency", (SafetyLowering("warn", "w", signed_off="meter"),))
+        with self.assertRaisesRegex(ValueError, "an emergency never carries lowered_for"):
+            self.rule("emergency", (SafetyLowering("stop", "w", signed_off="meter"),))
+
+    def test_a_lowering_that_is_not_lower_than_its_rule_is_refused(self) -> None:
+        for rule_response, lowered in (("stop", "stop"), ("stop", "emergency"), ("warn", "warn"), ("warn", "stop"), ("stop", "halt")):
+            with self.subTest(rule=rule_response, lowering=lowered), self.assertRaisesRegex(ValueError, "not lower than the rule's"):
+                self.rule(rule_response, (SafetyLowering(lowered, "w", signed_off="meter"),))
+
+    def test_a_lowering_names_exactly_one_known_sign_off_or_role(self) -> None:
+        for lowering, message in ((SafetyLowering("warn", "w"), "exactly one"),
+                                  (SafetyLowering("warn", "w", signed_off="meter", role="qualified"), "exactly one"),
+                                  (SafetyLowering("warn", "w", signed_off="roof"), "signed_off 'roof'"),
+                                  (SafetyLowering("warn", "w", role="boss"), "role 'boss'"),
+                                  (SafetyLowering("warn", " ", signed_off="meter"), "has words"),
+                                  ({"response": "warn"}, "lowerings only")):
+            with self.subTest(lowering=lowering), self.assertRaisesRegex(ValueError, message):
+                self.rule("stop", (lowering,))
+
+    def test_a_lowering_matches_the_sign_off_or_the_role_and_nothing_else(self) -> None:
+        meter, qualified = SafetyLowering("warn", "w", signed_off="meter"), SafetyLowering("warn", "w", role="qualified")
+        self.assertTrue(meter.matches(Profile("new", frozenset({"meter"}))))
+        self.assertFalse(meter.matches(Profile("qualified", frozenset({"battery"}))))
+        self.assertFalse(meter.matches(DEFAULT_PROFILE))
+        self.assertTrue(qualified.matches(Profile("qualified", frozenset())))
+        self.assertFalse(qualified.matches(Profile("crew", frozenset({"meter"}))))

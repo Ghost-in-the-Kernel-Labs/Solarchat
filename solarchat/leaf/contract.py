@@ -15,6 +15,9 @@ CHANGE_FIELDS = ("date", "by", "role", "why", "evidence")
 DECLARED_FIELDS = ("by", "role", "date", "evidence")
 COVERAGE_RESPONSES = ("warn", "stop")
 EMERGENCY_RULE_IDS = ("SR-08", "SR-09")
+# Decision: SC-020 (who the bot is talking to: a role and the sign-offs the worker's supervisor has given, self-declared)
+PROFILE_ROLES = ("new", "crew", "qualified")
+PROFILE_SIGN_OFFS = ("meter", "connector", "battery", "height")
 # Decision: SC-019 (a reply cites at most this many passages; more is an answerer's breach, answered with "I do not know")
 MAX_CITED_PASSAGES = 3
 # Decision: SC-019 (SC-010's words, one home: every reply shown in demo mode starts with them)
@@ -185,6 +188,74 @@ class SafetyRuleChange:
 
 
 @dataclass(frozen=True)
+class Profile:
+    """Who the bot is talking to, for one chat session: a role and the sign-offs the worker says they hold.
+
+    Decision: SC-020 (role is "new", "crew" or "qualified"; signed_off is a frozenset of "meter", "connector", "battery"
+    and "height"; nothing else is held, and the default is the newest contractor, so no profile gives today's replies).
+    Profile("qualified", frozenset({"meter"})) stands; Profile("boss", frozenset()), Profile("new", frozenset({"roof"})) or
+    a signed_off that is a list raises ValueError.
+    """
+
+    role: str
+    signed_off: frozenset[str]
+
+    def __post_init__(self) -> None:
+        """Raise ValueError when the profile breaks SC-020 (the examples are in the class docstring)."""
+        if self.role not in PROFILE_ROLES:
+            raise ValueError(f"role {self.role!r} is not one of {', '.join(PROFILE_ROLES)} (SC-020)")
+        if not isinstance(self.signed_off, frozenset) or not self.signed_off <= set(PROFILE_SIGN_OFFS):
+            raise ValueError(f"signed_off is a frozenset of {', '.join(PROFILE_SIGN_OFFS)} (SC-020)")
+
+
+DEFAULT_PROFILE = Profile("new", frozenset())
+
+
+@dataclass(frozen=True)
+class SafetyLowering:
+    """One way a profile lowers a rule: for a sign-off or a role, the rule gives a lower response with these words instead.
+
+    Decision: SC-020 (exactly one of signed_off or role names the profile answer; response is lower than the rule's own,
+    checked with the rule; words replace the rule's words_shown and are the precautions that still apply).
+    SafetyLowering("warn", "You are signed off for meter tests: ...", signed_off="meter") stands; the same with both signed_off
+    and role, or neither, raises ValueError in the rule that holds it.
+    """
+
+    response: str
+    words: str
+    signed_off: str | None = None
+    role: str | None = None
+
+    def matches(self, profile: Profile) -> bool:
+        """Whether the profile has the sign-off or the role this names: a "meter" lowering matches Profile("crew",
+        frozenset({"meter"})) and not DEFAULT_PROFILE."""
+        if self.signed_off is not None:
+            return self.signed_off in profile.signed_off
+        return self.role == profile.role
+
+
+# Decision: SC-020 (a lowering is for a stop only; an emergency never lowers; a lowering is lower than its rule and names a known answer)
+def lowering_problem(rule_id: str, response: str, lowering: object) -> str | None:
+    """What is wrong with one lowering of a rule, or None: a lowering of an emergency rule gives "SR-08: an emergency never
+    carries lowered_for (SC-020)"; a "stop" lowering of a "stop" rule gives "... is not lower than the rule's stop (SC-020)"."""
+    if not isinstance(lowering, SafetyLowering):
+        return f"{rule_id}: lowered_for holds lowerings only (SC-020)"
+    if response == "emergency":
+        return f"{rule_id}: an emergency never carries lowered_for (SC-020)"
+    if (lowering.signed_off is None) == (lowering.role is None):
+        return f"{rule_id}: a lowering names exactly one of signed_off or role (SC-020)"
+    if lowering.signed_off is not None and lowering.signed_off not in PROFILE_SIGN_OFFS:
+        return f"{rule_id}: signed_off {lowering.signed_off!r} is not one of {', '.join(PROFILE_SIGN_OFFS)} (SC-020)"
+    if lowering.role is not None and lowering.role not in PROFILE_ROLES:
+        return f"{rule_id}: role {lowering.role!r} is not one of {', '.join(PROFILE_ROLES)} (SC-020)"
+    if lowering.response not in SAFETY_RESPONSES or SAFETY_RESPONSES.index(lowering.response) >= SAFETY_RESPONSES.index(response):
+        return f"{rule_id}: a lowering's response {lowering.response!r} is not lower than the rule's {response} (SC-020)"
+    if not isinstance(lowering.words, str) or not lowering.words.strip():
+        return f"{rule_id}: a lowering has words (SC-020)"
+    return None
+
+
+@dataclass(frozen=True)
 class SafetyRule:
     """One of the project's own fixed safety rules (`solarchat/safety/rules.json`), refused at construction when incomplete.
 
@@ -192,6 +263,7 @@ class SafetyRule:
     make it apply, at least one public source, a response and a change log).
     Decision: SC-015 (its response is exactly "warn", "stop" or "emergency").
     Decision: SC-016 (its change log has at least one entry, each with date, by, role, why and evidence).
+    Decision: SC-020 (`lowered_for`, default empty, holds the lowerings a profile may apply; an emergency has none).
     SafetyRule("SR-01", "Site first", "Always.", ("site procedure",), "Stop. Go to your site supervisor or engineer.",
     (SafetyRuleSource("HSE", "https://www.hse.gov.uk/"),), "stop", (SafetyRuleChange("2026-11-21", "Ghost", "maintainer",
     "First draft.", "J-027"),)) stands; the same with triggers=(), response="halt" or changes=() raises ValueError.
@@ -206,6 +278,7 @@ class SafetyRule:
     response: str
     changes: tuple[SafetyRuleChange, ...]
     engineer_to_confirm: str | None = None
+    lowered_for: tuple[SafetyLowering, ...] = ()
 
     def __post_init__(self) -> None:
         """Raise ValueError when the rule breaks HAD-04 (the examples are in the class docstring)."""
@@ -228,6 +301,10 @@ def safety_rule_problem(rule: SafetyRule) -> str | None:
         return f"{rule.rule_id}: a rule has at least one source, each with a title and an https address (HAD-04)"
     if rule.response not in SAFETY_RESPONSES:
         return f"{rule.rule_id}: response {rule.response!r} is not one of {', '.join(SAFETY_RESPONSES)} (SC-015)"
+    for lowering in rule.lowered_for:
+        lowered = lowering_problem(rule.rule_id, rule.response, lowering)
+        if lowered:
+            return lowered
     return changes_problem(rule)
 
 
