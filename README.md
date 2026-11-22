@@ -148,7 +148,7 @@ solarchat --demo
 
 In cmd.exe the PATH line is `set PATH=%CD%\bin;%PATH%`. After it, `solarchat` works from any folder. `solarchat --key` with no value asks for the key hidden, which keeps it out of PowerShell's history; it is stored in `%APPDATA%\solarchat\key`, outside the clone, and never printed or uploaded. On Linux and macOS the launcher is `bin/solarchat`.
 
-`solarchat --demo` chats on the seed pack and reads each reply aloud by the system's own voice; add `--no-voice` (`solarchat --demo --no-voice`) for text only. `--voice` turns the voice on without `--demo`. The voice is the system's own (PowerShell's speech on Windows, `say` on macOS, `espeak` on Linux); the text is sent to the engine on its standard input, the citations are shown and not spoken, and with no engine the chat goes on in text.
+`solarchat --demo` chats on the seed pack and reads each reply aloud by the system's own voice; add `--no-voice` (`solarchat --demo --no-voice`) for text only. `--voice` turns the voice on without `--demo`. The voice is the system's own (PowerShell's speech on Windows, `say` on macOS, `espeak` on Linux); the text is sent to the engine on its standard input, the citations are shown and not spoken, and with no engine the chat goes on in text. The bot first asks two questions (your role, and what you are signed off for); `solarchat --demo --role qualified --signed-off battery` skips them.
 
 ## How a change is made
 
