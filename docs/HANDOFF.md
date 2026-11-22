@@ -167,6 +167,17 @@ which passage to show.
 21. **Journal ids across branches, and ruff: answered** (J-062, Ghost, 2026-11-22: "go with your recommendations"): the
     coordinator renumbers a branch's journal entry by hand at landing, and no renumbering script is written; `ruff
     check .` now runs in the fast checks (`stacks/python/gate.sh --fast`), so lint is caught at each landing.
+22. **SR-08's sentence ("do not touch the connector; cover the panel or turn off the switch"): S6 and S7 do not state it** (J-066):
+    S6 (BRE) and S7 (PVEL/HelioVolta) have no page saying do not touch or pull apart a hot, burnt or arcing connector, and none
+    saying cover the panel or open a switch for one. S6's pages 12 and 17 say the opposite of a solution: DC cables upstream of an
+    isolator cannot easily be isolated, and a safe emergency method of isolating there is still to be researched (that is the
+    caveat of (c), S6 page 12). S7 page 4 and the footnote of page 6 say connectors are only safely unplugged or opened when not
+    under load. S3 (Trina manual) supports half, for work on modules and not for a fire: page 3 (do not disconnect under load;
+    cover with an opaque cover if needed), page 14 (use a DC switch before disconnecting), page 15 (do not touch live parts of
+    cables and connectors; cover the front when repairing). Page numbers are printed and PDF alike. Ghost's choices: keep SR-08
+    without the sentence (current state), or word one from S3 only and limit it to what S3 says, or accept it as unsourced
+    guidance flagged "engineer to confirm". The quotes are in the worker's report. S6 was not added to the library: its page 3
+    allows distribution only entire and unamended, with no Open Government Licence statement in the PDF; S7 is copyrighted.
 
 Audit advisories (tune-up step 2): the python gate runs no audit step, so none are listed. An audit tool
 (`pip-audit` or the like) would be a new dependency, Ghost's to approve; until then the review's layers 1, 2 and 4

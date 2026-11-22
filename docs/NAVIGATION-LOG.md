@@ -119,3 +119,10 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Opened**: `docs/designs/rule-bank-and-triage.md` (4.1, 5), `TODO.md` (1.21), `docs/HANDOFF.md`, `docs/modules.json`.
 - **Complaints**: a question asked only in chat (the module map) left no trace in the repository for two days.
 - **Suggestions**: a coordinator writes every question it puts to Ghost into `docs/HANDOFF.md` when it asks, not when it is answered.
+
+### 2026-11-22 · Sourcing for SR-08's sentence, S6, S7, S3 (J-066) · Claude Sonnet 5.5
+
+- **Task**: find which page of S6 or S7 (then S3) states do-not-touch, stop-the-current and caveat claims for a hot or arcing connector; add S6 to the library only if its licence allows.
+- **Opened**: `CLAUDE.md` (given), `library/README.md`, `library/sources/osha-solar-lockout-tagout/source.json`, `docs/when/handoff.md`, `docs/when/hand-out-a-task.md`, `solarchat/safety/rules.json` (SR-08 only), `packs/seed-mc4-leads/manifest.json`, `docs/journal/INDEX.md`, `docs/journal/J-000-099.md` (tail), `docs/JOURNAL.md`, `docs/HANDOFF.md`.
+- **Complaints**: none; the brief named everything.
+- **Suggestions**: `library/README.md` could say what to do with a document whose own notice limits distribution but whose host page may carry another licence (S6 is this case).
