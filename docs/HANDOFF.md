@@ -185,13 +185,9 @@ which passage to show.
     rule, a page per covering passage, an emergency floor for SR-08 and SR-09, the pack cited, handed-over packs only, and
     the engineer's packet. HAD-04 and SC-020 carry the amendment; TODO 1.26 designs and builds it, before Phase 1's tune-up
     pass, now 1.27. Nothing waits on you here until 1.26's design asks.
-24. **SC-024's design, five questions** (J-070; `docs/designs/pack-coverage.md`, section 9): (1) the leaf change: `Reply`
-    gains `covered_by`, and a stop a pack covers may name the pack's passages (recommended: yes; SC-024 (4) needs it);
-    (2) with several packs switched on, a hazard in the worker's words belongs to the one pack on or the pack the answer
-    cited, otherwise the general rule applies (recommended); (3) the check holds that a covering passage cites a paged
-    document, and the engineer confirms it is the maker's own manual (recommended); (4) a session profile never lowers a
-    rule a pack covers (recommended: yes); (5) only a make-and-model pack may declare coverage, not an installation-type
-    pack such as the seed pack (recommended: yes).
+24. **SC-024's design: answered** (J-070 asked; J-071 records your answer of 2026-11-22, "go with your
+    recommendations"): all five as recommended, the leaf change (`Reply.covered_by`) approved. Slice 1 (the format and
+    the check) is being built; slice 2 (the leaf and the door) follows.
 
 Audit advisories (tune-up step 2): the python gate runs no audit step, so none are listed. An audit tool
 (`pip-audit` or the like) would be a new dependency, Ghost's to approve; until then the review's layers 1, 2 and 4

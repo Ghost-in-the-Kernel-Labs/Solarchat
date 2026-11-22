@@ -133,3 +133,10 @@ passages, their sources and pages, and `declared`, marked "engineer to confirm" 
 5. **Make and model only** (section 3 (4)): an installation-type pack, like the seed pack, cannot declare coverage.
    Recommended: yes, as SC-024 says "a specific make and model"; say if a type pack written from one maker's manual
    should be able to.
+
+### Ghost's answers, 2026-11-22 (in chat: "go with your recommendations")
+
+All five as recommended (J-071): (1) the leaf change is approved: `Reply.covered_by`, and a stop a pack covers names
+the pack's passages; (2) with several packs on, a worker's-words hit belongs to the one pack on or the pack cited, else
+the general rule applies; (3) the check holds a paged `document`, and the engineer confirms it is the maker's own manual;
+(4) a session profile never lowers a covered rule; (5) only a make-and-model pack may declare coverage.

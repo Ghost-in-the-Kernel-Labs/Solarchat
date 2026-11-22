@@ -154,3 +154,10 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Opened**: `docs/CONTRACT.md` (the pack format, HAD-03, HAD-04), `solarchat/leaf/contract.py` (`Reply`, `SafetyRule`), `solarchat/safety/rules.json` (the fourteen rules), `solarchat/answer/door.py`, `TODO.md` (1.10, 1.26).
 - **Complaints**: none.
 - **Suggestions**: none.
+
+### 2026-11-22 · SC-024's design answered (J-071) · Claude Opus 5.5
+
+- **Task**: record Ghost's five answers before slice 1 starts.
+- **Opened**: `docs/designs/pack-coverage.md`, `docs/HANDOFF.md`, `TODO.md`.
+- **Complaints**: none.
+- **Suggestions**: none.

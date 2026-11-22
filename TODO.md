@@ -50,7 +50,7 @@ Check: `solarchat/model/guards.json` in the shape of the design's section 6, app
 
 Check: first a design in `docs/designs/` (SC-024 in force, Ghost 2026-11-22; HAD-04 as amended): the manifest's coverage field (per rule id: the covering passages and the response each gives), how the door's step 6 and 1.10's worker's-words step choose a covering passage over the general rule, how the walker (2.3) does the same, the emergency floor for SR-08 and SR-09, what a reply shows and cites, and how a session records which pack covered which rule; Ghost's questions ranked, if any. Then the build: the pack check refuses a declaration that names an unknown rule, a passage not in the pack, a covering passage whose citation page is "unknown", a declaration in a pack that is neither `field` nor a `demo` pack on Ghost's word, and any declaration that lowers SR-08 or SR-09, each by a planted break under `test/fixtures/broken/packs/`; the door gives a covering passage's response and words, cited, in place of the rule, and the general rule wherever no declaration exists, each shown by a test on a fixture pack; the engineer's packet (1.14) lists every declaration. The seed pack declares nothing until Ghost names one.
 
-Design written: `docs/designs/pack-coverage.md` (J-070), its section 8 the slices and section 9 Ghost's five questions; slice 1 (the format and the check) may be built before they are answered, slice 2 (the leaf and the door) after.
+Design written: `docs/designs/pack-coverage.md` (J-070), its section 8 the slices and section 9 Ghost's five questions; Ghost answered all five as recommended (J-071), the leaf change approved; the slices are built in order.
 
 ### 1.27 Tune-up pass 1
 
