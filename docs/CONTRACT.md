@@ -119,6 +119,7 @@ digits joined by hyphens (`no-output`). A pack's text is data (HAD-05): nothing 
 | `sources` | a non-empty list of sources: where each fact in the pack comes from |
 | `third_party_images` | a list (it may be empty or absent) of the pictures copied from elsewhere (SC-007) |
 | `status` | required, exactly `"field"` or `"demo"`; any other value, or none, is refused (SC-013) |
+| `safety_coverage` | optional (absent or empty: the pack covers nothing): a list of declarations that some of the pack's own passages cover the hazard of a general safety rule (SC-024), below |
 
 A pack gives `make` and `model`, or `installation_type`, or all three; a pack with neither, or with one of `make` and
 `model` alone, is refused.
@@ -135,6 +136,25 @@ a person can check it), `licence` (the licence as the source states it, or the w
 what a source allows is what the person who loads the packs must weigh, SC-005) and `retrieved` (the date it was read; extra:
 a source changes). The check holds that the licence is written down, not that it allows redistribution; that is the
 person's judgement when the packs are loaded, and a licence that forbids redistribution never puts its pack in the repository (Core C-033).
+
+### A declaration of coverage (SC-024)
+
+Only a make-and-model pack may hold `safety_coverage`, and it is the one place in a pack that may name a safety rule
+(HAD-04); a rule named or overridden anywhere else in a pack is refused as before. A declaration has:
+
+| Field | Holds |
+| --- | --- |
+| `rule` | the id of a general rule in `solarchat/safety/rules.json`; a rule appears at most once in a pack's list |
+| `response` | what the pack's instruction is: `"warn"` (the worker may go on, with the pack's precautions) or `"stop"`; for SR-08 and SR-09 only `"emergency"` |
+| `passages` | one or more of the pack's own passage ids, in the order they are shown; their text is the instruction; at least one cites a `document` source with a page that is a number (or numbers: "3", "3, 14", "5-6"), so `"unknown"` never covers anything |
+| `declared` | who declared it, in what role, when, on what evidence (SC-016's shape: `by`, `role`, `date`, `evidence`, each with something in it); required on a `demo` pack, whose `role` must be `"maintainer"` (Ghost's word); not required on a `field` pack (handing it over is the approval, SC-013), but whole when given |
+
+A declaration never lists an `answer`: covering a hazard means saying what to do about it, so the reply is still a warn or
+a stop (SC-024 (4)). The check refuses a rule that is not a general rule's id or is listed twice, a passage that is not
+the pack's or an empty list, a covering passage with no paged `document` citation, `safety_coverage` in a pack that gives
+`installation_type` without `make` and `model`, a response out of place, and a `demo` declaration without a maintainer's
+`declared`. It cannot tell that a `document` source is the maker's own manual; that is the engineer's to confirm, so the
+check prints, for each declaration of a well-formed pack, the rule, the response and the covering passages' sources with pages.
 
 ### A citation (SC-012)
 

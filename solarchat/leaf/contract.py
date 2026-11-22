@@ -11,6 +11,10 @@ from typing import Protocol
 SAFETY_RULE_ID_PATTERN = re.compile(r"^SR-\d{2}$")
 SAFETY_RESPONSES = ("warn", "stop", "emergency")
 CHANGE_FIELDS = ("date", "by", "role", "why", "evidence")
+# Decision: SC-024 (a pack's declaration of coverage says who declared it, in SC-016's shape; SR-08 and SR-09 stay emergencies)
+DECLARED_FIELDS = ("by", "role", "date", "evidence")
+COVERAGE_RESPONSES = ("warn", "stop")
+EMERGENCY_RULE_IDS = ("SR-08", "SR-09")
 # Decision: SC-019 (a reply cites at most this many passages; more is an answerer's breach, answered with "I do not know")
 MAX_CITED_PASSAGES = 3
 # Decision: SC-019 (SC-010's words, one home: every reply shown in demo mode starts with them)
@@ -241,4 +245,48 @@ def changes_problem(rule: SafetyRule) -> str | None:
             date.fromisoformat(change.date)
         except ValueError:
             return f"{rule.rule_id}: change {number} has a date that is not ISO, YYYY-MM-DD (SC-016)"
+    return None
+
+
+@dataclass(frozen=True)
+class SafetyCoverage:
+    """One declaration in a pack's manifest that its own passages cover a general safety rule, refused at construction
+    when incomplete.
+
+    Decision: SC-024 (a make-and-model pack may declare that some of its passages cover the hazard of a rule; the response is
+    "warn" or "stop", and for SR-08 and SR-09 only "emergency"; the passages are the pack's own, in the order shown).
+    Decision: SC-016 (`declared`, when given, holds by, role, date and evidence, each with something in it; a field pack
+    may leave it out, so the default is None).
+    SafetyCoverage("SR-02", "warn", ("meter-check-1",), {"by": "Ghost", "role": "maintainer", "date": "2026-11-23",
+    "evidence": "J-072"}) stands; the same with passages=(), response="emergency" (for SR-02) or a declared with no "by"
+    raises ValueError.
+    """
+
+    rule: str
+    response: str
+    passages: tuple[str, ...]
+    declared: dict[str, str] | None = None
+
+    def __post_init__(self) -> None:
+        """Raise ValueError when the declaration breaks SC-024 (the examples are in the class docstring)."""
+        coverage_breach = safety_coverage_problem(self)
+        if coverage_breach:
+            raise ValueError(coverage_breach)
+
+
+def safety_coverage_problem(coverage: SafetyCoverage) -> str | None:
+    """What makes a declaration incomplete, or None: a rule that is not SR-nn gives "'X': a covered rule's id is SR- and
+    two digits (SC-024)"; SR-08 with the response "warn" gives "SR-08: the response is emergency (SC-024)"."""
+    if not isinstance(coverage.rule, str) or not SAFETY_RULE_ID_PATTERN.match(coverage.rule):
+        return f"{coverage.rule!r}: a covered rule's id is SR- and two digits (SC-024)"
+    allowed = ("emergency",) if coverage.rule in EMERGENCY_RULE_IDS else COVERAGE_RESPONSES
+    if coverage.response not in allowed:
+        return f"{coverage.rule}: the response is {' or '.join(allowed)}, not {coverage.response!r} (SC-024)"
+    if not coverage.passages or any(not isinstance(passage, str) or not passage.strip() for passage in coverage.passages):
+        return f"{coverage.rule}: a declaration names at least one passage, each with an id (SC-024)"
+    if coverage.declared is None:
+        return None
+    declared = coverage.declared
+    if not isinstance(declared, dict) or any(not isinstance(declared.get(name), str) or not declared[name].strip() for name in DECLARED_FIELDS):
+        return f"{coverage.rule}: declared has {', '.join(DECLARED_FIELDS)}, each with something in it (SC-016)"
     return None

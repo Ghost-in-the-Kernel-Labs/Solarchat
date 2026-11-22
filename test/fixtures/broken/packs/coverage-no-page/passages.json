@@ -1,0 +1,59 @@
+[
+  {
+    "id": "voltage",
+    "title": "Check the voltages match",
+    "text": "The panel's open-circuit voltage must be below the device's highest solar input voltage.",
+    "sources": [
+      {
+        "source": "S1",
+        "page": "1"
+      }
+    ],
+    "image": "images/step-1.svg",
+    "image_alt": "A label with a line marked Voc."
+  },
+  {
+    "id": "label",
+    "title": "Reading the label",
+    "text": "The specification label lists Voc.",
+    "sources": [
+      {
+        "source": "S1",
+        "page": "1"
+      },
+      "S2"
+    ],
+    "image": "images/third-party/label.svg",
+    "image_alt": "The specification label."
+  },
+  {
+    "id": "live-panel",
+    "title": "A panel is live in the light",
+    "text": "Cover the panel with an opaque sheet before you touch a lead, and check with a meter that the leads read zero volts.",
+    "sources": [
+      {
+        "source": "S1",
+        "page": "3, 4"
+      }
+    ]
+  },
+  {
+    "id": "heat-smoke",
+    "title": "If a lead or the panel gets hot",
+    "text": "If a lead or the panel is hot, smells of burning or gives off smoke, step away and call the site supervisor at once.",
+    "sources": [
+      {
+        "source": "S1",
+        "page": "5-6"
+      }
+    ]
+  },
+  {
+    "id": "unpaged",
+    "title": "Web only",
+    "text": "Cover the panel before touching a lead.",
+    "sources": [
+      "S2"
+    ]
+  }
+]
