@@ -106,6 +106,16 @@ class TheExitCodes(unittest.TestCase):
             with self.subTest(name):
                 self.assertEqual(run(on_tiny(record, extra))[0], 2)
 
+    def test_a_live_run_is_a_trend_not_a_record(self) -> None:
+        record = new_record()
+        for name, extra in {"--live --write": ["--live", "--write"], "claude, --live and --write": ["--answerer", "claude", "--live", "--write"]}.items():
+            with self.subTest(name):
+                code, out, err = run(on_tiny(record, extra))
+                self.assertEqual(code, 2)
+                self.assertIn("a live run is a trend, not a record (SC-023)", err)
+                self.assertEqual(out, "")
+                self.assertFalse(record.exists())
+
     def test_exit_2_when_the_record_is_the_set_itself(self) -> None:
         code, _, err = run(on_tiny(TINY, []))
         self.assertEqual(code, 2)
