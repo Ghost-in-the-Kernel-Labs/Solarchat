@@ -191,6 +191,12 @@ which passage to show.
 24. **SC-024's design: answered** (J-070 asked; J-071 records your answer of 2026-11-22, "go with your
     recommendations"): all five as recommended, the leaf change (`Reply.covered_by`) approved. Slice 1 (the format and
     the check) is being built; slice 2 (the leaf and the door) follows.
+25. **Tune-up commit 2's open question** (J-075): two debriefs (J-056, J-063) found that `scripts/score.py` cannot place an
+    item that names no file, and that an unplaced item's score depends on which files the placer names (6 points with the
+    files edited, 9 with `scripts/fast.sh` named). A way to ask what an item would score for given files, and a way to mark
+    files that are only read or run, are changes to `scripts/score.py` and `docs/when/grades.md`, outside a tune-up's
+    may-change list. Needs: your word on whether to build it (a TODO item), or that items should name their files so no
+    worker places them.
 
 Audit advisories (tune-up step 2): the python gate runs no audit step, so none are listed. An audit tool
 (`pip-audit` or the like) would be a new dependency, Ghost's to approve; until then the review's layers 1, 2 and 4

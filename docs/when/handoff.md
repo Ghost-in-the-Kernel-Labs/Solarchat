@@ -6,6 +6,13 @@ report, the Cost line): `docs/when/hand-out-a-task.md`.
 ## Finishing a task
 
 1. The fast loop green (`scripts/fast.sh`), and the item's own check where it has one.
+   Where source lines or `# Decision:` citations changed, the generated files first: `python3 -I scripts/metrics.py --write`
+   and `python3 -I scripts/directive_map.py`; a journal entry adds `python3 -I scripts/journal_index.py` (J-061).
+   A brief's journal id may differ from `python3 -I scripts/next_id.py journal` (the script cannot see ids reserved on
+   other branches): use the brief's; the coordinator renumbers at landing (`docs/HANDOFF.md`, For Ghost 21).
+   A built item also leaves some living documents stale: check that `README.md`, `docs/HANDOFF.md`,
+   `docs/SAFETY-AND-COMPLIANCE.md`, `docs/ROADMAP.md`'s status words and `docs/CONTRACT.md`'s pointers still say what is
+   built, and name any you did not change in your debrief (J-053, J-055, J-057).
 2. Your debrief in `docs/NAVIGATION-LOG.md`, as its header says: Task, Opened (files, in order),
    Complaints, Suggestions. Not the task's own findings; those go in the journal. "none" is an answer.
 3. Your journal entry, if an event happened (a contradiction, a decision, a failure caught).
