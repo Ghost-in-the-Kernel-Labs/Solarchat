@@ -77,6 +77,9 @@ which passage to show.
   (SC-022 point 6); a command menu and `solarchat --key`; speech out first, speech in later (J-054; TODO 2.5, 2.7).
 - 2026-11-22: the module map confirmed: `project` may import `answer` and `model` (`docs/modules.json`; asked in chat
   at TODO 1.16, J-048; confirmed, J-065).
+- 2026-11-22: the session profile's design (SC-020, `docs/designs/session-profile.md`): two questions, a fourth sign-off
+  for battery and controller wiring, SR-02, SR-11 and SR-05 lowered to warn for their sign-off and no other rule, the
+  leaf change, no company override yet (J-074).
 - The wording of SC-002 to SC-008 is the agent's, for Ghost to confirm.
 
 ## For Ghost: waiting on you

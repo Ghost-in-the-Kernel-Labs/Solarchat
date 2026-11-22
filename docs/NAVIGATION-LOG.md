@@ -175,3 +175,10 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Opened**: `CLAUDE.md`, `solarchat/cli/main.py`, `test/test_cli.py`, `test/test_speech.py`, `solarchat/project/chat.py`, `docs/modules.json` (MOD-02), `README.md`, `docs/when/handoff.md`, `docs/journal/J-000-099.md`.
 - **Complaints**: none; the brief named everything. `next_id.py` said J-073 (the reserved id was not visible to it).
 - **Suggestions**: none.
+
+### 2026-11-22 · The session profile designed (SC-020, J-074) · Claude Opus 5.5
+
+- **Task**: design SC-020's profile for the demo and record Ghost's answers.
+- **Opened**: `theGhost.md` (SC-020), `solarchat/safety/rules.json`, `solarchat/model/claude.py` (the system prompt), `solarchat/project/chat.py`, `docs/designs/answering-door.md`.
+- **Complaints**: SC-020 was in force for a day with nothing built, and the bot answered everyone as the newest contractor meanwhile; nothing flagged that an in-force decision had no item scheduled soon.
+- **Suggestions**: the tune-up could list in-force decisions whose build item is not in the next few.
