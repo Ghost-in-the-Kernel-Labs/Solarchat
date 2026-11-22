@@ -32,7 +32,7 @@ Check: a worker's question fires a safety rule on its own words, whatever passag
 
 The session profile, its first step, is designed in `docs/designs/session-profile.md` (J-074; Ghost's answers recorded there); its two slices are built first, then the worker's-words matching, designed in `docs/designs/worker-words.md` (J-075).
 
-Slice 1 built (J-077): the leaf's `Profile` and `SafetyRule.lowered_for`, three lowerings (SR-02 meter, SR-11 battery, SR-05 height), the door's `profile` argument, `evals/profiles.json` and the runner; mns-09 left `known-failures.json`. Slice 2 (the questions, the explanation, the lowered warn's first line) and the worker's-words matching are next.
+Slice 1 built (J-077): the leaf's `Profile` and `SafetyRule.lowered_for`, three lowerings (SR-02 meter, SR-11 battery, SR-05 height), the door's `profile` argument, `evals/profiles.json` and the runner; mns-09 left `known-failures.json`. Slice 2 built (J-078): the two questions, `--role` and `--signed-off`, the profile line to the answerer and its Depth paragraph, the lowered warn's first line. The worker's-words matching is next.
 
 ### 1.21 The model roles and the live bank run
 

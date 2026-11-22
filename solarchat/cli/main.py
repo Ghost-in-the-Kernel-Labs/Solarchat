@@ -3,7 +3,7 @@ import argparse
 import sys
 from typing import TextIO
 
-from solarchat.project.chat import DEFAULT_MODEL, DEMO_PACK, MODEL_CHOICES, start_chat
+from solarchat.project.chat import DEFAULT_MODEL, DEMO_PACK, MODEL_CHOICES, parse_signed_off, start_chat
 from solarchat.project.keys import forget_key_command, store_key_command
 
 MENU = """solarchat: walks you through setting up and fixing your solar panels, from the manuals in a pack.
@@ -23,9 +23,20 @@ Chat options (with --pack or --demo):
   --no-voice                keep the demo silent, text only: solarchat --demo --no-voice
   --answerer claude|stub    who answers: claude (the default) or stub, which says "I do not know": solarchat --pack P --answerer stub
   --model <model>           the Claude model, claude-sonnet-5-5 (the default) or claude-haiku-5-5: solarchat --pack P --model claude-haiku-5-5
+  --role new|crew|qualified   your role, so the bot does not ask: solarchat --pack P --demo --role qualified
+  --signed-off <list>       what you are signed off for, from meter,connector,battery,height (or none); skips the question.
+                            Both given skip both questions: solarchat --demo --role qualified --signed-off battery
 
 The chat uses ANTHROPIC_API_KEY when it is set, else the key stored by solarchat --key. The key is never shown or uploaded.
 """
+
+
+def signed_off_value(text: str) -> frozenset[str]:
+    """The --signed-off value as a set, or an argparse error in words: signed_off_value("meter,battery") has both."""
+    try:
+        return parse_signed_off(text)
+    except ValueError as problem:
+        raise argparse.ArgumentTypeError(str(problem)) from None
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -40,6 +51,8 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--voice", action="store_true", help="speak each reply aloud through the system's own voice")
     parser.add_argument("--no-voice", action="store_true", help="no speech, even with --demo")
     parser.add_argument("--answerer", choices=("claude", "stub"), default="claude")
+    parser.add_argument("--role", choices=("new", "crew", "qualified"), help="your role; skips the first question")
+    parser.add_argument("--signed-off", type=signed_off_value, help="meter,connector,battery,height or none; skips the second question")
     parser.add_argument("--model", choices=MODEL_CHOICES, default=DEFAULT_MODEL, help="the Claude model (claude-sonnet-5-5 unless testing)")
     return parser
 
@@ -64,4 +77,4 @@ def main(argv: list[str], stdin: TextIO | None = None, stdout: TextIO | None = N
         return 2
     pack = args.pack or str(DEMO_PACK)
     voice = (args.voice or args.demo) and not args.no_voice
-    return start_chat(pack, args.demo, args.answerer, stdin or sys.stdin, out, err, args.model, voice)
+    return start_chat(pack, args.demo, args.answerer, stdin or sys.stdin, out, err, args.model, voice, args.role, args.signed_off)
