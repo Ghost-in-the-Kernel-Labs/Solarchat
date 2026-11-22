@@ -78,3 +78,4 @@ Written from `docs/journal/` by `scripts/journal_index.py`; do not edit by hand.
 | J-072 | TODO 1.26 slice 1 built: safety_coverage in the pack format, the check's six refusals, SafetyCoverage | feature | `J-000-099.md` |
 | J-073 | `solarchat --demo` alone starts the demo: the seed pack, spoken aloud, `--no-voice` for text | direction | `J-000-099.md` |
 | J-074 | The session profile designed and answered: who the bot is talking to (SC-020, TODO 1.10's first step) | decision | `J-000-099.md` |
+| J-075 | The safety rules on the worker's own words designed; Ghost's trigger decisions (the rest of TODO 1.10) | decision | `J-000-099.md` |

@@ -182,3 +182,10 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Opened**: `theGhost.md` (SC-020), `solarchat/safety/rules.json`, `solarchat/model/claude.py` (the system prompt), `solarchat/project/chat.py`, `docs/designs/answering-door.md`.
 - **Complaints**: SC-020 was in force for a day with nothing built, and the bot answered everyone as the newest contractor meanwhile; nothing flagged that an in-force decision had no item scheduled soon.
 - **Suggestions**: the tune-up could list in-force decisions whose build item is not in the next few.
+
+### 2026-11-22 · The worker's-words step designed (1.10, J-075) · Claude Opus 5.5
+
+- **Task**: design the rest of 1.10 and take Ghost's trigger decisions.
+- **Opened**: `evals/v1.json`, `solarchat/safety/rules.json` (SR-07, SR-08, SR-14), `TODO.md` (1.10).
+- **Complaints**: none.
+- **Suggestions**: a script that runs the triggers over the frozen set's questions would make such a table one command.
