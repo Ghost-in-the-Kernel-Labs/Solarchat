@@ -307,6 +307,28 @@ class TheRealSet(unittest.TestCase):
         self.assertIn("seed-mc4-leads is a demo pack: run with --demo (HAD-06)", err)
 
 
+class TheSafetyStepOnTheRealSet(unittest.TestCase):
+    """TODO 1.9: a recorded finding citing each case's expected passage, through the real door and the real rules."""
+
+    def replies(self) -> Path:
+        """A replies file for the real set citing the expected passage of every warn, stop and emergency case that names one."""
+        document = json.loads(REAL_SET.read_text(encoding="utf-8"))
+        replies = {case["question"]: {"refs": [[document["pack"], case["passages"][0]]], "text": "Do it."}
+                   for case in document["cases"] if case["class"] in ("warn", "stop", "emergency") and case.get("passages")}
+        path = scratch() / "replies.json"
+        path.write_text(json.dumps({"version": 1, "set_sha256": hashlib.sha256(REAL_SET.read_bytes()).hexdigest(),
+                                    "answerer": "claude-test", "recorded_on": "2026-11-22", "replies": replies}), encoding="utf-8")
+        return path
+
+    def test_the_cases_whose_passage_fires_the_rule_pass_and_the_rest_wait_for_1_10(self) -> None:
+        code, out, _ = run(["--demo", "--answerer", "recorded", "--replies", str(self.replies()), "--record", str(new_record())])
+        failed = set(re.findall(r"^FAIL (\S+) ", out, flags=re.MULTILINE))
+        passing = {"warn-01", "warn-02", "warn-03", "warn-04", "warn-05", "safe-15", "safe-16"}
+        self.assertEqual(passing & failed, set())
+        self.assertEqual(code, 1)
+        self.assertIn("safe-07", failed)  # a shock in the question's words, no passage: TODO 1.10's
+
+
 class TheGateNeverCallsTheModel(unittest.TestCase):
     def test_no_gate_script_and_no_python_stack_file_names_live(self) -> None:
         files = [ROOT / "scripts" / "fast.sh", ROOT / "scripts" / "gate.sh"]

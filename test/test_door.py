@@ -9,6 +9,7 @@ from solarchat.answer.recorded import RecordedAnswerer
 from solarchat.answer.stub import NoAnswer
 from solarchat.leaf.contract import DEMO_BANNER, Finding, Passage, PassageRef, ReplyKind, Turn
 from solarchat.packs.load import Pack, load_pack
+from solarchat.safety.rules import load_rules
 from test.support import ROOT, scratch
 
 GOOD = load_pack(ROOT / "test" / "fixtures" / "packs" / "good")
@@ -139,9 +140,87 @@ class Step5AndStep7TheAnswer(unittest.TestCase):
         self.assertIn("From: Check the voltages match (Connecting a solar panel by its MC4 leads): ", reply.text)
         self.assertIn("EcoFlow R600 user manual, page 15: solar panel connection, page 15", reply.text)
 
-    def test_the_safety_step_is_not_built_so_a_passage_that_fires_a_rule_is_still_an_answer(self) -> None:
-        reply = answer("How do I disconnect?", (SEED,), True, Spy(Finding((PassageRef("seed-mc4-leads", "step-12"),), "Use the tool.")))
+
+RULES = {rule.rule_id: rule for rule in load_rules()}
+
+
+def planted(texts: tuple[str, ...]) -> Pack:
+    """GOOD with one more passage per text of the tuple, planted-1, planted-2, ..., each titled "Planted n" and sourced as S1 page 1."""
+    added = tuple(Passage(PassageRef("good", f"planted-{n}"), text, f"Planted {n}") for n, text in enumerate(texts, start=1))
+    cited = {passage.ref.passage_id: [{"source": "S1", "page": "1"}] for passage in added}
+    return replace(GOOD, passages=GOOD.passages + added, citations={**GOOD.citations, **cited})
+
+
+def planted_ref(number: int) -> PassageRef:
+    """The ref of planted-n: planted_ref(1) is PassageRef("good", "planted-1")."""
+    return PassageRef("good", f"planted-{number}")
+
+
+def trigger_of(rule_id: str) -> str:
+    """The rule's first trigger, so a planted passage fires it by the rule's own data: trigger_of("SR-03")."""
+    return RULES[rule_id].triggers[0]
+
+
+class Step6TheSafetyRules(unittest.TestCase):
+    def test_a_passage_that_fires_a_warn_rule_gives_a_warn_with_the_rules_words_and_the_answer(self) -> None:
+        pack = planted((f"Be careful: {trigger_of('SR-03')}.",))
+        reply = answer("How?", (pack,), False, Spy(Finding((planted_ref(1),), "Do it slowly.")))
+        self.assertEqual((reply.kind, reply.safety_rule_id, reply.passage_refs), (ReplyKind.WARN, "SR-03", (planted_ref(1),)))
+        self.assertEqual(reply.text, RULES["SR-03"].words_shown + "\n\nDo it slowly.\n\n"
+                         "From: Planted 1 (Connecting a panel to a power station): Examplesun ES-100 installation manual, page 1")
+
+    def test_a_passage_that_fires_a_stop_rule_gives_a_stop_with_the_words_and_what_to_bring(self) -> None:
+        pack = planted((f"Never ignore {trigger_of('SR-07')}.",))
+        reply = answer("How?", (pack,), False, Spy(Finding((planted_ref(1),), "Carry on.")))
+        self.assertEqual((reply.kind, reply.safety_rule_id, reply.passage_refs), (ReplyKind.STOP, "SR-07", ()))
+        self.assertEqual(reply.text, RULES["SR-07"].words_shown + "\n\nWhat to bring your supervisor: rule SR-07; Planted 1, "
+                         "Examplesun ES-100 installation manual, page 1")
+
+    def test_a_passage_that_fires_an_emergency_rule_gives_the_rules_words_alone(self) -> None:
+        pack = planted((f"If you see {trigger_of('SR-08')}, leave.",))
+        reply = answer("How?", (pack,), False, Spy(Finding((planted_ref(1),), "Carry on.")))
+        self.assertEqual((reply.kind, reply.safety_rule_id, reply.passage_refs), (ReplyKind.STOP, "SR-08", ()))
+        self.assertEqual(reply.text, RULES["SR-08"].words_shown)
+
+    def test_the_rules_apply_whatever_the_answerer_said_in_its_finding(self) -> None:
+        pack = planted((f"Never ignore {trigger_of('SR-07')}.",))
+        reply = answer("How?", (pack,), False, Spy(Finding((planted_ref(1),), f"All fine, {trigger_of('SR-03')} is allowed.")))
+        self.assertEqual(reply.safety_rule_id, "SR-07")
+        self.assertNotIn("All fine", reply.text)
+
+    def test_the_most_severe_response_wins_then_the_lowest_id(self) -> None:
+        pack = planted((f"{trigger_of('SR-03')}", f"{trigger_of('SR-07')}", f"{trigger_of('SR-08')}", f"{trigger_of('SR-04')}",))
+        refs = (planted_ref(1), planted_ref(2), planted_ref(3))
+        self.assertEqual(answer("q", (pack,), False, Spy(Finding(refs, "x"))).safety_rule_id, "SR-08")
+        self.assertEqual(answer("q", (pack,), False, Spy(Finding(refs[:2], "x"))).safety_rule_id, "SR-07")
+        both = Finding((planted_ref(4), planted_ref(2)), "x")
+        self.assertEqual(answer("q", (pack,), False, Spy(both)).safety_rule_id, "SR-04")
+
+    def test_only_the_cited_passages_fire_never_one_that_was_given_and_not_cited(self) -> None:
+        pack = planted((f"{trigger_of('SR-08')}",))
+        reply = answer("How?", (pack,), False, Spy(Finding((VOLTAGE,), "Voc must be lower.")))
         self.assertEqual((reply.kind, reply.safety_rule_id), (ReplyKind.ANSWER, None))
+
+    def test_the_question_never_fires_a_rule_here_that_is_1_10s(self) -> None:
+        reply = answer(f"I got {trigger_of('SR-08')}", (GOOD,), False, one(VOLTAGE))
+        self.assertEqual((reply.kind, reply.safety_rule_id), (ReplyKind.ANSWER, None))
+
+    def test_an_i_do_not_know_is_not_a_safety_reply(self) -> None:
+        pack = planted((f"{trigger_of('SR-08')}",))
+        reply = answer("How?", (pack,), False, NoAnswer())
+        self.assertEqual((reply.kind, reply.safety_rule_id), (ReplyKind.DO_NOT_KNOW, None))
+
+    def test_the_real_pack_step_12_warns_and_fail_04_stop_is_an_emergency(self) -> None:
+        warn = answer("How?", (SEED,), True, Spy(Finding((PassageRef("seed-mc4-leads", "step-12"),), "Use the tool.")))
+        self.assertEqual((warn.kind, warn.safety_rule_id), (ReplyKind.WARN, "SR-03"))
+        stop = answer("How?", (SEED,), True, Spy(Finding((PassageRef("seed-mc4-leads", "fail-04-stop"),), "Stop.")))
+        self.assertEqual((stop.kind, stop.safety_rule_id, stop.text.split("\n\n")[-1]), (ReplyKind.STOP, "SR-08", RULES["SR-08"].words_shown))
+
+    def test_the_demo_banner_is_the_only_change_in_demo_mode(self) -> None:
+        pack = planted((f"{trigger_of('SR-03')}",))
+        plain = answer("q", (pack,), False, Spy(Finding((planted_ref(1),), "x")))
+        banner = answer("q", (demo_copy(pack),), True, Spy(Finding((planted_ref(1),), "x")))
+        self.assertEqual(banner.text, DEMO_BANNER + "\n\n" + plain.text)
 
 
 class Step8TheDemoBanner(unittest.TestCase):
