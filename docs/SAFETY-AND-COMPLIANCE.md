@@ -116,10 +116,13 @@ removes dangers 3 and 5: no "what's next?" carries a worker past a stop.
   it and stays with the person who loads the packs.
 - **Designed:** the maintainer's read of the rules (1.3 is done but for it; the points marked "Engineer to confirm"
   in `docs/SAFETY-RULES.md` are the agent's draft, and under F-16 they wait for an electrical engineer's
-  final review at the end of the project); every answer carrying the rule its text fires (1.9), a rule firing on the
-  worker's own words with no passage found (1.10), and every walk stopping at a rule whatever the pack says (2.3 in
-  the walker). **Not enforced today:** nothing applies a rule to an answer, so no reply of the door is a warn or a stop
-  yet; the evaluation set's stop, emergency and warn cases score 0 on the offline stub, and `evals/known-failures.json` lists mns-03 and mns-09 for 1.10 to fix.
+  final review at the end of the project); a rule firing on the worker's own words with no passage found (1.10), and
+  every walk stopping at a rule whatever the pack says (2.3 in the walker). **Enforced today (J-063, SC-011):** the
+  door applies a rule to the passages a reply cites: a cited passage whose text fires a rule gives that rule's response
+  and words (a warn with the answer, a stop with what to bring the supervisor, an emergency with the rule's words alone),
+  the most severe response first and then the lowest id, whatever the answerer said (`test/test_door.py`, step 6).
+  **Not enforced today:** the worker's own words never fire a rule (1.10), and the offline stub cites no passage, so the
+  evaluation set's stop, emergency and warn cases still score 0 on it; `evals/known-failures.json` lists mns-03 and mns-09 for 1.10 to fix.
 - **Enforced today (J-034):** each rule answers with a warn, a helpful stop or an emergency,
   starting cautious (SR-03 at a warn on Ghost's word) and relaxed on Ghost's word, logged as maintainer and confirmed or
   reversed by an electrical engineer at the final review (SC-015); each rule keeps a change log of who changed it, in
@@ -174,7 +177,7 @@ banner **"DEMO: not reviewed by an engineer, do not use on a site"**, and withou
 - A pack is only as good as the documentation handed over. The format and the check prove a pack is complete and
   traceable; whether its text is true is the judgement of the person who loads the packs.
 - Today no worker is served by it: the chat runs only on a developer's machine, with a demo pack and a key, and the
-  safety rules are not yet applied in its answers. The safeguards marked "designed" above are not yet running.
+  safety rules are applied only to the passages an answer cites, not yet to the worker's own words. The safeguards marked "designed" above are not yet running.
 
 ## Where each rule lives
 
@@ -182,7 +185,7 @@ banner **"DEMO: not reviewed by an engineer, do not use on a site"**, and withou
 | --- | --- | --- |
 | Answers only from the packs, with its source | `docs/CONTRACT.md` HAD-03, HAD-06; `theGhost.md` SC-005 | `solarchat/leaf/contract.py`, `scripts/checks/packs.py`, `test/test_leaf.py`, `test/test_packs.py` |
 | A pack's text is data | HAD-05; Core C-007 | `solarchat/leaf/contract.py` (`Passage`) |
-| Safety rules outside every pack | HAD-04; `docs/ROADMAP.md` P-17 | `scripts/checks/packs.py` (`flow_problems`), the `safety` module's rules (1.3); applied to answers in 1.9 |
+| Safety rules outside every pack | HAD-04; `docs/ROADMAP.md` P-17 | `scripts/checks/packs.py` (`flow_problems`), the `safety` module's rules (1.3); applied to the cited passages of an answer in 1.9 (`solarchat/answer/door.py`, `test/test_door.py`) |
 | A model only in one module, with no tool; no model key in the repository | SC-002, SC-021, SC-022; `docs/modules.json` MOD-03 | `test/test_modules.py`, `scripts/checks/secrets.py`, `test/test_key.py` |
 | The test before the thing it tests | Core C-003; SC-003 | `TODO.md` order; the evaluation set (1.5) and the runner (1.6) |
 | A demo is labelled | SC-010 | `solarchat/answer/door.py` (`with_banner`), `solarchat/project/chat.py`; the demo switch's own item is 2.1 |

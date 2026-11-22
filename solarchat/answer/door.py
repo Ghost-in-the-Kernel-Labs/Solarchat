@@ -2,14 +2,16 @@
 
 The same function in every mode; what changes is the answerer passed in. The door, not the answerer, decides which packs
 may answer, the reply's kind and the citations, so an answerer can never skip them. It imports no model client and no
-answerer. Step 6 of the design, the safety rules in the answer, is TODO 1.9's and is not here: until it is built no
-reply of this door is a stop or a warn. Standard library, the leaf and the packs module only.
+answerer. Step 6 of the design, the safety rules in the answer (TODO 1.9), is here: a cited passage whose text fires a
+rule gives that rule's response and words, whatever the answerer said; the rules match the passages' text only, never the
+question (TODO 1.10). Standard library, the leaf, the packs module and the safety module only.
 """
 from dataclasses import replace
 
-from solarchat.leaf.contract import (DEMO_BANNER, MAX_CITED_PASSAGES, Answerer, Finding, Passage, PassageRef, Reply,
-                                     ReplyKind, Turn, may_answer)
+from solarchat.leaf.contract import (DEMO_BANNER, MAX_CITED_PASSAGES, SAFETY_RESPONSES, Answerer, Finding, Passage,
+                                     PassageRef, Reply, ReplyKind, SafetyRule, Turn, may_answer)
 from solarchat.packs.load import Pack, citation_lines
+from solarchat.safety.rules import load_rules, rules_fired
 
 DO_NOT_KNOW_TEXT = "I do not know. The packs switched on do not cover this."
 NO_PACK_TEXT = "I do not know. No pack switched on may answer here."
@@ -63,14 +65,42 @@ def usable_places(packs: tuple[Pack, ...], demo_mode: bool) -> dict[PassageRef, 
     return places
 
 
+# Decision: SC-015 (the most severe response of the rules fired wins, then the lowest id; the answerer cannot skip it)
+# Invariant: HAD-04 (a rule fires on the cited passages' text, whatever the answerer said)
+def fired_by_citations(finding: Finding, places: dict[PassageRef, tuple[Pack, Passage]],
+                       rules: tuple[SafetyRule, ...]) -> tuple[SafetyRule, Pack, Passage] | None:
+    """The rule to apply and the first cited passage that fires it, or None when no cited passage fires one: of every rule
+    fired by a cited passage's text, the most severe response by its index in SAFETY_RESPONSES, then the lowest id."""
+    by_id = {rule.rule_id: rule for rule in rules}
+    fired = [(by_id[rule_id], *places[ref]) for ref in finding.refs for rule_id in rules_fired(places[ref][1].text, rules)]
+    if not fired:
+        return None
+    return min(fired, key=lambda hit: (-SAFETY_RESPONSES.index(hit[0].response), hit[0].rule_id))
+
+
+def safety_reply(rule: SafetyRule, pack: Pack, passage: Passage, finding: Finding,
+                 places: dict[PassageRef, tuple[Pack, Passage]]) -> Reply:
+    """The reply a fired rule gives: an emergency is the rule's words alone; a stop is the words, a blank line and "What to
+    bring your supervisor: rule SR-07; Title, Manual, page 15" for the passage that fired it; a warn is the words, a blank
+    line and the answer's body, citing the finding's passages."""
+    if rule.response == "emergency":
+        return Reply(ReplyKind.STOP, rule.words_shown, (), rule.rule_id)
+    if rule.response == "stop":
+        bring = "; ".join(citation_lines(pack, passage.ref.passage_id))
+        title = passage.title or passage.ref.passage_id
+        note = f"What to bring your supervisor: rule {rule.rule_id}; {title}" + (f", {bring}" if bring else "")
+        return Reply(ReplyKind.STOP, f"{rule.words_shown}\n\n{note}", (), rule.rule_id)
+    return Reply(ReplyKind.WARN, f"{rule.words_shown}\n\n{answer_body(finding, places)}", finding.refs, rule.rule_id)
+
+
 # Decision: SC-019 (one door, an answerer passed in; the steps in order, each returning at once when it gives a reply)
 # Invariant: HAD-06 (only may_answer lets a pack's passages reach the answerer)
 def answer(question: str, packs: tuple[Pack, ...], demo_mode: bool, answerer: Answerer,
            history: tuple[Turn, ...] = ()) -> Reply:
     """The reply to a question: answer("", packs, True, NoAnswer()) is "I do not know" with the banner and the answerer
     is never called; a finding citing one given passage is an ANSWER with its sources. Steps: empty question; packs that
-    may answer; find; hold the answerer to the contract; "I do not know"; the answer; the demo banner. (Step 6, the
-    safety rules, is TODO 1.9's.) `history` is the turns so far, passed to the answerer unchanged (SC-019, amended
+    may answer; find; hold the answerer to the contract; "I do not know"; the safety rules on the cited passages' text (a
+    stop, an emergency or a warn, SC-015); the answer; the demo banner. `history` is the turns so far, passed to the answerer unchanged (SC-019, amended
     2026-11-21); the door's other steps do not read it. What the answerer raises is a bug and reaches the caller."""
     if not question.strip():
         return with_banner(do_not_know(DO_NOT_KNOW_TEXT), demo_mode)
@@ -81,5 +111,9 @@ def answer(question: str, packs: tuple[Pack, ...], demo_mode: bool, answerer: An
     finding = answerer.find(question, given, history)
     if breaks_contract(finding, given) or not finding.refs:
         return with_banner(do_not_know(DO_NOT_KNOW_TEXT), demo_mode)
+    hit = fired_by_citations(finding, places, load_rules())
+    if hit:
+        rule, pack, passage = hit
+        return with_banner(safety_reply(rule, pack, passage, finding, places), demo_mode)
     reply = Reply(ReplyKind.ANSWER, answer_body(finding, places), finding.refs)
     return with_banner(reply, demo_mode)

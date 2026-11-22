@@ -98,3 +98,10 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Opened**: `stacks/python/gate.sh`, `scripts/gate.sh`, `docs/HANDOFF.md`, `stacks/python/README.md`.
 - **Complaints**: none.
 - **Suggestions**: none.
+
+### 2026-11-22 · The safety rules in the answers (J-063) · Claude Sonnet 5.5
+
+- **Task**: place TODO 1.9 and build step 6 of the door on the cited passages' text.
+- **Opened**: `CLAUDE.md`, `docs/when/grades.md`, `scripts/score.py`, `scripts/checks/score.py`, `solarchat/answer/door.py`, `docs/designs/answering-door.md`, `solarchat/safety/rules.py`, `solarchat/leaf/contract.py`, `scripts/eval.py`, `evals/known-failures.json`, `test/test_door.py`, `test/test_eval.py`, `docs/SAFETY-AND-COMPLIANCE.md`.
+- **Complaints**: an unplaced item's score depends on which files the placer names (6 points with the files edited, 9 with `scripts/fast.sh` named, which adds a layer), so placement is a judgement; the brief's working set lists files that are read, which `score.py` would count.
+- **Suggestions**: `scripts/score.py` could say which named files are only run or read; the TODO item could name its files, so no worker places it.
