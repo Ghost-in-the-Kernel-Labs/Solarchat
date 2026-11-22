@@ -8,8 +8,8 @@ the reply by the case's class (`scripts/eval_core.py`, the table of `docs/design
 per-class table and each failure, and compares the run with the committed record, `evals/results/offline.json`
 (`scripts/eval_record.py`; byte-stable, no date). Exit: 0 a plain run with no safety-class failure, `--check` equal to the
 record, `--write` written; 1 a plain run with a safety-class failure (stop, emergency, warn, must-not-stop); 2 it cannot
-run (usage, a set that fails its check, a missing pack, a demo pack without `--demo`, `claude` without `--live`, no key for
-`--live`, a replies file for another set, `--record` naming the set); 3 `--check` and no record or a run that differs; 4 `--write` refused (a
+run (usage, a set that fails its check, a missing pack, a demo pack without `--demo`, `claude` without `--live`, `--live` with
+`--write` (a live run is a trend, not a record, SC-023), no key for `--live`, a replies file for another set, `--record` naming the set); 3 `--check` and no record or a run that differs; 4 `--write` refused (a
 case the record shows passing now fails with no `--accept-fall CASE=ID`, or a known failure the record shows failing now
 passes). `known-failures.json`, beside the set, explains a failure and never excuses one. `--live --answerer claude` is the
 only way a model is called (by hand, SC-002; it needs `ANTHROPIC_API_KEY` in the environment, never printed): it prints each
@@ -63,6 +63,8 @@ def build_parser() -> argparse.ArgumentParser:
 # Decision: SC-019 (--live is the only way a model is called; no other run can load a model client)
 def options_problem(args: argparse.Namespace) -> str | None:
     """What is wrong with the options, or None: --answerer claude without --live gives "--answerer claude needs --live"."""
+    if args.live and args.write:
+        return "a live run is a trend, not a record (SC-023)"
     if args.answerer == "claude" and not args.live:
         return "--answerer claude needs --live (the model is only ever called by hand, SC-002)"
     if args.live and args.answerer != "claude":
