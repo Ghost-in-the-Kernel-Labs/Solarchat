@@ -42,7 +42,13 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Complaints**: the brief named J-077, already taken on main; `scripts/next_id.py` gave J-077. The brief's "mns-09 now passes" cannot be told apart from "mns-09 always passed", since the stub never cites a passage and the door does not match the question yet.
 - **Suggestions**: a brief that names a journal id should say "or the next free one". `scripts/checks` could say which tests pin `known-failures.json` entries (test/test_eval.py pins the set of cases).
 
-### 2026-11-22 · TODO 1.10, the worker's-words step (J-078) · Claude Sonnet 5.5
+### 2026-11-22 · TODO 1.10 slice 2, the two questions and the explanation (J-078) · Claude Sonnet 5.5
+- **Task**: build slice 2 of `docs/designs/session-profile.md`: the questions, `--role` and `--signed-off`, the profile line to the answerer and the prompt's Depth paragraph, the lowered warn's first line.
+- **Opened**: `docs/designs/session-profile.md`, `solarchat/project/chat.py`, `solarchat/cli/main.py`, `solarchat/model/claude.py`, `solarchat/answer/door.py`, `solarchat/leaf/contract.py`, `test/test_cli.py`, `test/test_speech.py`, `test/test_claude.py`, `test/test_safety_lowerings.py`.
+- **Complaints**: the brief said to build the answerer with the profile in `choose_answerer`, but the questions come after a missing-key exit and the answerer is built first; and `docs/modules.json` (outside the working set) keeps chat.py from the door's `lowered_for_profile` and the model's word tables.
+- **Suggestions**: a brief that touches the chat should say what the existing tests that script stdin through `main` must do (here: add `--role new --signed-off none`).
+
+### 2026-11-22 · TODO 1.10, the worker's-words step (J-079) · Claude Sonnet 5.5
 - **Task**: build `docs/designs/worker-words.md` section 5: the door's words step, emergencies on the worker's words only, the warn fallback, three trigger changes, the evaluation.
 - **Opened**: `CLAUDE.md`, `docs/designs/worker-words.md`, `solarchat/answer/door.py`, `solarchat/safety/rules.py`, `solarchat/safety/rules.json`, `test/test_door.py`, `scripts/eval.py`, `test/test_eval.py`, `test/test_eval_live.py`, `test/fixtures/evals/known-failures.json`.
 - **Complaints**: the design's trigger table was checked against questions but not against the seed pack's passages: SR-07's new triggers fire on `step-02`. The tiny fixture's known-failures file and several eval tests assumed the stub stops nothing; no document said which tests pin that, so each was found by running them (a script listing them would help).

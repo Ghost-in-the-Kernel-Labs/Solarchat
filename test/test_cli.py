@@ -15,12 +15,13 @@ from test.support import ROOT, no_key
 SEED = ROOT / "packs" / "seed-mc4-leads"
 STEP = PassageRef("seed-mc4-leads", "step-06")
 PACK = load_pack(SEED)
+SKIP = ["--role", "new", "--signed-off", "none"]  # the two profile questions are answered on the command line
 
 
 def chat(lines: str, options: list[str] | None = None) -> tuple[int, str, str]:
     """The chat's exit code, stdout and stderr when `lines` is typed: chat("quit\\n")[0] gives 0 with the stub answerer."""
     out, err = io.StringIO(), io.StringIO()
-    argv = ["--pack", str(SEED), "--demo", "--answerer", "stub"] if options is None else options
+    argv = ["--pack", str(SEED), "--demo", "--answerer", "stub", *SKIP] if options is None else options
     with contextlib.redirect_stderr(err):  # argparse writes a usage error to the process's stderr
         code = main(argv, io.StringIO(lines), out, err)
     return code, out.getvalue(), err.getvalue()

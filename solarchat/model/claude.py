@@ -10,7 +10,7 @@ from collections.abc import Sequence
 from dataclasses import dataclass
 from typing import Protocol
 
-from solarchat.leaf.contract import Finding, Passage, PassageRef, Turn
+from solarchat.leaf.contract import PROFILE_SIGN_OFFS, Finding, Passage, PassageRef, Profile, Turn
 from solarchat.model.key import KEY_VARIABLE, resolve_key
 
 DEFAULT_MODEL = "claude-sonnet-5-5"
@@ -113,6 +113,8 @@ Scope. Answer only from the passages below, which are each given with its id and
 
 Pace. Give the one next thing the worker needs: a single step, or a single question if you need a fact to continue (which device, what the label says). Then stop and wait. No preamble, no summary, no list of later steps. Keep it short enough to read on a phone in a few seconds.
 
+Depth. The message begins with a line saying who the worker is. For a licensed electrician or engineer, give the whole step the passages describe in one reply, including what a part looks like and which way round it goes when the passages say so. For someone new to solar, give the one next small step with its reason. The steps and stops you give are the same for everyone; only how much of a step you say at once changes.
+
 Citing. Cite in passage_ids every passage your reply relies on. A clarifying question cites the passage it is leading toward.
 
 Not covered. If the passages do not cover the question, kind is "do_not_know", with no ids and a one-line reply.
@@ -175,11 +177,25 @@ def system_text(passages: tuple[Passage, ...]) -> str:
     return SYSTEM_PROMPT + "\n\nPassages:\n\n" + "\n\n".join(quoted)
 
 
-def messages_for(question: str, history: tuple[Turn, ...]) -> list[dict[str, str]]:
-    """The conversation as the API takes it: the history, then the new question as the last user turn:
-    messages_for("Next?", (Turn("user", "Hi"),)) gives two messages."""
+# Decision: SC-020 (who the worker is, in words, as the answerer is told it and the chat says it back)
+ROLE_WORDS = {"new": "new to solar", "crew": "crew member", "qualified": "licensed electrician or engineer"}
+SIGN_OFF_WORDS = {"meter": "meter tests", "connector": "connector work", "battery": "battery and controller wiring",
+                  "height": "work at height with fall protection"}
+
+
+def profile_line(profile: Profile) -> str:
+    """The one line the answerer is told: Profile("qualified", frozenset({"battery"})) gives "The worker: licensed electrician
+    or engineer; signed off for: battery and controller wiring."; no sign-off gives "signed off for: none"."""
+    signed = ", ".join(SIGN_OFF_WORDS[name] for name in PROFILE_SIGN_OFFS if name in profile.signed_off) or "none"
+    return f"The worker: {ROLE_WORDS[profile.role]}; signed off for: {signed}."
+
+
+def messages_for(question: str, history: tuple[Turn, ...], profile: Profile | None = None) -> list[dict[str, str]]:
+    """The conversation as the API takes it: the history, then the new question as the last user turn, which begins with
+    the profile's line when there is one (never the system block, SC-020): messages_for("Next?", (Turn("user", "Hi"),))
+    gives two messages."""
     turns = [{"role": turn.role, "content": turn.text} for turn in history]
-    return turns + [{"role": "user", "content": question}]
+    return turns + [{"role": "user", "content": question if profile is None else f"{profile_line(profile)}\n\n{question}"}]
 
 
 def default_client() -> Client:
@@ -264,14 +280,17 @@ class ClaudeAnswerer:
     Decision: SC-019 (an answerer of the door), SC-021 (the model and the SDK), SC-022 (the key is the environment's).
     """
 
-    def __init__(self, client: Client | None = None, errors: ErrorClasses | None = None, model: str = DEFAULT_MODEL) -> None:
-        """Hold the client (the SDK's unless given), the module of error classes (the SDK's unless given) and the model,
-        which is also the answerer's `name`; a model not in MODELS raises ValueError."""
+    def __init__(self, client: Client | None = None, errors: ErrorClasses | None = None, model: str = DEFAULT_MODEL,
+                 profile: Profile | None = None) -> None:
+        """Hold the client (the SDK's unless given), the module of error classes (the SDK's unless given), the model,
+        which is also the answerer's `name`, and the worker's profile (none: no line is added; the chat sets it once the
+        questions are answered); a model not in MODELS raises ValueError."""
         if model not in MODELS:
             raise ValueError(f"model {model!r} is not one of {', '.join(MODELS)}")
         self.model = self.name = model
         self.client = client if client is not None else default_client()
         self.errors = errors
+        self.profile = profile
         self.usage = Usage()
 
     def call(self, question: str, passages: tuple[Passage, ...], history: tuple[Turn, ...]) -> Response:
@@ -283,7 +302,7 @@ class ClaudeAnswerer:
             model=self.model, max_tokens=MAX_TOKENS, **extra,
             output_config={"effort": "low", "format": {"type": "json_schema", "schema": SCHEMA}},
             system=[{"type": "text", "text": system_text(passages), "cache_control": {"type": "ephemeral"}}],
-            messages=messages_for(question, history))
+            messages=messages_for(question, history, self.profile))
 
     def count(self, response: Response) -> None:
         """Add the response's token counts to `usage`; a count the response lacks is zero."""

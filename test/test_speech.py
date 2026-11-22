@@ -15,7 +15,7 @@ from solarchat.project.chat import DEMO_PACK, converse, render, spoken_aloud
 from solarchat.safety.rules import load_rules
 from solarchat.project.speech import NO_ENGINE, WINDOWS_ENCODED, WINDOWS_SCRIPT, Speaker, engine_command
 from test.support import ROOT
-from test.test_cli import PACK, STEP, Scripted
+from test.test_cli import PACK, SKIP, STEP, Scripted
 
 SEED = ROOT / "packs" / "seed-mc4-leads"
 
@@ -93,11 +93,12 @@ class TheSpokenReply(unittest.TestCase):
         fake = Fake()
         out, err = io.StringIO(), io.StringIO()
         with mock.patch("solarchat.project.chat.Speaker", lambda stderr: Speaker(stderr, fake, "linux", found)):
-            code = main(["--pack", str(SEED), "--demo", "--answerer", "stub", "--voice"], io.StringIO("A?\nB?\nquit\n"), out, err)
+            code = main(["--pack", str(SEED), "--demo", "--answerer", "stub", "--voice", *SKIP], io.StringIO("A?\nB?\nquit\n"), out, err)
         self.assertEqual(code, 0)
         self.assertEqual(out.getvalue().count(DEMO_BANNER), 3)
-        self.assertEqual(len(fake.calls), 3)
+        self.assertEqual(len(fake.calls), 4)  # the banner, the profile said back, and the two replies
         self.assertEqual(fake.calls[0][1], DEMO_BANNER)
+        self.assertEqual(fake.calls[1][1], "You are new to solar, not signed off for any of them.")
         self.assertEqual(sum(DEMO_BANNER in said for _, said in fake.calls), 1)
 
     def test_a_warn_speaks_the_rules_words_and_an_answer_does_not(self) -> None:
@@ -125,7 +126,7 @@ class TheMissingEngine(unittest.TestCase):
     def test_through_the_command_a_missing_engine_leaves_the_chat_working(self) -> None:
         out, err = io.StringIO(), io.StringIO()
         with contextlib.redirect_stderr(err), mock.patch("shutil.which", lambda name: None):
-            code = main(["--pack", str(SEED), "--demo", "--answerer", "stub", "--voice"], io.StringIO("A?\nquit\n"), out, err)
+            code = main(["--pack", str(SEED), "--demo", "--answerer", "stub", "--voice", *SKIP], io.StringIO("A?\nquit\n"), out, err)
         self.assertEqual(code, 0)
         self.assertEqual(err.getvalue().count(NO_ENGINE), 1)
         self.assertIn("I do not know", out.getvalue())

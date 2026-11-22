@@ -121,7 +121,7 @@ removes dangers 3 and 5: no "what's next?" carries a worker past a stop.
   door applies a rule to the passages a reply cites: a cited passage whose text fires a rule gives that rule's response
   and words (a warn with the answer, a stop with what to bring the supervisor, an emergency with the rule's words alone),
   the most severe response first and then the lowest id, whatever the answerer said (`test/test_door.py`, step 6).
-  **Enforced today (J-078, SC-011):** the door also applies the rules to the worker's own words, this turn's question only,
+  **Enforced today (J-079, SC-011):** the door also applies the rules to the worker's own words, this turn's question only,
   before "I do not know" (so a stop or an emergency is given even when nothing is cited); SR-08 and SR-09 fire on the
   worker's words only, never on a passage's text; a warn fired by the words alone is the answer with the warn's words
   before it when a passage is cited, and otherwise an "I do not know" carrying the warn's words (`test/test_door_words.py`).
