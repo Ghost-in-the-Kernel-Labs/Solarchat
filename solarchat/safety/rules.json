@@ -120,7 +120,7 @@
     "id": "SR-07",
     "title": "Damaged, burnt, melted, wet or corroded parts",
     "applies_when": "A connector, cable, panel or box is cracked, cut, crushed, burnt, scorched, melted, discoloured, corroded, wet inside, or has copper showing. The triggers fire only on text that says such a part is there, not on a step that tells you what to look for.",
-    "triggers": ["broken glass", "broken panel", "cracked panel", "heat-damaged", "damaged connector", "damaged cable", "burnt connector", "burnt cable", "melted connector", "corroded connector", "wet inside", "copper showing", "frayed", "chewed"],
+    "triggers": ["broken glass", "broken panel", "cracked panel", "heat-damaged", "damaged connector", "damaged cable", "burnt connector", "burnt cable", "melted connector", "corroded connector", "wet inside", "copper showing", "frayed", "chewed", "glass is broken", "glass is cracked", "is cracked"],
     "words_shown": "Stop. Do not touch, use or reconnect a damaged, burnt, melted, wet or corroded part. It can be live and can start a fire. Keep others away. Go to your site supervisor or engineer.",
     "response": "stop",
     "sources": [
@@ -129,14 +129,15 @@
     ],
     "changes": [
       {"date": "2026-11-21", "by": "Claude Opus 5.5", "role": "agent, drafting", "why": "Version 1: drafted from public guidance for the newest contractor on a site; engineer to confirm.", "evidence": "J-027; the sources listed on this rule"},
-      {"date": "2026-11-21", "by": "Ghost", "role": "maintainer", "why": "Triggers match whole words and phrases, and the rule's triggers and wording follow the audit, applied on Ghost's word; engineer to confirm.", "evidence": "docs/audits/2026-11-21-safety-rules.md; J-030", "fingerprint": "0d0689fc29da668e54e3c2aefd7f7bcdc320ca88357aeb9c6415b2f86d97901d"}
+      {"date": "2026-11-21", "by": "Ghost", "role": "maintainer", "why": "Triggers match whole words and phrases, and the rule's triggers and wording follow the audit, applied on Ghost's word; engineer to confirm.", "evidence": "docs/audits/2026-11-21-safety-rules.md; J-030", "fingerprint": "0d0689fc29da668e54e3c2aefd7f7bcdc320ca88357aeb9c6415b2f86d97901d"},
+      {"date": "2026-11-22", "by": "Ghost", "role": "maintainer", "why": "Triggers added: \"glass is broken\", \"glass is cracked\" and \"is cracked\", so a worker's report of broken or cracked panel glass stops them (safe-16); engineer to confirm.", "evidence": "J-075; docs/designs/worker-words.md", "fingerprint": "d5bdd8ef348b56defa960f8df1f9ce1344bb98db2179baa0d97998008c4e0bad"}
     ]
   },
   {
     "id": "SR-08",
     "title": "Heat, a burning smell, smoke, sparks or arcing",
     "applies_when": "Anything smells of burning, smokes, sparks, crackles or shows an arc or flame. A humming inverter, or a panel that is hot in the sun, is normal and is not a stop.",
-    "triggers": ["smoke", "smoking", "burning smell", "smells of burning", "sparks", "sparking", "arcing", "crackling", "flame", "flames", "on fire"],
+    "triggers": ["smoke", "smoking", "burning smell", "smells of burning", "sparks", "sparking", "arcing", "crackling", "flame", "flames", "on fire", "smells burnt", "burnt smell"],
     "words_shown": "Stop. Step back and do not touch it. Keep others away. If there is fire or smoke, follow the site's emergency procedure. Go to your site supervisor or engineer.",
     "response": "emergency",
     "sources": [
@@ -146,7 +147,8 @@
     "changes": [
       {"date": "2026-11-21", "by": "Claude Opus 5.5", "role": "agent, drafting", "why": "Version 1: drafted from public guidance for the newest contractor on a site; engineer to confirm.", "evidence": "J-027; the sources listed on this rule"},
       {"date": "2026-11-21", "by": "Ghost", "role": "maintainer", "why": "Triggers match whole words and phrases, and the rule's triggers and wording follow the audit, applied on Ghost's word; engineer to confirm.", "evidence": "docs/audits/2026-11-21-safety-rules.md; J-030"},
-      {"date": "2026-11-21", "by": "Ghost", "role": "maintainer", "why": "Starting response emergency (SC-015): step back, keep others away, call for help; engineer to confirm.", "evidence": "SC-015; J-032", "fingerprint": "e5aa96ceb7784875467ca64133fd0fcd2e1ed08f5e9c9b2498e322dd29b5ae04"}
+      {"date": "2026-11-21", "by": "Ghost", "role": "maintainer", "why": "Starting response emergency (SC-015): step back, keep others away, call for help; engineer to confirm.", "evidence": "SC-015; J-032", "fingerprint": "e5aa96ceb7784875467ca64133fd0fcd2e1ed08f5e9c9b2498e322dd29b5ae04"},
+      {"date": "2026-11-22", "by": "Ghost", "role": "maintainer", "why": "Triggers added: \"smells burnt\" and \"burnt smell\", so a worker's report that a part smells burnt is an emergency (safe-15); engineer to confirm.", "evidence": "J-075; docs/designs/worker-words.md", "fingerprint": "a27b1ff75a32c292e50261769783e63c9f349d86c9b4333a876e6344cd258e6a"}
     ]
   },
   {
@@ -241,7 +243,7 @@
     "id": "SR-14",
     "title": "When you are unsure",
     "applies_when": "The worker is not sure what to do, has not been trained for the step, or what they see does not look like the step says it should.",
-    "triggers": ["unsure", "do not know", "don't know", "not trained", "never done", "does not look like", "doesn't look like", "unexpected"],
+    "triggers": ["unsure", "not trained", "never done", "does not look like", "doesn't look like", "unexpected"],
     "words_shown": "Stop. If you are not sure, do not guess. It is always right to stop and ask. Go to your site supervisor or engineer.",
     "response": "stop",
     "sources": [
@@ -250,7 +252,8 @@
     ],
     "changes": [
       {"date": "2026-11-21", "by": "Claude Opus 5.5", "role": "agent, drafting", "why": "Version 1: drafted from public guidance for the newest contractor on a site; engineer to confirm.", "evidence": "J-027; the sources listed on this rule"},
-      {"date": "2026-11-21", "by": "Ghost", "role": "maintainer", "why": "Triggers match whole words and phrases, and the rule's triggers and wording follow the audit, applied on Ghost's word; engineer to confirm.", "evidence": "docs/audits/2026-11-21-safety-rules.md; J-030", "fingerprint": "2c68e9817fe18c3da918e0497d14a91f5152777d662d61da6535453ade94d6c5"}
+      {"date": "2026-11-21", "by": "Ghost", "role": "maintainer", "why": "Triggers match whole words and phrases, and the rule's triggers and wording follow the audit, applied on Ghost's word; engineer to confirm.", "evidence": "docs/audits/2026-11-21-safety-rules.md; J-030", "fingerprint": "2c68e9817fe18c3da918e0497d14a91f5152777d662d61da6535453ade94d6c5"},
+      {"date": "2026-11-22", "by": "Ghost", "role": "maintainer", "why": "Triggers removed: \"do not know\" and \"don't know\"; \"I don't know which lead is positive\" is a question, answered from the packs or with \"I do not know\" (HAD-03), not a stop; \"not trained\", \"never done\" and \"unsure\" still stop; engineer to confirm.", "evidence": "J-075; docs/designs/worker-words.md", "fingerprint": "be8792293d11de8ec21c05a1a4f732e51fe10065e88573c27e0991b20b00e2b4"}
     ]
   }
 ]

@@ -43,10 +43,12 @@ as 1.9 built for passages.
    - SR-14 loses "do not know" and "don't know": "I don't know which lead is positive" is a question, answered from
      the packs or with "I do not know" (HAD-03), not a stop; "not trained", "never done" and "unsure" still stop.
 3. **A warn fired only by the worker's words, with no passage cited** (the coordinator's reading, within HAD-03, which
-   requires a warn to name a passage): the reply is the answer the passages give, with the warn's words before it,
-   when the answerer cited a passage; when it cited none, the warn's words are given as a STOP naming the rule, so the
-   worker is never left with a warning and no step. (SR-03, the only warn rule today, is in every connector question,
-   so this is rare.)
+   requires a warn to name a passage; corrected by the coordinator before the build, J-079): when the answerer cited a
+   passage, the reply is the answer the passages give, with the warn's words before it; when it cited none, the reply
+   is an "I do not know" (it names no passage, which HAD-03 allows, and no rule) whose text is the warn's words, a blank
+   line, then the door's usual "I do not know" text. It is never turned into a STOP: that would undo a profile's lowering
+   exactly when it applies (a signed-off electrician, mns-09). (SR-03, the only warn rule today, is in every connector
+   question, so this is rare.)
 
 ## 5. What the worker builds
 

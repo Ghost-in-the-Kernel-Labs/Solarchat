@@ -3,8 +3,8 @@
 The same function in every mode; what changes is the answerer passed in. The door, not the answerer, decides which packs
 may answer, the reply's kind and the citations, so an answerer can never skip them. It imports no model client and no
 answerer. Step 6 of the design, the safety rules in the answer (TODO 1.9), is here: a cited passage whose text fires a
-rule gives that rule's response and words, whatever the answerer said; the rules match the passages' text only, never the
-question (TODO 1.10). Standard library, the leaf, the packs module and the safety module only.
+rule gives that rule's response and words, whatever the answerer said; so does a rule fired by this turn's question
+(TODO 1.10), before "I do not know" (an emergency rule fires on the question only). Standard library, the leaf, the packs module and the safety module only.
 """
 from dataclasses import replace
 
@@ -78,33 +78,60 @@ def lowered_for_profile(rule: SafetyRule, profile: Profile) -> SafetyRule:
 
 
 # Decision: SC-015 (the most severe response of the rules fired wins, then the lowest id; the answerer cannot skip it)
-# Invariant: HAD-04 (a rule fires on the cited passages' text, whatever the answerer said)
+# Invariant: HAD-04 (a rule fires on the cited passages' text and on the worker's own words, whatever the answerer said)
+# Decision: TODO 1.10 (an emergency rule, SR-08 and SR-09, fires on the worker's words only, never on a passage's text)
+Hit = tuple[SafetyRule, Pack | None, Passage | None]
+
+
+def most_severe(hits: list[Hit]) -> Hit | None:
+    """The hit with the most severe response by its index in SAFETY_RESPONSES, then the lowest rule id; on a tie of the same
+    rule a hit that names a passage comes first. None when there are no hits."""
+    if not hits:
+        return None
+    return min(hits, key=lambda hit: (-SAFETY_RESPONSES.index(hit[0].response), hit[0].rule_id, hit[2] is None))
+
+
+def fired_by_words(question: str, rules: tuple[SafetyRule, ...], profile: Profile = DEFAULT_PROFILE) -> list[Hit]:
+    """The rules this turn's question fires, each lowered for the profile (SC-020) and naming no passage:
+    fired_by_words("I got a shock", load_rules()) gives one hit, SR-09, with no pack and no passage."""
+    by_id = {rule.rule_id: lowered_for_profile(rule, profile) for rule in rules}
+    return [(by_id[rule_id], None, None) for rule_id in rules_fired(question, rules)]
+
+
 def fired_by_citations(finding: Finding, places: dict[PassageRef, tuple[Pack, Passage]],
-                       rules: tuple[SafetyRule, ...], profile: Profile = DEFAULT_PROFILE) -> tuple[SafetyRule, Pack, Passage] | None:
-    """The rule to apply and the first cited passage that fires it, or None when no cited passage fires one: each fired rule
-    is first lowered for the profile (SC-020), then of them the most severe response by its index in SAFETY_RESPONSES, then
-    the lowest id."""
+                       rules: tuple[SafetyRule, ...], profile: Profile = DEFAULT_PROFILE) -> list[Hit]:
+    """Each rule fired by a cited passage's text, with the passage that fires it, lowered for the profile (SC-020); an
+    emergency rule never fires on a passage's text: a finding citing a passage that lists "smoke" gives []."""
     # Decision: SC-024 (a pack that covers a rule is applied before a lowering, and a profile never lowers a covered rule;
     # the door does not apply coverage yet, TODO 1.26 slice 2: when it does, a covered rule skips lowered_for_profile here).
     by_id = {rule.rule_id: lowered_for_profile(rule, profile) for rule in rules}
-    fired = [(by_id[rule_id], *places[ref]) for ref in finding.refs for rule_id in rules_fired(places[ref][1].text, rules)]
-    if not fired:
-        return None
-    return min(fired, key=lambda hit: (-SAFETY_RESPONSES.index(hit[0].response), hit[0].rule_id))
+    on_text = tuple(rule for rule in rules if rule.response != "emergency")
+    return [(by_id[rule_id], *places[ref]) for ref in finding.refs for rule_id in rules_fired(places[ref][1].text, on_text)]
 
 
-def safety_reply(rule: SafetyRule, pack: Pack, passage: Passage, finding: Finding,
-                 places: dict[PassageRef, tuple[Pack, Passage]]) -> Reply:
-    """The reply a fired rule gives: an emergency is the rule's words alone; a stop is the words, a blank line and "What to
-    bring your supervisor: rule SR-07; Title, Manual, page 15" for the passage that fired it; a warn is the words, a blank
-    line and the answer's body, citing the finding's passages."""
+def stop_note(rule: SafetyRule, pack: Pack | None, passage: Passage | None) -> str:
+    """"What to bring your supervisor: rule SR-07; Title, Manual, page 15" for the passage that fired a stop; with no
+    passage (the worker's words fired it) "What to bring your supervisor: rule SR-07"."""
+    if pack is None or passage is None:
+        return f"What to bring your supervisor: rule {rule.rule_id}"
+    bring = "; ".join(citation_lines(pack, passage.ref.passage_id))
+    title = passage.title or passage.ref.passage_id
+    return f"What to bring your supervisor: rule {rule.rule_id}; {title}" + (f", {bring}" if bring else "")
+
+
+def safety_reply(hit: Hit, finding: Finding | None, places: dict[PassageRef, tuple[Pack, Passage]]) -> Reply:
+    """The reply a fired rule gives: an emergency is the rule's words alone; a stop is the words, a blank line and
+    "What to bring your supervisor: rule SR-07; Title, Manual, page 15"; a warn is the words, a blank line and the answer's
+    body, citing the finding's passages. A warn fired by the worker's words when the answerer cited no passage (finding is
+    None) names no passage, so it is an "I do not know" whose text is the warn's words, a blank line and DO_NOT_KNOW_TEXT
+    (TODO 1.10, corrected by the coordinator, J-079)."""
+    rule, pack, passage = hit
     if rule.response == "emergency":
         return Reply(ReplyKind.STOP, rule.words_shown, (), rule.rule_id)
     if rule.response == "stop":
-        bring = "; ".join(citation_lines(pack, passage.ref.passage_id))
-        title = passage.title or passage.ref.passage_id
-        note = f"What to bring your supervisor: rule {rule.rule_id}; {title}" + (f", {bring}" if bring else "")
-        return Reply(ReplyKind.STOP, f"{rule.words_shown}\n\n{note}", (), rule.rule_id)
+        return Reply(ReplyKind.STOP, f"{rule.words_shown}\n\n{stop_note(rule, pack, passage)}", (), rule.rule_id)
+    if finding is None:
+        return do_not_know(f"{rule.words_shown}\n\n{DO_NOT_KNOW_TEXT}")
     return Reply(ReplyKind.WARN, f"{rule.words_shown}\n\n{answer_body(finding, places)}", finding.refs, rule.rule_id)
 
 
@@ -114,8 +141,9 @@ def answer(question: str, packs: tuple[Pack, ...], demo_mode: bool, answerer: An
            history: tuple[Turn, ...] = (), profile: Profile = DEFAULT_PROFILE) -> Reply:
     """The reply to a question: answer("", packs, True, NoAnswer()) is "I do not know" with the banner and the answerer
     is never called; a finding citing one given passage is an ANSWER with its sources. Steps: empty question; packs that
-    may answer; find; hold the answerer to the contract; "I do not know"; the safety rules on the cited passages' text (a
-    stop, an emergency or a warn, SC-015); the answer; the demo banner. `history` is the turns so far, passed to the answerer unchanged (SC-019, amended
+    may answer; find; the safety rules on this turn's question and on the cited passages' text, when the finding keeps the contract
+    (a stop, an emergency or a warn, SC-015; an emergency fires on the question only; a stop or emergency is given even when
+    nothing is cited); "I do not know"; the answer; the demo banner. `history` is the turns so far, passed to the answerer unchanged (SC-019, amended
     2026-11-21); the door's other steps do not read it. `profile` is who is asking (SC-020): the default is the newest contractor, which
     gives the replies there were before it; a rule lowers for a profile only as its own lowered_for says. What the answerer raises is a bug and reaches the caller."""
     if not question.strip():
@@ -125,11 +153,15 @@ def answer(question: str, packs: tuple[Pack, ...], demo_mode: bool, answerer: An
         return with_banner(do_not_know(NO_PACK_TEXT), demo_mode)
     given = tuple(passage for _, passage in places.values())
     finding = answerer.find(question, given, history)
-    if breaks_contract(finding, given) or not finding.refs:
-        return with_banner(do_not_know(DO_NOT_KNOW_TEXT), demo_mode)
-    hit = fired_by_citations(finding, places, load_rules(), profile)
+    rules = load_rules()
+    hits = fired_by_words(question, rules, profile)
+    cited = bool(finding.refs) and not breaks_contract(finding, given)
+    if cited:
+        hits += fired_by_citations(finding, places, rules, profile)
+    hit = most_severe(hits)
     if hit:
-        rule, pack, passage = hit
-        return with_banner(safety_reply(rule, pack, passage, finding, places), demo_mode)
+        return with_banner(safety_reply(hit, finding if cited else None, places), demo_mode)
+    if not cited:
+        return with_banner(do_not_know(DO_NOT_KNOW_TEXT), demo_mode)
     reply = Reply(ReplyKind.ANSWER, answer_body(finding, places), finding.refs)
     return with_banner(reply, demo_mode)
