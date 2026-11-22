@@ -68,4 +68,4 @@ Written by `scripts/decisions_index.py` from `theGhost.md`; do not edit here. Se
 | SC-021 | The official Anthropic Python SDK (`anthropic`) is a runtime dependency, imported only by the `model` module, and the online model is Claude Sonnet 5.5 | in force | model client |
 | SC-022 | No model credential ever sits on a device; only Solarchat's service holds one, from a secrets manager; the offline mode needs none | in force | key management |
 | SC-023 | The conversational bot is tuned by a sampled rule bank, graded by Haiku and read as a trend, never a gate; a harmful reply is triaged content first, and a guard is added only when no passage is the cause | in force | tuning |
-| SC-024 | A pack is the first safety authority for its own make and model; the general safety rules are the default wherever a pack does not cover a hazard itself | proposed | safety-rule precedence |
+| SC-024 | A pack is the first safety authority for its own make and model; the general safety rules are the default wherever a pack does not cover a hazard itself | in force | safety-rule precedence |

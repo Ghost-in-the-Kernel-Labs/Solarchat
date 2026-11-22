@@ -46,11 +46,15 @@ Check: `scripts/triage.py <run> <rule>` writes `evals/triage/TR-nnn.json` in the
 
 Check: `solarchat/model/guards.json` in the shape of the design's section 6, appended to the system block in id order by `system_text` (the cache-stable bytes test still holds); `ClaudeAnswerer` takes `guards`; a check in the fast loop refuses a guard that names no triage record whose outcome is `guard`, and a total over the budget Ghost sets; a run with a guard's served rules in its sample also runs them with the guard removed and records both verdicts; the retirement rule of section 7 is printed on the trend page when a guard meets it; 1.14's check is extended in its text to list triage pack changes and findings, the guards in force with their triage records, and the watch list's safety rules.
 
-### 1.25 Tune-up pass 1
+### 1.26 Packs cover the safety rules for their own make and model (SC-024)
+
+Check: first a design in `docs/designs/` (SC-024 in force, Ghost 2026-11-22; HAD-04 as amended): the manifest's coverage field (per rule id: the covering passages and the response each gives), how the door's step 6 and 1.10's worker's-words step choose a covering passage over the general rule, how the walker (2.3) does the same, the emergency floor for SR-08 and SR-09, what a reply shows and cites, and how a session records which pack covered which rule; Ghost's questions ranked, if any. Then the build: the pack check refuses a declaration that names an unknown rule, a passage not in the pack, a covering passage whose citation page is "unknown", a declaration in a pack that is neither `field` nor a `demo` pack on Ghost's word, and any declaration that lowers SR-08 or SR-09, each by a planted break under `test/fixtures/broken/packs/`; the door gives a covering passage's response and words, cited, in place of the rule, and the general rule wherever no declaration exists, each shown by a test on a fixture pack; the engineer's packet (1.14) lists every declaration. The seed pack declares nothing until Ghost names one.
+
+### 1.27 Tune-up pass 1
 
 Check: `docs/when/tune-up.md` followed in full; the metrics table written; the navigation log reviewed; the human maintainability pass for the code written since the last one (SC-011).
 
-Renumbered: from 1.18, so the bank's items 1.19 to 1.24 come before it (SC-023 in force, J-051).
+Renumbered: from 1.18, so the bank's items 1.19 to 1.24 come before it (SC-023 in force, J-051); then from 1.25, so 1.26 comes before it (SC-024 in force, J-069).
 
 ## Phase 2: the offline mode (the floor)
 

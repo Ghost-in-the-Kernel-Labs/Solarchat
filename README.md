@@ -17,7 +17,7 @@ explained in full in [docs/SAFETY-AND-COMPLIANCE.md](docs/SAFETY-AND-COMPLIANCE.
   (2.5), and the checks and gates that hold the repository to its rules.
 - **Open, in order (`TODO.md`):** the index and keyword search (1.7, 1.8), the safety rules applied in the door's
   answers and on the worker's own words (1.9, 1.10), the bank run, its model roles, drafting, harm triage and guards
-  (1.20 to 1.24), then Phase 1's tune-up pass (1.25). Phase 2 holds demo mode, the walker, the safety rules in the
+  (1.20 to 1.24), SC-024's pack coverage of the safety rules (1.26), then Phase 1's tune-up pass (1.27). Phase 2 holds demo mode, the walker, the safety rules in the
   walker and the offline shell (2.1 to 2.4); speech out (2.7, `--voice`, J-056) is built.
 - **Later:** speech in, which needs a dependency proposed to Ghost; a small local model that only chooses which
   checked passage to show, the hosted service and the phone app (`docs/ROADMAP.md`, Phases 3 to 6).

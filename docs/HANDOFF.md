@@ -42,14 +42,14 @@ which passage to show.
    chain: 1.3 the safety rules, 1.4 the seed pack, 1.5 the frozen set, 1.6 the door and the runner, 1.16 the model
    answerer, 1.19 the bank's format, 2.5 the command menu and local key. Open, in order: 1.7 the index, 1.8 keyword
    search, 1.9 the safety rules in the answers, 1.10 the safety rules on the worker's words, 1.20 to 1.24 the bank run,
-   the model roles, drafting, harm triage and guards (SC-023), then 1.25 Tune-up pass 1 (renumbered from 1.15, 1.18).
+   the model roles, drafting, harm triage and guards (SC-023), then 1.26 SC-024's pack coverage of the safety rules, then 1.27 Tune-up pass 1 (renumbered from 1.15, 1.18, 1.25).
    Each goes to a fresh worker of its grade with the brief of `docs/when/hand-out-a-task.md`, saved on its own branch
    and landed by the coordinator after Ghost's word; 1.3 and 1.6 went to the strong grade.
 3. **Phase 2** (SC-018: old 1.5 to 1.8 moved down): 2.1 demo mode, 2.2 the walker (`solarchat/walker`, a module Ghost
    approved, its folder not yet written), 2.3 the safety rules in the walker (whole-word matching on the step's text is
    settled, HAD-04), 2.4 the offline shell, and 2.8 (2.7 speech out is built, J-056)
    Tune-up pass 2. 2.5 and 2.7 are the free numbers J-054 used; `docs/ROADMAP.md` still holds its own 2.5 (switching
-   packs on and off) and 2.7 (a site-safety pack) under those numbers (For Ghost 20). 1.25 Tune-up pass 1 carries the
+   packs on and off) and 2.7 (a site-safety pack) under those numbers (For Ghost 20). 1.27 Tune-up pass 1 carries the
    next human maintainability pass (SC-011: Ghost-Core's toolkit under `scripts/` a few files at a time, each with
    its proof that nothing changed; then the tests).
 
@@ -180,13 +180,11 @@ which passage to show.
     guidance flagged "engineer to confirm".
     Corrected on Ghost's word of 2026-11-22 ("make the pack specific changes", J-068): `fail-08-check-2` lost the sentence and its blanket picture, S3 page 3 is cited for fail-08 and pages 3 and 14 for fail-04, and the pack is version 0.2-draft; logged as maintainer, engineer to confirm. The quotes are in the worker's report. S6 was not added to the library: its page 3
     allows distribution only entire and unamended, with no Open Government Licence statement in the PDF; S7 is copyrighted.
-23. **SC-024, proposed: a pack is the first safety authority for its make and model; the general rules are the default
-    where it is silent** (J-067; your direction of 2026-11-22). It reverses HAD-04 and part of SC-020, so nothing is built
-    until you confirm or strike each part of its entry: (1) a pack declares, per general rule, which of its own passages
-    cover that hazard; an undeclared rule stays in force (silence is never guessed from the text); (2) each covering
-    passage cites the manual's page, never "unknown"; (3) an emergency floor: SR-08 and SR-09 still give the emergency
-    response, with the pack's words beside them; (4) the reply cites the pack's passage; (5) only a `field` pack, or a
-    `demo` pack on your word; (6) the engineer's packet lists every covered rule. Recommended: all six.
+23. **SC-024, in force: answered** (J-067 proposed it; J-069 records your answer of 2026-11-22, "go with your
+    recommendations on all six"): a pack is the first safety authority for its make and model, with declared coverage per
+    rule, a page per covering passage, an emergency floor for SR-08 and SR-09, the pack cited, handed-over packs only, and
+    the engineer's packet. HAD-04 and SC-020 carry the amendment; TODO 1.26 designs and builds it, before Phase 1's tune-up
+    pass, now 1.27. Nothing waits on you here until 1.26's design asks.
 
 Audit advisories (tune-up step 2): the python gate runs no audit step, so none are listed. An audit tool
 (`pip-audit` or the like) would be a new dependency, Ghost's to approve; until then the review's layers 1, 2 and 4

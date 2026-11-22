@@ -140,3 +140,10 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Opened**: `CLAUDE.md`, `packs/seed-mc4-leads/manifest.json`, `flows.json`, `passages.json`, `docs/CONTRACT.md` (pack format), `scripts/checks/packs.py`, `scripts/eval.py` (help), `docs/HANDOFF.md`, `docs/journal/J-000-099.md`, `docs/NAVIGATION-LOG.md`, `docs/when/handoff.md`.
 - **Complaints**: none; the brief named everything. The pack has no change log, so a pack change has no home but the journal.
 - **Suggestions**: CONTRACT.md could say what a `version` bump looks like for a demo pack (its string is tied to `evals/results/offline.json`).
+
+### 2026-11-22 · SC-024 in force, TODO 1.26 added (J-069) · Claude Opus 5.5
+
+- **Task**: record Ghost's answer, amend HAD-04 and SC-020, add the design-and-build item, renumber the tune-up pass.
+- **Opened**: `theGhost.md` (SC-020, SC-024), `docs/CONTRACT.md` (HAD-04), `TODO.md`, `docs/ROADMAP.md`, `docs/HANDOFF.md`, `README.md`.
+- **Complaints**: every item added to Phase 1 renumbers its tune-up pass and five documents that cite it (third time: 1.15, 1.18, 1.25).
+- **Suggestions**: cite the phase's pass as "Phase 1's tune-up pass" rather than by number outside `TODO.md`.

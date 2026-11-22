@@ -72,3 +72,4 @@ Written from `docs/journal/` by `scripts/journal_index.py`; do not edit by hand.
 | J-066 | Sourcing for SR-08's sentence: S6 and S7 do not support it; S3 supports half | measurement | `J-000-099.md` |
 | J-067 | A pack is the first safety authority for its make and model: SC-024 proposed, the general rules its default | direction | `J-000-099.md` |
 | J-068 | Seed pack corrected on Ghost's word: fail-08-check-2's unsourced sentence removed, S3 pages for fail-08 and fail-04 | feature | `J-000-099.md` |
+| J-069 | SC-024 in force: a pack is the first safety authority for its make and model; TODO 1.26 added | decision | `J-000-099.md` |

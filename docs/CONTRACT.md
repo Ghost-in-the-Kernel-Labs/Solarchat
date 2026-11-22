@@ -49,6 +49,13 @@ remove, reword or switch off a rule. Held by the leaf's `Reply` (a stop or a war
 `SafetyRule` (its response and change log), the safety rules' check (`load_rules`, with the fingerprint of SC-016) and
 the pack check (TODO 1.2).
 
+Amended by SC-024 (in force, Ghost, 2026-11-22): a pack is the first safety authority for its own make and model. A pack
+that declares in its manifest, rule by rule, which of its own passages cover a rule's hazard, each citing its manual
+with a page, gives that instruction (cited to the pack) in place of the rule; a rule it does not declare stays in force
+for it; SR-08 and SR-09 keep their emergency response in every pack. Only a `field` pack, or a `demo` pack on Ghost's
+word, may declare; the engineer's packet lists every declaration. Built by TODO 1.26: until then no pack declares, and
+the paragraph above holds unchanged.
+
 How a trigger matches (the audit of 2026-11-21, `docs/audits/2026-11-21-safety-rules.md`, applied on Ghost's word in J-030): a trigger matches a text when it occurs as a whole word or whole
 phrase, case-insensitively, with a word boundary at both ends (no letter, digit or underscore touching either end);
 never as a substring, so `live` does not fire on "deliver" or "alive", and a rule's trigger does not fire inside
