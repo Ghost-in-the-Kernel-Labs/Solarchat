@@ -120,9 +120,10 @@
     "id": "SR-07",
     "title": "Damaged, burnt, melted, wet or corroded parts",
     "applies_when": "A connector, cable, panel or box is cracked, cut, crushed, burnt, scorched, melted, discoloured, corroded, wet inside, or has copper showing. The triggers fire only on text that says such a part is there, not on a step that tells you what to look for.",
-    "triggers": ["broken glass", "broken panel", "cracked panel", "heat-damaged", "damaged connector", "damaged cable", "burnt connector", "burnt cable", "melted connector", "corroded connector", "wet inside", "copper showing", "frayed", "chewed", "glass is broken", "glass is cracked", "is cracked"],
+    "triggers": ["broken glass", "broken panel", "cracked panel", "heat-damaged", "damaged connector", "damaged cable", "burnt connector", "burnt cable", "melted connector", "corroded connector", "wet inside", "copper showing", "frayed", "chewed", "broken", "glass is cracked", "is cracked"],
     "words_shown": "Stop. Do not touch, use or reconnect a damaged, burnt, melted, wet or corroded part. It can be live and can start a fire. Keep others away. Go to your site supervisor or engineer.",
     "response": "stop",
+    "reads": "words",
     "sources": [
       {"title": "UK government (BRE): Fire incidents involving solar panels (connectors and poor installation among the causes)", "url": "https://www.gov.uk/government/publications/fire-incidents-involving-solar-panels"},
       {"title": "Staubli: MC4 branch connector assembly instructions MA250", "url": "https://www.staubli.com/content/dam/spot/PV_MA250-en.pdf"}
@@ -130,7 +131,8 @@
     "changes": [
       {"date": "2026-11-21", "by": "Claude Opus 5.5", "role": "agent, drafting", "why": "Version 1: drafted from public guidance for the newest contractor on a site; engineer to confirm.", "evidence": "J-027; the sources listed on this rule"},
       {"date": "2026-11-21", "by": "Ghost", "role": "maintainer", "why": "Triggers match whole words and phrases, and the rule's triggers and wording follow the audit, applied on Ghost's word; engineer to confirm.", "evidence": "docs/audits/2026-11-21-safety-rules.md; J-030", "fingerprint": "0d0689fc29da668e54e3c2aefd7f7bcdc320ca88357aeb9c6415b2f86d97901d"},
-      {"date": "2026-11-22", "by": "Ghost", "role": "maintainer", "why": "Triggers added: \"glass is broken\", \"glass is cracked\" and \"is cracked\", so a worker's report of broken or cracked panel glass stops them (safe-16); engineer to confirm.", "evidence": "J-075; docs/designs/worker-words.md", "fingerprint": "d5bdd8ef348b56defa960f8df1f9ce1344bb98db2179baa0d97998008c4e0bad"}
+      {"date": "2026-11-22", "by": "Ghost", "role": "maintainer", "why": "Triggers added: \"glass is broken\", \"glass is cracked\" and \"is cracked\", so a worker's report of broken or cracked panel glass stops them (safe-16); engineer to confirm.", "evidence": "J-075; docs/designs/worker-words.md", "fingerprint": "d5bdd8ef348b56defa960f8df1f9ce1344bb98db2179baa0d97998008c4e0bad"},
+      {"date": "2026-11-22", "by": "Ghost", "role": "maintainer", "why": "Trigger \"glass is broken\" becomes \"broken\" (safe-16); and the rule fires on the worker's words only, never on a passage's text; engineer to confirm.", "evidence": "J-079; docs/designs/worker-words.md", "fingerprint": "e4fdebf7aff44509652416f9b7d13410206714ef73c73f31b1f27ca5b2eec303"}
     ]
   },
   {
@@ -140,6 +142,7 @@
     "triggers": ["smoke", "smoking", "burning smell", "smells of burning", "sparks", "sparking", "arcing", "crackling", "flame", "flames", "on fire", "smells burnt", "burnt smell"],
     "words_shown": "Stop. Step back and do not touch it. Keep others away. If there is fire or smoke, follow the site's emergency procedure. Go to your site supervisor or engineer.",
     "response": "emergency",
+    "reads": "words",
     "sources": [
       {"title": "UK government (BRE): Fire incidents involving solar panels (electrical arcing the likely ignition)", "url": "https://www.gov.uk/government/publications/fire-incidents-involving-solar-panels"},
       {"title": "OSHA: Green Job Hazards, Solar Energy, Electrical (arc flash)", "url": "https://www.osha.gov/green-jobs/solar/electrical"}
@@ -148,7 +151,8 @@
       {"date": "2026-11-21", "by": "Claude Opus 5.5", "role": "agent, drafting", "why": "Version 1: drafted from public guidance for the newest contractor on a site; engineer to confirm.", "evidence": "J-027; the sources listed on this rule"},
       {"date": "2026-11-21", "by": "Ghost", "role": "maintainer", "why": "Triggers match whole words and phrases, and the rule's triggers and wording follow the audit, applied on Ghost's word; engineer to confirm.", "evidence": "docs/audits/2026-11-21-safety-rules.md; J-030"},
       {"date": "2026-11-21", "by": "Ghost", "role": "maintainer", "why": "Starting response emergency (SC-015): step back, keep others away, call for help; engineer to confirm.", "evidence": "SC-015; J-032", "fingerprint": "e5aa96ceb7784875467ca64133fd0fcd2e1ed08f5e9c9b2498e322dd29b5ae04"},
-      {"date": "2026-11-22", "by": "Ghost", "role": "maintainer", "why": "Triggers added: \"smells burnt\" and \"burnt smell\", so a worker's report that a part smells burnt is an emergency (safe-15); engineer to confirm.", "evidence": "J-075; docs/designs/worker-words.md", "fingerprint": "a27b1ff75a32c292e50261769783e63c9f349d86c9b4333a876e6344cd258e6a"}
+      {"date": "2026-11-22", "by": "Ghost", "role": "maintainer", "why": "Triggers added: \"smells burnt\" and \"burnt smell\", so a worker's report that a part smells burnt is an emergency (safe-15); engineer to confirm.", "evidence": "J-075; docs/designs/worker-words.md", "fingerprint": "a27b1ff75a32c292e50261769783e63c9f349d86c9b4333a876e6344cd258e6a"},
+      {"date": "2026-11-22", "by": "Ghost", "role": "maintainer", "why": "The rule fires on the worker's words only, never on a passage's text; engineer to confirm.", "evidence": "J-079; docs/designs/worker-words.md", "fingerprint": "babc37eb7548d5049f7653f9c77e266408d50ce8b657faac5f0ba64356dd9806"}
     ]
   },
   {
@@ -158,6 +162,7 @@
     "triggers": ["earth fault", "ground fault", "insulation fault", "isolation fault", "insulation resistance", "earth leakage", "gfdi", "tingle", "electric shock", "got a shock", "loose earth", "missing earth"],
     "words_shown": "Stop. Do not touch the frames, panels or boxes. A fault may have made metal live. If someone has had a shock, call for help and first aid at once, switch off the power if you can do it safely, and do not touch them while they may still be touching it. Go to your site supervisor or engineer.",
     "response": "emergency",
+    "reads": "words",
     "sources": [
       {"title": "Fluke: What is a DC ground fault in a PV system?", "url": "https://www.fluke.com/en-gb/learn/blog/renewable-energy/what-is-a-dc-ground-fault-in-a-pv-system"},
       {"title": "OSHA: Green Job Hazards, Solar Energy, Electrical (shock and burns when connecting panels)", "url": "https://www.osha.gov/green-jobs/solar/electrical"}
@@ -166,7 +171,8 @@
     "changes": [
       {"date": "2026-11-21", "by": "Claude Opus 5.5", "role": "agent, drafting", "why": "Version 1: drafted from public guidance for the newest contractor on a site; engineer to confirm.", "evidence": "J-027; the sources listed on this rule"},
       {"date": "2026-11-21", "by": "Ghost", "role": "maintainer", "why": "Triggers match whole words and phrases, and the rule's triggers and wording follow the audit, applied on Ghost's word; engineer to confirm.", "evidence": "docs/audits/2026-11-21-safety-rules.md; J-030"},
-      {"date": "2026-11-21", "by": "Ghost", "role": "maintainer", "why": "Starting response emergency (SC-015): step back, keep others away, call for help; engineer to confirm.", "evidence": "SC-015; J-032", "fingerprint": "a48448626dd5abd8aee0256552d851a8e07d9d8865d2c8f6293679a75fc2df67"}
+      {"date": "2026-11-21", "by": "Ghost", "role": "maintainer", "why": "Starting response emergency (SC-015): step back, keep others away, call for help; engineer to confirm.", "evidence": "SC-015; J-032", "fingerprint": "a48448626dd5abd8aee0256552d851a8e07d9d8865d2c8f6293679a75fc2df67"},
+      {"date": "2026-11-22", "by": "Ghost", "role": "maintainer", "why": "The rule fires on the worker's words only, never on a passage's text; engineer to confirm.", "evidence": "J-079; docs/designs/worker-words.md", "fingerprint": "d9ac7c334b1461cbdc20433b131abefbbfe80eec205584d36551abf45ce6cfd6"}
     ]
   },
   {

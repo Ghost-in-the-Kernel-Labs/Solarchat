@@ -161,9 +161,9 @@ Status: a draft for Ghost to read (TODO 1.3 stays open until Ghost has read it).
 
 **Response:** stop
 
-**Triggers:** `broken glass`, `broken panel`, `cracked panel`, `heat-damaged`, `damaged connector`, `damaged cable`, `burnt connector`, `burnt cable`, `melted connector`, `corroded connector`, `wet inside`, `copper showing`, `frayed`, `chewed`, `glass is broken`, `glass is cracked`, `is cracked`
+**Triggers:** `broken glass`, `broken panel`, `cracked panel`, `heat-damaged`, `damaged connector`, `damaged cable`, `burnt connector`, `burnt cable`, `melted connector`, `corroded connector`, `wet inside`, `copper showing`, `frayed`, `chewed`, `broken`, `glass is cracked`, `is cracked`
 
-**Latest change:** 2026-11-22, Ghost (maintainer): Triggers added: "glass is broken", "glass is cracked" and "is cracked", so a worker's report of broken or cracked panel glass stops them (safe-16); engineer to confirm. Evidence: J-075; docs/designs/worker-words.md. Pending engineer.
+**Latest change:** 2026-11-22, Ghost (maintainer): Trigger "glass is broken" becomes "broken" (safe-16); and the rule fires on the worker's words only, never on a passage's text; engineer to confirm. Evidence: J-079; docs/designs/worker-words.md. Pending engineer.
 
 **Sources:**
 
@@ -182,7 +182,7 @@ Status: a draft for Ghost to read (TODO 1.3 stays open until Ghost has read it).
 
 **Triggers:** `smoke`, `smoking`, `burning smell`, `smells of burning`, `sparks`, `sparking`, `arcing`, `crackling`, `flame`, `flames`, `on fire`, `smells burnt`, `burnt smell`
 
-**Latest change:** 2026-11-22, Ghost (maintainer): Triggers added: "smells burnt" and "burnt smell", so a worker's report that a part smells burnt is an emergency (safe-15); engineer to confirm. Evidence: J-075; docs/designs/worker-words.md. Pending engineer.
+**Latest change:** 2026-11-22, Ghost (maintainer): The rule fires on the worker's words only, never on a passage's text; engineer to confirm. Evidence: J-079; docs/designs/worker-words.md. Pending engineer.
 
 **Sources:**
 
@@ -201,7 +201,7 @@ Status: a draft for Ghost to read (TODO 1.3 stays open until Ghost has read it).
 
 **Triggers:** `earth fault`, `ground fault`, `insulation fault`, `isolation fault`, `insulation resistance`, `earth leakage`, `gfdi`, `tingle`, `electric shock`, `got a shock`, `loose earth`, `missing earth`
 
-**Latest change:** 2026-11-21, Ghost (maintainer): Starting response emergency (SC-015): step back, keep others away, call for help; engineer to confirm. Evidence: SC-015; J-032. Pending engineer.
+**Latest change:** 2026-11-22, Ghost (maintainer): The rule fires on the worker's words only, never on a passage's text; engineer to confirm. Evidence: J-079; docs/designs/worker-words.md. Pending engineer.
 
 **Sources:**
 

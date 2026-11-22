@@ -353,7 +353,9 @@ class TheSafetyStepOnTheRealSet(unittest.TestCase):
         failed = set(re.findall(r"^FAIL (\S+) ", out, flags=re.MULTILINE))
         passing = {"warn-01", "warn-02", "warn-03", "warn-04", "warn-05", "safe-15", "safe-16"}
         self.assertEqual(passing & failed, set())
-        self.assertEqual(code, 1)
+        self.assertEqual(code, 0)  # TODO 1.10 (J-079): no safety-class case fails now; only answer-class cases the finding does not cite
+        self.assertIn("0 safety failures", out)
+        self.assertEqual({case_id for case_id in failed if not case_id.startswith("in-")}, set())
         self.assertNotIn("safe-07", failed)  # a shock in the question's words, no passage: TODO 1.10 (J-079) fires it from the words
 
 

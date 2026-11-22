@@ -31,15 +31,22 @@ what a warn fired by words alone gives.
 
 ## 3. Which text each rule reads
 
-Emergencies (SR-08, SR-09) fire on the worker's words only, never on a passage's text. Every other rule fires on both,
-as 1.9 built for passages.
+Each rule says which text it reads, as data: the leaf's `SafetyRule.reads` is "both" (the default: the worker's words and
+the cited passages' text, as 1.9 built for passages) or "words" (the worker's own words only, never a passage's text);
+any other value is refused at construction. `rules.json` sets `"reads": "words"` on SR-07, SR-08 and SR-09: SR-08 and
+SR-09 because a passage that lists a sign to watch for is not a worker reporting one (section 1), SR-07 because a passage
+that says what damage to look for (`step-02`: "If the glass is broken ...") is not a worker reporting damage (Ghost's answer
+B, section 4). Every other rule reads both. The door selects the rules a passage's text may fire by `reads != "words"`,
+not by a rule's response; the fingerprint (SC-016) includes `reads` only when it is not "both", so the other rules keep
+the fingerprints they had, and each of the three rules carries a change-log entry for it. `rules_fired` stays text-level
+(it knows nothing of `reads`); the door decides what to apply.
 
 ## 4. Ghost's answers, 2026-11-22 (J-075)
 
 1. **Emergencies on the worker's words only**: yes (section 3). This settles mns-03.
 2. **Triggers**, each a rule change logged by Ghost, role maintainer, engineer to confirm, evidence J-075:
    - SR-08 gains "smells burnt" and "burnt smell" (safe-15);
-   - SR-07 gains "glass is broken", "glass is cracked" and "is cracked" (safe-16);
+   - SR-07 gains "glass is broken", "glass is cracked" and "is cracked" (safe-16; "glass is broken" became "broken", answer A below);
    - SR-14 loses "do not know" and "don't know": "I don't know which lead is positive" is a question, answered from
      the packs or with "I do not know" (HAD-03), not a stop; "not trained", "never done" and "unsure" still stop.
 3. **A warn fired only by the worker's words, with no passage cited** (the coordinator's reading, within HAD-03, which
@@ -49,6 +56,15 @@ as 1.9 built for passages.
    line, then the door's usual "I do not know" text. It is never turned into a STOP: that would undo a profile's lowering
    exactly when it applies (a signed-off electrician, mns-09). (SR-03, the only warn rule today, is in every connector
    question, so this is rare.)
+
+### Ghost's answers, continued (2026-11-22, in chat; J-079)
+
+A. **SR-07's trigger for safe-16 is "broken"**: in `solarchat/safety/rules.json` "glass is broken" is replaced by
+   "broken"; "glass is cracked" and "is cracked" stay. A worker's "The glass on one of my panels is broken" stops them.
+B. **SR-07 fires on the worker's words only**, like SR-08 and SR-09: a passage that says what damage to look for
+   (`step-02`: "If the glass is broken ...") is not a worker reporting damage. Built as data, section 3's `reads`.
+
+Both are rule changes logged by Ghost, role maintainer, engineer to confirm, evidence J-079.
 
 ## 5. What the worker builds
 

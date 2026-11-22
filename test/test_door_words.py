@@ -7,7 +7,7 @@ from solarchat.answer.stub import NoAnswer
 from solarchat.leaf.contract import DEFAULT_PROFILE, Finding, PassageRef, Profile, ReplyKind, Turn
 from solarchat.safety.rules import load_rules, rules_fired
 from test.support import ROOT
-from test.test_door import GOOD, SEED, VOLTAGE, Spy, one
+from test.test_door import GOOD, SEED, VOLTAGE, Spy, one, planted, planted_ref, trigger_of
 
 RULES = {rule.rule_id: rule for rule in load_rules()}
 SET = json.loads((ROOT / "evals" / "v1.json").read_text(encoding="utf-8"))["cases"]
@@ -112,10 +112,38 @@ class TheThreeTriggerChanges(unittest.TestCase):
 
     def test_each_change_is_logged_by_ghost_on_2026_11_22_with_its_evidence(self) -> None:
         for rule_id in ("SR-07", "SR-08", "SR-14"):
+            entries = [change for change in RULES[rule_id].changes
+                       if (change.date, change.by, change.role, change.evidence)
+                       == ("2026-11-22", "Ghost", "maintainer", "J-075; docs/designs/worker-words.md")]
+            self.assertEqual(len(entries), 1, rule_id)
+            self.assertTrue(entries[0].why.endswith("engineer to confirm."))
+        for rule_id in ("SR-07", "SR-08", "SR-09"):  # Ghost's decision B: the rule reads the worker's words only
             latest = RULES[rule_id].changes[-1]
             self.assertEqual((latest.date, latest.by, latest.role, latest.evidence),
-                             ("2026-11-22", "Ghost", "maintainer", "J-075; docs/designs/worker-words.md"))
+                             ("2026-11-22", "Ghost", "maintainer", "J-079; docs/designs/worker-words.md"))
+            self.assertIn("worker's words only", latest.why)
             self.assertTrue(latest.why.endswith("engineer to confirm."))
+
+
+class TheRulesThatReadTheWordsOnly(unittest.TestCase):
+    def test_a_rule_that_reads_the_words_only_never_fires_on_a_passage(self) -> None:
+        for rule in [rule for rule in load_rules() if rule.reads == "words"]:
+            with self.subTest(rule=rule.rule_id):
+                pack = planted((f"If you see {trigger_of(rule.rule_id)}, leave.",))
+                reply = answer("How?", (pack,), False, Spy(Finding((planted_ref(1),), "Carry on.")))
+                self.assertEqual((reply.kind, reply.safety_rule_id), (ReplyKind.ANSWER, None))
+                said = answer(f"There is {trigger_of(rule.rule_id)} here", (pack,), False, Spy(Finding((planted_ref(1),), "Carry on.")))
+                self.assertEqual((said.kind, said.safety_rule_id), (ReplyKind.STOP, rule.rule_id))
+
+    def test_a_passage_that_says_what_damage_to_look_for_is_not_a_worker_reporting_it(self) -> None:
+        """step-02 ("If the glass is broken ...") fires SR-07 at the text level (test_safety pins it) and the door does not
+        act on it: SR-07 reads the worker's words only (Ghost, 2026-11-22, J-079)."""
+        step_02 = PassageRef("seed-mc4-leads", "step-02")
+        in_04 = "What should I look at on the panel before I connect anything?"
+        reply = answer(in_04, (SEED,), True, Spy(Finding((step_02,), "Look at the glass, the cable covers and the connectors.")))
+        self.assertEqual((reply.kind, reply.safety_rule_id, reply.passage_refs), (ReplyKind.ANSWER, None, (step_02,)))
+        said = answer("The glass on one of my panels is broken", (SEED,), True, Spy(Finding((step_02,), "x")))
+        self.assertEqual((said.kind, said.safety_rule_id), (ReplyKind.STOP, "SR-07"))
 
 
 class TheFrozenSetsStopAndEmergencyCases(unittest.TestCase):

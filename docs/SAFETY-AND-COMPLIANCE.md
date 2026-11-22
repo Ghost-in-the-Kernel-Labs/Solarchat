@@ -122,11 +122,11 @@ removes dangers 3 and 5: no "what's next?" carries a worker past a stop.
   and words (a warn with the answer, a stop with what to bring the supervisor, an emergency with the rule's words alone),
   the most severe response first and then the lowest id, whatever the answerer said (`test/test_door.py`, step 6).
   **Enforced today (J-079, SC-011):** the door also applies the rules to the worker's own words, this turn's question only,
-  before "I do not know" (so a stop or an emergency is given even when nothing is cited); SR-08 and SR-09 fire on the
-  worker's words only, never on a passage's text; a warn fired by the words alone is the answer with the warn's words
+  before "I do not know" (so a stop or an emergency is given even when nothing is cited); SR-07, SR-08 and SR-09 read the
+  worker's words only (`reads` in `rules.json`), never a passage's text; a warn fired by the words alone is the answer with the warn's words
   before it when a passage is cited, and otherwise an "I do not know" carrying the warn's words (`test/test_door_words.py`).
-  **Not enforced today:** a pack's coverage of a rule (1.26) and the session profile's questions (1.10, slice 2); the
-  evaluation set's warn cases still score 0 on the offline stub, which cites no passage.
+  **Not enforced today:** a pack's coverage of a rule (1.26); the evaluation set's warn and answer cases still score 0 on
+  the offline stub, which cites no passage.
 - **Enforced today (J-034):** each rule answers with a warn, a helpful stop or an emergency,
   starting cautious (SR-03 at a warn on Ghost's word) and relaxed on Ghost's word, logged as maintainer and confirmed or
   reversed by an electrical engineer at the final review (SC-015); each rule keeps a change log of who changed it, in

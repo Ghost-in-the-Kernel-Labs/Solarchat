@@ -4,7 +4,7 @@ The same function in every mode; what changes is the answerer passed in. The doo
 may answer, the reply's kind and the citations, so an answerer can never skip them. It imports no model client and no
 answerer. Step 6 of the design, the safety rules in the answer (TODO 1.9), is here: a cited passage whose text fires a
 rule gives that rule's response and words, whatever the answerer said; so does a rule fired by this turn's question
-(TODO 1.10), before "I do not know" (an emergency rule fires on the question only). Standard library, the leaf, the packs module and the safety module only.
+(TODO 1.10), before "I do not know" (a rule that reads the words only fires on the question only). Standard library, the leaf, the packs module and the safety module only.
 """
 from dataclasses import replace
 
@@ -79,7 +79,7 @@ def lowered_for_profile(rule: SafetyRule, profile: Profile) -> SafetyRule:
 
 # Decision: SC-015 (the most severe response of the rules fired wins, then the lowest id; the answerer cannot skip it)
 # Invariant: HAD-04 (a rule fires on the cited passages' text and on the worker's own words, whatever the answerer said)
-# Decision: TODO 1.10 (an emergency rule, SR-08 and SR-09, fires on the worker's words only, never on a passage's text)
+# Decision: TODO 1.10 (a rule with reads == "words", SR-07, SR-08 and SR-09, fires on the worker's words only, never on a passage's text)
 Hit = tuple[SafetyRule, Pack | None, Passage | None]
 
 
@@ -101,11 +101,12 @@ def fired_by_words(question: str, rules: tuple[SafetyRule, ...], profile: Profil
 def fired_by_citations(finding: Finding, places: dict[PassageRef, tuple[Pack, Passage]],
                        rules: tuple[SafetyRule, ...], profile: Profile = DEFAULT_PROFILE) -> list[Hit]:
     """Each rule fired by a cited passage's text, with the passage that fires it, lowered for the profile (SC-020); an
-    emergency rule never fires on a passage's text: a finding citing a passage that lists "smoke" gives []."""
+    rule that reads the words only (reads == "words": SR-07, SR-08, SR-09) never fires on a passage's text: a finding citing
+    a passage that lists "smoke" gives []."""
     # Decision: SC-024 (a pack that covers a rule is applied before a lowering, and a profile never lowers a covered rule;
     # the door does not apply coverage yet, TODO 1.26 slice 2: when it does, a covered rule skips lowered_for_profile here).
     by_id = {rule.rule_id: lowered_for_profile(rule, profile) for rule in rules}
-    on_text = tuple(rule for rule in rules if rule.response != "emergency")
+    on_text = tuple(rule for rule in rules if rule.reads != "words")
     return [(by_id[rule_id], *places[ref]) for ref in finding.refs for rule_id in rules_fired(places[ref][1].text, on_text)]
 
 
@@ -142,7 +143,7 @@ def answer(question: str, packs: tuple[Pack, ...], demo_mode: bool, answerer: An
     """The reply to a question: answer("", packs, True, NoAnswer()) is "I do not know" with the banner and the answerer
     is never called; a finding citing one given passage is an ANSWER with its sources. Steps: empty question; packs that
     may answer; find; the safety rules on this turn's question and on the cited passages' text, when the finding keeps the contract
-    (a stop, an emergency or a warn, SC-015; an emergency fires on the question only; a stop or emergency is given even when
+    (a stop, an emergency or a warn, SC-015; SR-07, SR-08 and SR-09 fire on the question only; a stop or emergency is given even when
     nothing is cited); "I do not know"; the answer; the demo banner. `history` is the turns so far, passed to the answerer unchanged (SC-019, amended
     2026-11-21); the door's other steps do not read it. `profile` is who is asking (SC-020): the default is the newest contractor, which
     gives the replies there were before it; a rule lowers for a profile only as its own lowered_for says. What the answerer raises is a bug and reaches the caller."""
