@@ -2,7 +2,7 @@
 import json
 import unittest
 
-from solarchat.leaf.contract import DEMO_BANNER, MAX_CITED_PASSAGES, Finding, Passage, PassageRef, Reply, ReplyKind, may_answer
+from solarchat.leaf.contract import DEMO_BANNER, MAX_CITED_PASSAGES, Finding, Passage, PassageRef, Reply, ReplyKind, SafetyCoverage, may_answer
 from test.support import ROOT
 
 STEP = PassageRef("seed-mc4-leads", "step-06")
@@ -95,3 +95,21 @@ class TheAnsweringTypes(unittest.TestCase):
     def test_the_constants_say_what_the_decision_says(self) -> None:
         self.assertEqual(MAX_CITED_PASSAGES, 3)
         self.assertEqual(DEMO_BANNER, "DEMO: not reviewed by an engineer, do not use on a site")
+
+
+class TheSafetyCoverage(unittest.TestCase):
+    """SC-024: a declaration is refused at construction when incomplete."""
+
+    DECLARED = {"by": "Ghost", "role": "maintainer", "date": "2026-11-22", "evidence": "J-072"}
+
+    def test_a_whole_declaration_stands_with_or_without_declared(self) -> None:
+        self.assertEqual(SafetyCoverage("SR-02", "warn", ("a", "b"), self.DECLARED).passages, ("a", "b"))
+        self.assertIsNone(SafetyCoverage("SR-03", "stop", ("a",)).declared)
+        self.assertEqual(SafetyCoverage("SR-08", "emergency", ("a",)).response, "emergency")
+
+    def test_each_incomplete_declaration_is_refused(self) -> None:
+        for arguments in (("SR-2", "warn", ("a",)), ("SR-02", "halt", ("a",)), ("SR-02", "emergency", ("a",)),
+                          ("SR-08", "warn", ("a",)), ("SR-09", "stop", ("a",)), ("SR-02", "warn", ()), ("SR-02", "warn", (" ",)),
+                          ("SR-02", "warn", ("a",), {"by": "Ghost"}), ("SR-02", "warn", ("a",), {**self.DECLARED, "role": ""})):
+            with self.subTest(arguments=arguments), self.assertRaisesRegex(ValueError, "SC-0(24|16)"):
+                SafetyCoverage(*arguments)

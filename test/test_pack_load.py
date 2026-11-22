@@ -4,7 +4,7 @@ import shutil
 import unittest
 from pathlib import Path
 
-from solarchat.leaf.contract import PassageRef
+from solarchat.leaf.contract import PassageRef, SafetyCoverage
 from solarchat.packs.load import Pack, citation_lines, load_pack
 from test.support import ROOT, scratch
 
@@ -17,6 +17,30 @@ def copy_of_good() -> Path:
     folder = scratch() / "pack"
     shutil.copytree(GOOD, folder)
     return folder
+
+
+COVERED = ROOT / "test" / "fixtures" / "packs" / "covered"
+
+
+class TheCoverage(unittest.TestCase):
+    """SC-024: the manifest's safety_coverage is read onto the loaded pack; absent means an empty tuple."""
+
+    def test_a_pack_with_no_declaration_has_an_empty_tuple(self) -> None:
+        self.assertEqual(load_pack(GOOD).coverage, ())
+        self.assertEqual(load_pack(SEED).coverage, ())
+
+    def test_the_declarations_load_as_leaf_records_in_order(self) -> None:
+        declared = {"by": "Ghost", "role": "maintainer", "date": "2026-11-22", "evidence": "J-072"}
+        self.assertEqual(load_pack(COVERED).coverage, (SafetyCoverage("SR-02", "warn", ("live-panel",), declared),
+                                                       SafetyCoverage("SR-08", "emergency", ("heat-smoke",), declared)))
+
+    def test_a_malformed_declaration_raises_value_error(self) -> None:
+        folder = copy_of_good()
+        manifest = json.loads((folder / "manifest.json").read_text())
+        manifest["safety_coverage"] = [{"rule": "SR-02", "response": "warn", "passages": []}]
+        (folder / "manifest.json").write_text(json.dumps(manifest))
+        with self.assertRaises(ValueError):
+            load_pack(folder)
 
 
 class TheGoodPack(unittest.TestCase):

@@ -52,6 +52,8 @@ Check: first a design in `docs/designs/` (SC-024 in force, Ghost 2026-11-22; HAD
 
 Design written: `docs/designs/pack-coverage.md` (J-070), its section 8 the slices and section 9 Ghost's five questions; Ghost answered all five as recommended (J-071), the leaf change approved; the slices are built in order.
 
+Slice 1 built (J-072): `safety_coverage` in the pack format, the check's six refusals (`scripts/checks/coverage.py`), `SafetyCoverage` in the leaf and `Pack.coverage`, the `covered` fixture; slices 2 to 4 remain, so 1.26 stays open.
+
 ### 1.27 Tune-up pass 1
 
 Check: `docs/when/tune-up.md` followed in full; the metrics table written; the navigation log reviewed; the human maintainability pass for the code written since the last one (SC-011).

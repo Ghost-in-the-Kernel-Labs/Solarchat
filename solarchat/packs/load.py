@@ -8,7 +8,7 @@ import json
 from dataclasses import dataclass
 from pathlib import Path
 
-from solarchat.leaf.contract import Passage, PassageRef
+from solarchat.leaf.contract import Passage, PassageRef, SafetyCoverage
 
 MANIFEST_FIELDS = ("id", "title", "version", "status", "sources")
 PASSAGE_FIELDS = ("id", "title", "text", "sources")
@@ -18,12 +18,14 @@ UNKNOWN_PAGE = "unknown"
 @dataclass(frozen=True)
 class Pack:
     """One loaded pack: Pack("seed-mc4-leads", manifest, passages, citations) with `citations` the passage id to its
-    `sources` list as written ("S2", or {"source": "S3", "page": "15"})."""
+    `sources` list as written ("S2", or {"source": "S3", "page": "15"}); `coverage` is the manifest's `safety_coverage` as leaf
+    records, () when the manifest has none (SC-024)."""
 
     pack_id: str
     manifest: dict
     passages: tuple[Passage, ...]
     citations: dict[str, list]
+    coverage: tuple[SafetyCoverage, ...] = ()
 
 
 def read_json(path: Path) -> object:
@@ -64,6 +66,17 @@ def passage_entries(folder: Path) -> list[dict]:
     return entries
 
 
+# Decision: SC-024 (a manifest's safety_coverage is read into leaf records; the pack check is what refuses a bad one)
+def coverage_from_manifest(manifest: dict) -> tuple[SafetyCoverage, ...]:
+    """The manifest's declarations as SafetyCoverage records, () when absent: {"safety_coverage": [{"rule": "SR-02",
+    "response": "warn", "passages": ["a"]}]} gives (SafetyCoverage("SR-02", "warn", ("a",)),). A malformed one raises ValueError."""
+    entries = manifest.get("safety_coverage") or []
+    if not isinstance(entries, list) or not all(isinstance(entry, dict) for entry in entries):
+        raise ValueError("manifest.json: safety_coverage is not a list of declarations")
+    return tuple(SafetyCoverage(entry.get("rule"), entry.get("response"), tuple(entry.get("passages") or ()), entry.get("declared"))
+                 for entry in entries)
+
+
 # Decision: SC-019 (load_pack reads manifest and passages and names the file and field that is missing)
 def load_pack(folder: Path) -> Pack:
     """The pack in folder; a missing manifest, or a missing field of the manifest or of a passage, raises ValueError
@@ -75,7 +88,8 @@ def load_pack(folder: Path) -> Pack:
         raise ValueError(f"{folder / 'manifest.json'}: no {absent!r}")
     entries = passage_entries(folder)
     passages = tuple(passage_from_entry(manifest["id"], entry) for entry in entries)
-    return Pack(manifest["id"], manifest, passages, {entry["id"]: entry["sources"] for entry in entries})
+    citations = {entry["id"]: entry["sources"] for entry in entries}
+    return Pack(manifest["id"], manifest, passages, citations, coverage_from_manifest(manifest))
 
 
 def page_words(page: object) -> str:
