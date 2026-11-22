@@ -91,3 +91,10 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Opened**: `CLAUDE.md`, `solarchat/model/claude.py`, `docs/when/handoff.md`, `scripts/checks/readability.py`, `docs/when/hand-out-a-task.md`, `docs/NAVIGATION-LOG.md`, `docs/journal/INDEX.md`, `docs/journal/J-000-099.md`, `docs/JOURNAL.md`.
 - **Complaints**: none; the fast loop's metrics test fails after any source-line change until `scripts/metrics.py --write` runs, which the brief had to name.
 - **Suggestions**: `docs/when/handoff.md` could list `python3 -I scripts/metrics.py --write` and `scripts/directive_map.py` among the finishing steps when source lines or `# Decision:` citations change.
+
+### 2026-11-22 · Ruff in the fast checks, Ghost's answer recorded (J-062) · Claude Opus 5.5
+
+- **Task**: record For Ghost 21's answer and move `ruff` into the Python stack's fast checks.
+- **Opened**: `stacks/python/gate.sh`, `scripts/gate.sh`, `docs/HANDOFF.md`, `stacks/python/README.md`.
+- **Complaints**: none.
+- **Suggestions**: none.

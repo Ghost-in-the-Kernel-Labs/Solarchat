@@ -65,3 +65,4 @@ Written from `docs/journal/` by `scripts/journal_index.py`; do not edit by hand.
 | J-059 | Fix-forward: `ruff check .` fails on main (nine places left for a choice) | measurement | `J-000-099.md` |
 | J-060 | `scripts/worker_venv.py`: a worker's `.venv` of symlinks, by a command (HANDOFF "For Ghost" 19(b)) | feature | `J-000-099.md` |
 | J-061 | Fix-forward: `Any` in `claude.py` replaced by Protocols (the nine ANN401 of J-059) | measurement | `J-000-099.md` |
+| J-062 | Journal ids are renumbered by hand at landing; ruff joins the fast checks | decision | `J-000-099.md` |

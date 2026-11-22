@@ -162,11 +162,9 @@ which passage to show.
 20. **Two items held the same numbers: settled by the coordinator** (J-057 found it, J-058): the roadmap's 2.5 and 2.7
     are now 2.9 and 2.10, and the roadmap lists the demo's 2.5 and 2.7, which took those numbers by the coordinator's
     mistake (only `TODO.md` and `docs/DONE.md` were searched). No plan text changed; say if you want other numbers.
-21. **Journal ids across branches** (J-058): keep renumbering by hand at landing (the coordinator's recommendation:
-    a minute each time, and only the coordinator pays it), or a `scripts/renumber_journal.py` that renumbers an entry,
-    its index row and its mentions in the navigation log and the handoff. Also: the fast checks run no `ruff`, so lint
-    reached `main` today and the full gate fails until the clean-up lands; adding `ruff` to `scripts/gate.sh --fast` is
-    a gate change for you to decide.
+21. **Journal ids across branches, and ruff: answered** (J-062, Ghost, 2026-11-22: "go with your recommendations"): the
+    coordinator renumbers a branch's journal entry by hand at landing, and no renumbering script is written; `ruff
+    check .` now runs in the fast checks (`stacks/python/gate.sh --fast`), so lint is caught at each landing.
 
 Audit advisories (tune-up step 2): the python gate runs no audit step, so none are listed. An audit tool
 (`pip-audit` or the like) would be a new dependency, Ghost's to approve; until then the review's layers 1, 2 and 4
