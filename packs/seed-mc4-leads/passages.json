@@ -578,7 +578,7 @@
       "S2",
       {
         "source": "S3",
-        "page": "unknown"
+        "page": "3, 14"
       },
       {
         "source": "S5",
@@ -597,7 +597,7 @@
     "sources": [
       {
         "source": "S3",
-        "page": "unknown"
+        "page": "3, 14"
       },
       {
         "source": "S5",
@@ -630,7 +630,7 @@
       "S2",
       {
         "source": "S3",
-        "page": "unknown"
+        "page": "3, 14"
       },
       {
         "source": "S5",
@@ -650,7 +650,7 @@
       "S2",
       {
         "source": "S3",
-        "page": "unknown"
+        "page": "3, 14"
       },
       {
         "source": "S5",
@@ -926,7 +926,7 @@
     "sources": [
       {
         "source": "S3",
-        "page": "unknown"
+        "page": "3"
       },
       {
         "source": "S5",
@@ -962,19 +962,17 @@
   {
     "id": "fail-08-check-2",
     "title": "A connector is hot, melted, darkened, or smells burnt: check 2",
-    "text": "Do not touch the connector. Keep everyone back. If you safely can, cover the panel fully or turn off the off switch, without touching the connector.",
+    "text": "Do not touch the connector. Keep everyone back.",
     "sources": [
       {
         "source": "S3",
-        "page": "unknown"
+        "page": "3"
       },
       {
         "source": "S7",
         "page": "unknown"
       }
-    ],
-    "image": "images/step-04.svg",
-    "image_alt": "A panel with its whole front covered by a dark blanket, with a green tick. A small inset marked wrong shows the blanket covering only half the panel, with a red cross."
+    ]
   },
   {
     "id": "fail-08-fix",
@@ -983,7 +981,7 @@
     "sources": [
       {
         "source": "S3",
-        "page": "unknown"
+        "page": "3"
       },
       {
         "source": "S5",
@@ -1006,7 +1004,7 @@
     "sources": [
       {
         "source": "S3",
-        "page": "unknown"
+        "page": "3"
       },
       {
         "source": "S5",

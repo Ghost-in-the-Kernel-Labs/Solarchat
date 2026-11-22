@@ -2,7 +2,7 @@
   "id": "seed-mc4-leads",
   "title": "Connecting a solar panel by its MC4 leads",
   "installation_type": "crystalline-panel-mc4-leads",
-  "version": "0.1-draft",
+  "version": "0.2-draft",
   "status": "demo",
   "language": "en",
   "sources": [

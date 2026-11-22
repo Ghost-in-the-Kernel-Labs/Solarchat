@@ -133,3 +133,10 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Opened**: `docs/CONTRACT.md` (HAD-04), `theGhost.md` (SC-020, SC-023, the entry shape), `packs/seed-mc4-leads/manifest.json`.
 - **Complaints**: project decisions carry no Core line though the header's template shows one; the entry shape is learned from neighbours.
 - **Suggestions**: the header's template could show the project entry's shape (no Core line, a `subject:` line).
+
+### 2026-11-22 · Seed pack: fail-08 and fail-04 corrected (J-068) · Claude Sonnet 5.5
+
+- **Task**: remove fail-08-check-2's last sentence, fill the S3 pages for fail-08 and fail-04, update the unknown-page counts, check the eval is unchanged.
+- **Opened**: `CLAUDE.md`, `packs/seed-mc4-leads/manifest.json`, `flows.json`, `passages.json`, `docs/CONTRACT.md` (pack format), `scripts/checks/packs.py`, `scripts/eval.py` (help), `docs/HANDOFF.md`, `docs/journal/J-000-099.md`, `docs/NAVIGATION-LOG.md`, `docs/when/handoff.md`.
+- **Complaints**: none; the brief named everything. The pack has no change log, so a pack change has no home but the journal.
+- **Suggestions**: CONTRACT.md could say what a `version` bump looks like for a demo pack (its string is tied to `evals/results/offline.json`).
