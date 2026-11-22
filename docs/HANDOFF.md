@@ -178,6 +178,13 @@ which passage to show.
     without the sentence (current state), or word one from S3 only and limit it to what S3 says, or accept it as unsourced
     guidance flagged "engineer to confirm". The quotes are in the worker's report. S6 was not added to the library: its page 3
     allows distribution only entire and unamended, with no Open Government Licence statement in the PDF; S7 is copyrighted.
+23. **SC-024, proposed: a pack is the first safety authority for its make and model; the general rules are the default
+    where it is silent** (J-067; your direction of 2026-11-22). It reverses HAD-04 and part of SC-020, so nothing is built
+    until you confirm or strike each part of its entry: (1) a pack declares, per general rule, which of its own passages
+    cover that hazard; an undeclared rule stays in force (silence is never guessed from the text); (2) each covering
+    passage cites the manual's page, never "unknown"; (3) an emergency floor: SR-08 and SR-09 still give the emergency
+    response, with the pack's words beside them; (4) the reply cites the pack's passage; (5) only a `field` pack, or a
+    `demo` pack on your word; (6) the engineer's packet lists every covered rule. Recommended: all six.
 
 Audit advisories (tune-up step 2): the python gate runs no audit step, so none are listed. An audit tool
 (`pip-audit` or the like) would be a new dependency, Ghost's to approve; until then the review's layers 1, 2 and 4

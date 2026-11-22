@@ -126,3 +126,10 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Opened**: `CLAUDE.md` (given), `library/README.md`, `library/sources/osha-solar-lockout-tagout/source.json`, `docs/when/handoff.md`, `docs/when/hand-out-a-task.md`, `solarchat/safety/rules.json` (SR-08 only), `packs/seed-mc4-leads/manifest.json`, `docs/journal/INDEX.md`, `docs/journal/J-000-099.md` (tail), `docs/JOURNAL.md`, `docs/HANDOFF.md`.
 - **Complaints**: none; the brief named everything.
 - **Suggestions**: `library/README.md` could say what to do with a document whose own notice limits distribution but whose host page may carry another licence (S6 is this case).
+
+### 2026-11-22 · A pack as the first safety authority, SC-024 proposed (J-067) · Claude Opus 5.5
+
+- **Task**: record Ghost's precedence direction as a decision with safeguards.
+- **Opened**: `docs/CONTRACT.md` (HAD-04), `theGhost.md` (SC-020, SC-023, the entry shape), `packs/seed-mc4-leads/manifest.json`.
+- **Complaints**: project decisions carry no Core line though the header's template shows one; the entry shape is learned from neighbours.
+- **Suggestions**: the header's template could show the project entry's shape (no Core line, a `subject:` line).
