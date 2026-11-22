@@ -11,7 +11,8 @@ from unittest import mock
 
 from solarchat.cli.main import MENU, main
 from solarchat.leaf.contract import DEMO_BANNER, Finding, Reply, ReplyKind
-from solarchat.project.chat import converse, spoken_aloud
+from solarchat.project.chat import DEMO_PACK, converse, render, spoken_aloud
+from solarchat.safety.rules import load_rules
 from solarchat.project.speech import NO_ENGINE, WINDOWS_ENCODED, WINDOWS_SCRIPT, Speaker, engine_command
 from test.support import ROOT
 from test.test_cli import PACK, STEP, Scripted
@@ -140,6 +141,75 @@ class TheMissingEngine(unittest.TestCase):
 class TheOption(unittest.TestCase):
     def test_voice_is_in_the_menu(self) -> None:
         self.assertIn("--voice", MENU)
+
+
+class TheRuleWordsOnce(unittest.TestCase):
+    def door_reply(self, kind: ReplyKind, rule_id: str, rest: str) -> Reply:
+        """A reply as the door builds it since 1.9: the rule's words inside the text, then `rest`."""
+        words = {rule.rule_id: rule for rule in load_rules()}[rule_id].words_shown
+        return Reply(kind, f"{words}\n\n{rest}\n\nFrom: Step 6", () if kind is ReplyKind.STOP else (STEP,), rule_id)
+
+    def check_once(self, reply: Reply, rule_id: str) -> None:
+        """The rule's words once in the display and once in the speech: check_once(warn, "SR-03") passes when they are."""
+        words = {rule.rule_id: rule for rule in load_rules()}[rule_id].words_shown
+        self.assertEqual(render(reply).count(words), 1)
+        self.assertTrue(render(reply).startswith(f"Safety rule {rule_id}\n\n"))
+        self.assertEqual(spoken_aloud(reply).count(words), 1)
+        self.assertNotIn("From:", spoken_aloud(reply))
+
+    def test_a_warn_shows_and_speaks_the_rules_words_once(self) -> None:
+        self.check_once(self.door_reply(ReplyKind.WARN, "SR-03", "Join plus to plus."), "SR-03")
+
+    def test_a_stop_shows_and_speaks_the_rules_words_once(self) -> None:
+        self.check_once(self.door_reply(ReplyKind.STOP, "SR-07", "What to bring your supervisor: the part."), "SR-07")
+
+
+class TheDemoCommand(unittest.TestCase):
+    def run_demo(self, argv: list[str]) -> mock._Call:
+        """The arguments start_chat got when main runs `argv`, with start_chat faked (no model, no engine)."""
+        with mock.patch("solarchat.cli.main.start_chat", return_value=0) as start:
+            self.assertEqual(main(argv, io.StringIO(""), io.StringIO(), io.StringIO()), 0)
+        return start.call_args
+
+    def test_demo_alone_chats_on_the_seed_pack_with_the_voice_on(self) -> None:
+        args = self.run_demo(["--demo"]).args
+        self.assertEqual(args[0], str(SEED))
+        self.assertTrue(args[1])  # demo
+        self.assertTrue(args[7])  # voice
+
+    def test_demo_with_no_voice_is_silent(self) -> None:
+        self.assertFalse(self.run_demo(["--demo", "--no-voice"]).args[7])
+
+    def test_voice_without_demo_still_turns_it_on_and_no_voice_wins(self) -> None:
+        self.assertTrue(self.run_demo(["--pack", "p", "--voice"]).args[7])
+        self.assertFalse(self.run_demo(["--pack", "p", "--voice", "--no-voice"]).args[7])
+        self.assertFalse(self.run_demo(["--pack", "p"]).args[7])
+
+    def test_a_pack_given_wins_over_the_default(self) -> None:
+        args = self.run_demo(["--pack", "packs/other", "--demo"]).args
+        self.assertEqual(args[0], "packs/other")
+        self.assertTrue(args[7])
+
+    def test_the_default_pack_is_absolute_and_exists(self) -> None:
+        self.assertTrue(DEMO_PACK.is_absolute())
+        self.assertTrue(DEMO_PACK.is_dir())
+        self.assertEqual(DEMO_PACK, SEED)
+
+    def test_demo_alone_reaches_the_chat_for_real_and_speaks_through_the_fake(self) -> None:
+        fake = Fake()
+        out, err = io.StringIO(), io.StringIO()
+        with mock.patch("solarchat.project.chat.Speaker", lambda stderr: Speaker(stderr, fake, "linux", found)):
+            code = main(["--demo", "--answerer", "stub"], io.StringIO("A?\nquit\n"), out, err)
+        self.assertEqual(code, 0)
+        self.assertEqual(fake.calls[0][1], DEMO_BANNER)
+
+    def test_no_voice_is_in_the_menu_and_the_menu_leads_with_demo(self) -> None:
+        self.assertIn("--no-voice", MENU)
+        self.assertIn("solarchat --demo ", MENU.split("Commands:")[1].split("\n")[6])
+
+    def test_options_without_pack_or_demo_still_exit_2(self) -> None:
+        err = io.StringIO()
+        self.assertEqual(main(["--voice"], io.StringIO(""), io.StringIO(), err), 2)
 
 
 if __name__ == "__main__":

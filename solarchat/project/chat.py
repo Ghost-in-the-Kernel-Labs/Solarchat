@@ -16,6 +16,7 @@ from solarchat.project.speech import Speaker
 from solarchat.safety.rules import load_rules
 
 PROMPT = "> "
+DEMO_PACK = Path(__file__).resolve().parents[2] / "packs" / "seed-mc4-leads"  # absolute: the launchers do not change the folder
 QUIT_WORDS = ("quit",)
 MODEL_CHOICES = tuple(MODELS)
 SOURCES_MARK = "\n\nFrom: "
@@ -28,28 +29,39 @@ def spoken(reply: Reply) -> str:
     return text.split(SOURCES_MARK)[0].strip() if SOURCES_MARK in text else text
 
 
+def rule_label(reply: Reply) -> tuple[str, str]:
+    """The rule a warn or a stop names, as ("Safety rule SR-03", "<words>"), or ("", "") for any other reply."""
+    if reply.kind not in (ReplyKind.WARN, ReplyKind.STOP) or not reply.safety_rule_id:
+        return "", ""
+    rule = {rule.rule_id: rule for rule in load_rules()}.get(reply.safety_rule_id)
+    return f"Safety rule {reply.safety_rule_id}", rule.words_shown if rule else ""
+
+
 def rule_words(reply: Reply) -> str:
     """The words of the rule a warn or a stop names, "Safety rule SR-03: <words>", or "" for any other reply."""
-    if reply.kind not in (ReplyKind.WARN, ReplyKind.STOP) or not reply.safety_rule_id:
-        return ""
-    rules = {rule.rule_id: rule for rule in load_rules()}
-    rule = rules.get(reply.safety_rule_id)
-    return f"Safety rule {reply.safety_rule_id}: {rule.words_shown}" if rule else f"Safety rule {reply.safety_rule_id}"
+    label, words = rule_label(reply)
+    return f"{label}: {words}" if words else label
+
+
+def with_rule(reply: Reply, text: str) -> str:
+    """`text` under the rule's heading: the door puts the rule's words inside the reply text since 1.9, so then only the
+    label ("Safety rule SR-03") goes above it; a reply recorded without them keeps "Safety rule SR-03: <words>" above."""
+    label, words = rule_label(reply)
+    if not label:
+        return text
+    return f"{label}\n\n{text}" if not words or words in text else f"{rule_words(reply)}\n\n{text}"
 
 
 def render(reply: Reply) -> str:
-    """The reply as shown: the rule's words first when a warn or a stop has them, then the door's text (which holds the
-    demo banner and the citations): a plain answer renders as its own text."""
-    words = rule_words(reply)
-    return f"{words}\n\n{reply.text}" if words and words not in reply.text else reply.text
+    """The reply as shown: the rule's label (and its words, when the text lacks them) first for a warn or a stop, then the
+    door's text (which holds the demo banner and the citations): a plain answer renders as its own text."""
+    return with_rule(reply, reply.text)
 
 
 def spoken_aloud(reply: Reply) -> str:
-    """What --voice reads aloud for a reply: the rule's words first when a warn or a stop has them, then the reply's words,
+    """What --voice reads aloud for a reply: the rule's label first for a warn or a stop, then the reply's words once,
     never the banner or the "From:" lines (the banner is spoken once, at the start)."""
-    words = rule_words(reply)
-    text = spoken(reply)
-    return f"{words}\n\n{text}" if words and words not in text else text
+    return with_rule(reply, spoken(reply))
 
 
 def choose_answerer(name: str, model: str = DEFAULT_MODEL) -> Answerer:
