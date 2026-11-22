@@ -112,3 +112,10 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Opened**: `CLAUDE.md`, `docs/designs/rule-bank-and-triage.md`, `TODO.md`, `docs/when/handoff.md`, `docs/when/hand-out-a-task.md`, `solarchat/answer/door.py`, `solarchat/answer/stub.py`, `solarchat/safety/rules.py`, `scripts/eval.py`, `scripts/fast.sh`, `scripts/checks/bank.py`, `test/test_bank.py`, `scripts/safety_rules_doc.py`, `test/test_eval.py`, `solarchat/leaf/contract.py` (for `Reply`'s field name), `docs/JOURNAL.md`.
 - **Complaints**: 5.1 names its fields without their shapes (`canaries`, `by_family`, `tokens`, `packs`, `run`), and 5.3's check-model clause needs a per-rule check verdict that 5.1 does not record; 4.1 does not say whether "safety rules" are the severity or the family, how a quarter rounds, or whether an `unclear` counts as a sampling; the page's "month so far" needs a clock the design does not give a page that `--check` must reproduce.
 - **Suggestions**: add the shapes to 5.1 in one example line; add the per-rule check verdict to 5.1's `results`; name the readability rules (a docstring on nested test helpers, no `**kwargs`) in the "Before calling work done" section or the process row.
+
+### 2026-11-22 · Sourcing for SR-08's sentence, S6, S7, S3 (J-065) · Claude Sonnet 5.5
+
+- **Task**: find which page of S6 or S7 (then S3) states do-not-touch, stop-the-current and caveat claims for a hot or arcing connector; add S6 to the library only if its licence allows.
+- **Opened**: `CLAUDE.md` (given), `library/README.md`, `library/sources/osha-solar-lockout-tagout/source.json`, `docs/when/handoff.md`, `docs/when/hand-out-a-task.md`, `solarchat/safety/rules.json` (SR-08 only), `packs/seed-mc4-leads/manifest.json`, `docs/journal/INDEX.md`, `docs/journal/J-000-099.md` (tail), `docs/JOURNAL.md`, `docs/HANDOFF.md`.
+- **Complaints**: none; the brief named everything.
+- **Suggestions**: `library/README.md` could say what to do with a document whose own notice limits distribution but whose host page may carry another licence (S6 is this case).

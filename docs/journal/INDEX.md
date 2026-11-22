@@ -68,3 +68,4 @@ Written from `docs/journal/` by `scripts/journal_index.py`; do not edit by hand.
 | J-062 | Journal ids are renumbered by hand at landing; ruff joins the fast checks | decision | `J-000-099.md` |
 | J-063 | The safety rules in the answers (TODO 1.9): placed, built, and what waits for 1.10 | feature | `J-000-099.md` |
 | J-064 | The bank run's deterministic half (TODO 1.20): built, and what the design leaves open | feature | `J-000-099.md` |
+| J-065 | Sourcing for SR-08's sentence: S6 and S7 do not support it; S3 supports half | measurement | `J-000-099.md` |
