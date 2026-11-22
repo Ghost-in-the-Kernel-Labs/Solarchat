@@ -93,10 +93,11 @@ which passage to show.
    design decision. Also: four sources were cited from search results without the page being read (J-027), and the two
    new OSHA regulation addresses (1910.333, 1926.1408) were not opened (osha.gov refuses this environment).
 2. **Page citations** (SC-012, landed on `main` in 3e40d86; the branch `agent/page-citations` is merged and safe to
-   delete): the seed pack's citations of its document sources carry a page, and 89 of them were `"unknown"`: S3 Trina installation manual 35, S7 PVEL/HelioVolta safety guide 22, S5 Victron
+   delete): the seed pack's citations of its document sources carry a page, and 89 of them were `"unknown"` (87 after J-067): S3 Trina installation manual 35 (33 after J-067), S7 PVEL/HelioVolta safety guide 22, S5 Victron
    troubleshooting chapter 19, S4 Victron installation chapter 10, S6 BRE fire report 3 (S8's 15 citations use page 15,
    from its title). The pack is now in the pack format (1.4, J-038), where a citation is written on every passage, flow
    and procedure that holds it, so the same 89 places in the manuals are counted as 187 citations: S3 71, S7 47, S5 38,
+   S4 21, S6 10. After J-067 (the pages of S3 for fail-08 and fail-04 filled) 87 places and 177 citations remain unknown: S3 61, S7 47, S5 38,
    S4 21, S6 10. A person finds each page in the manual; the check counts the unknown pages and prints the total
    (`python3 -I scripts/checks/packs.py <pack>`), and `test/test_packs.py` runs it over the seed pack (1.4, J-038).
 3. Read the demo pack with an engineer's eye before anyone relies on it. The worker flagged claims it could not
@@ -176,7 +177,8 @@ which passage to show.
     cover with an opaque cover if needed), page 14 (use a DC switch before disconnecting), page 15 (do not touch live parts of
     cables and connectors; cover the front when repairing). Page numbers are printed and PDF alike. Ghost's choices: keep SR-08
     without the sentence (current state), or word one from S3 only and limit it to what S3 says, or accept it as unsourced
-    guidance flagged "engineer to confirm". The quotes are in the worker's report. S6 was not added to the library: its page 3
+    guidance flagged "engineer to confirm".
+    Corrected on Ghost's word of 2026-11-22 ("make the pack specific changes", J-067): `fail-08-check-2` lost the sentence, and S3 page 3 is cited for fail-08 and pages 3 and 14 for fail-04; logged as maintainer, engineer to confirm. The quotes are in the worker's report. S6 was not added to the library: its page 3
     allows distribution only entire and unamended, with no Open Government Licence statement in the PDF; S7 is copyrighted.
 
 Audit advisories (tune-up step 2): the python gate runs no audit step, so none are listed. An audit tool

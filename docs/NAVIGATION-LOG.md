@@ -126,3 +126,10 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Opened**: `CLAUDE.md` (given), `library/README.md`, `library/sources/osha-solar-lockout-tagout/source.json`, `docs/when/handoff.md`, `docs/when/hand-out-a-task.md`, `solarchat/safety/rules.json` (SR-08 only), `packs/seed-mc4-leads/manifest.json`, `docs/journal/INDEX.md`, `docs/journal/J-000-099.md` (tail), `docs/JOURNAL.md`, `docs/HANDOFF.md`.
 - **Complaints**: none; the brief named everything.
 - **Suggestions**: `library/README.md` could say what to do with a document whose own notice limits distribution but whose host page may carry another licence (S6 is this case).
+
+### 2026-11-22 · Seed pack: fail-08 and fail-04 corrected (J-067) · Claude Sonnet 5.5
+
+- **Task**: remove fail-08-check-2's last sentence, fill the S3 pages for fail-08 and fail-04, update the unknown-page counts, check the eval is unchanged.
+- **Opened**: `CLAUDE.md`, `packs/seed-mc4-leads/manifest.json`, `flows.json`, `passages.json`, `docs/CONTRACT.md` (pack format), `scripts/checks/packs.py`, `scripts/eval.py` (help), `docs/HANDOFF.md`, `docs/journal/J-000-099.md`, `docs/NAVIGATION-LOG.md`, `docs/when/handoff.md`.
+- **Complaints**: none; the brief named everything. The pack has no change log, so a pack change has no home but the journal.
+- **Suggestions**: CONTRACT.md could say what a `version` bump looks like for a demo pack (its string is tied to `evals/results/offline.json`).
