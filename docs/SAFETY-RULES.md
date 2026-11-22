@@ -161,9 +161,9 @@ Status: a draft for Ghost to read (TODO 1.3 stays open until Ghost has read it).
 
 **Response:** stop
 
-**Triggers:** `broken glass`, `broken panel`, `cracked panel`, `heat-damaged`, `damaged connector`, `damaged cable`, `burnt connector`, `burnt cable`, `melted connector`, `corroded connector`, `wet inside`, `copper showing`, `frayed`, `chewed`
+**Triggers:** `broken glass`, `broken panel`, `cracked panel`, `heat-damaged`, `damaged connector`, `damaged cable`, `burnt connector`, `burnt cable`, `melted connector`, `corroded connector`, `wet inside`, `copper showing`, `frayed`, `chewed`, `broken`, `glass is cracked`, `is cracked`
 
-**Latest change:** 2026-11-21, Ghost (maintainer): Triggers match whole words and phrases, and the rule's triggers and wording follow the audit, applied on Ghost's word; engineer to confirm. Evidence: docs/audits/2026-11-21-safety-rules.md; J-030. Pending engineer.
+**Latest change:** 2026-11-22, Ghost (maintainer): Trigger "glass is broken" becomes "broken" (safe-16); and the rule fires on the worker's words only, never on a passage's text; engineer to confirm. Evidence: J-079; docs/designs/worker-words.md. Pending engineer.
 
 **Sources:**
 
@@ -180,9 +180,9 @@ Status: a draft for Ghost to read (TODO 1.3 stays open until Ghost has read it).
 
 **Response:** emergency
 
-**Triggers:** `smoke`, `smoking`, `burning smell`, `smells of burning`, `sparks`, `sparking`, `arcing`, `crackling`, `flame`, `flames`, `on fire`
+**Triggers:** `smoke`, `smoking`, `burning smell`, `smells of burning`, `sparks`, `sparking`, `arcing`, `crackling`, `flame`, `flames`, `on fire`, `smells burnt`, `burnt smell`
 
-**Latest change:** 2026-11-21, Ghost (maintainer): Starting response emergency (SC-015): step back, keep others away, call for help; engineer to confirm. Evidence: SC-015; J-032. Pending engineer.
+**Latest change:** 2026-11-22, Ghost (maintainer): The rule fires on the worker's words only, never on a passage's text; engineer to confirm. Evidence: J-079; docs/designs/worker-words.md. Pending engineer.
 
 **Sources:**
 
@@ -201,7 +201,7 @@ Status: a draft for Ghost to read (TODO 1.3 stays open until Ghost has read it).
 
 **Triggers:** `earth fault`, `ground fault`, `insulation fault`, `isolation fault`, `insulation resistance`, `earth leakage`, `gfdi`, `tingle`, `electric shock`, `got a shock`, `loose earth`, `missing earth`
 
-**Latest change:** 2026-11-21, Ghost (maintainer): Starting response emergency (SC-015): step back, keep others away, call for help; engineer to confirm. Evidence: SC-015; J-032. Pending engineer.
+**Latest change:** 2026-11-22, Ghost (maintainer): The rule fires on the worker's words only, never on a passage's text; engineer to confirm. Evidence: J-079; docs/designs/worker-words.md. Pending engineer.
 
 **Sources:**
 
@@ -296,9 +296,9 @@ Status: a draft for Ghost to read (TODO 1.3 stays open until Ghost has read it).
 
 **Response:** stop
 
-**Triggers:** `unsure`, `do not know`, `don't know`, `not trained`, `never done`, `does not look like`, `doesn't look like`, `unexpected`
+**Triggers:** `unsure`, `not trained`, `never done`, `does not look like`, `doesn't look like`, `unexpected`
 
-**Latest change:** 2026-11-21, Ghost (maintainer): Triggers match whole words and phrases, and the rule's triggers and wording follow the audit, applied on Ghost's word; engineer to confirm. Evidence: docs/audits/2026-11-21-safety-rules.md; J-030. Pending engineer.
+**Latest change:** 2026-11-22, Ghost (maintainer): Triggers removed: "do not know" and "don't know"; "I don't know which lead is positive" is a question, answered from the packs or with "I do not know" (HAD-03), not a stop; "not trained", "never done" and "unsure" still stop; engineer to confirm. Evidence: J-075; docs/designs/worker-words.md. Pending engineer.
 
 **Sources:**
 

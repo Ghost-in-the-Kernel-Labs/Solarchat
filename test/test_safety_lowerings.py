@@ -72,3 +72,39 @@ class TheLowerings(unittest.TestCase):
             entries[3]["lowered_for"] = [lowering]
             with self.subTest(lowering=lowering), self.assertRaisesRegex(ValueError, message):
                 rules.load_rules(write_rules(entries))
+
+
+class TheReadsField(unittest.TestCase):
+    """TODO 1.10: `reads` is data in rules.json, in the fingerprint only when it is not "both", and only SR-07, SR-08 and SR-09 read the words only."""
+
+    def entries(self) -> list[dict]:
+        """The real rules.json entries, to be altered into a planted break."""
+        return json.loads(rules.RULES_PATH.read_text())
+
+    def test_only_sr_07_sr_08_and_sr_09_read_the_words_only(self) -> None:
+        self.assertEqual({rule.rule_id for rule in rules.load_rules() if rule.reads == "words"}, {"SR-07", "SR-08", "SR-09"})
+        self.assertEqual({rule.rule_id for rule in rules.load_rules() if rule.reads == "both"}, {f"SR-{n:02d}" for n in (1, 2, 3, 4, 5, 6, 10, 11, 12, 13, 14)})
+
+    def test_reads_changed_with_no_new_entry_is_refused(self) -> None:
+        removed = self.entries()
+        del removed[6]["reads"]
+        with self.assertRaisesRegex(ValueError, "SR-07: the rule changed since its last change entry"):
+            rules.load_rules(write_rules(removed))
+        added = self.entries()
+        added[3]["reads"] = "words"
+        with self.assertRaisesRegex(ValueError, "SR-04: the rule changed since its last change entry"):
+            rules.load_rules(write_rules(added))
+
+    def test_a_bad_reads_value_is_refused_by_the_loader(self) -> None:
+        bad = self.entries()
+        bad[6]["reads"] = "passages"
+        with self.assertRaisesRegex(ValueError, "SR-07: reads 'passages' is not one of both, words"):
+            rules.load_rules(write_rules(bad))
+
+    def test_a_rule_that_reads_both_keeps_the_fingerprint_it_had_and_one_that_reads_words_adds_reads(self) -> None:
+        rule = rules.rule_from_entry(self.entries()[6])
+        fields = {"triggers": list(rule.triggers), "words_shown": rule.words_shown, "response": rule.response}
+        plain = json.dumps(fields, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+        with_reads = json.dumps({**fields, "reads": "words"}, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+        self.assertEqual(rules.rule_fingerprint(rule), hashlib.sha256(with_reads.encode("utf-8")).hexdigest())
+        self.assertNotEqual(rules.rule_fingerprint(rule), hashlib.sha256(plain.encode("utf-8")).hexdigest())

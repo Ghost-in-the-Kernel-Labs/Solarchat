@@ -10,6 +10,7 @@ from typing import Protocol
 
 SAFETY_RULE_ID_PATTERN = re.compile(r"^SR-\d{2}$")
 SAFETY_RESPONSES = ("warn", "stop", "emergency")
+SAFETY_READS = ("both", "words")
 CHANGE_FIELDS = ("date", "by", "role", "why", "evidence")
 # Decision: SC-024 (a pack's declaration of coverage says who declared it, in SC-016's shape; SR-08 and SR-09 stay emergencies)
 DECLARED_FIELDS = ("by", "role", "date", "evidence")
@@ -264,6 +265,8 @@ class SafetyRule:
     Decision: SC-015 (its response is exactly "warn", "stop" or "emergency").
     Decision: SC-016 (its change log has at least one entry, each with date, by, role, why and evidence).
     Decision: SC-020 (`lowered_for`, default empty, holds the lowerings a profile may apply; an emergency has none).
+    Decision: TODO 1.10 (`reads`, "both" by default or "words": a "words" rule fires on the worker's own words only, never
+    on a passage's text; any other value is refused).
     SafetyRule("SR-01", "Site first", "Always.", ("site procedure",), "Stop. Go to your site supervisor or engineer.",
     (SafetyRuleSource("HSE", "https://www.hse.gov.uk/"),), "stop", (SafetyRuleChange("2026-11-21", "Ghost", "maintainer",
     "First draft.", "J-027"),)) stands; the same with triggers=(), response="halt" or changes=() raises ValueError.
@@ -279,6 +282,7 @@ class SafetyRule:
     changes: tuple[SafetyRuleChange, ...]
     engineer_to_confirm: str | None = None
     lowered_for: tuple[SafetyLowering, ...] = ()
+    reads: str = "both"
 
     def __post_init__(self) -> None:
         """Raise ValueError when the rule breaks HAD-04 (the examples are in the class docstring)."""
@@ -301,6 +305,8 @@ def safety_rule_problem(rule: SafetyRule) -> str | None:
         return f"{rule.rule_id}: a rule has at least one source, each with a title and an https address (HAD-04)"
     if rule.response not in SAFETY_RESPONSES:
         return f"{rule.rule_id}: response {rule.response!r} is not one of {', '.join(SAFETY_RESPONSES)} (SC-015)"
+    if rule.reads not in SAFETY_READS:
+        return f"{rule.rule_id}: reads {rule.reads!r} is not one of {', '.join(SAFETY_READS)} (TODO 1.10)"
     for lowering in rule.lowered_for:
         lowered = lowering_problem(rule.rule_id, rule.response, lowering)
         if lowered:

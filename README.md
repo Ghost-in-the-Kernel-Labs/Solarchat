@@ -64,7 +64,7 @@ They are source material, not packs: nothing there answers a worker (SC-014; `li
 the reply the bot must give (an answer citing a named passage, "I do not know", a stop, an emergency, a warn, or
 anything but a stop), written against the seed pack. `evals/v1.sha256` holds its hash; the set is frozen, and a change
 needs a decision and the new hash. The automatic runner, `scripts/eval.py` (TODO 1.6), scores the bot on it and holds the result to `evals/results/offline.json`;
-`evals/known-failures.json` names the cases that fail until 1.10. The electrical engineer reviews the set at the end (TODO 6.4).
+`evals/known-failures.json` names known failures; it is empty since 1.10 (J-079). The electrical engineer reviews the set at the end (TODO 6.4).
 `evals/bank/` is the rule bank (SC-023, TODO 1.19): twenty hand-written conversational rules, sampled and read as a
 trend, never a gate; nothing runs them yet (1.20).
 

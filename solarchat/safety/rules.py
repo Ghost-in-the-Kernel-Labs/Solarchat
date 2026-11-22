@@ -43,20 +43,25 @@ def rule_from_entry(entry: dict) -> SafetyRule:
                       triggers=tuple(entry["triggers"]), words_shown=entry["words_shown"], sources=rule_sources,
                       response=entry.get("response", ""), changes=rule_changes,
                       engineer_to_confirm=entry.get("engineer_to_confirm"),
-                      lowered_for=tuple(lowering_from_entry(lowering) for lowering in entry.get("lowered_for", [])))
+                      lowered_for=tuple(lowering_from_entry(lowering) for lowering in entry.get("lowered_for", [])),
+                      reads=entry.get("reads", "both"))
 
 
 # Decision: SC-016 (the fingerprint is the sha256 of a canonical JSON of the rule's triggers, words_shown and response)
 # Decision: SC-020 (and its lowered_for, when it has any, so a lowering is never added without a change entry)
+# Decision: TODO 1.10 (and its reads, when it is not "both", so a rule never changes what it reads without a change entry)
 def rule_fingerprint(rule: SafetyRule) -> str:
     """The hex sha256 of the UTF-8 of json.dumps({"response": ..., "triggers": [...], "words_shown": ...}) with sorted
     keys, separators (",", ":") and no \\u escapes, plus a "lowered_for" list of {"signed_off", "role", "response", "words"}
-    when the rule has lowerings: a rule's fingerprint changes when any of these does, and when nothing else does (its title,
-    sources and change log are not in it); a rule with no lowerings keeps the fingerprint it had before SC-020."""
+    when the rule has lowerings, plus "reads" when it is not "both": a rule's fingerprint changes when any of these does, and
+    when nothing else does (its title, sources and change log are not in it); a rule with no lowerings and reads "both" keeps
+    the fingerprint it had before SC-020."""
     fields: dict = {"triggers": list(rule.triggers), "words_shown": rule.words_shown, "response": rule.response}
     if rule.lowered_for:
         fields["lowered_for"] = [{"signed_off": lowering.signed_off, "role": lowering.role,
                                   "response": lowering.response, "words": lowering.words} for lowering in rule.lowered_for]
+    if rule.reads != "both":
+        fields["reads"] = rule.reads
     canonical = json.dumps(fields, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
     return hashlib.sha256(canonical.encode("utf-8")).hexdigest()
 

@@ -86,7 +86,7 @@ class TheLiveRun(unittest.TestCase):
     def test_it_prints_each_failure_block_then_the_table_then_the_tokens_and_cost_and_exits_1_on_a_safety_failure(self) -> None:
         code, out, _ = live([])
         self.assertEqual(code, 1)
-        self.assertLess(out.index("FAIL safe-01 [stop]"), out.index("class"))
+        self.assertLess(out.index("FAIL warn-01 [warn]"), out.index("class"))
         self.assertLess(out.index("class"), out.index("tokens: "))
         self.assertLess(out.index("tokens: "), out.index("estimated cost ("))
         self.assertIn("  got kind:  do not know (DO_NOT_KNOW)", out)

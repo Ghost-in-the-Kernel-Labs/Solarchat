@@ -7,9 +7,9 @@ import json
 import unittest
 
 from scripts import bank_run
-from solarchat.leaf.contract import PassageRef, Reply, ReplyKind
+from solarchat.leaf.contract import SAFETY_RESPONSES, PassageRef, Reply, ReplyKind
 from solarchat.packs.load import load_pack
-from solarchat.safety.rules import load_rules
+from solarchat.safety.rules import load_rules, rules_fired
 from test.support import ROOT, scratch
 
 PACK = load_pack(ROOT / "packs" / "seed-mc4-leads")
@@ -183,14 +183,39 @@ class TheDoorFault(unittest.TestCase):
         live = Reply(ReplyKind.WARN, "Careful.", (PassageRef("seed-mc4-leads", "step-12"),), "SR-03")
         self.assertEqual(bank_run.door_faults([("How do I part the connectors?", live)], (PACK,), True), [])
 
-    def test_before_1_10_no_trigger_of_any_rule_fires_with_no_answer(self) -> None:
-        """The door's step 6 reads cited passages only, and NoAnswer cites nothing: every replay is "I do not know"."""
+    def test_with_no_answer_a_trigger_in_the_workers_words_fires_its_rule_so_the_door_fault_check_is_live(self) -> None:
+        """TODO 1.10 ended "no trigger fires with NoAnswer": the door reads the worker's words, so a trigger of a words-read
+        rule or of a stop rule gives that rule's stop or emergency with no passage; a warn rule's words come before an "I do
+        not know" (a warn must name a passage, HAD-03)."""
+        by_id = {each.rule_id: each for each in load_rules()}
         for each in load_rules():
             for trigger in each.triggers:
                 with self.subTest(rule=each.rule_id, trigger=trigger):
-                    reply = bank_run.replay_reply(f"I need to {trigger}", (PACK,), True)
-                    self.assertIsNone(reply.safety_rule_id)
-                    self.assertIs(reply.kind, ReplyKind.DO_NOT_KNOW)
+                    words = f"I need to {trigger}"
+                    reply = bank_run.replay_reply(words, (PACK,), True)
+                    fired = [by_id[rule_id] for rule_id in rules_fired(words, load_rules())]
+                    worst = min(fired, key=lambda hit: (-SAFETY_RESPONSES.index(hit.response), hit.rule_id))
+                    if worst.response == "warn":
+                        self.assertIs(reply.kind, ReplyKind.DO_NOT_KNOW)
+                        self.assertIsNone(reply.safety_rule_id)
+                        self.assertIn(worst.words_shown, reply.text)
+                    else:
+                        self.assertIs(reply.kind, ReplyKind.STOP)
+                        self.assertEqual(reply.safety_rule_id, worst.rule_id)
+                    if each.reads == "words" or each.response == "stop":
+                        self.assertIn(each.rule_id, [hit.rule_id for hit in fired])
+                        self.assertIs(reply.kind, ReplyKind.STOP)
+
+    def test_a_rule_fired_only_by_a_passage_never_fires_with_no_answer(self) -> None:
+        """NoAnswer cites nothing, so a passage's text fires no rule: every passage of the seed pack, replayed under a
+        question that fires nothing, is "I do not know"."""
+        for passage in PACK.passages:
+            with self.subTest(passage=passage.ref.passage_id):
+                self.assertEqual(rules_fired("Where do I start?", load_rules()), [])
+                reply = bank_run.replay_reply("Where do I start?", (PACK,), True)
+                self.assertIsNone(reply.safety_rule_id)
+                self.assertIs(reply.kind, ReplyKind.DO_NOT_KNOW)
+        self.assertTrue(any(rules_fired(passage.text, load_rules()) for passage in PACK.passages))
 
 
 class ThePlay(unittest.TestCase):

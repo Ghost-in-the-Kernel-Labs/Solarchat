@@ -135,6 +135,26 @@ class TheProfile(unittest.TestCase):
                 Profile(*arguments)
 
 
+class TheReads(unittest.TestCase):
+    """TODO 1.10: a rule reads "both" the worker's words and a passage's text (the default) or the "words" only."""
+
+    def rule(self, reads: str = "both") -> SafetyRule:
+        """A stop rule that reads this: self.rule("words").reads is "words"."""
+        return SafetyRule("SR-07", "t", "a", ("probe",), "Stop. Go to your site supervisor or engineer.",
+                          (SafetyRuleSource("HSE", "https://www.hse.gov.uk/"),), "stop",
+                          (SafetyRuleChange("2026-11-22", "Ghost", "maintainer", "w.", "J-079"),), reads=reads)
+
+    def test_a_rule_reads_both_by_default_and_may_read_the_words_only(self) -> None:
+        self.assertEqual(self.rule().reads, "both")
+        self.assertEqual(self.rule("words").reads, "words")
+        self.assertEqual(self.rule("both").reads, "both")
+
+    def test_any_other_value_is_refused_at_construction(self) -> None:
+        for reads in ("passages", "", "Words", "word"):
+            with self.subTest(reads=reads), self.assertRaisesRegex(ValueError, "reads .* is not one of both, words"):
+                self.rule(reads)
+
+
 class TheLowerings(unittest.TestCase):
     """SC-020: a rule's lowered_for is refused at construction when it breaks the decision."""
 

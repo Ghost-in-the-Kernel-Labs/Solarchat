@@ -165,9 +165,9 @@ def door_faults(exchanges: list[tuple[str, Reply]], packs: tuple[Pack, ...], dem
                 replay: Callable[[str, tuple[Pack, ...], bool], Reply] = replay_reply) -> list[Fault]:
     """One fault for each exchange (the worker's words, the bot's live reply) whose replay through the door with `NoAnswer`
     is a stop or an emergency naming a rule that the live reply does not carry. A replay that gives no stop is no
-    expectation, so the live reply may be anything, a rule fired by its cited passage included. Until TODO 1.10 the door
-    reads no worker words, a `NoAnswer` finding cites nothing and step 5 answers "I do not know" before step 6, so no
-    replay is a stop and no fault is found."""
+    expectation, so the live reply may be anything, a rule fired by its cited passage included. Since TODO 1.10 the door
+    reads the worker's words, so a replay with `NoAnswer` is a stop or an emergency whenever the words fire one, and a
+    live reply that does not carry that rule is a fault."""
     faults = []
     for words, live in exchanges:
         expected = replay(words, packs, demo_mode)

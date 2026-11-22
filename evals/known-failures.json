@@ -1,9 +1,1 @@
-[
-  {
-    "case": "mns-03",
-    "rule": "SR-08",
-    "why": "SR-08 over-fires on fail-04-check-2's \"smoke\", a list of signs to watch for",
-    "until": "TODO 1.10, which settles SR-08's \"smoke\" in fail-04's list of warning signs (Ghost, 2026-11-21)",
-    "evidence": "test/test_evals.py, J-039, J-042"
-  }
-]
+[]

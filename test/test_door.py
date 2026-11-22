@@ -170,29 +170,31 @@ class Step6TheSafetyRules(unittest.TestCase):
                          "From: Planted 1 (Connecting a panel to a power station): Examplesun ES-100 installation manual, page 1")
 
     def test_a_passage_that_fires_a_stop_rule_gives_a_stop_with_the_words_and_what_to_bring(self) -> None:
-        pack = planted((f"Never ignore {trigger_of('SR-07')}.",))
+        pack = planted((f"Never ignore {trigger_of('SR-06')}.",))
         reply = answer("How?", (pack,), False, Spy(Finding((planted_ref(1),), "Carry on.")))
-        self.assertEqual((reply.kind, reply.safety_rule_id, reply.passage_refs), (ReplyKind.STOP, "SR-07", ()))
-        self.assertEqual(reply.text, RULES["SR-07"].words_shown + "\n\nWhat to bring your supervisor: rule SR-07; Planted 1, "
+        self.assertEqual((reply.kind, reply.safety_rule_id, reply.passage_refs), (ReplyKind.STOP, "SR-06", ()))
+        self.assertEqual(reply.text, RULES["SR-06"].words_shown + "\n\nWhat to bring your supervisor: rule SR-06; Planted 1, "
                          "Examplesun ES-100 installation manual, page 1")
 
-    def test_a_passage_that_fires_an_emergency_rule_gives_the_rules_words_alone(self) -> None:
+    def test_a_passage_that_lists_an_emergency_sign_fires_nothing_but_the_question_that_reports_it_does(self) -> None:
         pack = planted((f"If you see {trigger_of('SR-08')}, leave.",))
-        reply = answer("How?", (pack,), False, Spy(Finding((planted_ref(1),), "Carry on.")))
+        listed = answer("How?", (pack,), False, Spy(Finding((planted_ref(1),), "Carry on.")))
+        self.assertEqual((listed.kind, listed.safety_rule_id), (ReplyKind.ANSWER, None))
+        reply = answer(f"There is {trigger_of('SR-08')} here", (pack,), False, Spy(Finding((planted_ref(1),), "Carry on.")))
         self.assertEqual((reply.kind, reply.safety_rule_id, reply.passage_refs), (ReplyKind.STOP, "SR-08", ()))
         self.assertEqual(reply.text, RULES["SR-08"].words_shown)
 
     def test_the_rules_apply_whatever_the_answerer_said_in_its_finding(self) -> None:
-        pack = planted((f"Never ignore {trigger_of('SR-07')}.",))
+        pack = planted((f"Never ignore {trigger_of('SR-06')}.",))
         reply = answer("How?", (pack,), False, Spy(Finding((planted_ref(1),), f"All fine, {trigger_of('SR-03')} is allowed.")))
-        self.assertEqual(reply.safety_rule_id, "SR-07")
+        self.assertEqual(reply.safety_rule_id, "SR-06")
         self.assertNotIn("All fine", reply.text)
 
     def test_the_most_severe_response_wins_then_the_lowest_id(self) -> None:
-        pack = planted((f"{trigger_of('SR-03')}", f"{trigger_of('SR-07')}", f"{trigger_of('SR-08')}", f"{trigger_of('SR-04')}",))
+        pack = planted((f"{trigger_of('SR-03')}", f"{trigger_of('SR-06')}", f"{trigger_of('SR-14')}", f"{trigger_of('SR-04')}",))
         refs = (planted_ref(1), planted_ref(2), planted_ref(3))
-        self.assertEqual(answer("q", (pack,), False, Spy(Finding(refs, "x"))).safety_rule_id, "SR-08")
-        self.assertEqual(answer("q", (pack,), False, Spy(Finding(refs[:2], "x"))).safety_rule_id, "SR-07")
+        self.assertEqual(answer(f"q {trigger_of('SR-08')}", (pack,), False, Spy(Finding(refs, "x"))).safety_rule_id, "SR-08")
+        self.assertEqual(answer("q", (pack,), False, Spy(Finding(refs, "x"))).safety_rule_id, "SR-06")
         both = Finding((planted_ref(4), planted_ref(2)), "x")
         self.assertEqual(answer("q", (pack,), False, Spy(both)).safety_rule_id, "SR-04")
 
@@ -201,19 +203,20 @@ class Step6TheSafetyRules(unittest.TestCase):
         reply = answer("How?", (pack,), False, Spy(Finding((VOLTAGE,), "Voc must be lower.")))
         self.assertEqual((reply.kind, reply.safety_rule_id), (ReplyKind.ANSWER, None))
 
-    def test_the_question_never_fires_a_rule_here_that_is_1_10s(self) -> None:
+    def test_the_question_fires_a_rule_even_when_a_passage_is_cited_and_says_nothing_of_it(self) -> None:
         reply = answer(f"I got {trigger_of('SR-08')}", (GOOD,), False, one(VOLTAGE))
-        self.assertEqual((reply.kind, reply.safety_rule_id), (ReplyKind.ANSWER, None))
+        self.assertEqual((reply.kind, reply.safety_rule_id, reply.passage_refs), (ReplyKind.STOP, "SR-08", ()))
 
     def test_an_i_do_not_know_is_not_a_safety_reply(self) -> None:
         pack = planted((f"{trigger_of('SR-08')}",))
         reply = answer("How?", (pack,), False, NoAnswer())
         self.assertEqual((reply.kind, reply.safety_rule_id), (ReplyKind.DO_NOT_KNOW, None))
 
-    def test_the_real_pack_step_12_warns_and_fail_04_stop_is_an_emergency(self) -> None:
+    def test_the_real_pack_step_12_warns_and_a_worker_who_sees_sparks_gets_an_emergency(self) -> None:
         warn = answer("How?", (SEED,), True, Spy(Finding((PassageRef("seed-mc4-leads", "step-12"),), "Use the tool.")))
         self.assertEqual((warn.kind, warn.safety_rule_id), (ReplyKind.WARN, "SR-03"))
-        stop = answer("How?", (SEED,), True, Spy(Finding((PassageRef("seed-mc4-leads", "fail-04-stop"),), "Stop.")))
+        fail_04 = Finding((PassageRef("seed-mc4-leads", "fail-04-stop"),), "Stop.")
+        stop = answer("I see sparks at the connector", (SEED,), True, Spy(fail_04))
         self.assertEqual((stop.kind, stop.safety_rule_id, stop.text.split("\n\n")[-1]), (ReplyKind.STOP, "SR-08", RULES["SR-08"].words_shown))
 
     def test_the_demo_banner_is_the_only_change_in_demo_mode(self) -> None:
@@ -265,7 +268,7 @@ class Step6TheProfile(unittest.TestCase):
     def test_a_rule_not_in_the_table_never_lowers_for_any_profile(self) -> None:
         everything = Profile("qualified", frozenset({"meter", "connector", "battery", "height"}))
         for rule in load_rules():
-            if rule.lowered_for:
+            if rule.lowered_for or rule.reads == "words":  # a words-only rule fires on no passage, so no reply to compare
                 continue
             with self.subTest(rule=rule.rule_id):
                 self.assertEqual(self.reply(rule.rule_id, everything), self.reply(rule.rule_id))
@@ -280,14 +283,14 @@ class Step6TheProfile(unittest.TestCase):
         pack = planted((trigger_of("SR-02"), trigger_of("SR-03")))
         both = Finding((planted_ref(1), planted_ref(2)), "x")
         self.assertEqual(answer("q", (pack,), False, Spy(both), profile=signed_off(("meter",))).safety_rule_id, "SR-02")
-        pack = planted((trigger_of("SR-02"), trigger_of("SR-07")))
-        self.assertEqual(answer("q", (pack,), False, Spy(both), profile=signed_off(("meter",))).safety_rule_id, "SR-07")
+        pack = planted((trigger_of("SR-02"), trigger_of("SR-06")))
+        self.assertEqual(answer("q", (pack,), False, Spy(both), profile=signed_off(("meter",))).safety_rule_id, "SR-06")
         self.assertEqual(answer("q", (pack,), False, Spy(both)).safety_rule_id, "SR-02")
 
     def test_a_lowered_rule_does_not_hide_another_that_still_stops(self) -> None:
-        pack = planted((f"{trigger_of('SR-11')} and {trigger_of('SR-08')}",))
+        pack = planted((f"{trigger_of('SR-11')} and {trigger_of('SR-06')}",))
         reply = answer("q", (pack,), False, Spy(Finding((planted_ref(1),), "x")), profile=signed_off(("battery",), role="qualified"))
-        self.assertEqual((reply.kind, reply.safety_rule_id), (ReplyKind.STOP, "SR-08"))
+        self.assertEqual((reply.kind, reply.safety_rule_id), (ReplyKind.STOP, "SR-06"))
 
     def test_the_demo_banner_is_still_the_only_change_in_demo_mode_for_a_lowered_warn(self) -> None:
         pack = planted((trigger_of("SR-02"),))

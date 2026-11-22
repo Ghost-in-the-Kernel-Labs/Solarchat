@@ -5,9 +5,14 @@ import re
 import unittest
 
 from scripts import safety_rules_doc
-from solarchat.leaf.contract import SafetyRule, SafetyRuleChange, SafetyRuleSource
+from solarchat.answer.door import answer
+from solarchat.leaf.contract import Finding, PassageRef, ReplyKind, SafetyRule, SafetyRuleChange, SafetyRuleSource
 from solarchat.safety import rules
+from solarchat.packs.load import load_pack
 from test.support import ROOT, scratch
+from test.test_door import Spy
+
+SEED = load_pack(ROOT / "packs" / "seed-mc4-leads")
 
 GO_TO_SUPERVISOR = "Go to your site supervisor or engineer."
 EMERGENCY_RULES = ("SR-08", "SR-09")
@@ -18,8 +23,13 @@ CHANGE = ("2026-11-21", "Ghost", "maintainer", "First draft.", "J-027")
 # step-12, fail-04, fail-07 and fail-10 tell the worker to part connectors (release tool, panel covered): SR-03.
 # fail-04 and fail-08 name smoke or a burning smell in their own stop lists: SR-08 (a trigger cannot tell "if there is
 # smoke" from "there is smoke"; matching on the worker's words is the next step). fail-08, fail-09, fail-13 are damage, always stop: SR-07.
+# TODO 1.10 (J-079): `rules_fired` is text-level. SR-07, SR-08 and SR-09 read the worker's words only (`reads == "words"`),
+# so the door acts on none of the SR-07 and SR-08 hits here; the new ones are Ghost's triggers "broken", "is cracked" (SR-07:
+# step-02's "If the glass is broken", fail-13) and "smells burnt" (SR-08: fail-01, fail-08), which still match the pack's text.
 DEMO_PACK_FIRINGS = {
+    "step-02": ["SR-07"],
     "step-12": ["SR-03"],
+    "fail-01": ["SR-08"],
     "fail-04": ["SR-03", "SR-08"],
     "fail-07": ["SR-03"],
     "fail-08": ["SR-07", "SR-08"],
@@ -30,8 +40,12 @@ DEMO_PACK_FIRINGS = {
 # The same firings by piece of the pack in the pack format (TODO 1.4): a passage, a flow, a procedure's header or one of its
 # steps, named `entry@procedure`; each old step or failure is now several, so DEMO_PACK_FIRINGS above is read by origin.
 DEMO_PACK_ENTRY_FIRINGS = {
+    "step-02": ["SR-07"],
+    "step-02@connect-panel": ["SR-07"],
     "step-12": ["SR-03"],
     "step-12@connect-panel": ["SR-03"],
+    "fail-01": ["SR-08"],
+    "fail-01-stop": ["SR-08"],
     "fail-04": ["SR-03", "SR-08"],
     "fail-04-check-2": ["SR-08"],
     "fail-04-fix": ["SR-03"],
@@ -39,7 +53,10 @@ DEMO_PACK_ENTRY_FIRINGS = {
     "fail-07": ["SR-03"],
     "fail-07-fix": ["SR-03"],
     "fail-08": ["SR-07", "SR-08"],
-    "fail-08-fix": ["SR-07"],
+    "fail-08-causes": ["SR-08"],
+    "fail-08-check-1": ["SR-08"],
+    "fail-08-check-2": ["SR-08"],
+    "fail-08-fix": ["SR-07", "SR-08"],
     "fail-08-stop": ["SR-08"],
     "fail-09": ["SR-07"],
     "fail-09-causes": ["SR-07"],
@@ -49,7 +66,10 @@ DEMO_PACK_ENTRY_FIRINGS = {
     "fail-10": ["SR-03"],
     "fail-10-fix": ["SR-03"],
     "fail-13": ["SR-07"],
+    "fail-13-causes": ["SR-07"],
+    "fail-13-check-1": ["SR-07"],
     "fail-13-fix": ["SR-07"],
+    "fail-13-stop": ["SR-07"],
 }
 SEED_PACK = ROOT / "packs" / "seed-mc4-leads"
 ORIGIN_ID = re.compile(r"^(step-\d+|fail-\d+)")
@@ -159,6 +179,8 @@ class TheChangeLog(unittest.TestCase):
                 if rule.lowered_for:  # SC-020: a rule with lowerings has them in its fingerprint; the others keep theirs
                     fields["lowered_for"] = [{"signed_off": low.signed_off, "role": low.role, "response": low.response,
                                               "words": low.words} for low in rule.lowered_for]
+                if rule.reads != "both":  # TODO 1.10: a rule that reads the words only has it in its fingerprint
+                    fields["reads"] = rule.reads
                 canonical = json.dumps(fields, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
                 self.assertEqual(rule.changes[-1].fingerprint, hashlib.sha256(canonical.encode("utf-8")).hexdigest())
                 self.assertEqual(rules.rule_fingerprint(rule), rule.changes[-1].fingerprint)
@@ -281,6 +303,14 @@ class TheDemoPack(unittest.TestCase):
             origin = ORIGIN_ID.match(entry_name)
             by_origin.setdefault(origin.group(1) if origin else entry_name, set()).update(entry_rules)
         self.assertEqual({origin: sorted(origin_rules) for origin, origin_rules in by_origin.items()}, DEMO_PACK_FIRINGS)
+
+
+    def test_the_door_does_not_act_on_step_02s_text_level_hit_of_a_words_only_rule(self) -> None:
+        step_02 = PassageRef("seed-mc4-leads", "step-02")
+        self.assertEqual(rules.rules_fired(next(p.text for p in SEED.passages if p.ref == step_02)), ["SR-07"])
+        reply = answer("What should I look at on the panel before I connect anything?", (SEED,), True,
+                       Spy(Finding((step_02,), "Look at the glass, the cable covers and the connectors.")))
+        self.assertEqual((reply.kind, reply.safety_rule_id), (ReplyKind.ANSWER, None))
 
 
 class TheLoader(unittest.TestCase):

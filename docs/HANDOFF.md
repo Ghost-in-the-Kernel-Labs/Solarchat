@@ -83,6 +83,8 @@ which passage to show.
 - 2026-11-22: the rules on the worker's own words (`docs/designs/worker-words.md`): SR-08 and SR-09 fire on the worker's
   words only; SR-08 gains "smells burnt", "burnt smell"; SR-07 gains "glass is broken", "glass is cracked", "is cracked";
   SR-14 loses "do not know" and "don't know" (J-075).
+- 2026-11-22: SR-07's trigger for safe-16 is "broken" (replacing "glass is broken"), and SR-07 fires on the worker's words
+  only, like SR-08 and SR-09, built as the rule's `reads` field in `rules.json` (J-079).
 - The wording of SC-002 to SC-008 is the agent's, for Ghost to confirm.
 
 ## For Ghost: waiting on you
