@@ -161,3 +161,10 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Opened**: `docs/designs/pack-coverage.md`, `docs/HANDOFF.md`, `TODO.md`.
 - **Complaints**: none.
 - **Suggestions**: none.
+
+### 2026-11-22 · TODO 1.26 slice 1, the format and the check (J-072) · Claude Sonnet 5.5
+
+- **Task**: `safety_coverage` in the pack format, the check's six refusals with planted breaks, `SafetyCoverage` in the leaf, the loader, a `covered` fixture.
+- **Opened**: `CLAUDE.md`, `docs/designs/pack-coverage.md`, `docs/CONTRACT.md` (pack format), `scripts/checks/packs.py`, `solarchat/packs/load.py`, `solarchat/leaf/contract.py`, `test/test_packs.py`, `test/test_pack_load.py`, `test/test_leaf.py`, `docs/AGENT.md` (the metric), `docs/journal/J-000-099.md`, `TODO.md`.
+- **Complaints**: the brief's working set did not allow for the 400-line armed limit, which `packs.py` (384 lines) could not take 88 more of; I stopped and the coordinator placed the check in its own file.
+- **Suggestions**: a brief that adds code to a script near 400 lines should name the file it goes in; `is_blank` is now written twice (`packs.py`, `coverage.py`) and could move to `scripts/checks/common.py`.
