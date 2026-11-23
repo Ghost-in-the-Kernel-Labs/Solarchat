@@ -1,4 +1,8 @@
 #!/bin/sh
 # Run Solarchat from this clone with its own .venv; every argument is passed through (TODO 2.5).
 root=$(cd "$(dirname "$0")/.." && pwd)
+if [ ! -x "$root/.venv/bin/python" ]; then
+  echo "Solarchat is not set up yet. Run: python3.12 -m venv .venv && .venv/bin/pip install --only-binary :all: --require-hashes -r requirements.lock" >&2
+  exit 2
+fi
 PYTHONPATH="$root" exec "$root/.venv/bin/python" -m solarchat.cli "$@"

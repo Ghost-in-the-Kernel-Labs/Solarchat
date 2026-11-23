@@ -30,11 +30,12 @@ class TheMenu(unittest.TestCase):
         for argv in ([], ["help"], ["--help"]):
             self.assertEqual(run(argv), (0, MENU, ""))
 
-    def test_the_menu_names_every_option_the_parser_has_and_says_the_hidden_way(self) -> None:
+    def test_the_menu_names_every_option_the_parser_has_and_says_it_is_typed_at_a_prompt(self) -> None:
         options = {o for action in build_parser()._actions for o in action.option_strings if o.startswith("--")}
         for option in options:
             self.assertIn(option, MENU)
-        self.assertIn("hidden", MENU)
+        self.assertIn("prompt", MENU)
+        self.assertNotIn("hidden", MENU)
 
     def test_the_chat_without_a_pack_exits_2_and_names_pack(self) -> None:
         code, _, err = run(["--voice"])
@@ -57,15 +58,26 @@ class TheKey(unittest.TestCase):
             self.assertNotIn(FAKE, out + err)
             self.assertNotIn(FAKE[:8], out + err)
 
-    def test_a_key_given_with_no_value_is_asked_hidden_and_never_echoed(self) -> None:
-        asked: list[str] = []
-        from solarchat.project.keys import store_key_command
-        out, err = io.StringIO(), io.StringIO()
+    def test_a_key_given_with_no_value_is_read_from_the_input_visibly_and_never_printed_back(self) -> None:
         with no_key() as folder:
-            code = store_key_command("", out, err, lambda prompt: asked.append(prompt) or FAKE)
+            code, out, err = run(["--key"], FAKE + "\n")
             self.assertEqual((code, (Path(folder) / "key").read_text().strip()), (0, FAKE))
-        self.assertEqual(len(asked), 1)
-        self.assertNotIn(FAKE, out.getvalue() + err.getvalue() + asked[0])
+        self.assertIn("Anthropic key", out)
+        self.assertNotIn(FAKE, out + err)
+
+    def test_the_chat_with_no_key_asks_for_it_stores_it_and_starts(self) -> None:
+        pack = str(ROOT / "packs" / "seed-mc4-leads")
+        with no_key() as folder, mock.patch.dict("sys.modules", {"anthropic": mock.Mock()}):
+            code, out, err = run(["--pack", pack, "--demo", "--role", "new", "--signed-off", "none"], FAKE + "\nquit\n")
+            self.assertEqual((code, (Path(folder) / "key").read_text().strip()), (0, FAKE))
+        self.assertIn("Ask a question", out)
+        self.assertNotIn(FAKE, out + err)
+
+    def test_the_chat_with_no_key_and_an_empty_input_exits_2_naming_the_command(self) -> None:
+        with no_key() as folder:
+            code, _, err = run(["--pack", str(ROOT / "packs" / "seed-mc4-leads"), "--demo"], "\n")
+            self.assertEqual((code, os.listdir(folder)), (2, []))
+        self.assertIn("solarchat --key", err)
 
     def test_an_empty_or_spaced_key_is_refused_and_not_echoed(self) -> None:
         with no_key() as folder:

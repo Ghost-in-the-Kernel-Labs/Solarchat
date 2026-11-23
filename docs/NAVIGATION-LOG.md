@@ -66,3 +66,9 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Opened**: `solarchat/model/claude.py`, `test/test_claude.py`, `scripts/checks/bank.py`, `docs/when/handoff.md`, `docs/journal/J-000-099.md`, `docs/journal/INDEX.md`.
 - **Complaints**: none.
 - **Suggestions**: none.
+
+### 2026-11-23 · TODO 2.11, Windows setup script (J-082) · Claude Sonnet 5.5
+- **Task**: `setup.cmd`, `solarchat --has-key`, the launcher's fallback to setup, `.gitattributes`, tests, docs.
+- **Opened**: `CLAUDE.md`, `docs/when/handoff.md`, `bin/solarchat.cmd`, `bin/solarchat`, `solarchat/project/keys.py`, `solarchat/cli/main.py`, `solarchat/model/key.py`, `test/test_key.py`, `test/support.py`, `README.md`, `docs/DEMO.md`, `TODO.md`, `docs/DONE.md`.
+- **Complaints**: the brief said `git ls-files --eol` should show i/crlf; with `eol=crlf` it shows i/lf w/crlf (the index normalises), so the check wording is off. Living documents not changed: `docs/HANDOFF.md`, `docs/SAFETY-AND-COMPLIANCE.md`, `docs/ROADMAP.md`, `docs/CONTRACT.md`.
+- **Suggestions**: none.

@@ -4,18 +4,19 @@ import sys
 from typing import TextIO
 
 from solarchat.project.chat import DEFAULT_MODEL, DEMO_PACK, MODEL_CHOICES, parse_signed_off, start_chat
-from solarchat.project.keys import forget_key_command, store_key_command
+from solarchat.project.keys import forget_key_command, has_key_command, store_key_command
 
 MENU = """solarchat: walks you through setting up and fixing your solar panels, from the manuals in a pack.
 
 Commands:
   solarchat                 show this menu
   solarchat help            show this menu (also: solarchat --help)
-  solarchat --key           store your model key, typed hidden so it stays out of shell history (the way to do it)
+  solarchat --key           store your model key, typed or pasted at the prompt (it stays out of shell history; the way to do it)
   solarchat --key <key>     store the key you give (it may stay in shell history)
   solarchat --forget-key    delete the stored key
   solarchat --demo          the demo: the seed pack, spoken aloud; type your question, quit to end (--no-voice for text only)
   solarchat --pack <pack>   chat about one pack, e.g. solarchat --pack packs/seed-mc4-leads --demo
+  solarchat --has-key       say whether a key is set (exit 0) or not (exit 1), without showing it
 
 Chat options (with --pack or --demo):
   --demo                    let a demo pack answer, with the demo banner on every reply; alone it uses the seed pack, with the voice on: solarchat --demo
@@ -27,7 +28,7 @@ Chat options (with --pack or --demo):
   --signed-off <list>       what you are signed off for, from meter,connector,battery,height (or none); skips the question.
                             Both given skip both questions: solarchat --demo --role qualified --signed-off battery
 
-The chat uses ANTHROPIC_API_KEY when it is set, else the key stored by solarchat --key. The key is never shown or uploaded.
+The chat uses ANTHROPIC_API_KEY when it is set, else the key stored by solarchat --key; with neither it asks for the key and stores it. The key is never shown or uploaded.
 """
 
 
@@ -44,7 +45,8 @@ def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="solarchat", add_help=False)
     parser.add_argument("command", nargs="?", choices=("help",), help="help shows the menu")
     parser.add_argument("-h", "--help", action="store_true", help="show the menu")
-    parser.add_argument("--key", nargs="?", const="", default=None, help="store the key; with no value, asked hidden")
+    parser.add_argument("--key", nargs="?", const="", default=None, help="store the key; with no value, asked at a prompt")
+    parser.add_argument("--has-key", action="store_true", help="say whether a key is set; exit 0 yes, 1 no")
     parser.add_argument("--forget-key", action="store_true", help="delete the stored key")
     parser.add_argument("--pack", help="the pack's folder, e.g. packs/seed-mc4-leads")
     parser.add_argument("--demo", action="store_true", help="let a demo pack answer, with the demo banner on every reply")
@@ -68,10 +70,12 @@ def main(argv: list[str], stdin: TextIO | None = None, stdout: TextIO | None = N
     if args.help or args.command == "help" or not argv:
         out.write(MENU)
         return 0
+    if args.has_key:
+        return has_key_command(out, err)
     if args.forget_key:
         return forget_key_command(out, err)
     if args.key is not None:
-        return store_key_command(args.key, out, err)
+        return store_key_command(args.key, out, err, stdin)
     if not args.pack and not args.demo:
         err.write("solarchat: the chat needs --pack <pack>; `solarchat help` shows every command\n")
         return 2
