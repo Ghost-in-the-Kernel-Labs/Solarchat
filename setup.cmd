@@ -5,6 +5,7 @@ setlocal
 cd /d "%~dp0"
 set "SC_BIN=%~dp0bin"
 set "PYEXE="
+set "SOLARCHAT_IN_SETUP=1"
 
 echo [1/5] Looking for Python 3.12...
 call :findpython
