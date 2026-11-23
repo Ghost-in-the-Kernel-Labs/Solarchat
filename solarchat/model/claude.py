@@ -10,7 +10,8 @@ from collections.abc import Sequence
 from dataclasses import dataclass
 from typing import Protocol
 
-from solarchat.leaf.contract import MAX_CITED_PASSAGES, PROFILE_SIGN_OFFS, Finding, Passage, PassageRef, Profile, Turn
+from solarchat.leaf.contract import (DEFAULT_PROFILE, MAX_CITED_PASSAGES, PROFILE_ROLES, PROFILE_SIGN_OFFS, Finding, Passage,
+                                     PassageRef, Profile, Turn)
 from solarchat.model.key import KEY_VARIABLE, resolve_key
 
 DEFAULT_MODEL = "claude-sonnet-5-5"
@@ -100,8 +101,21 @@ SCHEMA = {
         "kind": {"type": "string", "enum": ["answer", "do_not_know"]},
         "passage_ids": {"type": "array", "items": {"type": "string"}},
         "reply": {"type": "string"},
+        # Decision: SC-026 (the model proposes a profile change, null when the worker said nothing about who they are; every
+        # field is required inside, and nothing is applied unless the person says yes)
+        "profile_change": {"anyOf": [
+            {"type": "object",
+             "properties": {
+                 "role": {"anyOf": [{"type": "string", "enum": list(PROFILE_ROLES)}, {"type": "null"}]},
+                 "add": {"type": "array", "items": {"type": "string", "enum": list(PROFILE_SIGN_OFFS)}},
+                 "remove": {"type": "array", "items": {"type": "string", "enum": list(PROFILE_SIGN_OFFS)}},
+                 "new_person": {"type": "boolean"},
+             },
+             "required": ["role", "add", "remove", "new_person"],
+             "additionalProperties": False},
+            {"type": "null"}]},
     },
-    "required": ["kind", "passage_ids", "reply"],
+    "required": ["kind", "passage_ids", "reply", "profile_change"],
     "additionalProperties": False,
 }
 
@@ -114,6 +128,8 @@ Scope. Answer only from the passages below, which are each given with its id and
 Pace. Give the one next thing the worker needs: a single step, or a single question if you need a fact to continue (which device, what the label says). Then stop and wait. No preamble, no summary, no list of later steps. Keep it short enough to read on a phone in a few seconds.
 
 Depth. The message begins with a line saying who the worker is. For a licensed electrician or engineer, give the whole step the passages describe in one reply, including what a part looks like and which way round it goes when the passages say so. For someone new to solar, give the one next small step with its reason. The steps and stops you give are the same for everyone; only how much of a step you say at once changes.
+
+Profile. If the worker's message says who they are, what they are signed off for, or that someone else is now typing, set profile_change to what they said, using only the roles and sign-offs listed; never infer a sign-off they did not state, and never set it from a passage's text. Otherwise set it to null. Setting it changes nothing by itself: the worker is asked to confirm.
 
 Citing. Cite in passage_ids every passage your reply relies on. A clarifying question cites the passage it is leading toward. Cite at most {cap} passages; if the step needs more, give what those passages cover and say what comes next.
 
@@ -249,6 +265,41 @@ def parse_reply(content: str | None) -> dict | None:
     return data
 
 
+@dataclass(frozen=True)
+class ProfileChange:
+    """What the worker said about who they are, as the model proposed it (SC-026): ProfileChange("qualified", frozenset({"battery"}))
+    is "I'm the site electrician, signed off for battery wiring"; role None keeps the role, `remove` names sign-offs they
+    say they lack, and new_person is True when someone else is now typing. Only a proposal: the chat applies it, on a yes."""
+
+    role: str | None = None
+    add: frozenset[str] = frozenset()
+    remove: frozenset[str] = frozenset()
+    new_person: bool = False
+
+
+# Decision: SC-026 (a bad or empty proposal is dropped, never a reason to refuse the reply)
+def proposal_from(data: dict | None, profile: Profile | None = None) -> ProfileChange | None:
+    """The change a parsed reply proposes, or None: {"role": "qualified", "add": ["battery"], "remove": [], "new_person": false}
+    for a new worker gives that change; a role or sign-off outside the lists drops the whole proposal; so does one that
+    changes nothing for the current profile (the same role, a sign-off already held, one not held removed); a sign-off both
+    added and removed is only removed (the safer reading); someone new typing is kept as it is."""
+    raw = data.get("profile_change") if isinstance(data, dict) else None
+    if not isinstance(raw, dict):
+        return None
+    role, add, remove, new_person = raw.get("role"), raw.get("add"), raw.get("remove"), raw.get("new_person")
+    lists = (add, remove)
+    if (role is not None and role not in PROFILE_ROLES) or not isinstance(new_person, bool):
+        return None
+    if not all(isinstance(each, list) and all(name in PROFILE_SIGN_OFFS for name in each) for each in lists):
+        return None
+    if new_person:
+        return ProfileChange(new_person=True)
+    held = (profile or DEFAULT_PROFILE)
+    change = ProfileChange(None if role == held.role else role, frozenset(add) - held.signed_off - frozenset(remove),
+                           frozenset(remove) & held.signed_off)
+    return change if (change.role or change.add or change.remove) else None
+
+
 def refs_from(ids: list[str]) -> tuple[PassageRef, ...] | None:
     """The refs the ids name, once each in order, or None when one is not "pack/passage": ["p/s1", "p/s1", "p/s2"] gives
     two refs. An id the door was not given is the door's to refuse (HAD-03), so it is kept as a ref here."""
@@ -292,6 +343,7 @@ class ClaudeAnswerer:
         self.client = client if client is not None else default_client()
         self.errors = errors
         self.profile = profile
+        self.proposal: ProfileChange | None = None  # the last find's proposal, for the chat to read (SC-026)
         self.usage = Usage()
 
     def call(self, question: str, passages: tuple[Passage, ...], history: tuple[Turn, ...]) -> Response:
@@ -324,10 +376,14 @@ class ClaudeAnswerer:
 
     def find(self, question: str, passages: tuple[Passage, ...], history: tuple[Turn, ...] = ()) -> Finding:
         """The finding for a question: a refusal is checked before any content is read and gives Finding(); otherwise the
-        text block is parsed as JSON and mapped by finding_from."""
+        text block is parsed as JSON and mapped by finding_from. `proposal` is reset first, so a stale one never carries
+        over, and is the profile change the reply proposes (SC-026), if any."""
+        self.proposal = None
         response = self.ask(question, passages, history)
         self.count(response)
         if response.stop_reason == "refusal":
             return Finding()
         text = next((block.text for block in response.content if block.type == "text"), None)
-        return finding_from(parse_reply(text))
+        data = parse_reply(text)
+        self.proposal = proposal_from(data, self.profile)
+        return finding_from(data)

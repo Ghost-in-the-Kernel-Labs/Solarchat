@@ -85,3 +85,8 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Complaints**: `# Decision: SC-020` appears twice in chat.py, so a search for it finds the wrong one first. `test/test_speech.py` also compares the spoken lines and was not named in the brief.
 - **Suggestions**: none.
 
+### 2026-11-23 · TODO 2.12, the profile changes mid-conversation (J-085, SC-026) · Claude Sonnet 5.5
+- **Task**: build `docs/designs/profile-takeover.md` section 7 items 1, 2 and 4: the schema field, prompt paragraph, `ProfileChange`, `converse`'s steps, tests, SC-026, DEMO scenario 5.
+- **Opened**: `CLAUDE.md`, `docs/designs/profile-takeover.md`, `solarchat/model/claude.py`, `solarchat/project/chat.py`, `solarchat/answer/door.py`, `solarchat/leaf/contract.py`, `test/test_profile_chat.py`, `test/test_claude.py`, `test/test_cli.py`, `theGhost.md`, `docs/DONE.md`, `docs/DEMO.md`, `docs/when/handoff.md`, `docs/journal/J-000-099.md`.
+- **Complaints**: the brief names TODO 2.12 but `TODO.md` has no such item, so I wrote it straight to `docs/DONE.md` as told. The design says `parse_reply` validates the proposal; `parse_reply` returns the dict and checks only the reply's shape, so I put the check in `proposal_from`. Living documents not changed: `README.md`, `docs/HANDOFF.md`, `docs/SAFETY-AND-COMPLIANCE.md`, `docs/ROADMAP.md`, `docs/CONTRACT.md`.
+- **Suggestions**: none.

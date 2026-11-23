@@ -70,3 +70,4 @@ Written by `scripts/decisions_index.py` from `theGhost.md`; do not edit here. Se
 | SC-023 | The conversational bot is tuned by a sampled rule bank, graded by Haiku and read as a trend, never a gate; a harmful reply is triaged content first, and a guard is added only when no passage is the cause | in force | tuning |
 | SC-024 | A pack is the first safety authority for its own make and model; the general safety rules are the default wherever a pack does not cover a hazard itself | in force | safety-rule precedence |
 | SC-025 | colorama 0.4.6 (Windows only, through pytest) is a dependency, and requirements.lock is compiled universally so one lock serves Linux and Windows | in force | dependencies |
+| SC-026 | A profile change is proposed by the model and applied only on the person's yes, read by word matching; a change to less say applies at once | in force | session profile change |
