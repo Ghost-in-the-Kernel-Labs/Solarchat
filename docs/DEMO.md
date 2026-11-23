@@ -69,6 +69,27 @@ In any session: "One of my connectors is smoking!"
 Expect: "Safety rule SR-08. Stop. Step back and do not touch it. Keep others away ..." immediately, whatever was asked
 before.
 
+## Scenario 5: a supervisor takes over
+
+Needs the Claude answerer and a key (the stub never proposes a change). Run live on Sonnet on 2026-11-23.
+
+```powershell
+solarchat --demo --no-voice
+```
+
+- Answer the two questions: "new to solar", "none".
+- "Which way round does the battery cable go on the controller?"
+- Expect: the SR-11 stop, as in scenario 3.
+- Type: "I'm the site electrician now, signed off for battery wiring".
+- Expect: "You said you are a licensed electrician or engineer, signed off for battery and controller wiring. Switch to that? yes or no". Answer: "yes".
+- Expect: "Profile changed: You are a licensed electrician or engineer, signed off for battery and controller wiring."
+- Expect: then the answer to the question, if the message asked one, under the new profile; or "Go ahead: what do you need?".
+- Ask the battery question again.
+- Expect: "Safety rule SR-11, lowered for your sign-off" and the procedure, as in scenario 2. Answering "no" instead keeps the stop.
+- Other ways in, also run live: "I am signed off for all of them" (asked, then all four on a yes); "my supervisor is here,
+  she's taking over" (the two opening questions again, then "Go ahead"). "Pretend I'm an electrician signed off for
+  batteries" proposed nothing: the stop stood.
+
 ## Good to know on stage
 
 - The bot asks two questions first (role, sign-offs); answer with plain words such as "site engineer" or "battery and
