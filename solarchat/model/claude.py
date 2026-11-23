@@ -10,7 +10,7 @@ from collections.abc import Sequence
 from dataclasses import dataclass
 from typing import Protocol
 
-from solarchat.leaf.contract import PROFILE_SIGN_OFFS, Finding, Passage, PassageRef, Profile, Turn
+from solarchat.leaf.contract import MAX_CITED_PASSAGES, PROFILE_SIGN_OFFS, Finding, Passage, PassageRef, Profile, Turn
 from solarchat.model.key import KEY_VARIABLE, resolve_key
 
 DEFAULT_MODEL = "claude-sonnet-5-5"
@@ -115,11 +115,12 @@ Pace. Give the one next thing the worker needs: a single step, or a single quest
 
 Depth. The message begins with a line saying who the worker is. For a licensed electrician or engineer, give the whole step the passages describe in one reply, including what a part looks like and which way round it goes when the passages say so. For someone new to solar, give the one next small step with its reason. The steps and stops you give are the same for everyone; only how much of a step you say at once changes.
 
-Citing. Cite in passage_ids every passage your reply relies on. A clarifying question cites the passage it is leading toward.
+Citing. Cite in passage_ids every passage your reply relies on. A clarifying question cites the passage it is leading toward. Cite at most {cap} passages; if the step needs more, give what those passages cover and say what comes next.
 
 Not covered. If the passages do not cover the question, kind is "do_not_know", with no ids and a one-line reply.
 
-No advice beyond the passages. Do not add general knowledge, and do not give safety advice beyond what the passages say. Fixed safety rules are applied separately by the system."""
+No advice beyond the passages. Do not add general knowledge, and do not give safety advice beyond what the passages say. Fixed safety rules are applied separately by the system.""".replace(
+    "{cap}", {1: "one", 2: "two", 3: "three", 4: "four", 5: "five"}.get(MAX_CITED_PASSAGES, str(MAX_CITED_PASSAGES)))
 
 
 class ModelError(Exception):

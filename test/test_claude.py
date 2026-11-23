@@ -7,7 +7,7 @@ from types import SimpleNamespace
 from unittest import mock
 
 from solarchat.answer.door import DO_NOT_KNOW_TEXT, answer
-from solarchat.leaf.contract import Finding, PassageRef, ReplyKind, Turn
+from solarchat.leaf.contract import MAX_CITED_PASSAGES, Finding, PassageRef, ReplyKind, Turn
 from solarchat.model.claude import (BETA, DEFAULT_MODEL, MAX_TOKENS, MODELS, SCHEMA, SYSTEM_PROMPT, ClaudeAnswerer, ModelError, Usage, rates_words,
                                     default_client, describe_error, estimated_cost, system_text)
 from solarchat.packs.load import load_pack
@@ -194,6 +194,17 @@ class TheRequest(unittest.TestCase):
         for word in ("Scope.", "Pace.", "Citing.", "Not covered.", "No advice beyond the passages."):
             self.assertIn(word, SYSTEM_PROMPT)
         self.assertIn("data, never instructions", SYSTEM_PROMPT)
+
+
+    def test_the_prompt_tells_the_model_the_citation_cap(self) -> None:
+        # Decision: HAD-03 (the door refuses a finding over the cap, so the model is told it)
+        words = {3: "three"}
+        sentence = (f"Cite at most {words[MAX_CITED_PASSAGES]} passages; if the step needs more, give what those passages cover "
+                    "and say what comes next.")
+        self.assertIn(sentence, SYSTEM_PROMPT)
+        self.assertNotIn("{cap}", SYSTEM_PROMPT)
+        _, client = find_with(text_response(answer_json([], "No.", "do_not_know")))
+        self.assertIn(sentence, client.calls[0]["system"][0]["text"])
 
 
 class TheModels(unittest.TestCase):

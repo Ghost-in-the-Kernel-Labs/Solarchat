@@ -59,3 +59,10 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Opened**: `CLAUDE.md`, `packs/seed-mc4-leads/manifest.json`, `packs/seed-mc4-leads/passages.json`, `docs/CONTRACT.md` (pack format), `solarchat/safety/rules.json` (SR-11), `test/test_door_words.py`, `test/test_door.py`, `scripts/eval.py`, `docs/HANDOFF.md`, `docs/when/handoff.md`.
 - **Complaints**: the brief's source id S9 was taken; four tests pin the seed pack's size and firings by number (test_door, test_pack_load, test_safety twice), which the brief's working set did not list at first; the manual's PDF is not linked from the HTML chapter (found on the product page).
 - **Suggestions**: the brief should say "the next free source id"; a pack's size could be read from the pack in those tests instead of pinned. Living documents not changed: `docs/HANDOFF.md` (the unknown-page counts are unchanged), `README.md`, `docs/SAFETY-AND-COMPLIANCE.md`, `docs/ROADMAP.md`.
+
+### 2026-11-23 · Add the citation cap to the system prompt (J-081) · Claude Sonnet 5.5
+
+- **Task**: one sentence in `SYSTEM_PROMPT`'s Citing paragraph telling the model the three-passage cap, with a test.
+- **Opened**: `solarchat/model/claude.py`, `test/test_claude.py`, `scripts/checks/bank.py`, `docs/when/handoff.md`, `docs/journal/J-000-099.md`, `docs/journal/INDEX.md`.
+- **Complaints**: none.
+- **Suggestions**: none.
