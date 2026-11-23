@@ -118,9 +118,9 @@ def word_matches(word: str, vocabulary: list[str]) -> str | None:
 # Decision: SC-020 (the answers are read by plain word matching, never by the model; the safest reading wins when words clash)
 def read_role(text: str) -> str | None:
     """The role an answer names, or None: "I'm the site engineer" gives "qualified", "crewmember" gives "crew", "new to solar"
-    gives "new", "licenssed eletrician" gives "qualified"; an answer with several (new before crew before engineer) gives
+    gives "new", "licenssed eletrician" gives "qualified", "cew member" gives "crew" ("member" says crew); an answer with several (new before crew before engineer) gives
     the one with the least say; no role word ("now", "the boss") gives None."""
-    roles = {"new": "new", "crew": "crew", "electrician": "qualified", "engineer": "qualified", "licensed": "qualified",
+    roles = {"new": "new", "crew": "crew", "member": "crew", "electrician": "qualified", "engineer": "qualified", "licensed": "qualified",
              "qualified": "qualified"}
     found = {roles[known] for word in re.findall(r"[a-z]+", text.lower()) if (known := word_matches(word, list(roles)))}
     return next((role for role in ("new", "crew", "qualified") if role in found), None)

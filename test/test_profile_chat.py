@@ -51,6 +51,8 @@ class TheReading(unittest.TestCase):
 
     def test_typos_and_run_together_words_are_read(self) -> None:
         self.assertEqual(read_role("crewmember"), "crew")
+        for text in ("cre member", "cew member", "crew member"):  # Ghost's run on Windows, 2026-11-23: "member" says crew
+            self.assertEqual(read_role(text), "crew", text)
         self.assertEqual(read_role("crewman"), "crew")
         self.assertEqual(read_role("licenssed eletrician"), "qualified")
         self.assertEqual(read_role("eletrician"), "qualified")
