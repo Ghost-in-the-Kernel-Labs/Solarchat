@@ -72,9 +72,9 @@ class TheGoodPack(unittest.TestCase):
 
 
 class TheSeedPack(unittest.TestCase):
-    def test_it_has_85_passages_with_titles(self) -> None:
+    def test_it_has_89_passages_with_titles(self) -> None:
         pack = load_pack(SEED)
-        self.assertEqual(len(pack.passages), 85)
+        self.assertEqual(len(pack.passages), 89)
         self.assertEqual(pack.pack_id, "seed-mc4-leads")
         self.assertTrue(all(passage.title for passage in pack.passages))
 

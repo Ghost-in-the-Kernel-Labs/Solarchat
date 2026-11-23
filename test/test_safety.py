@@ -36,6 +36,8 @@ DEMO_PACK_FIRINGS = {
     "fail-09": ["SR-07"],
     "fail-10": ["SR-03"],
     "fail-13": ["SR-07"],
+    "battery-terminals": ["SR-11"],
+    "battery-torque": ["SR-11"],
 }
 # The same firings by piece of the pack in the pack format (TODO 1.4): a passage, a flow, a procedure's header or one of its
 # steps, named `entry@procedure`; each old step or failure is now several, so DEMO_PACK_FIRINGS above is read by origin.
@@ -70,6 +72,8 @@ DEMO_PACK_ENTRY_FIRINGS = {
     "fail-13-check-1": ["SR-07"],
     "fail-13-fix": ["SR-07"],
     "fail-13-stop": ["SR-07"],
+    "battery-terminals": ["SR-11"],
+    "battery-torque": ["SR-11"],
 }
 SEED_PACK = ROOT / "packs" / "seed-mc4-leads"
 ORIGIN_ID = re.compile(r"^(step-\d+|fail-\d+)")
