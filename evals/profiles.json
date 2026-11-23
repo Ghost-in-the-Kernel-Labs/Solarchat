@@ -1,3 +1,50 @@
 {
-  "mns-09": {"role": "qualified", "signed_off": ["meter"]}
+  "mns-01": {
+    "role": "crew",
+    "signed_off": [
+      "connector"
+    ]
+  },
+  "mns-02": {
+    "role": "crew",
+    "signed_off": [
+      "connector"
+    ]
+  },
+  "mns-09": {
+    "role": "qualified",
+    "signed_off": [
+      "meter"
+    ]
+  },
+  "warn-01": {
+    "role": "crew",
+    "signed_off": [
+      "connector"
+    ]
+  },
+  "warn-02": {
+    "role": "crew",
+    "signed_off": [
+      "connector"
+    ]
+  },
+  "warn-03": {
+    "role": "crew",
+    "signed_off": [
+      "connector"
+    ]
+  },
+  "warn-04": {
+    "role": "crew",
+    "signed_off": [
+      "connector"
+    ]
+  },
+  "warn-05": {
+    "role": "crew",
+    "signed_off": [
+      "connector"
+    ]
+  }
 }

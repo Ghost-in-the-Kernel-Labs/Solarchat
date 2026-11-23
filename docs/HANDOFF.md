@@ -6,7 +6,7 @@ Read `CLAUDE.md` first, then this. `TODO.md` is the chain in order; `docs/DONE.m
 
 `main` holds the stamp, decisions to SC-023, the project's ghost, the roadmap (Phases 1 to 6), the 22-pin lockfile
 (the SDK and its 15 reviewed additions came in with SC-021, J-045), the package `solarchat/` with its contract
-(HAD-01 to HAD-06) and module map, the demo pack `packs/seed-mc4-leads/`, the fourteen safety rules as data, and the
+(HAD-01 to HAD-06) and module map, the demo pack `packs/seed-mc4-leads/`, the fifteen safety rules as data, and the
 frozen evaluation set. Built since the pack and the rules: the answering door and the runner (1.6, J-047), the Claude
 answerer, the chat command and the live evaluation run, with the model a parameter (1.16, J-048, J-049), the rule
 bank's format and check with twenty hand-written rules (1.19, J-053), and the command menu `bin/solarchat` with the
@@ -30,7 +30,7 @@ which passage to show.
 
 1. **TODO 1.3 is landed, with Ghost's read still open**: landed 2026-11-21 on Ghost's word with the draft's answers;
    Ghost has not yet read `docs/SAFETY-RULES.md`; SR-03 was settled by Ghost's word (J-030) and four points stay open. J-027 (renumbered from J-026 at the landing),
-   reviewed by the coordinator. Fourteen rules, SR-01 to SR-14, in `solarchat/safety/rules.json`, read by
+   reviewed by the coordinator. Fifteen rules, SR-01 to SR-15 (SR-15 and three changes to SR-03, SR-05 and SR-09 by J-089), in `solarchat/safety/rules.json`, read by
    `solarchat/safety/rules.py` as the leaf's `SafetyRule`; `docs/SAFETY-RULES.md` generated from them
    (`scripts/safety_rules_doc.py`); the pack check refuses a pack that names a rule or tells the reader to skip one.
    1.3 is in `docs/DONE.md`, marked as all but Ghost's read. Next: the four marks still open in `docs/SAFETY-RULES.md`

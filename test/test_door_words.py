@@ -61,16 +61,22 @@ class AnEmergencyFiresOnTheWordsOnly(unittest.TestCase):
 
 class AWarnFiredByTheWordsAlone(unittest.TestCase):
     QUESTION = "Can I pull connectors apart to move the panel?"
+    CONNECTOR = Profile("crew", frozenset({"connector"}))
 
     def test_with_a_cited_passage_it_is_the_answer_with_the_warns_words_before_it(self) -> None:
-        reply = answer(self.QUESTION, (GOOD,), False, one(VOLTAGE))
+        reply = answer(self.QUESTION, (GOOD,), False, one(VOLTAGE), profile=self.CONNECTOR)
         self.assertEqual((reply.kind, reply.safety_rule_id, reply.passage_refs), (ReplyKind.WARN, "SR-03", (VOLTAGE,)))
-        self.assertTrue(reply.text.startswith(RULES["SR-03"].words_shown + "\n\nVoc must be lower.\n\nFrom: "))
+        self.assertTrue(reply.text.startswith(RULES["SR-03"].lowered_for[0].words + "\n\nVoc must be lower.\n\nFrom: "))
+
+    def test_with_no_sign_off_the_same_question_is_a_stop(self) -> None:
+        reply = answer(self.QUESTION, (GOOD,), False, one(VOLTAGE))
+        self.assertEqual((reply.kind, reply.safety_rule_id, reply.passage_refs), (ReplyKind.STOP, "SR-03", ()))
+        self.assertTrue(reply.text.startswith(RULES["SR-03"].words_shown))
 
     def test_with_no_passage_cited_it_is_an_i_do_not_know_that_carries_the_warns_words_and_names_no_rule(self) -> None:
-        reply = answer(self.QUESTION, (GOOD,), False, NoAnswer())
+        reply = answer(self.QUESTION, (GOOD,), False, NoAnswer(), profile=self.CONNECTOR)
         self.assertEqual((reply.kind, reply.safety_rule_id, reply.passage_refs), (ReplyKind.DO_NOT_KNOW, None, ()))
-        self.assertEqual(reply.text, RULES["SR-03"].words_shown + "\n\n" + DO_NOT_KNOW_TEXT)
+        self.assertEqual(reply.text, RULES["SR-03"].lowered_for[0].words + "\n\n" + DO_NOT_KNOW_TEXT)
 
 
 class TheProfileLowersARuleFiredByTheWords(unittest.TestCase):
@@ -118,7 +124,7 @@ class TheThreeTriggerChanges(unittest.TestCase):
             self.assertEqual(len(entries), 1, rule_id)
             self.assertTrue(entries[0].why.endswith("engineer to confirm."))
         for rule_id in ("SR-07", "SR-08", "SR-09"):  # Ghost's decision B: the rule reads the worker's words only
-            latest = RULES[rule_id].changes[-1]
+            latest = [change for change in RULES[rule_id].changes if change.date == "2026-11-22"][-1]
             self.assertEqual((latest.date, latest.by, latest.role, latest.evidence),
                              ("2026-11-22", "Ghost", "maintainer", "J-079; docs/designs/worker-words.md"))
             self.assertIn("worker's words only", latest.why)

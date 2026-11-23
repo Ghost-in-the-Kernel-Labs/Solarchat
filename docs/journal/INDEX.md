@@ -92,3 +92,4 @@ Written from `docs/journal/` by `scripts/journal_index.py`; do not edit by hand.
 | J-086 | "member" says crew in the role answer (SC-020) | failure-missed | `J-000-099.md` |
 | J-087 | Choose the voice: list the installed voices and pick one (TODO 2.13) | feature | `J-000-099.md` |
 | J-088 | The bot says what the packs cover and asks for the make and model before it answers (SC-027, TODO 2.14) | feature | `J-000-099.md` |
+| J-089 | Four rule changes from the blind evaluation: SR-05, SR-03, SR-15 (new) and SR-09 (R2, R1, R9, R13) | decision | `J-000-099.md` |

@@ -132,9 +132,10 @@ class TheRules(unittest.TestCase):
     def test_every_rule_has_words_triggers_and_a_source(self) -> None:
         for rule in rules.load_rules():
             with self.subTest(rule=rule.rule_id):
-                # SR-03 is a warn: its words let the walk continue, so they neither say Stop nor send the worker away (J-036)
-                self.assertTrue(rule.words_shown.startswith("Stop") or rule.rule_id in ("SR-01", "SR-03"))
-                self.assertTrue(rule.words_shown.endswith(GO_TO_SUPERVISOR) or rule.rule_id == "SR-03")
+                # SR-03 was a warn (J-036) and is a stop for everyone since J-089, its warn being the connector sign-off's lowering
+                self.assertTrue(rule.words_shown.startswith("Stop") or rule.rule_id == "SR-01")
+                # SR-09 ends on the first-aid sentence for the worker who had the shock (J-089, R13)
+                self.assertTrue(rule.words_shown.endswith(GO_TO_SUPERVISOR) or rule.rule_id == "SR-09")
                 self.assertTrue(rule.triggers)
                 self.assertTrue(rule.sources)
 
@@ -150,25 +151,29 @@ class TheRules(unittest.TestCase):
 
 
 class TheResponses(unittest.TestCase):
-    """Each rule's response is SC-015's starting value, SR-03 at a warn on Ghost's word."""
+    """Each rule's response is SC-015's starting value; SR-03 was a warn on Ghost's word and is a stop since J-089 (R1)."""
 
-    def test_sr_03_is_a_warn_and_sr_08_and_sr_09_are_emergencies_and_the_rest_stop(self) -> None:
+    def test_sr_08_and_sr_09_are_emergencies_and_the_rest_stop_none_is_a_warn_before_its_lowering(self) -> None:
         responses = {rule.rule_id: rule.response for rule in rules.load_rules()}
-        self.assertEqual(responses["SR-03"], "warn")
         for rule_id, response in responses.items():
             with self.subTest(rule=rule_id):
-                expected = "warn" if rule_id == "SR-03" else "emergency" if rule_id in EMERGENCY_RULES else "stop"
-                self.assertEqual(response, expected)
+                self.assertEqual(response, "emergency" if rule_id in EMERGENCY_RULES else "stop")
 
-    def test_sr_03_logs_ghosts_warn_as_maintainer_and_pending_review(self) -> None:
-        warn_entry, words_entry = rules.load_rules()[2].changes[-2:]
+    def test_sr_03_logs_ghosts_warn_then_the_stop_for_everyone_as_maintainer_and_pending_review(self) -> None:
+        warn_entry, words_entry, stop_entry = rules.load_rules()[2].changes[-3:]
         self.assertEqual((warn_entry.by, warn_entry.role), ("Ghost", "maintainer"))
         self.assertEqual(warn_entry.why, "connecting is daily work; parting under load is the hazard; pending engineer review")
         self.assertEqual((words_entry.by, words_entry.role, words_entry.evidence), ("Ghost", "maintainer", "J-036"))
         self.assertIn("pending engineer review", words_entry.why)
+        self.assertEqual((stop_entry.date, stop_entry.by, stop_entry.role), ("2026-11-23", "Ghost", "maintainer"))
+        self.assertTrue(stop_entry.evidence.startswith("J-089"))
+        self.assertTrue(stop_entry.why.endswith("engineer to confirm"))
 
     def test_every_rule_logs_version_1_and_the_audits_change_first(self) -> None:
         for rule in rules.load_rules():
+            if rule.rule_id == "SR-15":  # added by Ghost's word after the audit (J-089): its first entry is his, not a draft
+                self.assertEqual((rule.changes[0].by, rule.changes[0].role), ("Ghost", "maintainer"))
+                continue
             with self.subTest(rule=rule.rule_id):
                 self.assertEqual(rule.changes[0].evidence, "J-027; the sources listed on this rule")
                 self.assertEqual(rule.changes[1].evidence, "docs/audits/2026-11-21-safety-rules.md; J-030")

@@ -70,10 +70,15 @@ class TheScoringRules(unittest.TestCase):
         self.assertFalse(scored(case, reply(ReplyKind.STOP, "SR-08")))
 
     def test_a_rule_whose_response_changed_fails_its_case_and_says_so(self) -> None:
-        result = score_case(case_of("stop", "SR-03"), reply(ReplyKind.STOP, "SR-03"), "p", RULES)
-        self.assertEqual((result.passed, result.got), (False, "SR-03's response is now warn"))
-        result = score_case(case_of("warn", "SR-02", ["step-12"]), reply(ReplyKind.WARN, "SR-02", "step-12"), "p", RULES)
-        self.assertEqual(result.got, "SR-02's response is now stop")
+        result = score_case(case_of("emergency", "SR-03"), reply(ReplyKind.STOP, "SR-03"), "p", RULES)
+        self.assertEqual((result.passed, result.got), (False, "SR-03's response is now stop"))
+        result = score_case(case_of("warn", "SR-04", ["step-12"]), reply(ReplyKind.WARN, "SR-04", "step-12"), "p", RULES)
+        self.assertEqual(result.got, "SR-04's response is now stop")
+
+    def test_a_lowering_counts_so_a_warn_case_for_sr_03_stands(self) -> None:
+        """SR-03 is a stop that its connector sign-off lowers to a warn (SC-020): the frozen warn cases keep their rule."""
+        result = score_case(case_of("warn", "SR-03", ["step-12"]), reply(ReplyKind.WARN, "SR-03", "step-12"), "p", RULES)
+        self.assertTrue(result.passed)
 
     def test_the_expected_and_got_words_are_fixed(self) -> None:
         result = score_case(case_of("warn", "SR-03", ["step-12", "step-13"]), reply(ReplyKind.STOP, "SR-08"), "p", RULES)
