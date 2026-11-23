@@ -1,0 +1,83 @@
+# Solarchat demo script
+
+main at a4b69e2. Every scenario below was run live on Sonnet (the default model) on 2026-11-22 and 2026-11-23. The voice
+has only been tested with a fake engine, so test it on the laptop first.
+
+## Before the demo (on the laptop, once)
+
+In PowerShell, from the cloned folder:
+
+```powershell
+git pull
+py -3.12 -m venv .venv
+.venv\Scripts\pip install --only-binary :all: --require-hashes -r requirements.lock
+$env:Path = "$PWD\bin;$env:Path"
+solarchat --key
+```
+
+`solarchat --key` asks for the Anthropic key without showing it. Then run each scenario below once, end to end, with the
+speakers on. If `py -3.12` is missing, install Python 3.12 (the lockfile is built for 3.12). The `$env:Path` line lasts
+for that PowerShell window only, so run it again in any new window.
+
+## Scenario 1: a fault the worker can fix (swapped leads), with the voice on
+
+```powershell
+solarchat --demo
+```
+
+- Role: `new to solar`. Signed off for: `none`.
+- "My panel is plugged into the charge controller but it shows no solar power at all."
+- Answer what it asks, one fact at a time (display on? sunny and unshaded? off switch on?).
+- "I checked the marks. The panel's plus lead is joined to the controller's minus."
+- Expect: "Plus and minus are swapped", the SR-03 warning about not pulling connectors apart under load, then "cover the
+  whole panel first".
+
+What it shows: one step at a time, cited to the manuals, with a safety warning at the right moment.
+
+## Scenario 2: the same kind of question from an engineer
+
+```powershell
+solarchat --demo --role qualified --signed-off battery
+```
+
+- "The controller display is blank and the panel is not plugged in. What do I connect first?"
+- Expect: "Safety rule SR-11, lowered for your sign-off", the battery precautions, then: connect the battery first,
+  fused (15-20 A for the 75/10 ...), plus to the battery + screw terminal, wait 10 seconds, loads next, panel last.
+- "Which way round does the battery cable go on the controller?"
+- Expect: the battery + and - screw terminals, check polarity, don't mix them up with the PV and load terminals,
+  0.75 Nm, and an honest "the manual doesn't give terminal colours".
+
+## Scenario 3: the same battery question from a new worker
+
+```powershell
+solarchat --demo --no-voice --role new
+```
+
+- Signed off for: `none`.
+- "Which way round does the battery cable go on the controller?"
+- Expect: "Safety rule SR-11. Stop. Do not work on battery terminals or cables ... Go to your site supervisor or
+  engineer", and "What to bring your supervisor: ... page 13".
+
+What 2 and 3 show together: the same question gets the right answer for each person, traced to a page of the manual.
+
+## Scenario 4: an emergency in the worker's own words
+
+In any session: "One of my connectors is smoking!"
+
+Expect: "Safety rule SR-08. Stop. Step back and do not touch it. Keep others away ..." immediately, whatever was asked
+before.
+
+## Good to know on stage
+
+- The bot asks two questions first (role, sign-offs); answer with plain words such as "site engineer" or "battery and
+  meter".
+- Answer the question it asks. It needs that one fact before it moves on; volunteering other facts makes it repeat the
+  question.
+- The banner "DEMO: not reviewed by an engineer, do not use on a site" is on every reply by design. "Page not yet found"
+  on some citations is expected for the demo pack.
+- Type `quit` to end a session.
+- No voice? `solarchat --demo --no-voice` runs the same chat in text.
+- "ANTHROPIC_API_KEY is not set and no key is stored": run `solarchat --key` again.
+- Out of scope: questions the pack doesn't cover get "I do not know. The packs switched on do not cover this." That is
+  the bot refusing to make things up, worth saying out loud.
+- Known rough edge: a lowered warning repeats its precautions on every reply in a battery conversation.
