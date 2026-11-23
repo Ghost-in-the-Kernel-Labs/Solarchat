@@ -72,7 +72,7 @@ before.
 ## Good to know on stage
 
 - The bot asks two questions first (role, sign-offs); answer with plain words such as "site engineer" or "battery and
-  meter".
+  meter"; typos and "all" are understood; if the profile said back is wrong, type quit and start again.
 - Answer the question it asks. It needs that one fact before it moves on; volunteering other facts makes it repeat the
   question.
 - The banner "DEMO: not reviewed by an engineer, do not use on a site" is on every reply by design. "Page not yet found"

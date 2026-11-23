@@ -13,7 +13,8 @@ from solarchat.leaf.contract import DEMO_BANNER, Finding, Passage, PassageRef, P
 from solarchat.model import claude
 from solarchat.model.claude import SYSTEM_PROMPT, ClaudeAnswerer, profile_line
 from solarchat.project import chat
-from solarchat.project.chat import (ROLE_AGAIN, ROLE_QUESTION, SIGN_OFF_QUESTION, converse, parse_signed_off, profile_said_back,
+from solarchat.project.chat import (PROFILE_WRONG, ROLE_AGAIN, ROLE_QUESTION, SIGN_OFF_QUESTION, ask_profile, converse, parse_signed_off,
+                                    profile_said_back,
                                     read_role, read_signed_off, render)
 from solarchat.project.speech import Speaker
 from test.support import ROOT
@@ -46,6 +47,27 @@ class TheReading(unittest.TestCase):
         self.assertEqual(read_role("I am new to solar"), "new")
         self.assertEqual(read_role("a new engineer"), "new")
         self.assertIsNone(read_role("the boss"))
+        self.assertIsNone(read_role("now"))
+
+    def test_typos_and_run_together_words_are_read(self) -> None:
+        self.assertEqual(read_role("crewmember"), "crew")
+        self.assertEqual(read_role("crewman"), "crew")
+        self.assertEqual(read_role("licenssed eletrician"), "qualified")
+        self.assertEqual(read_role("eletrician"), "qualified")
+        self.assertEqual(read_role("I'm new"), "new")
+        self.assertEqual(read_role("renewable engineer"), "qualified")
+        self.assertIsNone(read_role("few"))
+        self.assertEqual(read_signed_off("baterry"), frozenset({"battery"}))
+
+    def test_all_every_and_not_in_the_sign_off_answer(self) -> None:
+        every = frozenset({"meter", "connector", "battery", "height"})
+        self.assertEqual(read_signed_off("all of these"), every)
+        self.assertEqual(read_signed_off("everything"), every)
+        self.assertEqual(read_signed_off("all except height"), frozenset())
+        self.assertEqual(read_signed_off("all but the roof"), frozenset())
+        self.assertEqual(read_signed_off("not battery"), frozenset())
+        self.assertEqual(read_signed_off("none of these"), frozenset())
+        self.assertEqual(read_signed_off("battery and meter"), frozenset({"meter", "battery"}))
         self.assertIsNone(read_role(""))
 
     def test_sign_offs_are_read_by_words_and_none_wins(self) -> None:
@@ -83,8 +105,14 @@ class TheQuestions(unittest.TestCase):
         self.assertTrue(out.startswith(DEMO_BANNER))
         positions = [out.index(text) for text in ("Ask a question", ROLE_QUESTION, SIGN_OFF_QUESTION, "You are a licensed")]
         self.assertEqual(positions, sorted(positions))
-        self.assertIn("You are a licensed electrician or engineer, signed off for meter tests, battery and controller wiring.\n\n> ", out)
+        self.assertIn(f"You are a licensed electrician or engineer, signed off for meter tests, battery and controller wiring.\n{PROFILE_WRONG}\n\n> ", out)
         self.assertNotIn(ROLE_AGAIN, out)
+
+    def test_ghosts_own_answers_give_the_profile_he_meant(self) -> None:
+        every = frozenset({"meter", "connector", "battery", "height"})
+        for text, role in (("crewmember\nall of these\n", "crew"), ("xyz\nlicenssed eletrician\nall of these\n", "qualified")):
+            with self.subTest(text=text):
+                self.assertEqual(ask_profile(io.StringIO(text), io.StringIO()), Profile(role, every))
 
     def test_a_role_answer_naming_none_is_asked_once_more(self) -> None:
         _, out = run("hello\ncrew\nnone\nquit\n")
@@ -110,7 +138,8 @@ class TheQuestions(unittest.TestCase):
         run("engineer\nbattery\nquit\n", voice=fake)
         said = [text for _, text in fake.calls]
         self.assertEqual(said, [DEMO_BANNER, ROLE_QUESTION, SIGN_OFF_QUESTION,
-                                "You are a licensed electrician or engineer, signed off for battery and controller wiring."])
+                                "You are a licensed electrician or engineer, signed off for battery and controller wiring.",
+                                PROFILE_WRONG])
 
 
 class TheOptions(unittest.TestCase):
