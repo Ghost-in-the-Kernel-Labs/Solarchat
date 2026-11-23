@@ -72,3 +72,10 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Opened**: `CLAUDE.md`, `docs/when/handoff.md`, `bin/solarchat.cmd`, `bin/solarchat`, `solarchat/project/keys.py`, `solarchat/cli/main.py`, `solarchat/model/key.py`, `test/test_key.py`, `test/support.py`, `README.md`, `docs/DEMO.md`, `TODO.md`, `docs/DONE.md`.
 - **Complaints**: the brief said `git ls-files --eol` should show i/crlf; with `eol=crlf` it shows i/lf w/crlf (the index normalises), so the check wording is off. Living documents not changed: `docs/HANDOFF.md`, `docs/SAFETY-AND-COMPLIANCE.md`, `docs/ROADMAP.md`, `docs/CONTRACT.md`.
 - **Suggestions**: none.
+
+### 2026-11-23 · colorama into the lock for Windows (J-083, SC-025) · Claude Sonnet 5.5
+- **Task**: regenerate `requirements.lock` universally, review colorama 0.4.6 by every layer of `docs/DEPENDENCY-REVIEW.md`, record it.
+- **Opened**: `docs/when/dependency-update.md`, `docs/DEPENDENCY-REVIEW.md`, `docs/SUPPLY-CHAIN.md`, `docs/when/handoff.md`, `stacks/python/README.md`, `requirements.in`, `requirements.lock`, `scripts/review_scan.py`, `docs/REVIEWED-VERSIONS.md`, `theGhost.md`, `docs/journal/J-000-099.md`, `docs/NAVIGATION-LOG.md`.
+- **Complaints**: the stack README's fetch command is for an update (an old and a new wheel); for a new package `review_scan.py --unpack` needs an old archive, so I unpacked each archive against an empty zip, and nothing says so. `pip download --no-binary :all:` for the sdist runs a build backend (it failed asking for hatchling); fetching the sdist URL from the JSON API by `curl` is the safe way, also unwritten. A worker has no Agent tool, so the two agent layers cannot run from a worker and this brief hit that wall (as J-045 did).
+- **Suggestions**: add to `stacks/python/README.md`'s "Dependency updates" row the new-package case (an empty zip as the old side) and the sdist fetch by URL; put in `docs/when/hand-out-a-task.md` that a dependency brief's two agent layers belong to the coordinator.
+

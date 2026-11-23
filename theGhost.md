@@ -714,3 +714,13 @@ The core decisions above are inherited (Core C-001 to C-041); this project's beg
 - **Reverses if:** a pack's declared coverage is found to have let a worker do something its manual did not in fact allow (the safeguards were not enough); or the engineer's final review (TODO 6.4) finds coverage cannot be confirmed pack by pack.
 - **See also:** HAD-04, SC-013, SC-015, SC-016, SC-020, SC-022, P-20, F-16, C-033
 - **subject:** safety-rule precedence
+
+### SC-025: colorama 0.4.6 (Windows only, through pytest) is a dependency, and requirements.lock is compiled universally so one lock serves Linux and Windows
+- **Decision:** **In force (Ghost, 2026-11-23, in chat: "Add colorama (Recommended)"; and, asked whether to land it given the reputation checker's CONCERN: "Land it (Recommended)").** `requirements.lock` is compiled with `--universal --no-emit-package httpx2-jsfetch`, so it carries the packages only some platforms need: colorama 0.4.6 with its two PyPI hashes, marked `sys_platform == 'win32'`, and `h11`, `httpcore2` and `truststore` marked `sys_platform != 'emscripten'`. `httpx2-jsfetch`, httpx2's emscripten-only (browser Python) dependency that no Solarchat platform installs, is left out so that no unreviewed package enters the lock. No version already held changed (the cooldown date stays 2026-11-13).
+- **Why:** `setup.cmd` failed on Windows because the lock, compiled on Linux without markers, lacked pytest's Windows-only dependency, and pip refused `colorama>=0.4 (from pytest==9.2.0)` under `--require-hashes`. colorama is a small terminal-colour library (the whole package was read: SAFE; the reputation checker's one CONCERN, a 2024 trojaned copy served from the lookalike domain files.pypihosted.org and not from PyPI, does not apply because the lock's hashes match pypi.org's and pip refuses any other bytes).
+- **Held by:** `docs/REVIEWED-VERSIONS.md` (colorama's row), `scripts/checks/dependency_review.py` (a lock entry with no row fails), the compile command in `requirements.in`'s header.
+- **Source:** Ghost, 2026-11-23, in chat (answering the coordinator); the review is J-083.
+- **Status:** in force
+- **Reverses if:** colorama's maintainers or publisher change, or an advisory names 0.4.6; or pytest drops the dependency.
+- **See also:** SC-021, C-033
+- **subject:** dependencies
