@@ -68,7 +68,7 @@ class TheKey(unittest.TestCase):
     def test_the_chat_with_no_key_asks_for_it_stores_it_and_starts(self) -> None:
         pack = str(ROOT / "packs" / "seed-mc4-leads")
         with no_key() as folder, mock.patch.dict("sys.modules", {"anthropic": mock.Mock()}):
-            code, out, err = run(["--pack", pack, "--demo", "--role", "new", "--signed-off", "none"], FAKE + "\nquit\n")
+            code, out, err = run(["--pack", pack, "--demo", "--role", "new", "--signed-off", "none", "--equipment", "none"], FAKE + "\nquit\n")
             self.assertEqual((code, (Path(folder) / "key").read_text().strip()), (0, FAKE))
         self.assertIn("Ask a question", out)
         self.assertNotIn(FAKE, out + err)

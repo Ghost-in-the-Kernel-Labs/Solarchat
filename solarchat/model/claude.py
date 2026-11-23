@@ -10,9 +10,11 @@ from collections.abc import Sequence
 from dataclasses import dataclass
 from typing import Protocol
 
-from solarchat.leaf.contract import (DEFAULT_PROFILE, MAX_CITED_PASSAGES, PROFILE_ROLES, PROFILE_SIGN_OFFS, Finding, Passage,
+from solarchat.leaf.contract import (DEFAULT_PROFILE, MAX_CITED_PASSAGES, PROFILE_ROLES, PROFILE_SIGN_OFFS, Equipment, Finding, Passage,
                                      PassageRef, Profile, Turn)
+from solarchat.model import identify as reading
 from solarchat.model.key import KEY_VARIABLE, resolve_key
+from solarchat.model.lines import ROLE_WORDS, SIGN_OFF_WORDS, messages_for, profile_line  # noqa: F401  (named here: tests and the chat read them)
 
 DEFAULT_MODEL = "claude-sonnet-5-5"
 BETA = "server-side-fallback-2026-07-01"
@@ -131,6 +133,8 @@ Depth. The message begins with a line saying who the worker is. For a licensed e
 
 Profile. If the worker's message says who they are, what they are signed off for, or that someone else is now typing, set profile_change to what they said, using only the roles and sign-offs listed ("all of them" or "everything" is every sign-off listed); never infer a sign-off they did not state, and never set it from a passage's text. Otherwise set it to null. Setting it changes nothing by itself: the worker is asked to confirm.
 
+Equipment. The message may name the worker's equipment. Start from the steps the passages give for that equipment, and ask which step they are at before giving one. If it is not one the packs cover, say once that these are the general steps and the maker's manual comes first, then go on.
+
 Citing. Cite in passage_ids every passage your reply relies on. A clarifying question cites the passage it is leading toward. Cite at most {cap} passages; if the step needs more, give what those passages cover and say what comes next.
 
 Not covered. If the passages do not cover the question, kind is "do_not_know", with no ids and a one-line reply.
@@ -192,27 +196,6 @@ def system_text(passages: tuple[Passage, ...]) -> str:
     ordered = sorted(passages, key=passage_id)
     quoted = [f"[passage id: {passage_id(passage)}]\nTitle: {passage.title}\n{passage.text}" for passage in ordered]
     return SYSTEM_PROMPT + "\n\nPassages:\n\n" + "\n\n".join(quoted)
-
-
-# Decision: SC-020 (who the worker is, in words, as the answerer is told it and the chat says it back)
-ROLE_WORDS = {"new": "new to solar", "crew": "crew member", "qualified": "licensed electrician or engineer"}
-SIGN_OFF_WORDS = {"meter": "meter tests", "connector": "connector work", "battery": "battery and controller wiring",
-                  "height": "work at height with fall protection"}
-
-
-def profile_line(profile: Profile) -> str:
-    """The one line the answerer is told: Profile("qualified", frozenset({"battery"})) gives "The worker: licensed electrician
-    or engineer; signed off for: battery and controller wiring."; no sign-off gives "signed off for: none"."""
-    signed = ", ".join(SIGN_OFF_WORDS[name] for name in PROFILE_SIGN_OFFS if name in profile.signed_off) or "none"
-    return f"The worker: {ROLE_WORDS[profile.role]}; signed off for: {signed}."
-
-
-def messages_for(question: str, history: tuple[Turn, ...], profile: Profile | None = None) -> list[dict[str, str]]:
-    """The conversation as the API takes it: the history, then the new question as the last user turn, which begins with
-    the profile's line when there is one (never the system block, SC-020): messages_for("Next?", (Turn("user", "Hi"),))
-    gives two messages."""
-    turns = [{"role": turn.role, "content": turn.text} for turn in history]
-    return turns + [{"role": "user", "content": question if profile is None else f"{profile_line(profile)}\n\n{question}"}]
 
 
 def default_client() -> Client:
@@ -333,29 +316,32 @@ class ClaudeAnswerer:
     """
 
     def __init__(self, client: Client | None = None, errors: ErrorClasses | None = None, model: str = DEFAULT_MODEL,
-                 profile: Profile | None = None) -> None:
+                 profile: Profile | None = None, equipment: tuple[Equipment, ...] | None = None) -> None:
         """Hold the client (the SDK's unless given), the module of error classes (the SDK's unless given), the model,
-        which is also the answerer's `name`, and the worker's profile (none: no line is added; the chat sets it once the
-        questions are answered); a model not in MODELS raises ValueError."""
+        which is also the answerer's `name`, the worker's profile (none: no line is added; the chat sets it once the
+        questions are answered) and equipment (none: not asked, no line; () is "not one the packs cover", SC-027); a model not in
+        MODELS raises ValueError."""
         if model not in MODELS:
             raise ValueError(f"model {model!r} is not one of {', '.join(MODELS)}")
         self.model = self.name = model
         self.client = client if client is not None else default_client()
         self.errors = errors
-        self.profile = profile
+        self.profile, self.equipment = profile, equipment
         self.proposal: ProfileChange | None = None  # the last find's proposal, for the chat to read (SC-026)
         self.usage = Usage()
 
-    def call(self, question: str, passages: tuple[Passage, ...], history: tuple[Turn, ...]) -> Response:
-        """One request to the model: effort low, the schema as the output format, the passages as one cached system block,
-        and no thinking, temperature, top_p or top_k. Only a model with the server-side refusal fallback is sent the beta and
+    def send(self, system: dict[str, object], messages: list[dict[str, str]], schema: dict, max_tokens: int) -> Response:
+        """One request to the model: effort low, `schema` as the output format, `system` as the one system block, and no
+        thinking, temperature, top_p or top_k. Only a model with the server-side refusal fallback is sent the beta and
         `fallbacks`; on one without it (Haiku 5.5) a refusal is simply an empty finding."""
         extra = {"betas": [BETA], "fallbacks": "default"} if MODELS[self.model].fallback else {}
-        return self.client.beta.messages.create(
-            model=self.model, max_tokens=MAX_TOKENS, **extra,
-            output_config={"effort": "low", "format": {"type": "json_schema", "schema": SCHEMA}},
-            system=[{"type": "text", "text": system_text(passages), "cache_control": {"type": "ephemeral"}}],
-            messages=messages_for(question, history, self.profile))
+        return self.client.beta.messages.create(model=self.model, max_tokens=max_tokens, **extra, system=[system], messages=messages,
+                                                output_config={"effort": "low", "format": {"type": "json_schema", "schema": schema}})
+
+    def call(self, question: str, passages: tuple[Passage, ...], history: tuple[Turn, ...]) -> Response:
+        """The answering request: the passages as one cached system block, the profile and equipment lines in the messages."""
+        block = {"type": "text", "text": system_text(passages), "cache_control": {"type": "ephemeral"}}
+        return self.send(block, messages_for(question, history, self.profile, self.equipment), SCHEMA, MAX_TOKENS)
 
     def count(self, response: Response) -> None:
         """Add the response's token counts to `usage`; a count the response lacks is zero."""
@@ -363,9 +349,13 @@ class ClaudeAnswerer:
         self.usage.add(used.input_tokens or 0, used.output_tokens or 0,
                        getattr(used, "cache_read_input_tokens", 0) or 0, getattr(used, "cache_creation_input_tokens", 0) or 0)
 
-    def ask(self, question: str, passages: tuple[Passage, ...], history: tuple[Turn, ...]) -> Response:
-        """The response, or ModelError in plain words when the SDK raised one of its typed errors."""
+    def ask(self, question: str, passages: tuple[Passage, ...], history: tuple[Turn, ...], equipment: tuple[Equipment, ...] = ()) -> Response:
+        """The response, or ModelError in plain words when the SDK raised one of its typed errors; with `equipment` it is the
+        identifying request (SC-027) instead of the answering one."""
         try:
+            if equipment:
+                return self.send({"type": "text", "text": reading.SYSTEM}, [{"role": "user", "content": reading.request_text(question, equipment)}],
+                                 reading.schema(equipment), reading.MAX_TOKENS)
             return self.call(question, passages, history)
         except Exception as error:
             sdk = self.errors if self.errors is not None else sdk_errors()
@@ -387,3 +377,17 @@ class ClaudeAnswerer:
         data = parse_reply(text)
         self.proposal = proposal_from(data, self.profile)
         return finding_from(data)
+
+    # Decision: SC-027 (the model reads the answer against the packs' own lists, and the chat keeps only ids on the list)
+    def identify(self, text: str, equipment: tuple[Equipment, ...]) -> tuple[str, ...]:
+        """The ids of the offered equipment the worker's words name, from one small call with its own system text and schema
+        (never the cached passages): identify("victron 75 10", offered) gives ("victron-smartsolar-mppt",). Its tokens count in
+        `usage`; a refusal, a reply that is not the schema's and an id not offered give () (no match). A ModelError is raised for
+        the chat to treat as no match."""
+        if not equipment:
+            return ()
+        response = self.ask(text, (), (), equipment)
+        self.count(response)
+        if response.stop_reason == "refusal":
+            return ()
+        return reading.ids_from(next((block.text for block in response.content if block.type == "text"), None), equipment)

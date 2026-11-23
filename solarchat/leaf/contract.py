@@ -15,6 +15,8 @@ CHANGE_FIELDS = ("date", "by", "role", "why", "evidence")
 # Decision: SC-024 (a pack's declaration of coverage says who declared it, in SC-016's shape; SR-08 and SR-09 stay emergencies)
 DECLARED_FIELDS = ("by", "role", "date", "evidence")
 COVERAGE_RESPONSES = ("warn", "stop")
+EQUIPMENT_KINDS = ("panel", "controller", "power-station", "battery", "inverter", "connector")
+EQUIPMENT_ID_PATTERN = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
 EMERGENCY_RULE_IDS = ("SR-08", "SR-09")
 # Decision: SC-020 (who the bot is talking to: a role and the sign-offs the worker's supervisor has given, self-declared)
 PROFILE_ROLES = ("new", "crew", "qualified")
@@ -373,3 +375,25 @@ def safety_coverage_problem(coverage: SafetyCoverage) -> str | None:
     if not isinstance(declared, dict) or any(not isinstance(declared.get(name), str) or not declared[name].strip() for name in DECLARED_FIELDS):
         return f"{coverage.rule}: declared has {', '.join(DECLARED_FIELDS)}, each with something in it (SC-016)"
     return None
+
+
+@dataclass(frozen=True)
+class Equipment:
+    """One piece of equipment a pack's manuals describe, refused at construction when incomplete.
+
+    Decision: SC-027 (the packs name what they cover; `sources` are the pack's own source ids; no safety coverage is declared).
+    Equipment("victron-smartsolar-mppt", "controller", "Victron Energy", "SmartSolar MPPT 75/10", ("S4",)) stands; an id with a
+    capital, a kind outside EQUIPMENT_KINDS, a blank make or model, or no sources raises ValueError.
+    """
+
+    id: str
+    kind: str
+    make: str
+    model: str
+    sources: tuple[str, ...]
+
+    def __post_init__(self) -> None:
+        """Raise ValueError when the record breaks SC-027 (the examples are in the class docstring)."""
+        if not (isinstance(self.id, str) and EQUIPMENT_ID_PATTERN.match(self.id)) or self.kind not in EQUIPMENT_KINDS or not self.sources \
+                or any(not isinstance(word, str) or not word.strip() for word in (self.make, self.model, *self.sources)):
+            raise ValueError(f"equipment {self.id!r}: an id of lowercase words, one of {', '.join(EQUIPMENT_KINDS)}, a make, a model and sources (SC-027)")

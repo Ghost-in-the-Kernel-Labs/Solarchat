@@ -8,7 +8,7 @@ import json
 from dataclasses import dataclass
 from pathlib import Path
 
-from solarchat.leaf.contract import Passage, PassageRef, SafetyCoverage
+from solarchat.leaf.contract import Equipment, Passage, PassageRef, SafetyCoverage
 
 MANIFEST_FIELDS = ("id", "title", "version", "status", "sources")
 PASSAGE_FIELDS = ("id", "title", "text", "sources")
@@ -19,13 +19,14 @@ UNKNOWN_PAGE = "unknown"
 class Pack:
     """One loaded pack: Pack("seed-mc4-leads", manifest, passages, citations) with `citations` the passage id to its
     `sources` list as written ("S2", or {"source": "S3", "page": "15"}); `coverage` is the manifest's `safety_coverage` as leaf
-    records, () when the manifest has none (SC-024)."""
+    records, () when the manifest has none (SC-024); `equipment` is its `equipment` list as leaf records, () when none (SC-027)."""
 
     pack_id: str
     manifest: dict
     passages: tuple[Passage, ...]
     citations: dict[str, list]
     coverage: tuple[SafetyCoverage, ...] = ()
+    equipment: tuple[Equipment, ...] = ()
 
 
 def read_json(path: Path) -> object:
@@ -77,6 +78,17 @@ def coverage_from_manifest(manifest: dict) -> tuple[SafetyCoverage, ...]:
                  for entry in entries)
 
 
+# Decision: SC-027 (a manifest's equipment is read into leaf records; the pack check is what refuses a bad one)
+def equipment_from_manifest(manifest: dict) -> tuple[Equipment, ...]:
+    """The manifest's equipment as Equipment records, () when absent: {"equipment": [{"id": "r600", "kind": "power-station", "make":
+    "EcoFlow", "model": "R600", "sources": ["S8"]}]} gives (Equipment("r600", "power-station", "EcoFlow", "R600", ("S8",)),).
+    A malformed list or entry raises ValueError."""
+    entries = manifest.get("equipment") or []
+    if not isinstance(entries, list) or not all(isinstance(entry, dict) and isinstance(entry.get("sources"), list) for entry in entries):
+        raise ValueError("manifest.json: equipment is not a list of entries, each with a list of sources")
+    return tuple(Equipment(entry.get("id"), entry.get("kind"), entry.get("make"), entry.get("model"), tuple(entry["sources"])) for entry in entries)
+
+
 # Decision: SC-019 (load_pack reads manifest and passages and names the file and field that is missing)
 def load_pack(folder: Path) -> Pack:
     """The pack in folder; a missing manifest, or a missing field of the manifest or of a passage, raises ValueError
@@ -89,7 +101,8 @@ def load_pack(folder: Path) -> Pack:
     entries = passage_entries(folder)
     passages = tuple(passage_from_entry(manifest["id"], entry) for entry in entries)
     citations = {entry["id"]: entry["sources"] for entry in entries}
-    return Pack(manifest["id"], manifest, passages, citations, coverage_from_manifest(manifest))
+    return Pack(manifest["id"], manifest, passages, citations, coverage_from_manifest(manifest),
+                equipment_from_manifest(manifest))
 
 
 def page_words(page: object) -> str:

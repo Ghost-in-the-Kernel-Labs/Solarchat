@@ -1,0 +1,29 @@
+[
+  {
+    "id": "voltage",
+    "title": "Check the voltages match",
+    "text": "The panel's open-circuit voltage must be below the device's highest solar input voltage.",
+    "sources": [
+      {
+        "source": "S1",
+        "page": "1"
+      }
+    ],
+    "image": "images/step-1.svg",
+    "image_alt": "A label with a line marked Voc."
+  },
+  {
+    "id": "label",
+    "title": "Reading the label",
+    "text": "The specification label lists Voc.",
+    "sources": [
+      {
+        "source": "S1",
+        "page": "1"
+      },
+      "S2"
+    ],
+    "image": "images/third-party/label.svg",
+    "image_alt": "The specification label."
+  }
+]

@@ -15,7 +15,7 @@ from test.support import ROOT, no_key
 SEED = ROOT / "packs" / "seed-mc4-leads"
 STEP = PassageRef("seed-mc4-leads", "step-06")
 PACK = load_pack(SEED)
-SKIP = ["--role", "new", "--signed-off", "none"]  # the two profile questions are answered on the command line
+SKIP = ["--role", "new", "--signed-off", "none", "--equipment", "none"]  # the profile and equipment questions are answered on the command line
 
 
 def chat(lines: str, options: list[str] | None = None) -> tuple[int, str, str]:

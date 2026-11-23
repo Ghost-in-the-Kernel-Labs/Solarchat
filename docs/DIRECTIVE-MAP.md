@@ -2,7 +2,7 @@
 
 Written by `scripts/directive_map.py` from `theGhost.md`, `docs/CONTRACT.md` and the code's citations; do not edit here. A function holds a directive when it cites it: `# Decision: SC-005 (why)` or `# Invariant: HAD-06 (why)` directly above its `def`, or an `Invariant:` line in its docstring (SC-011). "No function" means the directive is held by a document, a test or a review: its Held by line in `theGhost.md` or `docs/CONTRACT.md` says which.
 
-36 of 73 directives are cited by a function.
+37 of 74 directives are cited by a function.
 
 | Directive | Title | Held in code by |
 | --- | --- | --- |
@@ -73,6 +73,7 @@ Written by `scripts/directive_map.py` from `theGhost.md`, `docs/CONTRACT.md` and
 | SC-024 | A pack is the first safety authority for its own make and model; the general safety rules are the default wherever a pack does not cover a hazard itself | `scripts/checks/coverage.py:coverage_problems`, `solarchat/leaf/contract.py:SafetyCoverage`, `solarchat/packs/load.py:coverage_from_manifest` |
 | SC-025 | colorama 0.4.6 (Windows only, through pytest) is a dependency, and requirements.lock is compiled universally so one lock serves Linux and Windows | no function |
 | SC-026 | A profile change is proposed by the model and applied only on the person's yes, read by word matching; a change to less say applies at once | `solarchat/model/claude.py:proposal_from`, `solarchat/project/chat.py:read_yes`, `solarchat/project/chat.py:gives_more_say`, `solarchat/project/chat.py:settle_proposal` |
+| SC-027 | The bot says what the packs cover and asks for the make and model before it answers; the model reads the answer, and the chat keeps only equipment on a list | `scripts/checks/equipment.py:equipment_problems`, `solarchat/leaf/contract.py:Equipment`, `solarchat/model/claude.py:identify`, `solarchat/model/lines.py:equipment_line`, `solarchat/packs/load.py:equipment_from_manifest`, `solarchat/project/intake.py:equipment_of` |
 | HAD-01 | The leaf module imports nothing of the project's own | `solarchat/leaf/__init__.py` |
 | HAD-02 | Every number a document reports comes from a run the repository can repeat | `solarchat/leaf/__init__.py` |
 | HAD-03 | Hadley answers only from the packs, names the passage, or says it does not know | `scripts/checks/evals.py:passage_problems`, `scripts/checks/packs.py:reference_problems`, `solarchat/answer/door.py:breaks_contract`, `solarchat/answer/door.py:answer_body`, `solarchat/leaf/contract.py:Reply` |

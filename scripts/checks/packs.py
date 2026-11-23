@@ -21,6 +21,7 @@ if __name__ == "__main__":  # run as a script from the project's root: the root 
     sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 from scripts.checks.common import tracked_files  # noqa: E402
 from scripts.checks.coverage import coverage_lines, coverage_problems  # noqa: E402
+from scripts.checks.equipment import equipment_problems  # noqa: E402
 
 ID_PATTERN = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
 MANIFEST_TEXT_FIELDS = ("id", "title", "version")
@@ -352,7 +353,7 @@ def problems(folder: Path) -> list[str]:
     procedures = load_optional_list(folder, "procedures.json", faults)
     if not (passages or flows or procedures):
         faults.append("the pack has no passage, flow or procedure")
-    faults += coverage_problems(manifest, passages, source_kinds)
+    faults += coverage_problems(manifest, passages, source_kinds) + equipment_problems(manifest, source_kinds)
     faults += passage_problems(passages, source_kinds, folder) + flow_problems(flows, source_kinds, folder)
     faults += procedure_problems(procedures, source_kinds, folder)
     faults += safety_rule_problems(located_entries(passages, flows, procedures))
