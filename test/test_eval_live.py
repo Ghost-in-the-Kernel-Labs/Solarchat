@@ -89,7 +89,7 @@ class TheLiveRun(unittest.TestCase):
         self.assertLess(out.index("FAIL warn-01 [warn]"), out.index("class"))
         self.assertLess(out.index("class"), out.index("tokens: "))
         self.assertLess(out.index("tokens: "), out.index("estimated cost ("))
-        self.assertIn("  got kind:  do not know (DO_NOT_KNOW)", out)
+        self.assertIn("  got kind:  stop (STOP rule SR-03)", out)  # SR-03 stops a profile with no connector sign-off (J-089)
         self.assertIn("answerer claude-sonnet-5-5", out)
         self.assertNotIn("FAIL in-01", out)
 

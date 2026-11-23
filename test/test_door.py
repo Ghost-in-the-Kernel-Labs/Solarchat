@@ -164,9 +164,9 @@ def trigger_of(rule_id: str) -> str:
 class Step6TheSafetyRules(unittest.TestCase):
     def test_a_passage_that_fires_a_warn_rule_gives_a_warn_with_the_rules_words_and_the_answer(self) -> None:
         pack = planted((f"Be careful: {trigger_of('SR-03')}.",))
-        reply = answer("How?", (pack,), False, Spy(Finding((planted_ref(1),), "Do it slowly.")))
+        reply = answer("How?", (pack,), False, Spy(Finding((planted_ref(1),), "Do it slowly.")), profile=signed_off(("connector",)))
         self.assertEqual((reply.kind, reply.safety_rule_id, reply.passage_refs), (ReplyKind.WARN, "SR-03", (planted_ref(1),)))
-        self.assertEqual(reply.text, RULES["SR-03"].words_shown + "\n\nDo it slowly.\n\n"
+        self.assertEqual(reply.text, RULES["SR-03"].lowered_for[0].words + "\n\nDo it slowly.\n\n"
                          "From: Planted 1 (Connecting a panel to a power station): Examplesun ES-100 installation manual, page 1")
 
     def test_a_passage_that_fires_a_stop_rule_gives_a_stop_with_the_words_and_what_to_bring(self) -> None:
@@ -194,7 +194,9 @@ class Step6TheSafetyRules(unittest.TestCase):
         pack = planted((f"{trigger_of('SR-03')}", f"{trigger_of('SR-06')}", f"{trigger_of('SR-14')}", f"{trigger_of('SR-04')}",))
         refs = (planted_ref(1), planted_ref(2), planted_ref(3))
         self.assertEqual(answer(f"q {trigger_of('SR-08')}", (pack,), False, Spy(Finding(refs, "x"))).safety_rule_id, "SR-08")
-        self.assertEqual(answer("q", (pack,), False, Spy(Finding(refs, "x"))).safety_rule_id, "SR-06")
+        self.assertEqual(answer("q", (pack,), False, Spy(Finding(refs, "x"))).safety_rule_id, "SR-03")
+        signed = signed_off(("connector",))
+        self.assertEqual(answer("q", (pack,), False, Spy(Finding(refs, "x")), profile=signed).safety_rule_id, "SR-06")
         both = Finding((planted_ref(4), planted_ref(2)), "x")
         self.assertEqual(answer("q", (pack,), False, Spy(both)).safety_rule_id, "SR-04")
 
@@ -213,8 +215,11 @@ class Step6TheSafetyRules(unittest.TestCase):
         self.assertEqual((reply.kind, reply.safety_rule_id), (ReplyKind.DO_NOT_KNOW, None))
 
     def test_the_real_pack_step_12_warns_and_a_worker_who_sees_sparks_gets_an_emergency(self) -> None:
-        warn = answer("How?", (SEED,), True, Spy(Finding((PassageRef("seed-mc4-leads", "step-12"),), "Use the tool.")))
+        step_12 = Spy(Finding((PassageRef("seed-mc4-leads", "step-12"),), "Use the tool."))
+        warn = answer("How?", (SEED,), True, step_12, profile=signed_off(("connector",)))
         self.assertEqual((warn.kind, warn.safety_rule_id), (ReplyKind.WARN, "SR-03"))
+        stopped = answer("How?", (SEED,), True, step_12)
+        self.assertEqual((stopped.kind, stopped.safety_rule_id), (ReplyKind.STOP, "SR-03"))
         fail_04 = Finding((PassageRef("seed-mc4-leads", "fail-04-stop"),), "Stop.")
         stop = answer("I see sparks at the connector", (SEED,), True, Spy(fail_04))
         self.assertEqual((stop.kind, stop.safety_rule_id, stop.text.split("\n\n")[-1]), (ReplyKind.STOP, "SR-08", RULES["SR-08"].words_shown))
@@ -226,7 +231,7 @@ class Step6TheSafetyRules(unittest.TestCase):
         self.assertEqual(banner.text, DEMO_BANNER + "\n\n" + plain.text)
 
 
-LOWERINGS = (("SR-02", "meter", "stop"), ("SR-11", "battery", "stop"), ("SR-05", "height", "stop"))
+LOWERINGS = (("SR-02", "meter", "stop"), ("SR-11", "battery", "stop"), ("SR-05", "height", "stop"), ("SR-03", "connector", "stop"))
 
 
 def signed_off(names: tuple[str, ...] = (), role: str = "crew") -> Profile:
@@ -257,7 +262,7 @@ class Step6TheProfile(unittest.TestCase):
 
     def test_without_the_sign_off_each_still_stops_as_before(self) -> None:
         others = {"SR-02": ("battery", "height", "connector"), "SR-11": ("meter", "height", "connector"),
-                  "SR-05": ("meter", "battery", "connector")}
+                  "SR-05": ("meter", "battery", "connector"), "SR-03": ("meter", "battery", "height")}
         for rule_id, _, _ in LOWERINGS:
             for profile in (DEFAULT_PROFILE, signed_off(), signed_off(others[rule_id], role="qualified"), Profile("qualified", frozenset())):
                 with self.subTest(rule=rule_id, profile=profile):
@@ -282,7 +287,8 @@ class Step6TheProfile(unittest.TestCase):
     def test_a_lowered_rule_is_chosen_among_the_others_by_its_lowered_response(self) -> None:
         pack = planted((trigger_of("SR-02"), trigger_of("SR-03")))
         both = Finding((planted_ref(1), planted_ref(2)), "x")
-        self.assertEqual(answer("q", (pack,), False, Spy(both), profile=signed_off(("meter",))).safety_rule_id, "SR-02")
+        self.assertEqual(answer("q", (pack,), False, Spy(both), profile=signed_off(("meter", "connector"))).safety_rule_id, "SR-02")
+        self.assertEqual(answer("q", (pack,), False, Spy(both), profile=signed_off(("meter",))).safety_rule_id, "SR-03")
         pack = planted((trigger_of("SR-02"), trigger_of("SR-06")))
         self.assertEqual(answer("q", (pack,), False, Spy(both), profile=signed_off(("meter",))).safety_rule_id, "SR-06")
         self.assertEqual(answer("q", (pack,), False, Spy(both)).safety_rule_id, "SR-02")

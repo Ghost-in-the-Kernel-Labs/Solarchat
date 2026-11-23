@@ -11,7 +11,7 @@ explained in full in [docs/SAFETY-AND-COMPLIANCE.md](docs/SAFETY-AND-COMPLIANCE.
 ## Where the project stands
 
 - **Built:** the contract every module shares (`docs/CONTRACT.md`), the knowledge-pack format and the check that
-  refuses a broken pack, the demo pack, the fourteen fixed safety rules as data, the frozen evaluation set, the
+  refuses a broken pack, the demo pack, the fifteen fixed safety rules as data, the frozen evaluation set, the
   answering door and the runner that scores an answerer on that set (1.6), a Claude answerer with a chat command
   and a live evaluation run (1.16), the rule bank's format and check (1.19), the command menu and the local key
   (2.5), and the checks and gates that hold the repository to its rules.

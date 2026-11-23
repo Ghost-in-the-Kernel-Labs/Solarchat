@@ -45,8 +45,11 @@
     "title": "Never pull connectors apart under load",
     "applies_when": "A step has you pull a panel's connectors, a string or a DC lead apart while current can flow. Pulling a connector apart under load can draw an arc that burns. Joining and plugging in connectors is daily work and is not a stop (Ghost, 2026-11-21).",
     "triggers": ["pull connectors apart", "pull the connectors apart", "separate the halves", "open the pairs", "open the connectors", "under load", "disconnect under load"],
-    "words_shown": "Before you part connectors, make sure no current can flow: turn the isolator off, or cover the whole panel. Then open each pair with the release tool made for it, never by hand. Never pull connectors apart under load: they can spark and burn.",
-    "response": "warn",
+    "words_shown": "Stop. Do not part connectors yourself. Opening a pair needs the panel made safe first and the release tool made for it, and connectors pulled apart under load can spark and burn. Go to your site supervisor or engineer.",
+    "response": "stop",
+    "lowered_for": [
+      {"signed_off": "connector", "response": "warn", "words": "Before you part connectors, make sure no current can flow: turn the isolator off, or cover the whole panel. Then open each pair with the release tool made for it, never by hand. Never pull connectors apart under load: they can spark and burn."}
+    ],
     "sources": [
       {"title": "Staubli: MC4 branch connector assembly instructions MA250 (12.2025, e: always de-energise the PV system before mating and disconnecting; never disconnect the connectors under load; a tool is required to open)", "url": "https://www.staubli.com/content/dam/spot/PV_MA250-en.pdf"},
       {"title": "Staubli: assembly instructions MA263 (de-energise before mating or unmating)", "url": "https://staubli.com/content/dam/spot/PV_MA263-en.pdf"},
@@ -56,7 +59,8 @@
       {"date": "2026-11-21", "by": "Claude Opus 5.5", "role": "agent, drafting", "why": "Version 1: drafted from public guidance for the newest contractor on a site; engineer to confirm.", "evidence": "J-027; the sources listed on this rule"},
       {"date": "2026-11-21", "by": "Ghost", "role": "maintainer", "why": "Rewritten as never pulling connectors apart under load, with the isolator off or the panel covered and the release tool: connecting is daily work; applied on Ghost's word; engineer to confirm.", "evidence": "docs/audits/2026-11-21-safety-rules.md; J-030"},
       {"date": "2026-11-21", "by": "Ghost", "role": "maintainer", "why": "connecting is daily work; parting under load is the hazard; pending engineer review", "evidence": "SC-015; J-032", "fingerprint": "607a6f08600a99e1a651637f317233c7692d7eb9e0314217be43286e613d8647"},
-      {"date": "2026-11-21", "by": "Ghost", "role": "maintainer", "why": "A warning lets the walk continue, so the words no longer say Stop or send the worker away; pending engineer review (F-16)", "evidence": "J-036", "fingerprint": "5291e877ba5c273db9138b3e232ba7c4ebf3fa5acc9080d4a7e49f14b6ba30a2"}
+      {"date": "2026-11-21", "by": "Ghost", "role": "maintainer", "why": "A warning lets the walk continue, so the words no longer say Stop or send the worker away; pending engineer review (F-16)", "evidence": "J-036", "fingerprint": "5291e877ba5c273db9138b3e232ba7c4ebf3fa5acc9080d4a7e49f14b6ba30a2"},
+      {"date": "2026-11-23", "by": "Ghost", "role": "maintainer", "why": "SR-03 made a stop for everyone, lowered to the earlier warn (its words unchanged) for the connector sign-off (SC-020): a new worker with no sign-off must not part connectors; the stop's words say only what the Staubli instructions and OSHA's lockout page support (R1); engineer to confirm", "evidence": "J-089; the blind evaluation of 2026-11-23 and Ghost's approval in chat, 2026-11-23", "fingerprint": "55f350c97ad659add2a57659e2da5ca9de1b84f58411d4a48a80e9d2f23a7620"}
     ]
   },
   {
@@ -79,7 +83,7 @@
     "id": "SR-05",
     "title": "Work at height or on a roof",
     "applies_when": "A step has you go onto a roof, a ladder, a scaffold or a frame, or near an edge, skylight or roof hatch, or carry a panel up. There is no safe height to fall from; the site sets the fall protection.",
-    "triggers": ["rooftop", "ladder", "scaffold", "at height", "skylight", "roof hatch", "roof edge", "go up on the roof", "climb the ladder", "work at height", "on the roof edge"],
+    "triggers": ["rooftop", "ladder", "scaffold", "at height", "skylight", "roof hatch", "roof edge", "go up on the roof", "climb the ladder", "work at height", "on the roof edge", "on the roof", "onto the roof", "up on the roof", "get up there", "climb up", "harness"],
     "words_shown": "Stop. Do not go up or near an edge until your supervisor has shown you the fall protection for this job and it is in place. Never climb a ladder carrying a panel. Go to your site supervisor or engineer.",
     "response": "stop",
     "lowered_for": [
@@ -95,7 +99,8 @@
     "changes": [
       {"date": "2026-11-21", "by": "Claude Opus 5.5", "role": "agent, drafting", "why": "Version 1: drafted from public guidance for the newest contractor on a site; engineer to confirm.", "evidence": "J-027; the sources listed on this rule"},
       {"date": "2026-11-21", "by": "Ghost", "role": "maintainer", "why": "Triggers match whole words and phrases, and the rule's triggers and wording follow the audit, applied on Ghost's word; engineer to confirm.", "evidence": "docs/audits/2026-11-21-safety-rules.md; J-030", "fingerprint": "d421664561cee04d1239121a672e26f959e6a4383b8f89d5e4cd99bbf7a7e633"},
-      {"date": "2026-11-22", "by": "Ghost", "role": "maintainer", "why": "SR-05 lowered to warn for a height sign-off (SC-020); engineer to confirm", "evidence": "J-074; docs/designs/session-profile.md", "fingerprint": "47387889d934676bb1f8fbdaf52a82c67888e307511cc529ba54cc8fc5e7bdc2"}
+      {"date": "2026-11-22", "by": "Ghost", "role": "maintainer", "why": "SR-05 lowered to warn for a height sign-off (SC-020); engineer to confirm", "evidence": "J-074; docs/designs/session-profile.md", "fingerprint": "47387889d934676bb1f8fbdaf52a82c67888e307511cc529ba54cc8fc5e7bdc2"},
+      {"date": "2026-11-23", "by": "Ghost", "role": "maintainer", "why": "Triggers added: \"on the roof\", \"onto the roof\", \"up on the roof\", \"get up there\", \"climb up\", \"harness\"; none occurs in any pack passage, and the height lowering stays (R2); engineer to confirm", "evidence": "J-089; the blind evaluation of 2026-11-23 and Ghost's approval in chat, 2026-11-23", "fingerprint": "6a8ea4c48620fc59457194a7e78c2ddd72f6ab980a0b1fdb52abdbc86dad487b"}
     ]
   },
   {
@@ -160,19 +165,21 @@
     "title": "An earth (ground) fault or an electric shock",
     "applies_when": "A device shows an earth fault, ground fault, insulation or isolation fault, or a protective device trips; or someone feels a tingle or a shock from a frame, panel or box. A fault can make metal live that should not be.",
     "triggers": ["earth fault", "ground fault", "insulation fault", "isolation fault", "insulation resistance", "earth leakage", "gfdi", "tingle", "electric shock", "got a shock", "loose earth", "missing earth"],
-    "words_shown": "Stop. Do not touch the frames, panels or boxes. A fault may have made metal live. If someone has had a shock, call for help and first aid at once, switch off the power if you can do it safely, and do not touch them while they may still be touching it. Go to your site supervisor or engineer.",
+    "words_shown": "Stop. Do not touch the frames, panels or boxes. A fault may have made metal live. If someone has had a shock, call for help and first aid at once, switch off the power if you can do it safely, and do not touch them while they may still be touching it. Go to your site supervisor or engineer. If you had the shock yourself, get medical attention even if you feel fine.",
     "response": "emergency",
     "reads": "words",
     "sources": [
       {"title": "Fluke: What is a DC ground fault in a PV system?", "url": "https://www.fluke.com/en-gb/learn/blog/renewable-energy/what-is-a-dc-ground-fault-in-a-pv-system"},
-      {"title": "OSHA: Green Job Hazards, Solar Energy, Electrical (shock and burns when connecting panels)", "url": "https://www.osha.gov/green-jobs/solar/electrical"}
+      {"title": "OSHA: Green Job Hazards, Solar Energy, Electrical (shock and burns when connecting panels)", "url": "https://www.osha.gov/green-jobs/solar/electrical"},
+      {"title": "Better Health Channel (Victoria, Australia): Electric shock (a person who has had a shock may appear unharmed but should still receive medical attention)", "url": "https://www.betterhealth.vic.gov.au/health/healthyliving/electric-shock"}
     ],
-    "engineer_to_confirm": "The first-aid sentence (call for help, do not touch a person who may still be touching something live) is common first-aid practice but none of the sources above states it; the site's own first-aid arrangements apply. Keep, reword or source it. The same goes for SR-08's line to follow the site's emergency procedure on fire or smoke.",
+    "engineer_to_confirm": "The first-aid sentence (call for help, do not touch a person who may still be touching something live) is common first-aid practice but none of the sources above states it; the site's own first-aid arrangements apply. Keep, reword or source it. The same goes for SR-08's line to follow the site's emergency procedure on fire or smoke. The last sentence (J-089, R13), medical attention for the person who had the shock themselves, is sourced to the Better Health Channel page for that clause only; Ghost's wording also said to stop work, step away, not touch it again and tell the supervisor, and no page fetched for J-089 states those, so they were left out (the rule's first words already say Stop and go to the supervisor).",
     "changes": [
       {"date": "2026-11-21", "by": "Claude Opus 5.5", "role": "agent, drafting", "why": "Version 1: drafted from public guidance for the newest contractor on a site; engineer to confirm.", "evidence": "J-027; the sources listed on this rule"},
       {"date": "2026-11-21", "by": "Ghost", "role": "maintainer", "why": "Triggers match whole words and phrases, and the rule's triggers and wording follow the audit, applied on Ghost's word; engineer to confirm.", "evidence": "docs/audits/2026-11-21-safety-rules.md; J-030"},
       {"date": "2026-11-21", "by": "Ghost", "role": "maintainer", "why": "Starting response emergency (SC-015): step back, keep others away, call for help; engineer to confirm.", "evidence": "SC-015; J-032", "fingerprint": "a48448626dd5abd8aee0256552d851a8e07d9d8865d2c8f6293679a75fc2df67"},
-      {"date": "2026-11-22", "by": "Ghost", "role": "maintainer", "why": "The rule fires on the worker's words only, never on a passage's text; engineer to confirm.", "evidence": "J-079; docs/designs/worker-words.md", "fingerprint": "d9ac7c334b1461cbdc20433b131abefbbfe80eec205584d36551abf45ce6cfd6"}
+      {"date": "2026-11-22", "by": "Ghost", "role": "maintainer", "why": "The rule fires on the worker's words only, never on a passage's text; engineer to confirm.", "evidence": "J-079; docs/designs/worker-words.md", "fingerprint": "d9ac7c334b1461cbdc20433b131abefbbfe80eec205584d36551abf45ce6cfd6"},
+      {"date": "2026-11-23", "by": "Ghost", "role": "maintainer", "why": "One sentence appended to the words: if you had the shock yourself, get medical attention even if you feel fine, trimmed to what the added source states; response, triggers and the rest of the words unchanged (R13); engineer to confirm", "evidence": "J-089; the blind evaluation of 2026-11-23 and Ghost's approval in chat, 2026-11-23", "fingerprint": "674faca18f86799a4ea5f72de7bbe1756a76b29152d1bbc5fa057655dd52a4e7"}
     ]
   },
   {
@@ -260,6 +267,26 @@
       {"date": "2026-11-21", "by": "Claude Opus 5.5", "role": "agent, drafting", "why": "Version 1: drafted from public guidance for the newest contractor on a site; engineer to confirm.", "evidence": "J-027; the sources listed on this rule"},
       {"date": "2026-11-21", "by": "Ghost", "role": "maintainer", "why": "Triggers match whole words and phrases, and the rule's triggers and wording follow the audit, applied on Ghost's word; engineer to confirm.", "evidence": "docs/audits/2026-11-21-safety-rules.md; J-030", "fingerprint": "2c68e9817fe18c3da918e0497d14a91f5152777d662d61da6535453ade94d6c5"},
       {"date": "2026-11-22", "by": "Ghost", "role": "maintainer", "why": "Triggers removed: \"do not know\" and \"don't know\"; \"I don't know which lead is positive\" is a question, answered from the packs or with \"I do not know\" (HAD-03), not a stop; \"not trained\", \"never done\" and \"unsure\" still stop; engineer to confirm.", "evidence": "J-075; docs/designs/worker-words.md", "fingerprint": "be8792293d11de8ec21c05a1a4f732e51fe10065e88573c27e0991b20b00e2b4"}
+    ]
+  },
+  {
+    "id": "SR-15",
+    "title": "Connecting to the grid or a building's mains",
+    "applies_when": "The worker asks to connect solar to the grid or to a building's mains supply, or to feed power in or net meter. This is work for a licensed electrician and usually needs the network operator's permission before it is connected.",
+    "triggers": ["to the grid", "grid tie", "grid-tie", "grid-tied", "feed in", "net meter", "net metering", "to the mains", "into the mains"],
+    "words_shown": "Stop. Connecting solar to the grid or a building's mains is work for a licensed electrician, and usually needs the network operator's permission. Do not do it. Go to your site supervisor or engineer.",
+    "response": "stop",
+    "reads": "words",
+    "engineer_to_confirm": "Both sources are government pages from New South Wales and Wales, not from the country the pilot runs in. The claims are by country: a licensed electrician (NSW), the network operator's permission (NSW; Wales), and the words say usually because a small UK system may only need notice, not prior permission. Replace them with the national regulator's and network operator's pages for the pilot's country, and confirm who counts as licensed there.",
+    "lowered_for": [
+      {"role": "qualified", "response": "warn", "words": "You are qualified: get the network operator's approval before you connect to the grid or a building's mains."}
+    ],
+    "sources": [
+      {"title": "NSW Government: Guide to solar panels (installation must be by a licensed builder or licensed electrical contractor; you must get approval from the electricity network owner before connecting your solar system to the grid)", "url": "https://www.nsw.gov.au/housing-and-construction/building-or-renovating-a-home/during-building-process/guide-to-solar-panels"},
+      {"title": "Welsh Government: Connecting on-site generation to the grid, technical note (distribution network operators must authorise all installation of generating stations and battery storage systems)", "url": "https://www.gov.wales/connecting-site-generation-grid-technical-note-html"}
+    ],
+    "changes": [
+      {"date": "2026-11-23", "by": "Ghost", "role": "maintainer", "why": "New rule: connecting to the grid or a building's mains is a stop on the worker's words, lowered to a warn for a qualified role; every claim traced to the two sources listed (R9); engineer to confirm", "evidence": "J-089; the blind evaluation of 2026-11-23 and Ghost's approval in chat, 2026-11-23", "fingerprint": "b211a9c74aee919ea183e06abdb0b1e6d1aaac748b3a877af5c127901ba1d1c0"}
     ]
   }
 ]

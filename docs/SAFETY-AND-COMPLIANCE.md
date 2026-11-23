@@ -107,7 +107,7 @@ removes dangers 3 and 5: no "what's next?" carries a worker past a stop.
 - **Enforced today:** every troubleshooting flow in a pack must end at a stop, the point where the worker goes to the
   supervisor or engineer; `scripts/checks/packs.py` refuses a flow without one, and a procedure step's stop, when
   present, must say something. A stop reply in the leaf must name the safety rule that fired. The safety rules,
-  version 1, are data in the `safety` module (`solarchat/safety/rules.json`, fourteen rules, SR-01 the rule that the
+  version 1, are data in the `safety` module (`solarchat/safety/rules.json`, fifteen rules, SR-01 the rule that the
   site's own safety procedures come first), loaded by `solarchat/safety/rules.py` as the leaf's `SafetyRule`, which
   refuses a rule with no words, triggers or source; `docs/SAFETY-RULES.md` is written from that data and a test keeps
   it current (`test/test_safety.py`). The pack check refuses a pack that names a rule by id or uses one of a short list
@@ -122,13 +122,13 @@ removes dangers 3 and 5: no "what's next?" carries a worker past a stop.
   and words (a warn with the answer, a stop with what to bring the supervisor, an emergency with the rule's words alone),
   the most severe response first and then the lowest id, whatever the answerer said (`test/test_door.py`, step 6).
   **Enforced today (J-079, SC-011):** the door also applies the rules to the worker's own words, this turn's question only,
-  before "I do not know" (so a stop or an emergency is given even when nothing is cited); SR-07, SR-08 and SR-09 read the
+  before "I do not know" (so a stop or an emergency is given even when nothing is cited); SR-07, SR-08, SR-09 and SR-15 read the
   worker's words only (`reads` in `rules.json`), never a passage's text; a warn fired by the words alone is the answer with the warn's words
   before it when a passage is cited, and otherwise an "I do not know" carrying the warn's words (`test/test_door_words.py`).
   **Not enforced today:** a pack's coverage of a rule (1.26); the evaluation set's warn and answer cases still score 0 on
   the offline stub, which cites no passage.
 - **Enforced today (J-034):** each rule answers with a warn, a helpful stop or an emergency,
-  starting cautious (SR-03 at a warn on Ghost's word) and relaxed on Ghost's word, logged as maintainer and confirmed or
+  starting cautious (SR-03 a stop for everyone since J-089, lowered to a warn for the connector sign-off) and relaxed on Ghost's word, logged as maintainer and confirmed or
   reversed by an electrical engineer at the final review (SC-015); each rule keeps a change log of who changed it, in
   what role, why and on what evidence (SC-016); `solarchat/safety/rules.py` refuses a rule with no entry, an entry
   missing a field, a response that is not warn, stop or emergency, and a rule changed since its latest entry (its

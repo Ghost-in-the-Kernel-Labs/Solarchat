@@ -131,14 +131,15 @@ def passage_problems(case: dict, location: str, passage_texts: dict[str, str]) -
 
 # Decision: SC-015 (a stop, an emergency and a warn name a rule whose response is that very word)
 def rule_problems(case: dict, location: str, rules: dict[str, SafetyRule]) -> list[str]:
-    """The faults of the case's rule: absent from rules.json, or whose response is not the case's class.
-    A `warn` case naming SR-02 gives ["case 'a': class warn needs a rule whose response is warn; SR-02's is stop (SC-015)"]."""
+    """The faults of the case's rule: absent from rules.json, or whose response, or a lowering of it (SC-020), is not the
+    case's class. A `warn` case naming SR-04 gives ["case 'a': class warn needs a rule whose response is warn; SR-04's is stop
+    (SC-015)"]; one naming SR-03 stands, for SR-03 is a stop that its connector sign-off lowers to a warn."""
     kind, rule_id = case.get("class"), case.get("rule")
     if kind not in RULE_CLASSES or not isinstance(rule_id, str):
         return []
     if rule_id not in rules:
         return [f"{location}: rule {rule_id!r} is not in rules.json"]
-    if rules[rule_id].response != kind:
+    if kind not in (rules[rule_id].response, *(lowering.response for lowering in rules[rule_id].lowered_for)):
         return [f"{location}: class {kind} needs a rule whose response is {kind}; {rule_id}'s is {rules[rule_id].response} (SC-015)"]
     return []
 

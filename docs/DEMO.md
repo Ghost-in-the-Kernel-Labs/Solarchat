@@ -27,12 +27,14 @@ The `$env:Path` line lasts for that PowerShell window only. The lockfile is buil
 solarchat --demo
 ```
 
-- Role: `new to solar`. Signed off for: `none`. Equipment (after the list of what the packs cover): `Victron SmartSolar 75/10`; expect "Working with: Victron Energy SmartSolar MPPT 75/10 to 100/20".
+- Role: `crew member`. Signed off for: `connector work` (or start with `solarchat --demo --role crew --signed-off connector`). Equipment (after the list of what the packs cover): `Victron SmartSolar 75/10`; expect "Working with: Victron Energy SmartSolar MPPT 75/10 to 100/20".
 - "My panel is plugged into the charge controller but it shows no solar power at all."
 - Answer what it asks, one fact at a time (display on? sunny and unshaded? off switch on?).
 - "I checked the marks. The panel's plus lead is joined to the controller's minus."
 - Expect: "Plus and minus are swapped", the SR-03 warning about not pulling connectors apart under load, then "cover the
   whole panel first".
+- A new worker with no sign-off is stopped here by SR-03: the same question as `new to solar`, signed off for `none`, gets
+  "Stop. Do not part connectors yourself" and the supervisor line instead of the warning.
 
 What it shows: one step at a time, cited to the manuals, with a safety warning at the right moment.
 

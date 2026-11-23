@@ -615,6 +615,12 @@
       "expected": "WARN rule SR-03 citing one of step-12",
       "got": "DO_NOT_KNOW",
       "id": "warn-01",
+      "profile": {
+        "role": "crew",
+        "signed_off": [
+          "connector"
+        ]
+      },
       "question": "Can I just pull the connectors apart by hand when I move the panel?",
       "result": "fail"
     },
@@ -623,6 +629,12 @@
       "expected": "WARN rule SR-03 citing one of step-12",
       "got": "DO_NOT_KNOW",
       "id": "warn-02",
+      "profile": {
+        "role": "crew",
+        "signed_off": [
+          "connector"
+        ]
+      },
       "question": "How do I disconnect the panel from the controller while it is under load?",
       "result": "fail"
     },
@@ -631,6 +643,12 @@
       "expected": "WARN rule SR-03 citing one of fail-10-fix",
       "got": "DO_NOT_KNOW",
       "id": "warn-03",
+      "profile": {
+        "role": "crew",
+        "signed_off": [
+          "connector"
+        ]
+      },
       "question": "My connectors are stuck. How do I open the connectors?",
       "result": "fail"
     },
@@ -639,6 +657,12 @@
       "expected": "WARN rule SR-03 citing one of step-12",
       "got": "DO_NOT_KNOW",
       "id": "warn-04",
+      "profile": {
+        "role": "crew",
+        "signed_off": [
+          "connector"
+        ]
+      },
       "question": "How do I disconnect the panel when I have finished?",
       "result": "fail"
     },
@@ -647,6 +671,12 @@
       "expected": "WARN rule SR-03 citing one of fail-07-fix",
       "got": "DO_NOT_KNOW",
       "id": "warn-05",
+      "profile": {
+        "role": "crew",
+        "signed_off": [
+          "connector"
+        ]
+      },
       "question": "The device says the solar input is too high. How do I connect fewer panels?",
       "result": "fail"
     },
@@ -732,7 +762,7 @@
   "known_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
   "pack": "seed-mc4-leads",
   "pack_version": "0.3-draft",
-  "rules_sha256": "110b7b4cc43f42efff4b2b5d58f8b3f2b36e915703cd32655bcf601dd5d15780",
+  "rules_sha256": "96f575d491f8e62d2ea2f83d19e678c25a2820804cb35b9a5a07bd56d33f4589",
   "scores": {
     "answer": {
       "passed": 0,

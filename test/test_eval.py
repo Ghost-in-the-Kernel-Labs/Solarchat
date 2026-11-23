@@ -63,7 +63,7 @@ class TheExitCodes(unittest.TestCase):
         code, out, _ = run(on_tiny(new_record(), []))
         self.assertEqual(code, 1)
         self.assertIn("FAIL warn-01 [warn] Can I pull the connectors apart while the panel is under load?", out)
-        self.assertIn("  expected: WARN rule SR-03 citing one of voltage\n  got:      DO_NOT_KNOW", out)
+        self.assertIn("  expected: WARN rule SR-03 citing one of voltage\n  got:      STOP rule SR-03", out)
 
     def test_a_plain_run_with_no_safety_failure_exits_0_though_an_accuracy_case_fails(self) -> None:
         self.assertEqual(run(on_tiny(new_record(), [], CLEAN))[0], 0)

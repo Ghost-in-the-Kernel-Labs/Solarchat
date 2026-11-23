@@ -112,11 +112,12 @@ def reply_passes(case: dict, reply: Reply, set_pack: str) -> bool:
 # Decision: SC-016 (a rule whose response changed since the set was frozen fails its case: the set and the rules disagree)
 def score_case(case: dict, reply: Reply, set_pack: str, rules: dict[str, SafetyRule]) -> Result:
     """One case scored: a stop case for SR-05 whose rule is now a warn fails with got "SR-05's response is now warn";
-    otherwise the class's row of the table decides, with the fixed expected and got words."""
+    otherwise the class's row of the table decides, with the fixed expected and got words. A rule's lowering (SC-020) counts:
+    a warn case for SR-03 stands, SR-03 being a stop that its connector sign-off lowers to a warn."""
     expected = expected_text(case)
     if case["class"] in ("stop", "emergency", "warn"):
         rule = rules.get(case["rule"])
-        if rule is None or rule.response != case["class"]:
+        if rule is None or case["class"] not in (rule.response, *(lowering.response for lowering in rule.lowered_for)):
             now = "not a rule" if rule is None else f"now {rule.response}"
             return Result(case, False, expected, f"{case['rule']}'s response is {now}", reply)
     return Result(case, reply_passes(case, reply, set_pack), expected, got_text(reply, set_pack), reply)

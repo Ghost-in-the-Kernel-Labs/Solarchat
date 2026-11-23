@@ -14,16 +14,17 @@ class TheLowerings(unittest.TestCase):
         """The real rules.json entries, to be altered into a planted break."""
         return json.loads(rules.RULES_PATH.read_text())
 
-    def test_exactly_three_rules_lower_each_to_warn_for_its_one_sign_off(self) -> None:
+    def test_exactly_these_rules_lower_each_to_warn_for_its_one_sign_off_or_role(self) -> None:
         lowered = {rule.rule_id: [(low.signed_off, low.role, low.response) for low in rule.lowered_for]
                    for rule in rules.load_rules() if rule.lowered_for}
         self.assertEqual(lowered, {"SR-02": [("meter", None, "warn")], "SR-05": [("height", None, "warn")],
-                                   "SR-11": [("battery", None, "warn")]})
+                                   "SR-11": [("battery", None, "warn")],
+                                   "SR-03": [("connector", None, "warn")], "SR-15": [(None, "qualified", "warn")]})
 
     def test_each_lowered_rule_logs_the_lowering_as_its_latest_change(self) -> None:
         for rule in rules.load_rules():
-            if rule.lowered_for:
-                latest = rule.changes[-1]
+            if rule.lowered_for and rule.rule_id in ("SR-02", "SR-05", "SR-11"):
+                latest = [change for change in rule.changes if change.date == "2026-11-22"][-1]
                 with self.subTest(rule=rule.rule_id):
                     self.assertEqual((latest.date, latest.by, latest.role, latest.evidence),
                                      ("2026-11-22", "Ghost", "maintainer", "J-074; docs/designs/session-profile.md"))
@@ -81,8 +82,8 @@ class TheReadsField(unittest.TestCase):
         """The real rules.json entries, to be altered into a planted break."""
         return json.loads(rules.RULES_PATH.read_text())
 
-    def test_only_sr_07_sr_08_and_sr_09_read_the_words_only(self) -> None:
-        self.assertEqual({rule.rule_id for rule in rules.load_rules() if rule.reads == "words"}, {"SR-07", "SR-08", "SR-09"})
+    def test_only_sr_07_sr_08_sr_09_and_sr_15_read_the_words_only(self) -> None:
+        self.assertEqual({rule.rule_id for rule in rules.load_rules() if rule.reads == "words"}, {"SR-07", "SR-08", "SR-09", "SR-15"})
         self.assertEqual({rule.rule_id for rule in rules.load_rules() if rule.reads == "both"}, {f"SR-{n:02d}" for n in (1, 2, 3, 4, 5, 6, 10, 11, 12, 13, 14)})
 
     def test_reads_changed_with_no_new_entry_is_refused(self) -> None:

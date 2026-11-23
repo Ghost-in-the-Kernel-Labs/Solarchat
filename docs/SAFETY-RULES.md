@@ -26,6 +26,7 @@ Status: a draft for Ghost to read (TODO 1.3 stays open until Ghost has read it).
 - SR-12 Never bypass or switch off a protective device
 - SR-13 A step that disagrees with the maker's instructions or the site's procedures
 - SR-14 When you are unsure
+- SR-15 Connecting to the grid or a building's mains
 
 ## SR-01 The site's own safety procedures and your supervisor come first
 
@@ -75,13 +76,13 @@ Status: a draft for Ghost to read (TODO 1.3 stays open until Ghost has read it).
 
 **The worker is shown:**
 
-> Before you part connectors, make sure no current can flow: turn the isolator off, or cover the whole panel. Then open each pair with the release tool made for it, never by hand. Never pull connectors apart under load: they can spark and burn.
+> Stop. Do not part connectors yourself. Opening a pair needs the panel made safe first and the release tool made for it, and connectors pulled apart under load can spark and burn. Go to your site supervisor or engineer.
 
-**Response:** warn
+**Response:** stop
 
 **Triggers:** `pull connectors apart`, `pull the connectors apart`, `separate the halves`, `open the pairs`, `open the connectors`, `under load`, `disconnect under load`
 
-**Latest change:** 2026-11-21, Ghost (maintainer): A warning lets the walk continue, so the words no longer say Stop or send the worker away; pending engineer review (F-16). Evidence: J-036. Pending engineer.
+**Latest change:** 2026-11-23, Ghost (maintainer): SR-03 made a stop for everyone, lowered to the earlier warn (its words unchanged) for the connector sign-off (SC-020): a new worker with no sign-off must not part connectors; the stop's words say only what the Staubli instructions and OSHA's lockout page support (R1); engineer to confirm. Evidence: J-089; the blind evaluation of 2026-11-23 and Ghost's approval in chat, 2026-11-23. Pending engineer.
 
 **Sources:**
 
@@ -118,9 +119,9 @@ Status: a draft for Ghost to read (TODO 1.3 stays open until Ghost has read it).
 
 **Response:** stop
 
-**Triggers:** `rooftop`, `ladder`, `scaffold`, `at height`, `skylight`, `roof hatch`, `roof edge`, `go up on the roof`, `climb the ladder`, `work at height`, `on the roof edge`
+**Triggers:** `rooftop`, `ladder`, `scaffold`, `at height`, `skylight`, `roof hatch`, `roof edge`, `go up on the roof`, `climb the ladder`, `work at height`, `on the roof edge`, `on the roof`, `onto the roof`, `up on the roof`, `get up there`, `climb up`, `harness`
 
-**Latest change:** 2026-11-22, Ghost (maintainer): SR-05 lowered to warn for a height sign-off (SC-020); engineer to confirm. Evidence: J-074; docs/designs/session-profile.md. Pending engineer.
+**Latest change:** 2026-11-23, Ghost (maintainer): Triggers added: "on the roof", "onto the roof", "up on the roof", "get up there", "climb up", "harness"; none occurs in any pack passage, and the height lowering stays (R2); engineer to confirm. Evidence: J-089; the blind evaluation of 2026-11-23 and Ghost's approval in chat, 2026-11-23. Pending engineer.
 
 **Sources:**
 
@@ -195,20 +196,21 @@ Status: a draft for Ghost to read (TODO 1.3 stays open until Ghost has read it).
 
 **The worker is shown:**
 
-> Stop. Do not touch the frames, panels or boxes. A fault may have made metal live. If someone has had a shock, call for help and first aid at once, switch off the power if you can do it safely, and do not touch them while they may still be touching it. Go to your site supervisor or engineer.
+> Stop. Do not touch the frames, panels or boxes. A fault may have made metal live. If someone has had a shock, call for help and first aid at once, switch off the power if you can do it safely, and do not touch them while they may still be touching it. Go to your site supervisor or engineer. If you had the shock yourself, get medical attention even if you feel fine.
 
 **Response:** emergency
 
 **Triggers:** `earth fault`, `ground fault`, `insulation fault`, `isolation fault`, `insulation resistance`, `earth leakage`, `gfdi`, `tingle`, `electric shock`, `got a shock`, `loose earth`, `missing earth`
 
-**Latest change:** 2026-11-22, Ghost (maintainer): The rule fires on the worker's words only, never on a passage's text; engineer to confirm. Evidence: J-079; docs/designs/worker-words.md. Pending engineer.
+**Latest change:** 2026-11-23, Ghost (maintainer): One sentence appended to the words: if you had the shock yourself, get medical attention even if you feel fine, trimmed to what the added source states; response, triggers and the rest of the words unchanged (R13); engineer to confirm. Evidence: J-089; the blind evaluation of 2026-11-23 and Ghost's approval in chat, 2026-11-23. Pending engineer.
 
 **Sources:**
 
 - [Fluke: What is a DC ground fault in a PV system?](https://www.fluke.com/en-gb/learn/blog/renewable-energy/what-is-a-dc-ground-fault-in-a-pv-system)
 - [OSHA: Green Job Hazards, Solar Energy, Electrical (shock and burns when connecting panels)](https://www.osha.gov/green-jobs/solar/electrical)
+- [Better Health Channel (Victoria, Australia): Electric shock (a person who has had a shock may appear unharmed but should still receive medical attention)](https://www.betterhealth.vic.gov.au/health/healthyliving/electric-shock)
 
-**Engineer to confirm:** The first-aid sentence (call for help, do not touch a person who may still be touching something live) is common first-aid practice but none of the sources above states it; the site's own first-aid arrangements apply. Keep, reword or source it. The same goes for SR-08's line to follow the site's emergency procedure on fire or smoke.
+**Engineer to confirm:** The first-aid sentence (call for help, do not touch a person who may still be touching something live) is common first-aid practice but none of the sources above states it; the site's own first-aid arrangements apply. Keep, reword or source it. The same goes for SR-08's line to follow the site's emergency procedure on fire or smoke. The last sentence (J-089, R13), medical attention for the person who had the shock themselves, is sourced to the Better Health Channel page for that clause only; Ghost's wording also said to stop work, step away, not touch it again and tell the supervisor, and no page fetched for J-089 states those, so they were left out (the rule's first words already say Stop and go to the supervisor).
 
 ## SR-10 A voltage above what a device is rated for
 
@@ -304,3 +306,24 @@ Status: a draft for Ghost to read (TODO 1.3 stays open until Ghost has read it).
 
 - [HSE: Electrical safety at work, frequently asked questions (competence for the specific work)](https://www.hse.gov.uk/electricity/faq.htm)
 - [OSHA: Green Job Hazards, Solar Energy](https://www.osha.gov/green-jobs/solar)
+
+## SR-15 Connecting to the grid or a building's mains
+
+**When it applies:** The worker asks to connect solar to the grid or to a building's mains supply, or to feed power in or net meter. This is work for a licensed electrician and usually needs the network operator's permission before it is connected.
+
+**The worker is shown:**
+
+> Stop. Connecting solar to the grid or a building's mains is work for a licensed electrician, and usually needs the network operator's permission. Do not do it. Go to your site supervisor or engineer.
+
+**Response:** stop
+
+**Triggers:** `to the grid`, `grid tie`, `grid-tie`, `grid-tied`, `feed in`, `net meter`, `net metering`, `to the mains`, `into the mains`
+
+**Latest change:** 2026-11-23, Ghost (maintainer): New rule: connecting to the grid or a building's mains is a stop on the worker's words, lowered to a warn for a qualified role; every claim traced to the two sources listed (R9); engineer to confirm. Evidence: J-089; the blind evaluation of 2026-11-23 and Ghost's approval in chat, 2026-11-23. Pending engineer.
+
+**Sources:**
+
+- [NSW Government: Guide to solar panels (installation must be by a licensed builder or licensed electrical contractor; you must get approval from the electricity network owner before connecting your solar system to the grid)](https://www.nsw.gov.au/housing-and-construction/building-or-renovating-a-home/during-building-process/guide-to-solar-panels)
+- [Welsh Government: Connecting on-site generation to the grid, technical note (distribution network operators must authorise all installation of generating stations and battery storage systems)](https://www.gov.wales/connecting-site-generation-grid-technical-note-html)
+
+**Engineer to confirm:** Both sources are government pages from New South Wales and Wales, not from the country the pilot runs in. The claims are by country: a licensed electrician (NSW), the network operator's permission (NSW; Wales), and the words say usually because a small UK system may only need notice, not prior permission. Replace them with the national regulator's and network operator's pages for the pilot's country, and confirm who counts as licensed there.

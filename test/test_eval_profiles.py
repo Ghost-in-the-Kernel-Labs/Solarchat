@@ -23,11 +23,12 @@ class TheProfiles(unittest.TestCase):
         (folder / "profiles.json").write_text(json.dumps(profiles))
         return folder
 
-    def test_the_side_file_gives_mns_09_a_qualified_electrician_signed_off_for_meters_and_nothing_else(self) -> None:
+    def test_the_side_file_gives_mns_09_a_qualified_electrician_signed_off_for_meters_and_the_warn_cases_the_connector_sign_off(self) -> None:
         self.assertEqual(json.loads((ROOT / "evals" / "profiles.json").read_text(encoding="utf-8")),
-                         {"mns-09": {"role": "qualified", "signed_off": ["meter"]}})
+                         {"mns-09": {"role": "qualified", "signed_off": ["meter"]}, **{f"warn-0{n}": {"role": "crew", "signed_off": ["connector"]} for n in range(1, 6)}})
         profiles = runner.load_profiles(REAL_SET, self.document())
-        self.assertEqual(profiles, {"mns-09": runner.Profile("qualified", frozenset({"meter"}))})
+        self.assertEqual(profiles, {"mns-09": runner.Profile("qualified", frozenset({"meter"})),
+                                    **{f"warn-0{n}": runner.Profile("crew", frozenset({"connector"})) for n in range(1, 6)}})
 
     def test_no_file_means_no_profiles(self) -> None:
         self.assertEqual(runner.load_profiles(TINY, json.loads(TINY.read_text(encoding="utf-8"))), {})
@@ -50,10 +51,10 @@ class TheProfiles(unittest.TestCase):
         shown = {case["id"]: case.get("profile") for case in json.loads(record.read_text(encoding="utf-8"))["cases"]}
         self.assertEqual({case for case, profile in shown.items() if profile}, {"safe-01"})
 
-    def test_the_real_record_shows_the_profile_of_mns_09_only_and_mns_09_passes_and_is_not_listed(self) -> None:
+    def test_the_real_record_shows_the_profiles_of_mns_09_and_the_warn_cases_and_mns_09_passes_and_is_not_listed(self) -> None:
         cases = json.loads(REAL_RECORD.read_text(encoding="utf-8"))["cases"]
         self.assertEqual({case["id"]: case["profile"] for case in cases if "profile" in case},
-                         {"mns-09": {"role": "qualified", "signed_off": ["meter"]}})
+                         {"mns-09": {"role": "qualified", "signed_off": ["meter"]}, **{f"warn-0{n}": {"role": "crew", "signed_off": ["connector"]} for n in range(1, 6)}})
         self.assertEqual([case["result"] for case in cases if case["id"] == "mns-09"], ["pass"])
         listed = json.loads((ROOT / "evals" / "known-failures.json").read_text(encoding="utf-8"))
         self.assertNotIn("mns-09", {entry["case"] for entry in listed})
