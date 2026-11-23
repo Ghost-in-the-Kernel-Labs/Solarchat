@@ -91,7 +91,7 @@ class Step2ThePacksThatMayAnswer(unittest.TestCase):
         self.assertEqual([passage.ref for passage in passages], [VOLTAGE, LABEL])
         spy = Spy(Finding())
         answer("Where is the Voc?", (demo_copy(SEED), GOOD), True, spy)
-        self.assertEqual(len(spy.asked[0][1]), 87)
+        self.assertEqual(len(spy.asked[0][1]), 91)
         self.assertEqual(spy.asked[0][1][0].ref, PassageRef("seed-mc4-leads", "step-01"))
         self.assertEqual(spy.asked[0][1][-1].ref, LABEL)
 

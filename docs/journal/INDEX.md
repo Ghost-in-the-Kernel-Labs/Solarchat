@@ -83,3 +83,4 @@ Written from `docs/journal/` by `scripts/journal_index.py`; do not edit by hand.
 | J-077 | The session profile and three lowerings built: slice 1 of SC-020 (TODO 1.10's first step) | feature | `J-000-099.md` |
 | J-078 | The two questions and the explanation built: slice 2 of SC-020 (TODO 1.10's first step) | feature | `J-000-099.md` |
 | J-079 | The safety rules on the worker's own words built (TODO 1.10, the words step) | feature | `J-000-099.md` |
+| J-080 | Seed pack: battery-wiring passages from Victron's installation chapter, version 0.3-draft | feature | `J-000-099.md` |

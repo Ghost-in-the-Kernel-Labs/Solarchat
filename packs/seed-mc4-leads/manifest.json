@@ -2,7 +2,7 @@
   "id": "seed-mc4-leads",
   "title": "Connecting a solar panel by its MC4 leads",
   "installation_type": "crystalline-panel-mc4-leads",
-  "version": "0.2-draft",
+  "version": "0.3-draft",
   "status": "demo",
   "language": "en",
   "sources": [
@@ -103,6 +103,17 @@
       "licence": "not stated (cited as a source of fact only)",
       "licence_url": null,
       "retrieved": "2026-11-20",
+      "reached": true
+    },
+    {
+      "id": "S10",
+      "title": "MPPT solar charger manual (PDF, multilingual), English chapter 4: Installation",
+      "kind": "document",
+      "publisher": "Victron Energy",
+      "url": "https://www.victronenergy.com/upload/documents/Manual_SmartSolar_MPPT_75-10_up_to_100-20/29694-MPPT_solar_charger_manual-pdf.pdf",
+      "licence": "not stated (cited as a source of fact only)",
+      "licence_url": null,
+      "retrieved": "2026-11-23",
       "reached": true
     }
   ],

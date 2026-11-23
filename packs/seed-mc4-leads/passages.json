@@ -1359,5 +1359,49 @@
       },
       "S9"
     ]
+  },
+  {
+    "id": "battery-terminals",
+    "title": "Charge controller: the battery terminals",
+    "text": "On this Victron controller the battery connects to two screw terminals. One is the battery positive (+) screw terminal and the other is the battery negative (-) screw terminal. The battery's positive (+) cable goes to the battery positive (+) terminal and its negative (-) cable to the battery negative (-) terminal; check the polarity before you connect. The panel (PV) and the DC loads each have their own pair of screw terminals, marked positive (+) and negative (-) in the same way, so do not mix them up with the battery terminals. The manual's connection overview names the terminals but does not say what colour they are.",
+    "sources": [
+      {
+        "source": "S10",
+        "page": "13"
+      }
+    ]
+  },
+  {
+    "id": "battery-connect",
+    "title": "Charge controller: connect the battery first",
+    "text": "Connect the battery to the controller first. Check the polarity before you connect the battery. Then wait 10 seconds so the controller can recognise the system voltage by itself. The DC loads go on next and the panel (PV) after them. Connecting in this order is needed for the controller to recognise the voltage properly. The manual says that not following the right order can disable or damage the controller or the installation.",
+    "sources": [
+      {
+        "source": "S10",
+        "page": "13"
+      }
+    ]
+  },
+  {
+    "id": "battery-torque",
+    "title": "Charge controller: tighten the battery terminals",
+    "text": "Tighten the battery terminals, and the load and panel (PV) terminals, to 0.75 Nm. The manual says to use flexible multi-stranded copper cable for the battery connections.",
+    "sources": [
+      {
+        "source": "S10",
+        "page": "13"
+      }
+    ]
+  },
+  {
+    "id": "battery-fuse",
+    "title": "Charge controller: the battery needs a fuse",
+    "text": "The battery supply to the controller must be protected by a fuse, even if the controller already has an external fuse. The fuse size depends on the controller: MPPT 75/10, 15 A to 20 A; MPPT 75/15 and 100/15, 20 A to 25 A; MPPT 100/20, 25 A to 30 A. These are the smallest and largest fuse the manual allows.",
+    "sources": [
+      {
+        "source": "S10",
+        "page": "11"
+      }
+    ]
   }
 ]
