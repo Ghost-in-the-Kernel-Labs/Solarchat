@@ -160,7 +160,7 @@ class TheResponses(unittest.TestCase):
                 self.assertEqual(response, "emergency" if rule_id in EMERGENCY_RULES else "stop")
 
     def test_sr_03_logs_ghosts_warn_then_the_stop_for_everyone_as_maintainer_and_pending_review(self) -> None:
-        warn_entry, words_entry, stop_entry = rules.load_rules()[2].changes[-3:]
+        warn_entry, words_entry, stop_entry = rules.load_rules()[2].changes[-4:-1]  # the last entry is SC-028's holds
         self.assertEqual((warn_entry.by, warn_entry.role), ("Ghost", "maintainer"))
         self.assertEqual(warn_entry.why, "connecting is daily work; parting under load is the hazard; pending engineer review")
         self.assertEqual((words_entry.by, words_entry.role, words_entry.evidence), ("Ghost", "maintainer", "J-036"))
@@ -190,6 +190,8 @@ class TheChangeLog(unittest.TestCase):
                                               "words": low.words} for low in rule.lowered_for]
                 if rule.reads != "both":  # TODO 1.10: a rule that reads the words only has it in its fingerprint
                     fields["reads"] = rule.reads
+                if rule.holds:  # SC-028: a rule with topic words has them in its fingerprint; the others keep theirs
+                    fields["holds"] = list(rule.holds)
                 canonical = json.dumps(fields, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
                 self.assertEqual(rule.changes[-1].fingerprint, hashlib.sha256(canonical.encode("utf-8")).hexdigest())
                 self.assertEqual(rules.rule_fingerprint(rule), rule.changes[-1].fingerprint)

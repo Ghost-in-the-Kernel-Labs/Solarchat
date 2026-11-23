@@ -6,6 +6,7 @@ answerer. Step 6 of the design, the safety rules in the answer (TODO 1.9), is he
 rule gives that rule's response and words, whatever the answerer said; so does a rule fired by this turn's question
 (TODO 1.10), before "I do not know" (a rule that reads the words only fires on the question only). Standard library, the leaf, the packs module and the safety module only.
 """
+import re
 from dataclasses import replace
 
 from solarchat.leaf.contract import (DEFAULT_PROFILE, DEMO_BANNER, MAX_CITED_PASSAGES, SAFETY_RESPONSES, Answerer, Finding,
@@ -134,6 +135,21 @@ def safety_reply(hit: Hit, finding: Finding | None, places: dict[PassageRef, tup
     if finding is None:
         return do_not_know(f"{rule.words_shown}\n\n{DO_NOT_KNOW_TEXT}")
     return Reply(ReplyKind.WARN, f"{rule.words_shown}\n\n{answer_body(finding, places)}", finding.refs, rule.rule_id)
+
+
+STILL_STOPPED = "This is still stopped for you."
+ASK_OTHER = "Is there something else I can help with?"
+SENTENCE_END = re.compile(r"(?<=[.!?])\s+")
+
+
+# Decision: SC-028 (a held stop is the rule's stop again, short: STOP, naming the rule and no passage, HAD-03)
+def held_stop(rule: SafetyRule, demo_mode: bool) -> Reply:
+    """The reply for a topic a stop still holds: for SR-11 a STOP naming "SR-11" and no passage whose text is "This is still
+    stopped for you. Go to your site supervisor or engineer. Is there something else I can help with?", a blank line and "What
+    to bring your supervisor: rule SR-11" (the middle sentence is the rule's own last sentence); the banner first in demo mode."""
+    last = SENTENCE_END.split(rule.words_shown.strip())[-1]
+    text = f"{STILL_STOPPED} {last} {ASK_OTHER}\n\n{stop_note(rule, None, None)}"
+    return with_banner(Reply(ReplyKind.STOP, text, (), rule.rule_id), demo_mode)
 
 
 # Decision: SC-019 (one door, an answerer passed in; the steps in order, each returning at once when it gives a reply)

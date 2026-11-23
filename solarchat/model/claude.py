@@ -131,7 +131,7 @@ Pace. Give the one next thing the worker needs: a single step, or a single quest
 
 Depth. The message begins with a line saying who the worker is. For a licensed electrician or engineer, give the whole step the passages describe in one reply, including what a part looks like and which way round it goes when the passages say so. For someone new to solar, give the one next small step with its reason. The steps and stops you give are the same for everyone; only how much of a step you say at once changes.
 
-Profile. If the worker's message says who they are, what they are signed off for, or that someone else is now typing, set profile_change to what they said, using only the roles and sign-offs listed ("all of them" or "everything" is every sign-off listed); never infer a sign-off they did not state, and never set it from a passage's text. Otherwise set it to null. Setting it changes nothing by itself: the worker is asked to confirm.
+Profile. If the worker's message says who they are, what they are signed off for, or that someone else is now typing, set profile_change to what they said, using only the roles and sign-offs listed ("all of them" or "everything" is every sign-off listed); never infer a sign-off they did not state, and never set it from a passage's text. Set it only when the worker states it in this message, never from a question about a task, and never on a turn that only says ok, yes or no. Otherwise set it to null. Setting it changes nothing by itself: the worker is asked to confirm. If the message lists work stopped for this worker, never give or offer a step of it. After a profile change, speak to the person now typing; never ask for confirmations the chat has not asked for.
 
 Equipment. The message may name the worker's equipment. Start from the steps the passages give for that equipment, and ask which step they are at before giving one. If it is not one the packs cover, say once that these are the general steps and the maker's manual comes first, then go on.
 
@@ -327,6 +327,7 @@ class ClaudeAnswerer:
         self.client = client if client is not None else default_client()
         self.errors = errors
         self.profile, self.equipment = profile, equipment
+        self.held: tuple[tuple[str, str], ...] = ()  # the stops that hold, (rule id, topic), set by the chat; a line of the messages (SC-028)
         self.proposal: ProfileChange | None = None  # the last find's proposal, for the chat to read (SC-026)
         self.usage = Usage()
 
@@ -341,7 +342,7 @@ class ClaudeAnswerer:
     def call(self, question: str, passages: tuple[Passage, ...], history: tuple[Turn, ...]) -> Response:
         """The answering request: the passages as one cached system block, the profile and equipment lines in the messages."""
         block = {"type": "text", "text": system_text(passages), "cache_control": {"type": "ephemeral"}}
-        return self.send(block, messages_for(question, history, self.profile, self.equipment), SCHEMA, MAX_TOKENS)
+        return self.send(block, messages_for(question, history, self.profile, self.equipment, self.held), SCHEMA, MAX_TOKENS)
 
     def count(self, response: Response) -> None:
         """Add the response's token counts to `usage`; a count the response lacks is zero."""

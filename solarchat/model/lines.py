@@ -29,11 +29,23 @@ def equipment_line(equipment: tuple[Equipment, ...] | None) -> str:
     return f"The equipment: {named}." if equipment else "The equipment: not one the packs cover."
 
 
+# Decision: SC-028 (the held stops go in the messages beside the profile line, so the cached system block never varies with them)
+def held_line(held: tuple[tuple[str, str], ...]) -> str:
+    """What the answerer is told of the stops that hold: () gives ""; (("SR-11", "batteries"),) gives "Stopped for this worker:
+    batteries (SR-11). Do not give or offer any step of that work; if it comes up, say it is stopped and they should go to
+    their supervisor."; several are joined by "; "."""
+    if not held:
+        return ""
+    named = "; ".join(f"{name} ({rule_id})" for rule_id, name in held)
+    return (f"Stopped for this worker: {named}. Do not give or offer any step of that work; if it comes up, say it is stopped "
+            "and they should go to their supervisor.")
+
+
 def messages_for(question: str, history: tuple[Turn, ...], profile: Profile | None = None,
-                 equipment: tuple[Equipment, ...] | None = None) -> list[dict[str, str]]:
+                 equipment: tuple[Equipment, ...] | None = None, held: tuple[tuple[str, str], ...] = ()) -> list[dict[str, str]]:
     """The conversation as the API takes it: the history, then the new question as the last user turn, which begins with
-    the profile's line and the equipment's line when there are any (never the system block, SC-020, SC-027):
-    messages_for("Next?", (Turn("user", "Hi"),)) gives two messages."""
+    the profile's line, the equipment's line and the held stops' line when there are any (never the system block, SC-020,
+    SC-027, SC-028): messages_for("Next?", (Turn("user", "Hi"),)) gives two messages."""
     turns = [{"role": turn.role, "content": turn.text} for turn in history]
-    lines = [line for line in (profile_line(profile) if profile is not None else "", equipment_line(equipment)) if line]
+    lines = [line for line in (profile_line(profile) if profile is not None else "", equipment_line(equipment), held_line(held)) if line]
     return turns + [{"role": "user", "content": "\n".join(lines) + "\n\n" + question if lines else question}]

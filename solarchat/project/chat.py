@@ -4,12 +4,10 @@ Each reply is the door's: the words, the passages' titles with each source's tit
 mode; a warn or a stop also shows its rule's words. Ctrl-D or "quit" ends it. The orchestrator: it may call the answer,
 model, packs and safety modules, so the command line holds no logic (MOD-02). Decision: SC-019 (amended 2026-11-21).
 """
-import difflib
-import re
 from pathlib import Path
 from typing import Protocol, TextIO
 
-from solarchat.answer.door import answer
+from solarchat.answer.door import STILL_STOPPED, answer
 from solarchat.answer.stub import NoAnswer
 from solarchat.leaf.contract import (DEFAULT_PROFILE, DEMO_BANNER, PROFILE_ROLES, PROFILE_SIGN_OFFS, SAFETY_RESPONSES, Answerer, Profile, Reply,
                                      ReplyKind, Turn, may_answer)
@@ -17,6 +15,9 @@ from solarchat.model.claude import DEFAULT_MODEL, MODELS, ClaudeAnswerer, ModelE
 from solarchat.packs.load import Pack, load_pack
 from solarchat.project.intake import equipment_of, parse_option, run_intake
 from solarchat.project.keys import ensure_key
+from solarchat.project.holds import enforce_holds, held_names, kept_holds, stop_shown
+from solarchat.project.proposal import checked_proposal
+from solarchat.project.reading import asks_instead, read_role, read_signed_off, read_yes, word_matches  # noqa: F401  (moved out for the line limit; still read from here)
 from solarchat.project.speech import Speaker
 from solarchat.safety.rules import load_rules
 
@@ -49,8 +50,8 @@ class ProfileChange(Protocol):
     new_person: bool
 
 
-YES_WORDS = ("yes", "y", "yeah", "yep", "correct", "confirm")
-NO_WORDS = ("no", "n", "nope", "not", "dont")
+SWITCH_REMINDER = "Only switch if your supervisor has signed you off for this on this site."
+KEPT_PROFILE = "Kept your profile as it was."
 NEW_PERSON_LINE = "Someone new is typing: two quick questions."
 CHANGED = "Profile changed: "
 GO_AHEAD = "Go ahead: what do you need?"
@@ -87,11 +88,11 @@ def rule_words(reply: Reply, profile: Profile = DEFAULT_PROFILE) -> str:
 
 def with_rule(reply: Reply, text: str, profile: Profile = DEFAULT_PROFILE) -> str:
     """`text` under the rule's heading: the door puts the rule's words inside the reply text since 1.9, so then only the
-    label ("Safety rule SR-03") goes above it; a reply recorded without them keeps "Safety rule SR-03: <words>" above."""
+    label ("Safety rule SR-03") goes above it, and so does a held stop's short text (SC-028); a reply recorded without them keeps "Safety rule SR-03: <words>" above."""
     label, words = rule_label(reply, profile)
     if not label:
         return text
-    return f"{label}\n\n{text}" if not words or words in text else f"{rule_words(reply, profile)}\n\n{text}"
+    return f"{label}\n\n{text}" if not words or words in text or STILL_STOPPED in text else f"{rule_words(reply, profile)}\n\n{text}"
 
 
 def render(reply: Reply, profile: Profile = DEFAULT_PROFILE) -> str:
@@ -104,41 +105,6 @@ def spoken_aloud(reply: Reply, profile: Profile = DEFAULT_PROFILE) -> str:
     """What --voice reads aloud for a reply: the rule's label first for a warn or a stop, then the reply's words once,
     never the banner or the "From:" lines (the banner is spoken once, at the start)."""
     return with_rule(reply, spoken(reply), profile)
-
-
-def word_matches(word: str, vocabulary: list[str]) -> str | None:
-    """The vocabulary word a spoken or typed word stands for, or None: "crewmember" gives "crew" (it starts with it), "eletrician"
-    gives "electrician" (a close spelling, only for words of 6 letters or more); "now" gives None, never "new"."""
-    for known in vocabulary:
-        if word.startswith(known):
-            return known
-    close = difflib.get_close_matches(word, vocabulary, n=1, cutoff=0.8) if len(word) >= 6 else []
-    return close[0] if close else None
-
-
-# Decision: SC-020 (the answers are read by plain word matching, never by the model; the safest reading wins when words clash)
-def read_role(text: str) -> str | None:
-    """The role an answer names, or None: "I'm the site engineer" gives "qualified", "crewmember" gives "crew", "new to solar"
-    gives "new", "licenssed eletrician" gives "qualified", "cew member" gives "crew" ("member" says crew); an answer with several (new before crew before engineer) gives
-    the one with the least say; no role word ("now", "the boss") gives None."""
-    roles = {"new": "new", "crew": "crew", "member": "crew", "electrician": "qualified", "engineer": "qualified", "licensed": "qualified",
-             "qualified": "qualified"}
-    found = {roles[known] for word in re.findall(r"[a-z]+", text.lower()) if (known := word_matches(word, list(roles)))}
-    return next((role for role in ("new", "crew", "qualified") if role in found), None)
-
-
-def read_signed_off(text: str) -> frozenset[str]:
-    """The sign-offs an answer names: "battery and meter" gives {"battery", "meter"}, "baterry" gives {"battery"}, "all of these"
-    or "everything" gives all four; "none" or "not" or "except" or "but" anywhere, or nothing known, gives the empty set
-    (fewer sign-offs is the safe reading, so "all except height" signs off nothing and the said-back line lets them restart)."""
-    words = re.findall(r"[a-z]+", text.lower())
-    if {"none", "not", "except", "but"} & set(words):
-        return frozenset()
-    if {"all", "every", "everything"} & set(words):
-        return frozenset(PROFILE_SIGN_OFFS)
-    signs = {"meter": "meter", "connector": "connector", "battery": "battery", "batteries": "battery", "controller": "battery",
-             "height": "height", "roof": "height"}
-    return frozenset(signs[known] for word in words if (known := word_matches(word, list(signs))))
 
 
 def parse_signed_off(text: str) -> frozenset[str]:
@@ -191,13 +157,6 @@ def ask_profile(stdin: TextIO, stdout: TextIO, speaker: Speaker | None = None, r
     return profile
 
 
-# Decision: SC-026 (a yes is read by word matching, never by the model; anything but a clear yes is a no)
-def read_yes(text: str) -> bool:
-    """Whether an answer is a yes: "yes" and "Yeah, confirm" are; "no", "maybe", "" and "yes, no" are not (a no word wins)."""
-    words = set(re.findall(r"[a-z]+", text.lower().replace("'", "")))
-    return bool(words & set(YES_WORDS)) and not words & set(NO_WORDS)
-
-
 def applied(profile: Profile, change: ProfileChange) -> Profile:
     """The profile once the change is made: Profile("new", {}) with ProfileChange("crew", {"meter"}) is a crew member signed
     off for meter tests; a sign-off both held and removed is gone."""
@@ -214,11 +173,13 @@ def gives_more_say(profile: Profile, change: ProfileChange) -> bool:
 
 # Decision: SC-026 (the model proposes; more say is applied only on the person's yes, less say at once, a new person re-asks)
 def settle_proposal(change: ProfileChange, profile: Profile, declined: set[tuple[str | None, frozenset[str]]], stdin: TextIO,
-                    stdout: TextIO, speaker: Speaker | None) -> Profile | None:
+                    stdout: TextIO, speaker: Speaker | None, leftover: list[str] | None = None) -> Profile | None:
     """The profile after a proposal, or None when the person kept the old one (the held reply is then shown as it is):
     "no" or a proposal already declined gives None; less say, or "yes", gives the changed profile; someone new typing asks
     both opening questions and gives their answers whole. One question at most. A declined (role, add) is remembered in
-    `declined`: ProfileChange("qualified", {"battery"}) answered "no" is not asked again this session."""
+    `declined`: ProfileChange("qualified", {"battery"}) answered "no" is not asked again this session. The question carries a
+    reminder ("Only switch if your supervisor has signed you off for this on this site."), and an answer that is a next question
+    (SC-028: "Can I use a bigger fuse on the string?") is a no whose words are added to `leftover`, to be answered."""
     if change.new_person:
         stdout.write(NEW_PERSON_LINE + "\n")
         if speaker:
@@ -232,9 +193,12 @@ def settle_proposal(change: ProfileChange, profile: Profile, declined: set[tuple
     if key in declined:
         return None
     said = profile_said_back(after).removeprefix("You are ").rstrip(".")
-    if read_yes(ask(f"You said you are {said}. Switch to that? yes or no", stdin, stdout, speaker)):
+    typed = ask(f"You said you are {said}. {SWITCH_REMINDER} Switch to that? yes or no", stdin, stdout, speaker)
+    if read_yes(typed):
         return after
     declined.add(key)
+    if leftover is not None and asks_instead(typed):
+        leftover.append(typed)
     return None
 
 
@@ -255,16 +219,42 @@ def load_chat_pack(folder: str, demo: bool) -> Pack:
     return pack
 
 
+def tell_answerer(answerer: Answerer, held: set[str]) -> None:
+    """Give a real answerer the stops that hold, for the held line of its next call (never the system block, SC-028)."""
+    if isinstance(answerer, ClaudeAnswerer):
+        answerer.held = held_names(held, load_rules())
+
+
+# Decision: SC-028 (a stop holds for the conversation; the proposal is checked against what was said; a question at the prompt is kept)
 def converse(pack: Pack, demo: bool, answerer: Answerer, stdin: TextIO, stdout: TextIO, stderr: TextIO,
              speaker: Speaker | None = None, profile: Profile = DEFAULT_PROFILE) -> None:
     """The loop: read a line, answer it with the history so far, print the reply, keep both turns. A line of "quit", or the
     end of input, ends it; a blank line is skipped; a model that cannot be used is told in words and the turn is not kept.
     With a speaker each reply is shown, then spoken before the next prompt. The profile goes to the door with every question.
-    A profile change the answerer proposes (SC-026) is settled before the reply is shown: "I'm the site electrician, signed off
-    for battery wiring" asks "Switch to that? yes or no", and on yes prints "Profile changed: You are a licensed electrician or
-    engineer, signed off for battery and controller wiring." and answers the turn again under it; on no it shows the held reply."""
+    A profile change the answerer proposes (SC-026) is kept only where the worker's message says it (SC-028), never on the first
+    turn or the turn after a change, then settled before the reply is shown: "I'm the site electrician, signed off for battery
+    wiring" asks "... Switch to that? yes or no", and on yes prints "Profile changed: You are a licensed electrician or engineer,
+    signed off for battery and controller wiring." and answers the turn again under it; on no it shows the held reply, and a
+    question typed instead of a yes or no is answered after "Kept your profile as it was.". A stop shown is held: a later reply
+    that names its topic is the held stop again, until a change lowers the rule or someone new types."""
     history: list[Turn] = []
     declined: set[tuple[str | None, frozenset[str]]] = set()
+    held: set[str] = set()
+    rules = load_rules()
+    fresh = True  # the first turn, and the turn after a profile change, act on no proposal
+
+    def show(question: str, reply: Reply, notes: list[Turn]) -> None:
+        """Print and speak a reply, hold its stop, and keep the turn."""
+        stdout.write(render(reply, profile) + "\n\n")
+        if speaker:
+            stdout.flush()
+            speaker.say(spoken_aloud(reply, profile))
+        stopped = stop_shown(reply, rules)
+        if stopped:
+            held.add(stopped)
+            tell_answerer(answerer, held)
+        history.extend([Turn("user", question), *notes, Turn("assistant", spoken(reply))])
+
     while True:
         stdout.write(PROMPT)
         stdout.flush()
@@ -281,12 +271,16 @@ def converse(pack: Pack, demo: bool, answerer: Answerer, stdin: TextIO, stdout: 
             stderr.write(f"Sorry: {problem}\n")
             continue
         notes: list[Turn] = []
-        change = getattr(answerer, "proposal", None)
-        changed = settle_proposal(change, profile, declined, stdin, stdout, speaker) if change else None
+        proposed = getattr(answerer, "proposal", None)
+        change = None if fresh or not proposed else checked_proposal(proposed, question, profile)
+        fresh, leftover = False, []
+        changed = settle_proposal(change, profile, declined, stdin, stdout, speaker, leftover) if change else None
         if changed is not None and (changed != profile or change.new_person):  # a new person gets the turn again even if the same
-            profile = changed
+            held &= kept_holds(held, changed, rules, change.new_person)
+            profile, fresh = changed, True
             if isinstance(answerer, ClaudeAnswerer):
                 answerer.profile = profile  # the profile line of the next call, never the system block (SC-020)
+            tell_answerer(answerer, held)
             line = CHANGED + profile_said_back(profile)
             try:
                 reply = answer(question, (pack,), demo, answerer, tuple(history), profile)  # the same question, the new profile
@@ -298,6 +292,7 @@ def converse(pack: Pack, demo: bool, answerer: Answerer, stdin: TextIO, stdout: 
                 stdout.flush()
                 speaker.say(line)
             notes = [Turn("assistant", line)]
+            reply = enforce_holds(reply, held, question, pack, demo, rules)
             if reply.kind is ReplyKind.DO_NOT_KNOW:  # "she's taking over" or "I am signed off for all" asks nothing: invite it
                 stdout.write(GO_AHEAD + "\n\n")
                 if speaker:
@@ -305,11 +300,18 @@ def converse(pack: Pack, demo: bool, answerer: Answerer, stdin: TextIO, stdout: 
                     speaker.say(GO_AHEAD)
                 history += [Turn("user", question), *notes, Turn("assistant", GO_AHEAD)]
                 continue
-        stdout.write(render(reply, profile) + "\n\n")
-        if speaker:
-            stdout.flush()
-            speaker.say(spoken_aloud(reply, profile))
-        history += [Turn("user", question), *notes, Turn("assistant", spoken(reply))]
+        show(question, enforce_holds(reply, held, question, pack, demo, rules), notes)
+        if leftover:  # the question typed at the prompt: one more answer, in this same turn
+            stdout.write(KEPT_PROFILE + "\n\n")
+            if speaker:
+                stdout.flush()
+                speaker.say(KEPT_PROFILE)
+            try:
+                reply = answer(leftover[0], (pack,), demo, answerer, tuple(history), profile)
+            except ModelError as problem:
+                stderr.write(f"Sorry: {problem}\n")
+                continue
+            show(leftover[0], enforce_holds(reply, held, leftover[0], pack, demo, rules), [])
 
 
 def start_chat(pack_folder: str, demo: bool, answerer_name: str, stdin: TextIO, stdout: TextIO, stderr: TextIO,

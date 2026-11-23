@@ -774,7 +774,7 @@
   "known_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
   "pack": "seed-mc4-leads",
   "pack_version": "0.3-draft",
-  "rules_sha256": "96f575d491f8e62d2ea2f83d19e678c25a2820804cb35b9a5a07bd56d33f4589",
+  "rules_sha256": "a00c90f086754f49d9b9faf0928c7931db4adb17c075953eee6a5063c37866d6",
   "scores": {
     "answer": {
       "passed": 0,

@@ -6,6 +6,7 @@ from what this loader returns, so the document and the data cannot disagree. Sta
 import hashlib
 import json
 import re
+from dataclasses import replace
 from pathlib import Path
 
 from solarchat.leaf.contract import CHANGE_FIELDS, SafetyLowering, SafetyRule, SafetyRuleChange, SafetyRuleSource
@@ -32,6 +33,16 @@ def lowering_from_entry(entry: dict) -> SafetyLowering:
                           role=entry.get("role"))
 
 
+# Decision: SC-028 (holds is a list in rules.json; a text or a number is refused, never read letter by letter)
+def holds_from(entry: dict) -> tuple[str, ...]:
+    """The entry's "holds" words: {"id": "SR-11", "holds": ["battery"]} gives ("battery",); no "holds" gives (); "holds":
+    "battery" raises ValueError "SR-11: holds is a list of words (SC-028)"."""
+    holds = entry.get("holds", [])
+    if not isinstance(holds, list):
+        raise ValueError(f"{entry.get('id')}: holds is a list of words (SC-028)")
+    return tuple(holds)
+
+
 def rule_from_entry(entry: dict) -> SafetyRule:
     """One rules.json entry as a SafetyRule: {"id": "SR-01", "title": ..., "sources": [{"title": ..., "url": ...}]}
     gives SafetyRule("SR-01", ...); a missing field raises KeyError, an incomplete rule ValueError. A missing
@@ -44,24 +55,27 @@ def rule_from_entry(entry: dict) -> SafetyRule:
                       response=entry.get("response", ""), changes=rule_changes,
                       engineer_to_confirm=entry.get("engineer_to_confirm"),
                       lowered_for=tuple(lowering_from_entry(lowering) for lowering in entry.get("lowered_for", [])),
-                      reads=entry.get("reads", "both"))
+                      reads=entry.get("reads", "both"), holds=holds_from(entry))
 
 
 # Decision: SC-016 (the fingerprint is the sha256 of a canonical JSON of the rule's triggers, words_shown and response)
 # Decision: SC-020 (and its lowered_for, when it has any, so a lowering is never added without a change entry)
 # Decision: TODO 1.10 (and its reads, when it is not "both", so a rule never changes what it reads without a change entry)
+# Decision: SC-028 (and its holds, when it has any, so a topic list is never changed without a change entry)
 def rule_fingerprint(rule: SafetyRule) -> str:
     """The hex sha256 of the UTF-8 of json.dumps({"response": ..., "triggers": [...], "words_shown": ...}) with sorted
     keys, separators (",", ":") and no \\u escapes, plus a "lowered_for" list of {"signed_off", "role", "response", "words"}
-    when the rule has lowerings, plus "reads" when it is not "both": a rule's fingerprint changes when any of these does, and
+    when the rule has lowerings, plus "reads" when it is not "both", plus "holds" (a list) when it has any: a rule's fingerprint changes when any of these does, and
     when nothing else does (its title, sources and change log are not in it); a rule with no lowerings and reads "both" keeps
-    the fingerprint it had before SC-020."""
+    the fingerprint it had before SC-020; a rule with no holds keeps the one it had before SC-028."""
     fields: dict = {"triggers": list(rule.triggers), "words_shown": rule.words_shown, "response": rule.response}
     if rule.lowered_for:
         fields["lowered_for"] = [{"signed_off": lowering.signed_off, "role": lowering.role,
                                   "response": lowering.response, "words": lowering.words} for lowering in rule.lowered_for]
     if rule.reads != "both":
         fields["reads"] = rule.reads
+    if rule.holds:
+        fields["holds"] = list(rule.holds)
     canonical = json.dumps(fields, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
     return hashlib.sha256(canonical.encode("utf-8")).hexdigest()
 
@@ -120,3 +134,12 @@ def rules_fired(text: str, loaded_rules: tuple[SafetyRule, ...] | None = None) -
     for_rules = load_rules() if loaded_rules is None else loaded_rules
     return [rule.rule_id for rule in for_rules
             if any(trigger_pattern(trigger).search(text) for trigger in rule.triggers)]
+
+
+# Decision: SC-028 (a held stop's topic words are the rule's holds, or its triggers when it has none, matched as rules_fired matches)
+def topic_fired(text: str, loaded_rules: tuple[SafetyRule, ...]) -> list[str]:
+    """The ids, in rule order, of the rules whose topic words occur in text: with SR-11 holding "battery",
+    topic_fired("Is the battery fitted?", rules) gives ["SR-11"] though no SR-11 trigger is in it; a rule with no holds
+    answers to its triggers. It is rules_fired on copies whose triggers are the topic words, so the matcher is the same one."""
+    topics = tuple(replace(rule, triggers=rule.holds or rule.triggers) for rule in loaded_rules)
+    return rules_fired(text, topics)
