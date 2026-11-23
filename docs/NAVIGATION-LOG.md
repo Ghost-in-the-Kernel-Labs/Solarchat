@@ -90,3 +90,9 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Opened**: `CLAUDE.md`, `docs/designs/profile-takeover.md`, `solarchat/model/claude.py`, `solarchat/project/chat.py`, `solarchat/answer/door.py`, `solarchat/leaf/contract.py`, `test/test_profile_chat.py`, `test/test_claude.py`, `test/test_cli.py`, `theGhost.md`, `docs/DONE.md`, `docs/DEMO.md`, `docs/when/handoff.md`, `docs/journal/J-000-099.md`.
 - **Complaints**: the brief names TODO 2.12 but `TODO.md` has no such item, so I wrote it straight to `docs/DONE.md` as told. The design says `parse_reply` validates the proposal; `parse_reply` returns the dict and checks only the reply's shape, so I put the check in `proposal_from`. Living documents not changed: `README.md`, `docs/HANDOFF.md`, `docs/SAFETY-AND-COMPLIANCE.md`, `docs/ROADMAP.md`, `docs/CONTRACT.md`.
 - **Suggestions**: none.
+
+### 2026-11-23 · TODO 2.13, choose the voice (J-087) · Claude Sonnet 5.5
+- **Task**: `--voices` and `--voice-name`, the voice kept beside the key, the name passed to PowerShell only in an environment variable.
+- **Opened**: `CLAUDE.md`, `solarchat/project/speech.py`, `solarchat/model/key.py`, `solarchat/project/keys.py`, `solarchat/cli/main.py`, `docs/modules.json`, `test/test_speech.py`, `test/test_key.py`, `test/support.py`, `docs/DONE.md`, `docs/DEMO.md`, `README.md`, `docs/when/handoff.md`, `docs/journal/J-000-099.md`.
+- **Complaints**: the brief said "TODO 2.13 straight to DONE" and TODO.md has no 2.13, which was right but took a grep to learn. The existing speech tests read the real config folder once the Speaker reads a voice, so the test module now points it at a temp folder. Living documents not changed: `docs/HANDOFF.md`, `docs/SAFETY-AND-COMPLIANCE.md`, `docs/ROADMAP.md`, `docs/CONTRACT.md`.
+- **Suggestions**: none.

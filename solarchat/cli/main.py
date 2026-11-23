@@ -5,6 +5,7 @@ from typing import TextIO
 
 from solarchat.project.chat import DEFAULT_MODEL, DEMO_PACK, MODEL_CHOICES, parse_signed_off, start_chat
 from solarchat.project.keys import forget_key_command, has_key_command, store_key_command
+from solarchat.project.speech import voice_name_command, voices_command
 
 MENU = """solarchat: walks you through setting up and fixing your solar panels, from the manuals in a pack.
 
@@ -16,6 +17,8 @@ Commands:
   solarchat --forget-key    delete the stored key
   solarchat --demo          the demo: the seed pack, spoken aloud; type your question, quit to end (--no-voice for text only)
   solarchat --pack <pack>   chat about one pack, e.g. solarchat --pack packs/seed-mc4-leads --demo
+  solarchat --voices        list the voices installed on this computer, the chosen one marked
+  solarchat --voice-name <name>   choose the voice, kept beside the key: solarchat --voice-name "Microsoft Zira Desktop" (default forgets it)
   solarchat --has-key       say whether a key is set (exit 0) or not (exit 1), without showing it
 
 Chat options (with --pack or --demo):
@@ -52,6 +55,8 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--demo", action="store_true", help="let a demo pack answer, with the demo banner on every reply")
     parser.add_argument("--voice", action="store_true", help="speak each reply aloud through the system's own voice")
     parser.add_argument("--no-voice", action="store_true", help="no speech, even with --demo")
+    parser.add_argument("--voices", action="store_true", help="list the installed voices")
+    parser.add_argument("--voice-name", help="choose the voice by name (default forgets the choice)")
     parser.add_argument("--answerer", choices=("claude", "stub"), default="claude")
     parser.add_argument("--role", choices=("new", "crew", "qualified"), help="your role; skips the first question")
     parser.add_argument("--signed-off", type=signed_off_value, help="meter,connector,battery,height or none; skips the second question")
@@ -76,6 +81,13 @@ def main(argv: list[str], stdin: TextIO | None = None, stdout: TextIO | None = N
         return forget_key_command(out, err)
     if args.key is not None:
         return store_key_command(args.key, out, err, stdin)
+    if args.voices:
+        return voices_command(out, err)
+    if args.voice_name is not None:
+        if args.pack or args.demo:
+            err.write("solarchat: --voice-name only saves the voice; run it alone, then start the chat: solarchat --voice-name \"<name>\", then solarchat --demo\n")
+            return 2
+        return voice_name_command(args.voice_name, out, err)
     if not args.pack and not args.demo:
         err.write("solarchat: the chat needs --pack <pack>; `solarchat help` shows every command\n")
         return 2

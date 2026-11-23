@@ -4,7 +4,9 @@ after the start, and a missing or failing engine leaves the chat working in text
 import base64
 import contextlib
 import io
+import os
 import subprocess
+import tempfile
 import unittest
 from collections.abc import Callable
 from unittest import mock
@@ -20,19 +22,35 @@ from test.test_cli import PACK, SKIP, STEP, Scripted
 SEED = ROOT / "packs" / "seed-mc4-leads"
 
 
+_FOLDER = tempfile.TemporaryDirectory()
+
+
+def setUpModule() -> None:
+    """No chosen voice and no stored key anywhere but a temporary folder, so a developer's own choice never changes a result."""
+    os.environ["SOLARCHAT_CONFIG_DIR"] = _FOLDER.name
+
+
+def tearDownModule() -> None:
+    """Put the environment back and remove the folder."""
+    os.environ.pop("SOLARCHAT_CONFIG_DIR", None)
+    _FOLDER.cleanup()
+
+
 class Fake:
     """A runner that records each call's arguments and input and gives the scripted exit code (or raises)."""
 
     def __init__(self, code: int = 0, error: Exception | None = None) -> None:
         """Hold what to give back: Fake(1) fails with exit code 1."""
         self.calls: list[tuple[list[str], str]] = []
+        self.envs: list[dict[str, str] | None] = []
         self.code, self.error = code, error
 
     def __call__(self, command: list[str], *, input: str, text: bool, encoding: str, check: bool, timeout: int,
-                 shell: bool = False) -> subprocess.CompletedProcess:
+                 shell: bool = False, env: dict[str, str] | None = None) -> subprocess.CompletedProcess:
         """Record the call; refuse a shell, as subprocess is held to (subprocess.run's keywords, named)."""
         assert not shell and input is not None and check is False and text and encoding == "utf-8" and timeout > 0
         self.calls.append((command, str(input)))
+        self.envs.append(env)
         if self.error:
             raise self.error
         return subprocess.CompletedProcess(command, self.code)
@@ -141,6 +159,7 @@ class TheMissingEngine(unittest.TestCase):
 
 
 class TheOption(unittest.TestCase):
+
     def test_voice_is_in_the_menu(self) -> None:
         self.assertIn("--voice", MENU)
 

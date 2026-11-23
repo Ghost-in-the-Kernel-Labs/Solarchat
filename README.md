@@ -155,7 +155,7 @@ solarchat --demo
 
 On Linux and macOS the launcher is `bin/solarchat`, and the venv is made by hand (`python3.12 -m venv .venv && .venv/bin/pip install --only-binary :all: --require-hashes -r requirements.lock`).
 
-`solarchat --demo` chats on the seed pack and reads each reply aloud by the system's own voice; add `--no-voice` (`solarchat --demo --no-voice`) for text only. `--voice` turns the voice on without `--demo`. The voice is the system's own (PowerShell's speech on Windows, `say` on macOS, `espeak` on Linux); the text is sent to the engine on its standard input, the citations are shown and not spoken, and with no engine the chat goes on in text. The bot first asks two questions (your role, and what you are signed off for); `solarchat --demo --role qualified --signed-off battery` skips them.
+`solarchat --demo` chats on the seed pack and reads each reply aloud by the system's own voice; add `--no-voice` (`solarchat --demo --no-voice`) for text only. `--voice` turns the voice on without `--demo`. The voice is the system's own (PowerShell's speech on Windows, `say` on macOS, `espeak` on Linux); the text is sent to the engine on its standard input, the citations are shown and not spoken, and with no engine the chat goes on in text. `solarchat --voices` lists the voices installed on the computer and `solarchat --voice-name "Microsoft Zira Desktop"` chooses one, kept beside the key (`--voice-name default` goes back to the system's own). The bot first asks two questions (your role, and what you are signed off for); `solarchat --demo --role qualified --signed-off battery` skips them.
 
 ## How a change is made
 
