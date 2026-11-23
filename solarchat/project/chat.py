@@ -14,6 +14,7 @@ from solarchat.leaf.contract import (DEFAULT_PROFILE, DEMO_BANNER, PROFILE_SIGN_
                                      ReplyKind, Turn, may_answer)
 from solarchat.model.claude import DEFAULT_MODEL, MODELS, ClaudeAnswerer, ModelError
 from solarchat.packs.load import Pack, load_pack
+from solarchat.project.keys import ensure_key
 from solarchat.project.speech import Speaker
 from solarchat.safety.rules import load_rules
 
@@ -207,6 +208,8 @@ def start_chat(pack_folder: str, demo: bool, answerer_name: str, stdin: TextIO, 
     """Run a whole chat and return its exit code: 0 when it ended, 2 when it cannot run (a pack that is missing or may not
     answer, or no key for the Claude answerer), with one plain line on stderr. The demo banner is shown at the start; with
     `voice` the chat is also spoken (a missing engine is one line on stderr and the chat goes on in text). After the banner the two profile questions are asked (SC-020), unless `role` and `signed_off` give the answers."""
+    if answerer_name == "claude":
+        ensure_key(stdin, stdout, stderr)  # no key: ask here and store it; an empty line leaves the exit 2 below
     try:
         pack = load_chat_pack(pack_folder, demo)
         answerer = choose_answerer(answerer_name, model)

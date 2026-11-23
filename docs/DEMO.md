@@ -5,7 +5,11 @@ has only been tested with a fake engine, so test it on the laptop first.
 
 ## Before the demo (on the laptop, once)
 
-In PowerShell, from the cloned folder:
+Clone or pull, then double-click `setup.cmd` in the cloned folder (or run it in cmd.exe). It installs Python 3.12 on a Y,
+makes `.venv`, installs the locked packages, puts `bin` on the PATH and asks for the Anthropic key, typed or pasted at a prompt. Open a new
+Command Prompt and type `solarchat --demo`. Then run each scenario below once, end to end, with the speakers on.
+
+If `setup.cmd` cannot be used, the manual steps, in PowerShell from the cloned folder:
 
 ```powershell
 git pull
@@ -15,9 +19,7 @@ $env:Path = "$PWD\bin;$env:Path"
 solarchat --key
 ```
 
-`solarchat --key` asks for the Anthropic key without showing it. Then run each scenario below once, end to end, with the
-speakers on. If `py -3.12` is missing, install Python 3.12 (the lockfile is built for 3.12). The `$env:Path` line lasts
-for that PowerShell window only, so run it again in any new window.
+The `$env:Path` line lasts for that PowerShell window only. The lockfile is built for Python 3.12.
 
 ## Scenario 1: a fault the worker can fix (swapped leads), with the voice on
 

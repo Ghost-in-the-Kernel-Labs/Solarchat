@@ -176,7 +176,8 @@ class TheAnswerer(unittest.TestCase):
     def test_the_chat_gives_the_fake_client_the_profile_it_asked_for(self) -> None:
         client = FakeClient([text_response(answer_json([], "No.", "do_not_know"))])
         out, err = io.StringIO(), io.StringIO()
-        with mock.patch("solarchat.model.claude.default_client", lambda: client), contextlib.redirect_stderr(err):
+        with mock.patch("solarchat.model.claude.default_client", lambda: client), contextlib.redirect_stderr(err), \
+                mock.patch.dict("os.environ", {"ANTHROPIC_API_KEY": "set-for-the-test"}):
             code = main(["--pack", str(SEED), "--demo", "--no-voice"], io.StringIO("I'm the site engineer\nbattery\nWhat now?\nquit\n"), out, err)
         self.assertEqual(code, 0)
         self.assertEqual(client.calls[0]["messages"][-1]["content"],

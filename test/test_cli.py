@@ -84,7 +84,8 @@ class TheStubChat(unittest.TestCase):
     def test_claude_is_the_default_and_with_no_key_exits_2_in_plain_words_and_calls_nothing(self) -> None:
         with no_key():
             code, out, err = chat("", ["--pack", str(SEED), "--demo"])
-        self.assertEqual((code, out), (2, ""))
+        self.assertEqual(code, 2)
+        self.assertIn("No Anthropic key is set yet", out)  # it asked for the key; the empty input left it unset (TODO 2.11)
         self.assertIn("ANTHROPIC_API_KEY is not set", err)
 
     def test_model_is_an_option_haiku_is_allowed_and_another_model_exits_2(self) -> None:
