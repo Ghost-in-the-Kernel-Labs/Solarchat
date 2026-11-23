@@ -4,6 +4,7 @@ Each reply is the door's: the words, the passages' titles with each source's tit
 mode; a warn or a stop also shows its rule's words. Ctrl-D or "quit" ends it. The orchestrator: it may call the answer,
 model, packs and safety modules, so the command line holds no logic (MOD-02). Decision: SC-019 (amended 2026-11-21).
 """
+import difflib
 import re
 from pathlib import Path
 from typing import TextIO
@@ -19,6 +20,7 @@ from solarchat.project.speech import Speaker
 from solarchat.safety.rules import load_rules
 
 PROMPT = "> "
+PROFILE_WRONG = "If that is wrong, type quit and start again."
 DEMO_PACK = Path(__file__).resolve().parents[2] / "packs" / "seed-mc4-leads"  # absolute: the launchers do not change the folder
 QUIT_WORDS = ("quit",)
 MODEL_CHOICES = tuple(MODELS)
@@ -85,27 +87,39 @@ def spoken_aloud(reply: Reply, profile: Profile = DEFAULT_PROFILE) -> str:
     return with_rule(reply, spoken(reply), profile)
 
 
+def word_matches(word: str, vocabulary: list[str]) -> str | None:
+    """The vocabulary word a spoken or typed word stands for, or None: "crewmember" gives "crew" (it starts with it), "eletrician"
+    gives "electrician" (a close spelling, only for words of 6 letters or more); "now" gives None, never "new"."""
+    for known in vocabulary:
+        if word.startswith(known):
+            return known
+    close = difflib.get_close_matches(word, vocabulary, n=1, cutoff=0.8) if len(word) >= 6 else []
+    return close[0] if close else None
+
+
 # Decision: SC-020 (the answers are read by plain word matching, never by the model; the safest reading wins when words clash)
 def read_role(text: str) -> str | None:
-    """The role an answer names, or None: "I'm the site engineer" gives "qualified", "crew" gives "crew", "new to solar"
-    gives "new"; an answer with several (new before crew before engineer) gives the one with the least say; no role word gives None."""
-    words = set(re.findall(r"[a-z]+", text.lower()))
-    if "new" in words:
-        return "new"
-    if "crew" in words:
-        return "crew"
-    return "qualified" if words & {"electrician", "engineer"} else None
+    """The role an answer names, or None: "I'm the site engineer" gives "qualified", "crewmember" gives "crew", "new to solar"
+    gives "new", "licenssed eletrician" gives "qualified"; an answer with several (new before crew before engineer) gives
+    the one with the least say; no role word ("now", "the boss") gives None."""
+    roles = {"new": "new", "crew": "crew", "electrician": "qualified", "engineer": "qualified", "licensed": "qualified",
+             "qualified": "qualified"}
+    found = {roles[known] for word in re.findall(r"[a-z]+", text.lower()) if (known := word_matches(word, list(roles)))}
+    return next((role for role in ("new", "crew", "qualified") if role in found), None)
 
 
 def read_signed_off(text: str) -> frozenset[str]:
-    """The sign-offs an answer names: "battery and meter" gives {"battery", "meter"}; "none", or nothing known, gives the empty
-    set, and "none" beside others wins (fewer sign-offs is the safe reading)."""
+    """The sign-offs an answer names: "battery and meter" gives {"battery", "meter"}, "baterry" gives {"battery"}, "all of these"
+    or "everything" gives all four; "none" or "not" or "except" or "but" anywhere, or nothing known, gives the empty set
+    (fewer sign-offs is the safe reading, so "all except height" signs off nothing and the said-back line lets them restart)."""
     words = re.findall(r"[a-z]+", text.lower())
-    if "none" in words:
+    if {"none", "not", "except", "but"} & set(words):
         return frozenset()
-    prefixes = {"meter": "meter", "connector": "connector", "battery": "battery", "batteries": "battery", "controller": "battery",
-                "height": "height", "roof": "height"}
-    return frozenset(sign for word in words for start, sign in prefixes.items() if word.startswith(start))
+    if {"all", "every", "everything"} & set(words):
+        return frozenset(PROFILE_SIGN_OFFS)
+    signs = {"meter": "meter", "connector": "connector", "battery": "battery", "batteries": "battery", "controller": "battery",
+             "height": "height", "roof": "height"}
+    return frozenset(signs[known] for word in words if (known := word_matches(word, list(signs))))
 
 
 def parse_signed_off(text: str) -> frozenset[str]:
@@ -143,17 +157,18 @@ def ask_profile(stdin: TextIO, stdout: TextIO, speaker: Speaker | None = None, r
                 signed_off: frozenset[str] | None = None) -> Profile:
     """The worker's profile: the two questions, each skipped when its answer is given (--role, --signed-off); a role answer that
     names no role is asked once more and then is "new"; a sign-off answer naming nothing known is none; the profile is said
-    back in one line (and spoken)."""
+    back in one line, then "If that is wrong, type quit and start again." (both spoken)."""
     if role is None:
         role = read_role(ask(ROLE_QUESTION, stdin, stdout, speaker)) or read_role(ask(ROLE_AGAIN, stdin, stdout, speaker)) or "new"
     if signed_off is None:
         signed_off = read_signed_off(ask(SIGN_OFF_QUESTION, stdin, stdout, speaker))
     profile = Profile(role, signed_off)
     line = profile_said_back(profile)
-    stdout.write(line + "\n\n")
+    stdout.write(line + "\n" + PROFILE_WRONG + "\n\n")
     if speaker:
         stdout.flush()
         speaker.say(line)
+        speaker.say(PROFILE_WRONG)
     return profile
 
 

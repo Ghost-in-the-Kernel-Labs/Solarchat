@@ -96,9 +96,10 @@ class TheSpokenReply(unittest.TestCase):
             code = main(["--pack", str(SEED), "--demo", "--answerer", "stub", "--voice", *SKIP], io.StringIO("A?\nB?\nquit\n"), out, err)
         self.assertEqual(code, 0)
         self.assertEqual(out.getvalue().count(DEMO_BANNER), 3)
-        self.assertEqual(len(fake.calls), 4)  # the banner, the profile said back, and the two replies
+        self.assertEqual(len(fake.calls), 5)  # the banner, the profile said back and how to correct it, and the two replies
         self.assertEqual(fake.calls[0][1], DEMO_BANNER)
         self.assertEqual(fake.calls[1][1], "You are new to solar, not signed off for any of them.")
+        self.assertEqual(fake.calls[2][1], "If that is wrong, type quit and start again.")
         self.assertEqual(sum(DEMO_BANNER in said for _, said in fake.calls), 1)
 
     def test_a_warn_speaks_the_rules_words_and_an_answer_does_not(self) -> None:

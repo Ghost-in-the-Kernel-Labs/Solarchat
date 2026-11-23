@@ -87,3 +87,4 @@ Written from `docs/journal/` by `scripts/journal_index.py`; do not edit by hand.
 | J-081 | The model is told the three-citation cap, so a full engineer's answer is not refused | contradiction | `J-000-099.md` |
 | J-082 | Setup on a junior IT worker's Windows device (TODO 2.11) | feature | `J-000-099.md` |
 | J-083 | colorama comes in so the lock installs on Windows (SC-025) | decision | `J-000-099.md` |
+| J-084 | The profile answers: typos, run-together words and "all" are read (SC-020) | failure-missed | `J-000-099.md` |

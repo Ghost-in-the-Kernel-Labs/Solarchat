@@ -79,3 +79,9 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Complaints**: the stack README's fetch command is for an update (an old and a new wheel); for a new package `review_scan.py --unpack` needs an old archive, so I unpacked each archive against an empty zip, and nothing says so. `pip download --no-binary :all:` for the sdist runs a build backend (it failed asking for hatchling); fetching the sdist URL from the JSON API by `curl` is the safe way, also unwritten. A worker has no Agent tool, so the two agent layers cannot run from a worker and this brief hit that wall (as J-045 did).
 - **Suggestions**: add to `stacks/python/README.md`'s "Dependency updates" row the new-package case (an empty zip as the old side) and the sdist fetch by URL; put in `docs/when/hand-out-a-task.md` that a dependency brief's two agent layers belong to the coordinator.
 
+### 2026-11-23 · Profile answers: typos and "all" (J-084, SC-020) · Claude Sonnet 5.5
+- **Task**: read typos, run-together words and "all" in the role and sign-off answers; say how to correct the profile.
+- **Opened**: `CLAUDE.md`, `docs/when/handoff.md`, `solarchat/project/chat.py`, `test/test_profile_chat.py`, `test/test_speech.py`, `docs/DEMO.md`, `docs/journal/J-000-099.md`.
+- **Complaints**: `# Decision: SC-020` appears twice in chat.py, so a search for it finds the wrong one first. `test/test_speech.py` also compares the spoken lines and was not named in the brief.
+- **Suggestions**: none.
+
