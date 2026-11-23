@@ -100,6 +100,7 @@ solarchat --demo --no-voice
   on some citations is expected for the demo pack.
 - Type `quit` to end a session.
 - No voice? `solarchat --demo --no-voice` runs the same chat in text.
+- Another voice: `solarchat --voices`, then `solarchat --voice-name "Microsoft Zira Desktop"`.
 - "ANTHROPIC_API_KEY is not set and no key is stored": run `solarchat --key` again.
 - Out of scope: questions the pack doesn't cover get "I do not know. The packs switched on do not cover this." That is
   the bot refusing to make things up, worth saying out loud.
