@@ -20,6 +20,7 @@
     "title": "A panel is live whenever light falls on it",
     "applies_when": "A step has you touch, cut, strip, open or test any wire, terminal or bare metal of a panel, a string or its wiring. A panel makes voltage in daylight, even in cloud, and its DC side stays live when the inverter or the mains is switched off.",
     "triggers": ["energised", "energized", "bare wire", "bare copper", "exposed conductor", "cut the cable", "cut the wire", "strip the cable", "strip the wire", "measure the voltage", "test the voltage", "multimeter", "voltmeter", "probe", "test leads", "clamp meter", "insulation tester"],
+    "holds": ["multimeter", "meter", "measure", "probe", "test leads"],
     "words_shown": "Stop. Treat every panel and its wiring as live in daylight. Switching off the inverter or the mains does not make it safe. Do not touch, cut or test it yourself. Go to your site supervisor or engineer.",
     "response": "stop",
     "lowered_for": [
@@ -37,7 +38,8 @@
       {"date": "2026-11-21", "by": "Claude Opus 5.5", "role": "agent, drafting", "why": "Version 1: drafted from public guidance for the newest contractor on a site; engineer to confirm.", "evidence": "J-027; the sources listed on this rule"},
       {"date": "2026-11-21", "by": "Ghost", "role": "maintainer", "why": "Triggers match whole words and phrases, and the rule's triggers and wording follow the audit, applied on Ghost's word; engineer to confirm.", "evidence": "docs/audits/2026-11-21-safety-rules.md; J-030", "fingerprint": "6b8bc896060102b8e3fe543544922a30f89f9e41d3a9a2b21705d21c7f1ee279"},
       {"date": "2026-11-21", "by": "Ghost", "role": "maintainer", "why": "Removed the trigger 'crimp': crimping a connector onto a cable is done on cable that is not yet connected, which is routine installer work; pending engineer review (F-16)", "evidence": "J-041", "fingerprint": "680c54e5126e8d9cd4f943abb8949b8633ac54686004e6c4fc01f78ae3a37064"},
-      {"date": "2026-11-22", "by": "Ghost", "role": "maintainer", "why": "SR-02 lowered to warn for a meter sign-off (SC-020); engineer to confirm", "evidence": "J-074; docs/designs/session-profile.md", "fingerprint": "f24110a23757c58d83dd508f78a008d0f95488b5f2c41ed94b681e8fc1e2f265"}
+      {"date": "2026-11-22", "by": "Ghost", "role": "maintainer", "why": "SR-02 lowered to warn for a meter sign-off (SC-020); engineer to confirm", "evidence": "J-074; docs/designs/session-profile.md", "fingerprint": "f24110a23757c58d83dd508f78a008d0f95488b5f2c41ed94b681e8fc1e2f265"},
+      {"date": "2026-11-23", "by": "Ghost", "role": "maintainer", "why": "Added holds: words that keep this rule's topic closed for the rest of a conversation once it has stopped a worker, so a follow-up about the same work is not offered a step (SC-028); no trigger or wording changed; engineer to confirm", "evidence": "J-090; docs/designs/sticky-stops-and-proposal-guards.md", "fingerprint": "f602dcc6b1668e7793bafecc4bdfbfeaaedc0d49b32db1ae1031c40eb18ea153"}
     ]
   },
   {
@@ -45,6 +47,7 @@
     "title": "Never pull connectors apart under load",
     "applies_when": "A step has you pull a panel's connectors, a string or a DC lead apart while current can flow. Pulling a connector apart under load can draw an arc that burns. Joining and plugging in connectors is daily work and is not a stop (Ghost, 2026-11-21).",
     "triggers": ["pull connectors apart", "pull the connectors apart", "separate the halves", "open the pairs", "open the connectors", "under load", "disconnect under load"],
+    "holds": ["connector", "connectors", "release tool", "open the pair", "rejoin", "unplug"],
     "words_shown": "Stop. Do not part connectors yourself. Opening a pair needs the panel made safe first and the release tool made for it, and connectors pulled apart under load can spark and burn. Go to your site supervisor or engineer.",
     "response": "stop",
     "lowered_for": [
@@ -60,7 +63,8 @@
       {"date": "2026-11-21", "by": "Ghost", "role": "maintainer", "why": "Rewritten as never pulling connectors apart under load, with the isolator off or the panel covered and the release tool: connecting is daily work; applied on Ghost's word; engineer to confirm.", "evidence": "docs/audits/2026-11-21-safety-rules.md; J-030"},
       {"date": "2026-11-21", "by": "Ghost", "role": "maintainer", "why": "connecting is daily work; parting under load is the hazard; pending engineer review", "evidence": "SC-015; J-032", "fingerprint": "607a6f08600a99e1a651637f317233c7692d7eb9e0314217be43286e613d8647"},
       {"date": "2026-11-21", "by": "Ghost", "role": "maintainer", "why": "A warning lets the walk continue, so the words no longer say Stop or send the worker away; pending engineer review (F-16)", "evidence": "J-036", "fingerprint": "5291e877ba5c273db9138b3e232ba7c4ebf3fa5acc9080d4a7e49f14b6ba30a2"},
-      {"date": "2026-11-23", "by": "Ghost", "role": "maintainer", "why": "SR-03 made a stop for everyone, lowered to the earlier warn (its words unchanged) for the connector sign-off (SC-020): a new worker with no sign-off must not part connectors; the stop's words say only what the Staubli instructions and OSHA's lockout page support (R1); engineer to confirm", "evidence": "J-089; the blind evaluation of 2026-11-23 and Ghost's approval in chat, 2026-11-23", "fingerprint": "55f350c97ad659add2a57659e2da5ca9de1b84f58411d4a48a80e9d2f23a7620"}
+      {"date": "2026-11-23", "by": "Ghost", "role": "maintainer", "why": "SR-03 made a stop for everyone, lowered to the earlier warn (its words unchanged) for the connector sign-off (SC-020): a new worker with no sign-off must not part connectors; the stop's words say only what the Staubli instructions and OSHA's lockout page support (R1); engineer to confirm", "evidence": "J-089; the blind evaluation of 2026-11-23 and Ghost's approval in chat, 2026-11-23", "fingerprint": "55f350c97ad659add2a57659e2da5ca9de1b84f58411d4a48a80e9d2f23a7620"},
+      {"date": "2026-11-23", "by": "Ghost", "role": "maintainer", "why": "Added holds: words that keep this rule's topic closed for the rest of a conversation once it has stopped a worker, so a follow-up about the same work is not offered a step (SC-028); no trigger or wording changed; engineer to confirm", "evidence": "J-090; docs/designs/sticky-stops-and-proposal-guards.md", "fingerprint": "3d26099564332a3e34f62dcfa2262e57896eb6428e75a80884e7fb30f03d0b80"}
     ]
   },
   {
@@ -68,6 +72,7 @@
     "title": "Do not open an inverter, combiner, battery or other electrical enclosure",
     "applies_when": "A step has you open, unscrew or take the cover off an inverter, combiner box, junction box, isolator, fuse holder, battery cabinet, switchboard or any other box that holds wiring.",
     "triggers": ["open the inverter", "replace the fuse", "remove the cover", "open the enclosure", "open the cover", "open the combiner", "remove the cover of the"],
+    "holds": ["enclosure", "open the box", "open the cover"],
     "words_shown": "Stop. Do not open this box. Parts inside can stay live and hold a charge even when switched off. Only someone authorised may open it. Go to your site supervisor or engineer.",
     "response": "stop",
     "sources": [
@@ -76,7 +81,8 @@
     ],
     "changes": [
       {"date": "2026-11-21", "by": "Claude Opus 5.5", "role": "agent, drafting", "why": "Version 1: drafted from public guidance for the newest contractor on a site; engineer to confirm.", "evidence": "J-027; the sources listed on this rule"},
-      {"date": "2026-11-21", "by": "Ghost", "role": "maintainer", "why": "Triggers match whole words and phrases, and the rule's triggers and wording follow the audit, applied on Ghost's word; engineer to confirm.", "evidence": "docs/audits/2026-11-21-safety-rules.md; J-030", "fingerprint": "a1ef07c822dcea867920a1e2f4d367a9db51840279a33c511562c71c4162750c"}
+      {"date": "2026-11-21", "by": "Ghost", "role": "maintainer", "why": "Triggers match whole words and phrases, and the rule's triggers and wording follow the audit, applied on Ghost's word; engineer to confirm.", "evidence": "docs/audits/2026-11-21-safety-rules.md; J-030", "fingerprint": "a1ef07c822dcea867920a1e2f4d367a9db51840279a33c511562c71c4162750c"},
+      {"date": "2026-11-23", "by": "Ghost", "role": "maintainer", "why": "Added holds: words that keep this rule's topic closed for the rest of a conversation once it has stopped a worker, so a follow-up about the same work is not offered a step (SC-028); no trigger or wording changed; engineer to confirm", "evidence": "J-090; docs/designs/sticky-stops-and-proposal-guards.md", "fingerprint": "ac41583ef2d6d5da1af2a0e0badbec38ac93d567a9bc8ec79e232f0231383cc0"}
     ]
   },
   {
@@ -84,6 +90,7 @@
     "title": "Work at height or on a roof",
     "applies_when": "A step has you go onto a roof, a ladder, a scaffold or a frame, or near an edge, skylight or roof hatch, or carry a panel up. There is no safe height to fall from; the site sets the fall protection.",
     "triggers": ["rooftop", "ladder", "scaffold", "at height", "skylight", "roof hatch", "roof edge", "go up on the roof", "climb the ladder", "work at height", "on the roof edge", "on the roof", "onto the roof", "up on the roof", "get up there", "climb up", "harness"],
+    "holds": ["roof", "ladder", "climb", "scaffold", "height", "harness"],
     "words_shown": "Stop. Do not go up or near an edge until your supervisor has shown you the fall protection for this job and it is in place. Never climb a ladder carrying a panel. Go to your site supervisor or engineer.",
     "response": "stop",
     "lowered_for": [
@@ -100,7 +107,8 @@
       {"date": "2026-11-21", "by": "Claude Opus 5.5", "role": "agent, drafting", "why": "Version 1: drafted from public guidance for the newest contractor on a site; engineer to confirm.", "evidence": "J-027; the sources listed on this rule"},
       {"date": "2026-11-21", "by": "Ghost", "role": "maintainer", "why": "Triggers match whole words and phrases, and the rule's triggers and wording follow the audit, applied on Ghost's word; engineer to confirm.", "evidence": "docs/audits/2026-11-21-safety-rules.md; J-030", "fingerprint": "d421664561cee04d1239121a672e26f959e6a4383b8f89d5e4cd99bbf7a7e633"},
       {"date": "2026-11-22", "by": "Ghost", "role": "maintainer", "why": "SR-05 lowered to warn for a height sign-off (SC-020); engineer to confirm", "evidence": "J-074; docs/designs/session-profile.md", "fingerprint": "47387889d934676bb1f8fbdaf52a82c67888e307511cc529ba54cc8fc5e7bdc2"},
-      {"date": "2026-11-23", "by": "Ghost", "role": "maintainer", "why": "Triggers added: \"on the roof\", \"onto the roof\", \"up on the roof\", \"get up there\", \"climb up\", \"harness\"; none occurs in any pack passage, and the height lowering stays (R2); engineer to confirm", "evidence": "J-089; the blind evaluation of 2026-11-23 and Ghost's approval in chat, 2026-11-23", "fingerprint": "6a8ea4c48620fc59457194a7e78c2ddd72f6ab980a0b1fdb52abdbc86dad487b"}
+      {"date": "2026-11-23", "by": "Ghost", "role": "maintainer", "why": "Triggers added: \"on the roof\", \"onto the roof\", \"up on the roof\", \"get up there\", \"climb up\", \"harness\"; none occurs in any pack passage, and the height lowering stays (R2); engineer to confirm", "evidence": "J-089; the blind evaluation of 2026-11-23 and Ghost's approval in chat, 2026-11-23", "fingerprint": "6a8ea4c48620fc59457194a7e78c2ddd72f6ab980a0b1fdb52abdbc86dad487b"},
+      {"date": "2026-11-23", "by": "Ghost", "role": "maintainer", "why": "Added holds: words that keep this rule's topic closed for the rest of a conversation once it has stopped a worker, so a follow-up about the same work is not offered a step (SC-028); no trigger or wording changed; engineer to confirm", "evidence": "J-090; docs/designs/sticky-stops-and-proposal-guards.md", "fingerprint": "6af9abc473c0bfcd2ac8c886a710eadb1d1fd852302078efa46ab8c1d74dd55a"}
     ]
   },
   {
@@ -204,6 +212,7 @@
     "title": "Batteries",
     "applies_when": "A step has you connect, disconnect or work on battery terminals, battery cables or a battery bank; or a battery is swollen, hot, leaking, hissing or smells.",
     "triggers": ["battery terminal", "battery terminals", "battery cable", "battery cables", "battery bank", "swollen", "bulging", "hissing", "battery is leaking", "battery leaking", "battery is venting", "battery venting"],
+    "holds": ["battery", "batteries", "battery's"],
     "words_shown": "Stop. Do not work on battery terminals or cables, and keep away from a battery that is swollen, hot, leaking, hissing or smells. A battery can burn, explode or give off toxic gas, and it cannot be switched off. Go to your site supervisor or engineer.",
     "response": "stop",
     "lowered_for": [
@@ -216,7 +225,8 @@
     "changes": [
       {"date": "2026-11-21", "by": "Claude Opus 5.5", "role": "agent, drafting", "why": "Version 1: drafted from public guidance for the newest contractor on a site; engineer to confirm.", "evidence": "J-027; the sources listed on this rule"},
       {"date": "2026-11-21", "by": "Ghost", "role": "maintainer", "why": "Triggers match whole words and phrases, and the rule's triggers and wording follow the audit, applied on Ghost's word; engineer to confirm.", "evidence": "docs/audits/2026-11-21-safety-rules.md; J-030", "fingerprint": "1c4b37312fd164b422f62b84558bc4d6e816b460a3f1a875297263d3c1ec81ee"},
-      {"date": "2026-11-22", "by": "Ghost", "role": "maintainer", "why": "SR-11 lowered to warn for a battery sign-off (SC-020); engineer to confirm", "evidence": "J-074; docs/designs/session-profile.md", "fingerprint": "10a044aef87d7306dfa9d869b420a472539bcc90093215e76fd8f53b05303c26"}
+      {"date": "2026-11-22", "by": "Ghost", "role": "maintainer", "why": "SR-11 lowered to warn for a battery sign-off (SC-020); engineer to confirm", "evidence": "J-074; docs/designs/session-profile.md", "fingerprint": "10a044aef87d7306dfa9d869b420a472539bcc90093215e76fd8f53b05303c26"},
+      {"date": "2026-11-23", "by": "Ghost", "role": "maintainer", "why": "Added holds: words that keep this rule's topic closed for the rest of a conversation once it has stopped a worker, so a follow-up about the same work is not offered a step (SC-028); no trigger or wording changed; engineer to confirm", "evidence": "J-090; docs/designs/sticky-stops-and-proposal-guards.md", "fingerprint": "788d117f8067f6a465145d086226d13a7b4988b2085baed22e7ecdd708673038"}
     ]
   },
   {
@@ -274,6 +284,7 @@
     "title": "Connecting to the grid or a building's mains",
     "applies_when": "The worker asks to connect solar to the grid or to a building's mains supply, or to feed power in or net meter. This is work for a licensed electrician and usually needs the network operator's permission before it is connected.",
     "triggers": ["to the grid", "grid tie", "grid-tie", "grid-tied", "feed in", "net meter", "net metering", "to the mains", "into the mains"],
+    "holds": ["grid", "mains", "network operator"],
     "words_shown": "Stop. Connecting solar to the grid or a building's mains is work for a licensed electrician, and usually needs the network operator's permission. Do not do it. Go to your site supervisor or engineer.",
     "response": "stop",
     "reads": "words",
@@ -286,7 +297,8 @@
       {"title": "Welsh Government: Connecting on-site generation to the grid, technical note (distribution network operators must authorise all installation of generating stations and battery storage systems)", "url": "https://www.gov.wales/connecting-site-generation-grid-technical-note-html"}
     ],
     "changes": [
-      {"date": "2026-11-23", "by": "Ghost", "role": "maintainer", "why": "New rule: connecting to the grid or a building's mains is a stop on the worker's words, lowered to a warn for a qualified role; every claim traced to the two sources listed (R9); engineer to confirm", "evidence": "J-089; the blind evaluation of 2026-11-23 and Ghost's approval in chat, 2026-11-23", "fingerprint": "b211a9c74aee919ea183e06abdb0b1e6d1aaac748b3a877af5c127901ba1d1c0"}
+      {"date": "2026-11-23", "by": "Ghost", "role": "maintainer", "why": "New rule: connecting to the grid or a building's mains is a stop on the worker's words, lowered to a warn for a qualified role; every claim traced to the two sources listed (R9); engineer to confirm", "evidence": "J-089; the blind evaluation of 2026-11-23 and Ghost's approval in chat, 2026-11-23", "fingerprint": "b211a9c74aee919ea183e06abdb0b1e6d1aaac748b3a877af5c127901ba1d1c0"},
+      {"date": "2026-11-23", "by": "Ghost", "role": "maintainer", "why": "Added holds: words that keep this rule's topic closed for the rest of a conversation once it has stopped a worker, so a follow-up about the same work is not offered a step (SC-028); no trigger or wording changed; engineer to confirm", "evidence": "J-090; docs/designs/sticky-stops-and-proposal-guards.md", "fingerprint": "50e53fb4db9f686e60f704a4523d573bcfc35ab3df58cbeda9dd7c385ae1233c"}
     ]
   }
 ]

@@ -72,3 +72,4 @@ Written by `scripts/decisions_index.py` from `theGhost.md`; do not edit here. Se
 | SC-025 | colorama 0.4.6 (Windows only, through pytest) is a dependency, and requirements.lock is compiled universally so one lock serves Linux and Windows | in force | dependencies |
 | SC-026 | A profile change is proposed by the model and applied only on the person's yes, read by word matching; a change to less say applies at once | in force | session profile change |
 | SC-027 | The bot says what the packs cover and asks for the make and model before it answers; the model reads the answer, and the chat keeps only equipment on a list | in force | equipment intake |
+| SC-028 | A stop holds for the rest of the conversation, and the profile proposal fires only on what the worker said | proposed | sticky stops |

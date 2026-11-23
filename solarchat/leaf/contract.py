@@ -8,6 +8,8 @@ from datetime import date
 from enum import Enum
 from typing import Protocol
 
+from solarchat.leaf.equipment import EQUIPMENT_ID_PATTERN, EQUIPMENT_KINDS, Equipment  # noqa: F401  (moved out for the line limit; still read from here)
+
 SAFETY_RULE_ID_PATTERN = re.compile(r"^SR-\d{2}$")
 SAFETY_RESPONSES = ("warn", "stop", "emergency")
 SAFETY_READS = ("both", "words")
@@ -15,8 +17,6 @@ CHANGE_FIELDS = ("date", "by", "role", "why", "evidence")
 # Decision: SC-024 (a pack's declaration of coverage says who declared it, in SC-016's shape; SR-08 and SR-09 stay emergencies)
 DECLARED_FIELDS = ("by", "role", "date", "evidence")
 COVERAGE_RESPONSES = ("warn", "stop")
-EQUIPMENT_KINDS = ("panel", "controller", "power-station", "battery", "inverter", "connector")
-EQUIPMENT_ID_PATTERN = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
 EMERGENCY_RULE_IDS = ("SR-08", "SR-09")
 # Decision: SC-020 (who the bot is talking to: a role and the sign-offs the worker's supervisor has given, self-declared)
 PROFILE_ROLES = ("new", "crew", "qualified")
@@ -269,6 +269,8 @@ class SafetyRule:
     Decision: SC-020 (`lowered_for`, default empty, holds the lowerings a profile may apply; an emergency has none).
     Decision: TODO 1.10 (`reads`, "both" by default or "words": a "words" rule fires on the worker's own words only, never
     on a passage's text; any other value is refused).
+    Decision: SC-028 (`holds`, default empty, lists lowercase words and phrases that keep the rule's topic closed once it has
+    stopped a worker; empty, the rule's triggers are used; a list that is not words is refused).
     SafetyRule("SR-01", "Site first", "Always.", ("site procedure",), "Stop. Go to your site supervisor or engineer.",
     (SafetyRuleSource("HSE", "https://www.hse.gov.uk/"),), "stop", (SafetyRuleChange("2026-11-21", "Ghost", "maintainer",
     "First draft.", "J-027"),)) stands; the same with triggers=(), response="halt" or changes=() raises ValueError.
@@ -285,6 +287,7 @@ class SafetyRule:
     engineer_to_confirm: str | None = None
     lowered_for: tuple[SafetyLowering, ...] = ()
     reads: str = "both"
+    holds: tuple[str, ...] = ()
 
     def __post_init__(self) -> None:
         """Raise ValueError when the rule breaks HAD-04 (the examples are in the class docstring)."""
@@ -309,6 +312,8 @@ def safety_rule_problem(rule: SafetyRule) -> str | None:
         return f"{rule.rule_id}: response {rule.response!r} is not one of {', '.join(SAFETY_RESPONSES)} (SC-015)"
     if rule.reads not in SAFETY_READS:
         return f"{rule.rule_id}: reads {rule.reads!r} is not one of {', '.join(SAFETY_READS)} (TODO 1.10)"
+    if not isinstance(rule.holds, tuple) or any(not isinstance(word, str) or not word.strip() or word != word.lower() for word in rule.holds):
+        return f"{rule.rule_id}: holds is a list of words, each lowercase and not empty (SC-028)"
     for lowering in rule.lowered_for:
         lowered = lowering_problem(rule.rule_id, rule.response, lowering)
         if lowered:
@@ -375,25 +380,3 @@ def safety_coverage_problem(coverage: SafetyCoverage) -> str | None:
     if not isinstance(declared, dict) or any(not isinstance(declared.get(name), str) or not declared[name].strip() for name in DECLARED_FIELDS):
         return f"{coverage.rule}: declared has {', '.join(DECLARED_FIELDS)}, each with something in it (SC-016)"
     return None
-
-
-@dataclass(frozen=True)
-class Equipment:
-    """One piece of equipment a pack's manuals describe, refused at construction when incomplete.
-
-    Decision: SC-027 (the packs name what they cover; `sources` are the pack's own source ids; no safety coverage is declared).
-    Equipment("victron-smartsolar-mppt", "controller", "Victron Energy", "SmartSolar MPPT 75/10", ("S4",)) stands; an id with a
-    capital, a kind outside EQUIPMENT_KINDS, a blank make or model, or no sources raises ValueError.
-    """
-
-    id: str
-    kind: str
-    make: str
-    model: str
-    sources: tuple[str, ...]
-
-    def __post_init__(self) -> None:
-        """Raise ValueError when the record breaks SC-027 (the examples are in the class docstring)."""
-        if not (isinstance(self.id, str) and EQUIPMENT_ID_PATTERN.match(self.id)) or self.kind not in EQUIPMENT_KINDS or not self.sources \
-                or any(not isinstance(word, str) or not word.strip() for word in (self.make, self.model, *self.sources)):
-            raise ValueError(f"equipment {self.id!r}: an id of lowercase words, one of {', '.join(EQUIPMENT_KINDS)}, a make, a model and sources (SC-027)")

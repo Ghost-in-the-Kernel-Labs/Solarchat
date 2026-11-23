@@ -111,14 +111,19 @@ ASK_BATTERY = Finding((BATTERY,), "Fit it to the controller first.")
 BATTERY_STOP = f"Safety rule SR-11\n\n{DEMO_BANNER}\n\nStop. Do not work on battery terminals"
 BATTERY_WARN = "Safety rule SR-11, lowered for your sign-off"
 ELECTRICIAN = ProfileChange("qualified", frozenset({"battery"}))
-SWITCH = "Switch to that? yes or no"
+SWITCH = "Only switch if your supervisor has signed you off for this on this site. Switch to that? yes or no"  # SC-028: the reminder
 NEW_PERSON = chat.NEW_PERSON_LINE
 NEW = Profile("new", frozenset())
+HELLO = "Hello\n"  # SC-028: the first turn acts on no proposal, so a test that proposes opens with a turn that does not
+SAID_ELECTRICIAN = "I'm the site electrician, signed off for battery wiring"  # SC-028: a proposal needs words that say it
+SAID_TAKEOVER = "My supervisor is taking over"
 
 
 def takeover(items: list, lines: str, profile: Profile = NEW, speaker: Speaker | None = None) -> tuple[Proposing, str]:
-    """The answerer and stdout of a chat on the battery pack with `lines` typed, the answerer proposing `items`."""
-    answerer, out = Proposing(items), io.StringIO()
+    """The answerer and stdout of a chat on the battery pack with `lines` typed, the answerer proposing `items`; a chat whose
+    lines open with HELLO has an opening turn that finds nothing and proposes nothing (SC-028), counted in `calls`."""
+    opening = [(Finding(), None)] if lines.startswith(HELLO) else []
+    answerer, out = Proposing(opening + items), io.StringIO()
     converse(BATTERY_PACK, True, answerer, io.StringIO(lines), out, io.StringIO(), speaker, profile)
     return answerer, out.getvalue()
 
@@ -141,33 +146,33 @@ class TheTakeover(unittest.TestCase):
     def test_sr_11_stops_a_new_worker_then_warns_after_a_yes_and_stops_after_a_no(self) -> None:
         _, out = takeover([(ASK_BATTERY, None)], "What do I connect first?\nquit\n")
         self.assertIn(BATTERY_STOP, out)
-        answerer, out = takeover([(ASK_BATTERY, ELECTRICIAN)], "What do I connect first?\nyes\nquit\n")
-        self.assertEqual(answerer.calls, 2)
+        answerer, out = takeover([(ASK_BATTERY, ELECTRICIAN)], f"{HELLO}{SAID_ELECTRICIAN}\nyes\nquit\n")
+        self.assertEqual(answerer.calls, 3)
         self.assertIn("You said you are a licensed electrician or engineer, signed off for battery and controller wiring. " + SWITCH, out)
         self.assertLess(out.index("Profile changed: You are a licensed electrician or engineer, signed off for battery and controller wiring."),
                         out.index(BATTERY_WARN))
         self.assertNotIn(BATTERY_STOP, out)  # the held reply was never shown, and the re-run is the warn
-        answerer, out = takeover([(ASK_BATTERY, ELECTRICIAN)], "What do I connect first?\nno\nquit\n")
-        self.assertEqual(answerer.calls, 1)
+        answerer, out = takeover([(ASK_BATTERY, ELECTRICIAN)], f"{HELLO}{SAID_ELECTRICIAN}\nno\nquit\n")
+        self.assertEqual(answerer.calls, 2)
         self.assertIn(BATTERY_STOP, out)
         self.assertNotIn("Profile changed", out)
 
     def test_the_new_profile_holds_for_the_next_turn_and_the_history_keeps_the_said_back_line(self) -> None:
-        answerer, out = takeover([(ASK_BATTERY, ELECTRICIAN), (ASK_BATTERY, None)], "What do I connect first?\nyes\nAnd then?\nquit\n")
+        answerer, out = takeover([(ASK_BATTERY, ELECTRICIAN), (ASK_BATTERY, None)], f"{HELLO}{SAID_ELECTRICIAN}\nyes\nAnd then?\nquit\n")
         self.assertEqual(out.count(BATTERY_WARN), 2)
         self.assertEqual(out.count(SWITCH), 1)
         line = "Profile changed: You are a licensed electrician or engineer, signed off for battery and controller wiring."
         last = answerer.histories[-1]
-        self.assertEqual([turn.role for turn in last], ["user", "assistant", "assistant"])
-        self.assertEqual(last[0].text, "What do I connect first?")
-        self.assertEqual(last[1].text, line)
-        self.assertTrue(last[2].text.startswith("You are signed off for battery"))
-        self.assertEqual(answerer.histories[1], ())  # the re-run is given the history as the first call had it
+        self.assertEqual([turn.role for turn in last], ["user", "assistant", "user", "assistant", "assistant"])
+        self.assertEqual(last[2].text, SAID_ELECTRICIAN)
+        self.assertEqual(last[3].text, line)
+        self.assertTrue(last[4].text.startswith("You are signed off for battery"))
+        self.assertEqual(answerer.histories[2], answerer.histories[1])  # the re-run is given the history as the first call had it
 
     def test_less_say_is_applied_at_once_with_no_question_and_the_turn_re_run(self) -> None:
         less = ProfileChange("new", frozenset(), frozenset({"battery"}))
-        answerer, out = takeover([(ASK_BATTERY, less)], "What do I connect first?\nquit\n", ENGINEER)
-        self.assertEqual(answerer.calls, 2)
+        answerer, out = takeover([(ASK_BATTERY, less)], f"{HELLO}I'm new to solar, not signed off for battery wiring\nquit\n", ENGINEER)
+        self.assertEqual(answerer.calls, 3)
         self.assertNotIn(SWITCH, out)
         self.assertIn("Profile changed: You are new to solar, not signed off for any of them.", out)
         self.assertIn(BATTERY_STOP, out)  # a rule the old profile lowered now stops
@@ -175,22 +180,22 @@ class TheTakeover(unittest.TestCase):
 
     def test_a_mixed_change_is_more_say_and_is_asked(self) -> None:
         mixed = ProfileChange("qualified", frozenset(), frozenset({"battery"}))
-        answerer, out = takeover([(ASK_BATTERY, mixed)], "Next?\nno\nquit\n", Profile("crew", frozenset({"battery"})))
+        answerer, out = takeover([(ASK_BATTERY, mixed)], f"{HELLO}I'm the engineer\nno\nquit\n", Profile("crew", frozenset({"battery"})))
         self.assertIn(SWITCH, out)
-        self.assertEqual(answerer.calls, 1)
+        self.assertEqual(answerer.calls, 2)
 
     def test_a_declined_proposal_is_not_asked_again_but_a_different_one_is(self) -> None:
         other = ProfileChange("crew", frozenset())
         answerer, out = takeover([(ASK_BATTERY, ELECTRICIAN), (ASK_BATTERY, ELECTRICIAN), (ASK_BATTERY, other)],
-                                 "One?\nno\nTwo?\nThree?\nno\nquit\n")
+                                 f"{HELLO}{SAID_ELECTRICIAN}\nno\n{SAID_ELECTRICIAN}\nI'm a crew member\nno\nquit\n")
         self.assertEqual(out.count(SWITCH), 2)
-        self.assertEqual(out.count(BATTERY_STOP), 3)
-        self.assertEqual(answerer.calls, 3)
+        self.assertEqual(out.count(BATTERY_STOP), 3)  # each reply is the door's own stop, so the held check leaves it alone (SC-028)
+        self.assertEqual(answerer.calls, 4)
 
     def test_a_new_person_re_asks_both_questions_and_their_answers_replace_the_profile(self) -> None:
         someone = ProfileChange(new_person=True)
-        answerer, out = takeover([(ASK_BATTERY, someone)], "My supervisor is taking over\nelectrician\nbattery\nquit\n")
-        self.assertEqual(answerer.calls, 2)
+        answerer, out = takeover([(ASK_BATTERY, someone)], f"{HELLO}{SAID_TAKEOVER}\nelectrician\nbattery\nquit\n")
+        self.assertEqual(answerer.calls, 3)
         for text in (NEW_PERSON, ROLE_QUESTION, SIGN_OFF_QUESTION, "Profile changed: You are a licensed electrician"):
             self.assertIn(text, out)
         self.assertNotIn(BATTERY_STOP, out)
@@ -199,40 +204,41 @@ class TheTakeover(unittest.TestCase):
 
     def test_a_new_person_who_asks_nothing_is_invited_to_ask_not_told_i_do_not_know(self) -> None:
         answerer, out = takeover([(Finding(), ProfileChange(new_person=True)), (Finding(), None)],
-                                 "My supervisor is taking over\nelectrician\nbattery\nquit\n")
-        self.assertEqual(answerer.calls, 2)
+                                 f"{HELLO}{SAID_TAKEOVER}\nelectrician\nbattery\nquit\n")
+        self.assertEqual(answerer.calls, 3)
         self.assertIn("Profile changed: You are a licensed electrician", out)
         self.assertIn(chat.GO_AHEAD, out)
-        self.assertNotIn("I do not know", out)
+        self.assertNotIn("I do not know", out.split("Profile changed")[1])
 
     def test_a_new_person_may_end_up_with_less_say_than_before(self) -> None:
-        answerer, out = takeover([(ASK_BATTERY, ProfileChange(new_person=True))], "Who is it?\nnew\nnone\nquit\n", ENGINEER)
+        answerer, out = takeover([(ASK_BATTERY, ProfileChange(new_person=True))], f"{HELLO}Someone else is here\nnew\nnone\nquit\n", ENGINEER)
         self.assertIn(BATTERY_STOP, out)
-        self.assertEqual(answerer.calls, 2)
+        self.assertEqual(answerer.calls, 3)
 
     def test_one_question_per_turn_the_re_run_proposal_is_not_asked(self) -> None:
         answerer, out = takeover([(ASK_BATTERY, ELECTRICIAN), (ASK_BATTERY, ProfileChange("crew", frozenset({"meter"})))],
-                                 "Go?\nyes\nquit\n")
+                                 f"{HELLO}{SAID_ELECTRICIAN}\nyes\nquit\n")
         self.assertEqual(out.count(SWITCH), 1)
-        self.assertEqual(answerer.calls, 2)
+        self.assertEqual(answerer.calls, 3)
 
     def test_the_question_and_the_changed_line_are_spoken_with_voice(self) -> None:
         fake = Fake()
-        takeover([(ASK_BATTERY, ELECTRICIAN)], "Go?\nyes\nquit\n", speaker=Speaker(io.StringIO(), fake, "linux", found))
+        takeover([(ASK_BATTERY, ELECTRICIAN)], f"{HELLO}{SAID_ELECTRICIAN}\nyes\nquit\n", speaker=Speaker(io.StringIO(), fake, "linux", found))
         said = [text for _, text in fake.calls]
-        self.assertTrue(said[0].endswith(SWITCH))
+        self.assertTrue(any(text.endswith(SWITCH) for text in said))
         self.assertTrue(any(text.startswith("Profile changed: You are a licensed") for text in said))
 
     def test_a_real_answerer_is_given_the_new_profile_for_the_next_call_and_the_same_system_block(self) -> None:
-        client = FakeClient([text_response(dict(answer_json([], "No.", "do_not_know"), profile_change=CHANGE)),
+        client = FakeClient([text_response(answer_json([], "No.", "do_not_know")),
+                             text_response(dict(answer_json([], "No.", "do_not_know"), profile_change=CHANGE)),
                              text_response(answer_json([], "No.", "do_not_know"))])
         answerer = ClaudeAnswerer(client, FakeErrors, profile=Profile("new", frozenset()))
-        converse(PACK, True, answerer, io.StringIO("I'm the electrician, battery signed\nyes\nquit\n"), io.StringIO(), io.StringIO(),
+        converse(PACK, True, answerer, io.StringIO("Hello\nI'm the electrician, battery signed\nyes\nquit\n"), io.StringIO(), io.StringIO(),
                  profile=Profile("new", frozenset()))
-        self.assertEqual(len(client.calls), 2)
-        self.assertTrue(client.calls[0]["messages"][-1]["content"].startswith("The worker: new to solar"))
-        self.assertTrue(client.calls[1]["messages"][-1]["content"].startswith("The worker: licensed electrician"))
-        self.assertEqual(json.dumps(client.calls[0]["system"]), json.dumps(client.calls[1]["system"]))
+        self.assertEqual(len(client.calls), 3)
+        self.assertTrue(client.calls[1]["messages"][-1]["content"].startswith("The worker: new to solar"))
+        self.assertTrue(client.calls[2]["messages"][-1]["content"].startswith("The worker: licensed electrician"))
+        self.assertEqual(json.dumps(client.calls[1]["system"]), json.dumps(client.calls[2]["system"]))
 
 
 if __name__ == "__main__":
