@@ -90,3 +90,4 @@ Written from `docs/journal/` by `scripts/journal_index.py`; do not edit by hand.
 | J-084 | The profile answers: typos, run-together words and "all" are read (SC-020) | failure-missed | `J-000-099.md` |
 | J-085 | The profile changes mid-conversation: the model proposes, the person's yes applies (SC-026, TODO 2.12) | decision | `J-000-099.md` |
 | J-086 | "member" says crew in the role answer (SC-020) | failure-missed | `J-000-099.md` |
+| J-087 | The bot says what the packs cover and asks for the make and model before it answers (SC-027, TODO 2.14) | feature | `J-000-099.md` |

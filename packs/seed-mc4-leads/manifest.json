@@ -117,6 +117,12 @@
       "reached": true
     }
   ],
+  "equipment": [
+    {"id": "victron-smartsolar-mppt", "kind": "controller", "make": "Victron Energy", "model": "SmartSolar MPPT 75/10 to 100/20", "sources": ["S4", "S5", "S10"]},
+    {"id": "ecoflow-r600", "kind": "power-station", "make": "EcoFlow", "model": "R600", "sources": ["S8"]},
+    {"id": "mc4-connector", "kind": "connector", "make": "any", "model": "MC4 and MC4-compatible connectors", "sources": ["S2", "S7"]},
+    {"id": "crystalline-panel-mc4", "kind": "panel", "make": "any", "model": "Crystalline silicon panels with MC4 leads (the general steps)", "sources": ["S3"]}
+  ],
   "third_party_images": [
     {
       "file": "images/third-party/mc4-connector-pair-marks.jpg",

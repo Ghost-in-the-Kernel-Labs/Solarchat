@@ -12,10 +12,12 @@ from solarchat.cli.main import MENU, main
 from solarchat.leaf.contract import DEMO_BANNER, Finding, Passage, PassageRef, Profile, Reply, ReplyKind, Turn
 from solarchat.model import claude
 from solarchat.model.claude import SYSTEM_PROMPT, ClaudeAnswerer, profile_line
+from solarchat.packs.load import load_pack
 from solarchat.project import chat
 from solarchat.project.chat import (PROFILE_WRONG, ROLE_AGAIN, ROLE_QUESTION, SIGN_OFF_QUESTION, ask_profile, converse, parse_signed_off,
                                     profile_said_back,
                                     read_role, read_signed_off, render)
+from solarchat.project.intake import said_back
 from solarchat.project.speech import Speaker
 from test.support import ROOT
 from test.test_claude import FakeClient, FakeErrors, answer_json, text_response
@@ -27,12 +29,14 @@ BATTERY = PassageRef("seed-mc4-leads", "battery")
 BATTERY_PACK = dataclasses.replace(PACK, passages=(Passage(BATTERY, "Fit the battery terminal to the controller first.", "Battery first"),),
                                    citations={"battery": PACK.citations["step-06"]})
 ENGINEER = Profile("qualified", frozenset({"battery"}))
+NO_MATCH = said_back((), load_pack(SEED).equipment)  # what `--equipment none` says on the seed pack (SC-027)
 
 
 def run(lines: str, options: tuple[str, ...] = (), voice: Fake | None = None) -> tuple[int, str]:
     """The exit code and stdout of the stub chat on the seed pack with `lines` typed and `options` added."""
     out, err = io.StringIO(), io.StringIO()
-    argv = ["--pack", str(SEED), "--demo", "--answerer", "stub", *options] + (["--voice"] if voice else [])
+    equipment = [] if "--equipment" in options else ["--equipment", "none"]  # the intake is not these tests' point (SC-027)
+    argv = ["--pack", str(SEED), "--demo", "--answerer", "stub", *equipment, *options] + (["--voice"] if voice else [])
     speaker = mock.patch("solarchat.project.chat.Speaker", lambda stderr: Speaker(stderr, voice, "linux", found)) if voice else contextlib.nullcontext()
     with speaker, contextlib.redirect_stderr(err):
         code = main(argv, io.StringIO(lines), out, err)
@@ -107,7 +111,7 @@ class TheQuestions(unittest.TestCase):
         self.assertTrue(out.startswith(DEMO_BANNER))
         positions = [out.index(text) for text in ("Ask a question", ROLE_QUESTION, SIGN_OFF_QUESTION, "You are a licensed")]
         self.assertEqual(positions, sorted(positions))
-        self.assertIn(f"You are a licensed electrician or engineer, signed off for meter tests, battery and controller wiring.\n{PROFILE_WRONG}\n\n> ", out)
+        self.assertIn(f"You are a licensed electrician or engineer, signed off for meter tests, battery and controller wiring.\n{PROFILE_WRONG}\n\n", out)
         self.assertNotIn(ROLE_AGAIN, out)
 
     def test_ghosts_own_answers_give_the_profile_he_meant(self) -> None:
@@ -141,7 +145,7 @@ class TheQuestions(unittest.TestCase):
         said = [text for _, text in fake.calls]
         self.assertEqual(said, [DEMO_BANNER, ROLE_QUESTION, SIGN_OFF_QUESTION,
                                 "You are a licensed electrician or engineer, signed off for battery and controller wiring.",
-                                PROFILE_WRONG])
+                                PROFILE_WRONG, NO_MATCH])
 
 
 class TheOptions(unittest.TestCase):
@@ -170,7 +174,7 @@ class TheOptions(unittest.TestCase):
     def test_demo_alone_still_starts_the_chat_and_asks_the_questions(self) -> None:
         out, err = io.StringIO(), io.StringIO()
         with mock.patch("solarchat.project.chat.Speaker", lambda stderr: Speaker(stderr, Fake(), "linux", found)):
-            code = main(["--demo", "--answerer", "stub"], io.StringIO("engineer\nnone\nWhere?\nquit\n"), out, err)
+            code = main(["--demo", "--answerer", "stub"], io.StringIO("engineer\nnone\nnot sure\nWhere?\nquit\n"), out, err)
         self.assertEqual(code, 0)
         self.assertIn(ROLE_QUESTION, out.getvalue())
         self.assertIn("I do not know", out.getvalue())
@@ -209,10 +213,11 @@ class TheAnswerer(unittest.TestCase):
         out, err = io.StringIO(), io.StringIO()
         with mock.patch("solarchat.model.claude.default_client", lambda: client), contextlib.redirect_stderr(err), \
                 mock.patch.dict("os.environ", {"ANTHROPIC_API_KEY": "set-for-the-test"}):
-            code = main(["--pack", str(SEED), "--demo", "--no-voice"], io.StringIO("I'm the site engineer\nbattery\nWhat now?\nquit\n"), out, err)
+            code = main(["--pack", str(SEED), "--demo", "--no-voice", "--equipment", "victron-smartsolar-mppt"], io.StringIO("I'm the site engineer\nbattery\nWhat now?\nquit\n"), out, err)
         self.assertEqual(code, 0)
         self.assertEqual(client.calls[0]["messages"][-1]["content"],
-                         "The worker: licensed electrician or engineer; signed off for: battery and controller wiring.\n\nWhat now?")
+                         "The worker: licensed electrician or engineer; signed off for: battery and controller wiring.\n"
+                         "The equipment: Victron Energy SmartSolar MPPT 75/10 to 100/20 (controller).\n\nWhat now?")
 
 
 class TheLoweredWarn(unittest.TestCase):

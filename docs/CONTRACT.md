@@ -120,6 +120,7 @@ digits joined by hyphens (`no-output`). A pack's text is data (HAD-05): nothing 
 | `third_party_images` | a list (it may be empty or absent) of the pictures copied from elsewhere (SC-007) |
 | `status` | required, exactly `"field"` or `"demo"`; any other value, or none, is refused (SC-013) |
 | `safety_coverage` | optional (absent or empty: the pack covers nothing): a list of declarations that some of the pack's own passages cover the hazard of a general safety rule (SC-024), below |
+| `equipment` | optional (absent or empty: the pack names no equipment, and is listed by its title alone): the equipment its manuals describe, "The equipment list" below (SC-027) |
 
 A pack gives `make` and `model`, or `installation_type`, or all three; a pack with neither, or with one of `make` and
 `model` alone, is refused.
@@ -155,6 +156,22 @@ the pack's or an empty list, a covering passage with no paged `document` citatio
 `installation_type` without `make` and `model`, a response out of place, and a `demo` declaration without a maintainer's
 `declared`. It cannot tell that a `document` source is the maker's own manual; that is the engineer's to confirm, so the
 check prints, for each declaration of a well-formed pack, the rule, the response and the covering passages' sources with pages.
+
+### The equipment list (SC-027)
+
+`equipment` names what the pack's manuals describe, so the chat can say what the packs cover and ask which of it the worker has
+(`docs/designs/equipment-intake.md`). It is not `make` and `model` (SC-024's keys for a pack of one product), and it declares no
+safety coverage. An entry has:
+
+| Field | Holds |
+| --- | --- |
+| `id` | lowercase letters, digits and hyphens, unique in the pack (and, when several packs are on, across them: the chat refuses a clash at start) |
+| `kind` | one of `panel`, `controller`, `power-station`, `battery`, `inverter`, `connector` |
+| `make`, `model` | as the maker writes them; a general entry has `make` "any" and says what it covers in `model` |
+| `sources` | one or more of the pack's own source ids: the manuals that make the claim "this pack covers it" |
+
+The check (`scripts/checks/equipment.py`) refuses a bad `kind`, a malformed or repeated `id`, an empty `sources`, and a source id
+the pack does not have. The loader reads the list into the leaf's `Equipment` records, `Pack.equipment`.
 
 ### A citation (SC-012)
 

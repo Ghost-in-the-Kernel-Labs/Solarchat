@@ -15,6 +15,7 @@ from solarchat.leaf.contract import (DEFAULT_PROFILE, DEMO_BANNER, PROFILE_ROLES
                                      ReplyKind, Turn, may_answer)
 from solarchat.model.claude import DEFAULT_MODEL, MODELS, ClaudeAnswerer, ModelError
 from solarchat.packs.load import Pack, load_pack
+from solarchat.project.intake import equipment_of, parse_option, run_intake
 from solarchat.project.keys import ensure_key
 from solarchat.project.speech import Speaker
 from solarchat.safety.rules import load_rules
@@ -313,15 +314,18 @@ def converse(pack: Pack, demo: bool, answerer: Answerer, stdin: TextIO, stdout: 
 
 def start_chat(pack_folder: str, demo: bool, answerer_name: str, stdin: TextIO, stdout: TextIO, stderr: TextIO,
                model: str = DEFAULT_MODEL, voice: bool = False, role: str | None = None,
-               signed_off: frozenset[str] | None = None) -> int:
+               signed_off: frozenset[str] | None = None, equipment: str | None = None) -> int:
     """Run a whole chat and return its exit code: 0 when it ended, 2 when it cannot run (a pack that is missing or may not
-    answer, or no key for the Claude answerer), with one plain line on stderr. The demo banner is shown at the start; with
-    `voice` the chat is also spoken (a missing engine is one line on stderr and the chat goes on in text). After the banner the two profile questions are asked (SC-020), unless `role` and `signed_off` give the answers."""
+    answer, an equipment id clash or an unknown `equipment` id, or no key for the Claude answerer), with one plain line on stderr. The demo banner is shown at the start; with
+    `voice` the chat is also spoken (a missing engine is one line on stderr and the chat goes on in text). After the banner the two profile questions are asked (SC-020), unless `role` and `signed_off` give the answers. Then the equipment intake (SC-027): the pack's equipment is listed and its make
+    and model asked, unless `equipment` ("victron-smartsolar-mppt" or "none") gives the match; a pack with no list has no intake."""
     if answerer_name == "claude":
         ensure_key(stdin, stdout, stderr)  # no key: ask here and store it; an empty line leaves the exit 2 below
     try:
         pack = load_chat_pack(pack_folder, demo)
         answerer = choose_answerer(answerer_name, model)
+        offered = equipment_of((pack,))
+        chosen = None if equipment is None else parse_option(equipment, offered)
     except (ValueError, ModelError) as problem:
         stderr.write(f"solarchat: cannot run: {problem}\n")
         return 2
@@ -333,5 +337,8 @@ def start_chat(pack_folder: str, demo: bool, answerer_name: str, stdin: TextIO, 
     profile = ask_profile(stdin, stdout, speaker, role, signed_off)
     if isinstance(answerer, ClaudeAnswerer):
         answerer.profile = profile  # built before the questions so a missing key ends the chat before any is asked
+    matched = run_intake(offered, chosen, answerer, stdin, stdout, speaker, ask)
+    if isinstance(answerer, ClaudeAnswerer) and offered:
+        answerer.equipment = matched  # the equipment line of every call, never the system block (SC-027)
     converse(pack, demo, answerer, stdin, stdout, stderr, speaker, profile)
     return 0

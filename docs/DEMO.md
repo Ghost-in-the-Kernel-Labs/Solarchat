@@ -27,7 +27,7 @@ The `$env:Path` line lasts for that PowerShell window only. The lockfile is buil
 solarchat --demo
 ```
 
-- Role: `new to solar`. Signed off for: `none`.
+- Role: `new to solar`. Signed off for: `none`. Equipment (after the list of what the packs cover): `Victron SmartSolar 75/10`; expect "Working with: Victron Energy SmartSolar MPPT 75/10 to 100/20".
 - "My panel is plugged into the charge controller but it shows no solar power at all."
 - Answer what it asks, one fact at a time (display on? sunny and unshaded? off switch on?).
 - "I checked the marks. The panel's plus lead is joined to the controller's minus."
@@ -39,7 +39,7 @@ What it shows: one step at a time, cited to the manuals, with a safety warning a
 ## Scenario 2: the same kind of question from an engineer
 
 ```powershell
-solarchat --demo --role qualified --signed-off battery
+solarchat --demo --role qualified --signed-off battery --equipment victron-smartsolar-mppt
 ```
 
 - "The controller display is blank and the panel is not plugged in. What do I connect first?"
@@ -52,7 +52,7 @@ solarchat --demo --role qualified --signed-off battery
 ## Scenario 3: the same battery question from a new worker
 
 ```powershell
-solarchat --demo --no-voice --role new
+solarchat --demo --no-voice --role new --equipment victron-smartsolar-mppt
 ```
 
 - Signed off for: `none`.
@@ -64,7 +64,7 @@ What 2 and 3 show together: the same question gets the right answer for each per
 
 ## Scenario 4: an emergency in the worker's own words
 
-In any session: "One of my connectors is smoking!"
+In any session (type `not sure` at the equipment question, or add `--equipment none`): "One of my connectors is smoking!"
 
 Expect: "Safety rule SR-08. Stop. Step back and do not touch it. Keep others away ..." immediately, whatever was asked
 before.
@@ -77,7 +77,7 @@ Needs the Claude answerer and a key (the stub never proposes a change). Run live
 solarchat --demo --no-voice
 ```
 
-- Answer the two questions: "new to solar", "none".
+- Answer the questions: "new to solar", "none", then the equipment, "Victron SmartSolar 75/10".
 - "Which way round does the battery cable go on the controller?"
 - Expect: the SR-11 stop, as in scenario 3.
 - Type: "I'm the site electrician now, signed off for battery wiring".
@@ -92,7 +92,8 @@ solarchat --demo --no-voice
 
 ## Good to know on stage
 
-- The bot asks two questions first (role, sign-offs); answer with plain words such as "site engineer" or "battery and
+- The bot asks three questions first (role, sign-offs, then the make and model after a list of what the packs cover; "not sure"
+  gets the general steps); answer with plain words such as "site engineer" or "battery and
   meter"; typos and "all" are understood; if the profile said back is wrong, type quit and start again.
 - Answer the question it asks. It needs that one fact before it moves on; volunteering other facts makes it repeat the
   question.

@@ -27,6 +27,8 @@ Chat options (with --pack or --demo):
   --role new|crew|qualified   your role, so the bot does not ask: solarchat --pack P --demo --role qualified
   --signed-off <list>       what you are signed off for, from meter,connector,battery,height (or none); skips the question.
                             Both given skip both questions: solarchat --demo --role qualified --signed-off battery
+  --equipment <ids>         the equipment you have, by id from the list the chat shows (or none); skips the question:
+                            solarchat --demo --equipment victron-smartsolar-mppt
 
 The chat uses ANTHROPIC_API_KEY when it is set, else the key stored by solarchat --key; with neither it asks for the key and stores it. The key is never shown or uploaded.
 """
@@ -55,6 +57,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--answerer", choices=("claude", "stub"), default="claude")
     parser.add_argument("--role", choices=("new", "crew", "qualified"), help="your role; skips the first question")
     parser.add_argument("--signed-off", type=signed_off_value, help="meter,connector,battery,height or none; skips the second question")
+    parser.add_argument("--equipment", help="equipment ids from the packs' lists, or none; skips the make-and-model question")
     parser.add_argument("--model", choices=MODEL_CHOICES, default=DEFAULT_MODEL, help="the Claude model (claude-sonnet-5-5 unless testing)")
     return parser
 
@@ -81,4 +84,4 @@ def main(argv: list[str], stdin: TextIO | None = None, stdout: TextIO | None = N
         return 2
     pack = args.pack or str(DEMO_PACK)
     voice = (args.voice or args.demo) and not args.no_voice
-    return start_chat(pack, args.demo, args.answerer, stdin or sys.stdin, out, err, args.model, voice, args.role, args.signed_off)
+    return start_chat(pack, args.demo, args.answerer, stdin or sys.stdin, out, err, args.model, voice, args.role, args.signed_off, args.equipment)

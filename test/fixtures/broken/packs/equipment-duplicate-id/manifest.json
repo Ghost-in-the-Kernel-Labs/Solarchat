@@ -1,0 +1,57 @@
+{
+  "id": "equipment-duplicate-id",
+  "title": "Connecting a panel to a power station",
+  "make": "Examplesun",
+  "model": "ES-100",
+  "version": "1.0",
+  "sources": [
+    {
+      "id": "S1",
+      "title": "Examplesun ES-100 installation manual",
+      "url": "https://example.com/es-100.pdf",
+      "licence": "CC BY 4.0, per the manual's copyright page",
+      "retrieved": "2026-11-20",
+      "kind": "document"
+    },
+    {
+      "id": "S2",
+      "title": "Reading a panel's label (web page)",
+      "url": "https://example.com/label",
+      "licence": "not stated",
+      "retrieved": "2026-11-20",
+      "kind": "web"
+    }
+  ],
+  "third_party_images": [
+    {
+      "file": "images/third-party/label.svg",
+      "source_url": "https://example.com/label.svg",
+      "owner": "A. Author",
+      "licence": "CC0, as stated on the file page",
+      "shows": "The panel's specification label."
+    }
+  ],
+  "status": "field",
+  "installation_type": "crystalline panel on MC4-type leads",
+  "equipment": [
+    {
+      "id": "examplesun-es-100",
+      "kind": "panel",
+      "make": "Examplesun",
+      "model": "ES-100",
+      "sources": [
+        "S1"
+      ]
+    },
+    {
+      "id": "examplesun-es-100",
+      "kind": "connector",
+      "make": "any",
+      "model": "MC4 connectors",
+      "sources": [
+        "S1",
+        "S2"
+      ]
+    }
+  ]
+}
