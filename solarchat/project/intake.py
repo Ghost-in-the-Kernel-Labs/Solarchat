@@ -18,6 +18,9 @@ LIST_HEADING = "I can help with:"
 QUESTION = ("What is the make and model of your panel, and of your charge controller or power station? "
             "Say 'not sure' if you don't know.")
 WRONG = "If that is wrong, say so at any point."
+PANEL_QUESTION = "And the panel's make and model? Say 'not sure' if you don't know."
+HELP_QUESTION = ("That's fine. Look for a label on the back of the panel and on the front of the controller or power station, "
+                 "and tell me any names you see.")
 NO_PACK = "I have no pack for that equipment."
 ONLY_LISTED = "I can only help with the equipment listed above."
 NOT_SURE = ("not sure", "unsure", "dont know", "do not know", "no idea", "idk")
@@ -123,14 +126,24 @@ def tell(line: str, stdout: TextIO, speaker: Speaker | None) -> None:
         speaker.say(line)
 
 
+# Decision: SC-029 (a controller named with no panel asks for the panel once; "not sure" first gets one helping question, two misses the no-match line)
 def run_intake(equipment: tuple[Equipment, ...], chosen: tuple[Equipment, ...] | None, answerer: Answerer, stdin: TextIO,
                stdout: TextIO, speaker: Speaker | None, ask: Ask) -> tuple[Equipment, ...]:
     """The intake: the list, the question, the reading and the said-back line, and the entries matched. `chosen` (from
-    --equipment) skips the list, the question and the reading. A pack list that is empty is no intake: the answer is ()."""
+    --equipment) skips the list, the question and the reading. A pack list that is empty is no intake: the answer is (). A first
+    answer of "not sure" is asked the helping question once and its answer read as the first; a controller matched with no panel is
+    asked for the panel once, and "not sure" keeps the general steps: "victron" gives the Victron entry, then "a Solarex 300" adds
+    no panel (the said-back line is "Working with: Victron ...")."""
     if not equipment:
         return ()
     if chosen is None:
         tell(list_text(equipment), stdout, speaker)
-        chosen = read_answer(ask(QUESTION, stdin, stdout, speaker), equipment, answerer)
+        typed = ask(QUESTION, stdin, stdout, speaker)
+        chosen = read_answer(typed, equipment, answerer)
+        if not chosen and is_not_sure(typed):
+            chosen = read_answer(ask(HELP_QUESTION, stdin, stdout, speaker), equipment, answerer)
+        panels = tuple(entry for entry in equipment if entry.kind == "panel")
+        if panels and any(entry.kind == "controller" for entry in chosen) and not any(entry.kind == "panel" for entry in chosen):
+            chosen += tuple(entry for entry in read_answer(ask(PANEL_QUESTION, stdin, stdout, speaker), panels, answerer) if entry not in chosen)
     tell(said_back(chosen, equipment), stdout, speaker)
     return chosen

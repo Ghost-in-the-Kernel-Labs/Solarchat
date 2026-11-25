@@ -8,13 +8,14 @@ import json
 import unittest
 from unittest import mock
 
+from solarchat.answer.door import DO_NOT_KNOW_TEXT
 from solarchat.cli.main import MENU, main
 from solarchat.leaf.contract import DEMO_BANNER, Finding, Passage, PassageRef, Profile, Reply, ReplyKind, Turn
 from solarchat.model import claude
 from solarchat.model.claude import SYSTEM_PROMPT, ClaudeAnswerer, profile_line
 from solarchat.packs.load import load_pack
 from solarchat.project import chat
-from solarchat.project.chat import (PROFILE_WRONG, ROLE_AGAIN, ROLE_QUESTION, SIGN_OFF_QUESTION, ask_profile, converse, parse_signed_off,
+from solarchat.project.chat import (LOWERED_MARK, PROFILE_WRONG, ROLE_AGAIN, ROLE_QUESTION, SIGN_OFF_QUESTION, ask_profile, converse, parse_signed_off,
                                     profile_said_back,
                                     read_role, read_signed_off, render)
 from solarchat.project.intake import said_back
@@ -174,10 +175,10 @@ class TheOptions(unittest.TestCase):
     def test_demo_alone_still_starts_the_chat_and_asks_the_questions(self) -> None:
         out, err = io.StringIO(), io.StringIO()
         with mock.patch("solarchat.project.chat.Speaker", lambda stderr: Speaker(stderr, Fake(), "linux", found)):
-            code = main(["--demo", "--answerer", "stub"], io.StringIO("engineer\nnone\nnot sure\nWhere?\nquit\n"), out, err)
+            code = main(["--demo", "--answerer", "stub"], io.StringIO("engineer\nnone\nnot sure\nnot sure\nWhere?\nquit\n"), out, err)
         self.assertEqual(code, 0)
         self.assertIn(ROLE_QUESTION, out.getvalue())
-        self.assertIn("I do not know", out.getvalue())
+        self.assertIn(DO_NOT_KNOW_TEXT, out.getvalue())
 
 
 class TheAnswerer(unittest.TestCase):
@@ -230,7 +231,7 @@ class TheLoweredWarn(unittest.TestCase):
 
     def test_a_battery_sign_off_lowers_sr_11_and_the_first_line_says_so(self) -> None:
         shown = self.talk(ENGINEER)
-        self.assertIn(f"Safety rule SR-11, lowered for your sign-off\n\n{DEMO_BANNER}\n\nYou are signed off for battery and controller wiring:", shown)
+        self.assertIn(f"Safety rule SR-11{LOWERED_MARK}\n\n{DEMO_BANNER}\n\nYou are signed off for battery and controller wiring:", shown)
         self.assertIn("Fit it to the controller first.", shown)
         self.assertEqual(shown.count("You are signed off for battery and controller wiring:"), 1)
 

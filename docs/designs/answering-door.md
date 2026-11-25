@@ -116,7 +116,7 @@ The steps, in order. Each returns at once when it returns a reply.
    and a blank line ("every screen shown under it carries the banner", SC-010). The runner does not read text, so
    the banner changes no score.
 
-`DO_NOT_KNOW_TEXT = "I do not know. The packs switched on do not cover this."` and `NO_PACK_TEXT = "I do not know.
+`DO_NOT_KNOW_TEXT = "I don't know this one: it isn't in the manuals I have for this equipment. Don't guess. If you are not sure what to do, stop and ask your site supervisor or engineer before you go on."` (SC-029; it read "I do not know. The packs switched on do not cover this." until 2026-11-25) and `NO_PACK_TEXT = "I do not know.
 No pack switched on may answer here."` are constants in `door.py` (words, not thresholds). The door cites
 `# Invariant: HAD-03`, `# Invariant: HAD-06` and `# Decision: SC-019` above the functions that hold them.
 

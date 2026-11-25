@@ -2,7 +2,7 @@
 
 Written by `scripts/directive_map.py` from `theGhost.md`, `docs/CONTRACT.md` and the code's citations; do not edit here. A function holds a directive when it cites it: `# Decision: SC-005 (why)` or `# Invariant: HAD-06 (why)` directly above its `def`, or an `Invariant:` line in its docstring (SC-011). "No function" means the directive is held by a document, a test or a review: its Held by line in `theGhost.md` or `docs/CONTRACT.md` says which.
 
-38 of 75 directives are cited by a function.
+39 of 76 directives are cited by a function.
 
 | Directive | Title | Held in code by |
 | --- | --- | --- |
@@ -75,6 +75,7 @@ Written by `scripts/directive_map.py` from `theGhost.md`, `docs/CONTRACT.md` and
 | SC-026 | A profile change is proposed by the model and applied only on the person's yes, read by word matching; a change to less say applies at once | `solarchat/model/claude.py:proposal_from`, `solarchat/project/chat.py:gives_more_say`, `solarchat/project/chat.py:settle_proposal`, `solarchat/project/reading.py:read_yes` |
 | SC-027 | The bot says what the packs cover and asks for the make and model before it answers; the model reads the answer, and the chat keeps only equipment on a list | `scripts/checks/equipment.py:equipment_problems`, `solarchat/leaf/equipment.py:Equipment`, `solarchat/model/claude.py:identify`, `solarchat/model/lines.py:equipment_line`, `solarchat/packs/load.py:equipment_from_manifest`, `solarchat/project/intake.py:equipment_of` |
 | SC-028 | A stop holds for the rest of the conversation, and the profile proposal fires only on what the worker said | `solarchat/answer/door.py:held_stop`, `solarchat/leaf/contract.py:SafetyRule`, `solarchat/model/lines.py:held_line`, `solarchat/project/chat.py:converse`, `solarchat/project/holds.py:stop_shown`, `solarchat/project/holds.py:kept_holds`, `solarchat/project/holds.py:enforce_holds`, `solarchat/project/proposal.py:checked_proposal`, `solarchat/project/proposal.py:said_proposal`, `solarchat/project/reading.py:asks_instead`, `solarchat/safety/rules.py:holds_from`, `solarchat/safety/rules.py:rule_fingerprint`, `solarchat/safety/rules.py:topic_fired` |
+| SC-029 | The conversation moves forward, says plainly what it cannot do, and lets the person correct or quit anywhere | `solarchat/project/chat.py:ask`, `solarchat/project/chat.py:converse`, `solarchat/project/intake.py:run_intake`, `solarchat/project/offtopic.py:plain_if_off_topic`, `solarchat/project/repeat.py:is_repeat`, `solarchat/project/repeat.py:retried`, `solarchat/project/shown.py:with_rule` |
 | HAD-01 | The leaf module imports nothing of the project's own | `solarchat/leaf/__init__.py` |
 | HAD-02 | Every number a document reports comes from a run the repository can repeat | `solarchat/leaf/__init__.py` |
 | HAD-03 | Hadley answers only from the packs, names the passage, or says it does not know | `scripts/checks/evals.py:passage_problems`, `scripts/checks/packs.py:reference_problems`, `solarchat/answer/door.py:breaks_contract`, `solarchat/answer/door.py:answer_body`, `solarchat/leaf/contract.py:Reply` |
