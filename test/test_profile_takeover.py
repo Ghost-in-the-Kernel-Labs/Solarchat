@@ -5,6 +5,7 @@ import io
 import json
 import unittest
 
+from solarchat.answer.door import DO_NOT_KNOW_TEXT
 from solarchat.leaf.contract import DEMO_BANNER, Finding, Profile, Turn
 from solarchat.model import claude
 from solarchat.model.claude import SCHEMA, SYSTEM_PROMPT, ClaudeAnswerer, ProfileChange
@@ -109,7 +110,7 @@ class Proposing(Scripted):
 
 ASK_BATTERY = Finding((BATTERY,), "Fit it to the controller first.")
 BATTERY_STOP = f"Safety rule SR-11\n\n{DEMO_BANNER}\n\nStop. Do not work on battery terminals"
-BATTERY_WARN = "Safety rule SR-11, lowered for your sign-off"
+BATTERY_WARN = f"Safety rule SR-11{chat.LOWERED_MARK}"
 ELECTRICIAN = ProfileChange("qualified", frozenset({"battery"}))
 SWITCH = "Only switch if your supervisor has signed you off for this on this site. Switch to that? yes or no"  # SC-028: the reminder
 NEW_PERSON = chat.NEW_PERSON_LINE
@@ -208,7 +209,7 @@ class TheTakeover(unittest.TestCase):
         self.assertEqual(answerer.calls, 3)
         self.assertIn("Profile changed: You are a licensed electrician", out)
         self.assertIn(chat.GO_AHEAD, out)
-        self.assertNotIn("I do not know", out.split("Profile changed")[1])
+        self.assertNotIn(DO_NOT_KNOW_TEXT, out.split("Profile changed")[1])
 
     def test_a_new_person_may_end_up_with_less_say_than_before(self) -> None:
         answerer, out = takeover([(ASK_BATTERY, ProfileChange(new_person=True))], f"{HELLO}Someone else is here\nnew\nnone\nquit\n", ENGINEER)

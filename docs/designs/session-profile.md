@@ -82,8 +82,7 @@ much of a step is said at once.
 ## 6. What is recorded (SC-020 (4))
 
 There is no session record yet in the project (TODO 1.14 and the hosted mode will add one). For now the chat shows the
-profile at the start, every warn that a profile lowered says so in its first line ("Safety rule SR-11, lowered for your
-sign-off"), and the profile is part of the history the answerer sees. The engineer's packet (1.14) lists every rule's
+profile at the start, every warn that a profile lowered says so in its first line ("Safety rule SR-11 (you are signed off for this work)" since SC-029), and the profile is part of the history the answerer sees. The engineer's packet (1.14) lists every rule's
 `lowered_for` with its change-log entry.
 
 ## 7. The evaluation side file, and the meter split

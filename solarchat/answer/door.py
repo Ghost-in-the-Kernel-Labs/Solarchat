@@ -14,7 +14,9 @@ from solarchat.leaf.contract import (DEFAULT_PROFILE, DEMO_BANNER, MAX_CITED_PAS
 from solarchat.packs.load import Pack, citation_lines
 from solarchat.safety.rules import load_rules, rules_fired
 
-DO_NOT_KNOW_TEXT = "I do not know. The packs switched on do not cover this."
+# Decision: SC-029 (it warns: it restates SR-14's own words, "If you are not sure, do not guess ... Go to your site supervisor or engineer", so it traces
+# to SR-14's sources, HSE and OSHA; Ghost, 2026-11-25. Plain words: what the worker can do next, and none of the project's internal words; HAD-03 and the kind do not change)
+DO_NOT_KNOW_TEXT = "I don't know this one: it isn't in the manuals I have for this equipment. Don't guess. If you are not sure what to do, stop and ask your site supervisor or engineer before you go on."
 NO_PACK_TEXT = "I do not know. No pack switched on may answer here."
 
 

@@ -42,10 +42,12 @@ def held_line(held: tuple[tuple[str, str], ...]) -> str:
 
 
 def messages_for(question: str, history: tuple[Turn, ...], profile: Profile | None = None,
-                 equipment: tuple[Equipment, ...] | None = None, held: tuple[tuple[str, str], ...] = ()) -> list[dict[str, str]]:
+                 equipment: tuple[Equipment, ...] | None = None, held: tuple[tuple[str, str], ...] = (),
+                 note: str = "") -> list[dict[str, str]]:
     """The conversation as the API takes it: the history, then the new question as the last user turn, which begins with
     the profile's line, the equipment's line and the held stops' line when there are any (never the system block, SC-020,
-    SC-027, SC-028): messages_for("Next?", (Turn("user", "Hi"),)) gives two messages."""
+    SC-027, SC-028); a `note` (SC-029, the retry's line) comes last, before the question and in this call only:
+    messages_for("Next?", (Turn("user", "Hi"),)) gives two messages."""
     turns = [{"role": turn.role, "content": turn.text} for turn in history]
-    lines = [line for line in (profile_line(profile) if profile is not None else "", equipment_line(equipment), held_line(held)) if line]
+    lines = [line for line in (profile_line(profile) if profile is not None else "", equipment_line(equipment), held_line(held), note) if line]
     return turns + [{"role": "user", "content": "\n".join(lines) + "\n\n" + question if lines else question}]

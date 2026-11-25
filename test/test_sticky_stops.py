@@ -13,7 +13,7 @@ from solarchat.answer.door import held_stop
 from solarchat.leaf.contract import DEFAULT_PROFILE, Finding, Passage, PassageRef, Profile, ReplyKind
 from solarchat.model.claude import SYSTEM_PROMPT, ClaudeAnswerer, ProfileChange
 from solarchat.model.lines import held_line, messages_for
-from solarchat.project.chat import converse
+from solarchat.project.chat import LOWERED_MARK, converse
 from solarchat.project.holds import held_names, kept_holds
 from solarchat.project.proposal import Proposal, checked_proposal, said_proposal, says_hand_over
 from solarchat.project.reading import asks_instead
@@ -181,7 +181,7 @@ class TheStickyStop(unittest.TestCase):
         _, out = chat([(Finding(), None)], "I got a shock\nthe battery?\nquit\n")
         self.assertNotIn(STILL, out)  # SR-09 is an emergency and holds nothing
         answerer, out = takeover([(ASK_BATTERY, None)], "What do I connect first?\nquit\n", ENGINEER)
-        self.assertIn("Safety rule SR-11, lowered for your sign-off", out)
+        self.assertIn(f"Safety rule SR-11{LOWERED_MARK}", out)
         self.assertNotIn(STILL, out)
 
     def test_a_real_answerer_is_told_the_held_stop_in_the_messages_and_the_system_block_does_not_vary(self) -> None:

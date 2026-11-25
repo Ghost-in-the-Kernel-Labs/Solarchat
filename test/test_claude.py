@@ -149,9 +149,9 @@ class TheRequest(unittest.TestCase):
         self.assertEqual(call["output_config"], {"effort": "low", "format": {"type": "json_schema", "schema": SCHEMA}})
         self.assertEqual(sorted(call), ["betas", "fallbacks", "max_tokens", "messages", "model", "output_config", "system"])
 
-    def test_the_schema_is_closed_and_requires_the_four_fields(self) -> None:
+    def test_the_schema_is_closed_and_requires_the_five_fields(self) -> None:
         self.assertIs(SCHEMA["additionalProperties"], False)
-        self.assertEqual(sorted(SCHEMA["required"]), ["kind", "passage_ids", "profile_change", "reply"])
+        self.assertEqual(sorted(SCHEMA["required"]), ["kind", "off_topic", "passage_ids", "profile_change", "reply"])
         self.assertEqual(SCHEMA["properties"]["kind"]["enum"], ["answer", "do_not_know"])
 
     def test_the_history_and_the_new_question_are_the_messages(self) -> None:

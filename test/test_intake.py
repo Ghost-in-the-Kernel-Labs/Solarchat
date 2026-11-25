@@ -7,13 +7,14 @@ import unittest
 from types import SimpleNamespace
 from unittest import mock
 
+from solarchat.answer.door import DO_NOT_KNOW_TEXT
 from solarchat.cli.main import MENU, main
 from solarchat.leaf.contract import Equipment, Turn
 from solarchat.model.claude import MAX_TOKENS, SYSTEM_PROMPT, ClaudeAnswerer, ModelError, messages_for
 from solarchat.model.lines import equipment_line
 from solarchat.packs.load import load_pack
 from solarchat.project import chat
-from solarchat.project.intake import (QUESTION, equipment_of, equipment_name, list_text, parse_option, read_answer, said_back, word_match)
+from solarchat.project.intake import (HELP_QUESTION, PANEL_QUESTION, QUESTION, equipment_of, equipment_name, list_text, parse_option, read_answer, said_back, word_match)
 from solarchat.project.speech import Speaker
 from test.support import ROOT
 from test.test_claude import FakeClient, FakeErrors, Refusal, answer_json, text_response
@@ -54,9 +55,9 @@ class TheListAndQuestion(unittest.TestCase):
             "- MC4 and MC4-compatible connectors"]))
 
     def test_after_the_profile_the_list_then_the_question_then_the_first_prompt(self) -> None:
-        code, out, _ = stub_chat("not sure\nquit\n")
+        code, out, _ = stub_chat("not sure\nnot sure\nquit\n")
         self.assertEqual(code, 0)
-        positions = [out.index(text) for text in ("You are new to solar", "I can help with:", QUESTION, NO_PACK)]
+        positions = [out.index(text) for text in ("You are new to solar", "I can help with:", QUESTION, HELP_QUESTION, NO_PACK)]
         self.assertEqual(positions, sorted(positions))
         self.assertTrue(out.index(NO_PACK) < out.rindex("> "))
 
@@ -65,9 +66,9 @@ class TheListAndQuestion(unittest.TestCase):
         out, err = io.StringIO(), io.StringIO()
         with mock.patch("solarchat.project.chat.Speaker", lambda stderr: Speaker(stderr, fake, "linux", found)):
             main(["--pack", str(SEED), "--demo", "--answerer", "stub", "--voice", "--role", "new", "--signed-off", "none"],
-                 io.StringIO("Victron SmartSolar 75/10\nquit\n"), out, err)
+                 io.StringIO("Victron SmartSolar 75/10\nnot sure\nquit\n"), out, err)
         said = [text for _, text in fake.calls]
-        self.assertEqual(said[-3:], [list_text(OFFERED), QUESTION, f"Working with: {VICTRON_NAME}. If that is wrong, say so at any point."])
+        self.assertEqual(said[-4:], [list_text(OFFERED), QUESTION, PANEL_QUESTION, f"Working with: {VICTRON_NAME}. If that is wrong, say so at any point."])
 
     def test_a_pack_with_no_equipment_has_no_intake(self) -> None:
         out = io.StringIO()
@@ -80,7 +81,7 @@ class TheListAndQuestion(unittest.TestCase):
 class TheModelsReading(unittest.TestCase):
     def test_a_match_is_said_back_and_told_to_the_answerer_in_the_messages_beside_the_profile_line(self) -> None:
         client = FakeClient([text_response(ID), DONT_KNOW])
-        code, out, _ = talk(client, "victron 75 10\nWhat now?\nquit\n")
+        code, out, _ = talk(client, "victron 75 10\nnot sure\nWhat now?\nquit\n")
         self.assertEqual(code, 0)
         self.assertIn(f"Working with: {VICTRON_NAME}. If that is wrong, say so at any point.", out)
         self.assertEqual(client.calls[1]["messages"][-1]["content"],
@@ -112,13 +113,13 @@ class TheModelsReading(unittest.TestCase):
         for answer in ("not sure", "I don't know", "", "No idea"):
             with self.subTest(answer=answer):
                 client = FakeClient([DONT_KNOW])
-                _, out, _ = talk(client, f"{answer}\nquit\n")
+                _, out, _ = talk(client, f"{answer}\n{answer}\nquit\n")
                 self.assertEqual(client.calls, [])
                 self.assertIn(NO_PACK, out)
 
     def test_an_id_off_the_list_is_dropped_and_a_listed_one_kept(self) -> None:
         client = FakeClient([text_response({"ids": ["nope", "victron-smartsolar-mppt", "victron-smartsolar-mppt"]}), DONT_KNOW])
-        _, out, _ = talk(client, "victron\nquit\n")
+        _, out, _ = talk(client, "victron\nnot sure\nquit\n")
         self.assertIn(f"Working with: {VICTRON_NAME}.", out)
         self.assertEqual(ClaudeAnswerer(FakeClient([text_response({"ids": ["nope"]})]), FakeErrors).identify("x", OFFERED), ())
 
@@ -127,14 +128,14 @@ class TheModelsReading(unittest.TestCase):
             with self.subTest(outcome=type(outcome).__name__):
                 _, out, err = talk(FakeClient([outcome, DONT_KNOW]), "victron\nWhat now?\nquit\n")
                 self.assertIn(NO_PACK, out)
-                self.assertIn("I do not know", out)
+                self.assertIn(DO_NOT_KNOW_TEXT, out)
                 self.assertEqual(err, "")
 
     def test_the_system_block_is_the_same_bytes_whatever_the_equipment(self) -> None:
         blocks = set()
         for ids in ([], ["victron-smartsolar-mppt"], ["ecoflow-r600", "mc4-connector"]):
             client = FakeClient([text_response({"ids": ids}), DONT_KNOW])
-            talk(client, "something\nWhat now?\nquit\n")
+            talk(client, "something\n" + ("not sure\n" if ids == ["victron-smartsolar-mppt"] else "") + "What now?\nquit\n")
             blocks.add(json.dumps(client.calls[1]["system"], sort_keys=True))
         self.assertEqual(len(blocks), 1)
         self.assertNotIn("Victron Energy", next(iter(blocks)).replace("Victron controller", ""))
@@ -173,8 +174,8 @@ class TheStubsWordMatching(unittest.TestCase):
                 self.assertEqual(self.names(text), [])
 
     def test_the_stub_chat_says_the_match_back_and_not_sure_is_no_match(self) -> None:
-        self.assertIn(f"Working with: {VICTRON_NAME}.", stub_chat("Victron SmartSolar 75/10\nquit\n")[1])
-        self.assertIn(NO_PACK, stub_chat("not sure\nquit\n")[1])
+        self.assertIn(f"Working with: {VICTRON_NAME}.", stub_chat("Victron SmartSolar 75/10\nnot sure\nquit\n")[1])
+        self.assertIn(NO_PACK, stub_chat("not sure\nnot sure\nquit\n")[1])
 
     def test_read_answer_uses_identify_when_the_answerer_has_it_and_keeps_only_listed_entries(self) -> None:
         answerer = SimpleNamespace(identify=lambda text, equipment: ("ecoflow-r600", "ghost"))
